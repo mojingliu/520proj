@@ -36,7 +36,7 @@ cst_exp {-> exp} =
 
 factor {-> exp} =
   {cst_mult}    factor star term 
-                {-> New exp.mult(Null,term.exp)}
+                {-> New exp.mult(factor.exp,term.exp)}
 | {cst_divd}    factor slash term 
                 {-> New exp.divd(factor.exp,term.exp)}
 | {term}        term {-> term.exp};
@@ -50,7 +50,7 @@ Abstract Syntax Tree
 exp = 
   {plus}     [l]:exp [r]:exp 
 | {minus}    [l]:exp [r]:exp
-| {mult}     [l]:exp? [r]:exp 
+| {mult}     [l]:exp [r]:exp 
 | {divd}     [l]:exp [r]:exp 
 | {id}       id 
 | {number}   number;

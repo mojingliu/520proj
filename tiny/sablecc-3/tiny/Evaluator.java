@@ -57,6 +57,18 @@ public class Evaluator extends DepthFirstAdapter
   public void outADivdExp(ADivdExp node)
   { setValue(node, getValue(node.getL()) / getValue(node.getR())); }
 
+  /* mod */
+  public void outAModExp(AModExp node)
+  { setValue(node, getValue(node.getL()) % getValue(node.getR())); }
+
+  /* pow */
+  public void outAPowExp(AModExp node)
+  { setValue(node, (int)Math.pow(getValue(node.getL()), getValue(node.getR()))); }
+
+  /* abs */
+  public void outAAbsExp(AAbsExp node)
+  { setValue(node, Math.abs(getValue(node.getExp()))); }
+
   /* identifier (!!!) */
   public void outAIdExp(AIdExp node)
   { throw new RuntimeException("I can't evaluate the value of an identifier!"); }

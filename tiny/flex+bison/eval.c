@@ -19,8 +19,8 @@ void i_hate_c(expre* toR, expre* left, expre* right, char const* connector)
         sprintf(rightword, "%d", right->value);
     else
         rightword = right->expression;
-    toR->expression = (char*)malloc(sizeof(char) * (strlen(leftword) + strlen(rightword) + 1));
-    sprintf(toR->expression, "%s%s%s", leftword, connector, rightword);
+    toR->expression = (char*)malloc(sizeof(char) * (strlen(leftword) + strlen(rightword) + 3));
+    sprintf(toR->expression, "(%s%s%s)", leftword, connector, rightword);
 }
 
 expre evalEXP(EXP *e)

@@ -17,10 +17,11 @@ class Main {
       Start tree = p.parse();
 
       /* pretty-print */
-      System.out.println("\nThe result of evaluating:\n" + tree);
+      System.out.println("\nThe result of evaluating:");
+      PrettyPrinter.print(tree);
 
       /* evaluate */
-      System.out.println("is: " + Evaluator.eval(tree));
+      System.out.println("\nis: " + Evaluator.eval(tree));
 
     } 
    catch(Exception e) 

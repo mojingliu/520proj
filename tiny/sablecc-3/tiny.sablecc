@@ -16,6 +16,9 @@ Tokens
   blank = ' ' | tab;
   star  = '*';
   slash = '/';
+  mod   = '%';
+  abs   = 'a' 'b' 's';
+  pow   = '*' '*';
   plus  = '+';
   minus = '-';
   l_par = '(';
@@ -31,26 +34,42 @@ cst_exp {-> exp} =
   {cst_plus}    cst_exp plus factor 
                 {-> New exp.plus(cst_exp.exp,factor.exp)}
 | {cst_minus}   cst_exp minus factor 
-	              {-> New exp.minus(cst_exp.exp,factor.exp)}
+	              {-> New exp.minus(cst_exp.exp,factor.exp)} 
 | {factor}      factor {-> factor.exp};
 
 factor {-> exp} =
   {cst_mult}    factor star term 
-                {-> New exp.mult(Null,term.exp)}
+                {-> New exp.mult(factor.exp,term.exp)}
 | {cst_divd}    factor slash term 
                 {-> New exp.divd(factor.exp,term.exp)}
-| {term}        term {-> term.exp};
+| {cst_mod}     factor mod term
+                {-> New exp.mod(factor.exp,term.exp)}
+| {power}       power {-> power.exp};
+
+power {-> exp } =
+  {cst_pow}     term pow power 
+                {-> New exp.pow(term.exp, power.exp)}
+| {term}        term
+                {-> term.exp };
 
 term {-> exp} =
-  {paren}       l_par cst_exp r_par {-> cst_exp.exp}
-| {cst_id}      id {-> New exp.id(id)}
-| {cst_number}  number {-> New exp.number(number)};
+  {paren}       l_par cst_exp r_par 
+                {-> cst_exp.exp}
+| {cst_abs}     abs l_par cst_exp r_par
+                {-> New exp.abs(cst_exp.exp)}
+| {cst_id}      id
+                {-> New exp.id(id)}
+| {cst_number}  number 
+                {-> New exp.number(number)};
 
 Abstract Syntax Tree
 exp = 
   {plus}     [l]:exp [r]:exp 
 | {minus}    [l]:exp [r]:exp
-| {mult}     [l]:exp? [r]:exp 
+| {mult}     [l]:exp [r]:exp 
 | {divd}     [l]:exp [r]:exp 
+| {mod}      [l]:exp [r]:exp
+| {pow}      [l]:exp [r]:exp
+| {abs}      exp
 | {id}       id 
 | {number}   number;
