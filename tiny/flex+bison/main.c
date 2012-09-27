@@ -16,6 +16,10 @@ int main()
   printf("\nThe result of evaluating:\n");
   prettyEXP(theexpression);
   printf("\n");
-  printf("is: %d\n",evalEXP(theexpression));
+  expre e = evalEXP(theexpression);
+  if(e.which)
+      printf("is: %s\n", e.expression);
+  else
+      printf("is: %d\n", e.value);
   return(1);
 }

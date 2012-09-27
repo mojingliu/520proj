@@ -3,6 +3,13 @@
 
 #include "tree.h"
 
-int evalEXP(EXP *e);
+typedef struct 
+{
+    int value;
+    char* expression;
+    int which;  /* 0 for int, 1 for expression */
+} expre;
+
+expre evalEXP(EXP *e);
 
 #endif /* !EVAL_H */
