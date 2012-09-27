@@ -35,20 +35,22 @@ cst_exp {-> exp} =
                 {-> New exp.plus(cst_exp.exp,factor.exp)}
 | {cst_minus}   cst_exp minus factor 
 	              {-> New exp.minus(cst_exp.exp,factor.exp)} 
+| {cst_uminus}  minus factor
+                {-> New exp.minus(null,factor.exp)}
 | {factor}      factor {-> factor.exp};
 
 factor {-> exp} =
-  {cst_mult}    factor star term 
-                {-> New exp.mult(factor.exp,term.exp)}
-| {cst_divd}    factor slash term 
-                {-> New exp.divd(factor.exp,term.exp)}
-| {cst_mod}     factor mod term
-                {-> New exp.mod(factor.exp,term.exp)}
+  {cst_mult}    factor star power 
+                {-> New exp.mult(factor.exp,power.exp)}
+| {cst_divd}    factor slash power
+                {-> New exp.divd(factor.exp,power.exp)}
+| {cst_mod}     factor mod power
+                {-> New exp.mod(factor.exp,power.exp)}
 | {power}       power {-> power.exp};
 
 power {-> exp } =
   {cst_pow}     term pow power 
-                {-> New exp.pow(term.exp, power.exp)}
+                {-> New exp.powr(term.exp, power.exp)}
 | {term}        term
                 {-> term.exp };
 
@@ -69,7 +71,7 @@ exp =
 | {mult}     [l]:exp [r]:exp 
 | {divd}     [l]:exp [r]:exp 
 | {mod}      [l]:exp [r]:exp
-| {pow}      [l]:exp [r]:exp
+| {powr}      [l]:exp [r]:exp
 | {abs}      exp
 | {id}       id 
 | {number}   number;

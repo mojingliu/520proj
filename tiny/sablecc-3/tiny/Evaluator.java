@@ -47,7 +47,12 @@ public class Evaluator extends DepthFirstAdapter
   
   /* minus */
   public void outAMinusExp(AMinusExp node)
-  { setValue(node, getValue(node.getL()) - getValue(node.getR())); }
+  { 
+    if(node.getL() == null)
+      setValue(node, 0 - getValue(node.getR()));
+    else
+      setValue(node, getValue(node.getL()) - getValue(node.getR())); 
+  }
 
   /* mult */
   public void outAMultExp(AMultExp node)
@@ -62,7 +67,7 @@ public class Evaluator extends DepthFirstAdapter
   { setValue(node, getValue(node.getL()) % getValue(node.getR())); }
 
   /* pow */
-  public void outAPowExp(AModExp node)
+  public void outAPowrExp(APowrExp node)
   { setValue(node, (int)Math.pow(getValue(node.getL()), getValue(node.getR()))); }
 
   /* abs */

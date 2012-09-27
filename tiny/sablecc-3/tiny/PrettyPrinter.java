@@ -69,7 +69,7 @@ public class PrettyPrinter extends DepthFirstAdapter {
   }
 
   /* mod */
-  public void caseAPowExp(AModExp node) {
+  public void caseAPowrExp(APowrExp node) {
       puts("(");
       node.getL().apply(this);
       puts("**");
