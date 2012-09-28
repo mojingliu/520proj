@@ -71,6 +71,21 @@ is: 6
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
+(4%2)
+is: 0
+Type in a tiny exp folowed by one or two Ctrl-d's:
+
+The result of evaluating:
+(2%4)
+is: 2
+Type in a tiny exp folowed by one or two Ctrl-d's:
+
+The result of evaluating:
+(2+(4%2))
+is: 2
+Type in a tiny exp folowed by one or two Ctrl-d's:
+
+The result of evaluating:
 abs((0-2))
 is: 2
 Type in a tiny exp folowed by one or two Ctrl-d's:
@@ -101,13 +116,23 @@ is: 4
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
+(5/0)
+is: Error - division by 0
+Type in a tiny exp folowed by one or two Ctrl-d's:
+
+The result of evaluating:
+(a/0)
+is: Error - division by 0
+Type in a tiny exp folowed by one or two Ctrl-d's:
+
+The result of evaluating:
 (a+4)
-is: a+4
+is: (a+4)
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
 ((4+5)+a)
-is: 9+a
+is: (9+a)
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:

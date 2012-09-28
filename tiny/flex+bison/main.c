@@ -15,11 +15,8 @@ int main()
   yyparse();
   printf("\nThe result of evaluating:\n");
   prettyEXP(theexpression);
+  printf("\nis: ");
+  prettyEXP(evalEXP(theexpression));
   printf("\n");
-  expre e = evalEXP(theexpression);
-  if(e.which)
-      printf("is: %s\n", e.expression);
-  else
-      printf("is: %d\n", e.value);
   return(1);
 }

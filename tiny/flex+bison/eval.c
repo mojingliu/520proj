@@ -1,177 +1,165 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 #include <math.h>
 #include "eval.h"
 
-void i_hate_c(expre* toR, expre* left, expre* right, char const* connector)
-{   /* python : toR = str(left) + c + str(right)
-       ::
-       c : */
-    char* leftword = malloc(sizeof(char) * 20);
-    char* rightword = malloc(sizeof(char) * 20);
-    toR->which = 1;
-    if(left->which == 0)
-        sprintf(leftword, "%d", left->value);
-    else
-        leftword = left->expression;
-    if(right->which == 0)
-        sprintf(rightword, "%d", right->value);
-    else
-        rightword = right->expression;
-    toR->expression = (char*)malloc(sizeof(char) * (strlen(leftword) + strlen(rightword) + 3));
-    sprintf(toR->expression, "(%s%s%s)", leftword, connector, rightword);
-}
-
-expre evalEXP(EXP *e)
+EXP* evalEXP(EXP *e)
 {
-    expre toR = {0, "", 0};  /* Just initialize to something */
+    EXP* toR = malloc(sizeof(EXP));
 
     switch (e->kind) {
     case idK:
-        toR.which = 1;
-        toR.expression = e->val.idE;
-	    return(toR);
+        return e;
     case intconstK:
-        toR.which = 0;
-        toR.value = e->val.intconstE;
-	    return(toR);
+        return e;
     case timesK:
     {
-        expre left = evalEXP(e->val.timesE.left);
-        expre right = evalEXP(e->val.timesE.right);
-        if(!left.which && !right.which)
+        EXP* left = evalEXP(e->val.timesE.left);
+        EXP* right = evalEXP(e->val.timesE.right);
+        if(left->kind == intconstK && right->kind == intconstK)
         {
-            toR.which = 0;
-            toR.value = left.value * right.value;
+            toR->kind = intconstK;
+            toR->val.intconstE = left->val.intconstE * right->val.intconstE;
         }
-        else if((!left.which && !left.value) || (!right.which && !right.value))
+        else if((left->kind == intconstK && !left->val.intconstE) ||
+            (right->kind == intconstK && !right->val.intconstE))
         {    /* one is 0; I know the answer to this! */
-            toR.which = 0;
-            toR.value = 0;
+            toR->kind = intconstK;
+            toR->val.intconstE = 0;
         }
         else
-            i_hate_c(&toR, &left, &right, "*");
+        {
+            e->val.timesE.left = left;
+            e->val.timesE.right = right;
+            return e;
+        }
         return toR;
     }
     case divK:
     {
-        expre left = evalEXP(e->val.divE.left);
-        expre right = evalEXP(e->val.divE.right);
-        if(!right.which && !right.value)
+        EXP* left = evalEXP(e->val.divE.left);
+        EXP* right = evalEXP(e->val.divE.right);
+        if(right->kind == intconstK && !right->val.intconstE)
         {
             printf("Error - division by 0\n");
             exit(0);
         }
-        if(!left.which && !right.which)
+        if(left->kind == intconstK && right->kind == intconstK)
         {
-            toR.which = 0;
-            toR.value = left.value / right.value;
+            toR->kind = intconstK;
+            toR->val.intconstE = left->val.intconstE / right->val.intconstE;
+            return toR;
         }
-        else if(!right.which && right.value == 1)
+        else if(right->kind == intconstK && right->val.intconstE == 1)
             return left;  /* x/1 == x */
-        else
-            i_hate_c(&toR, &left, &right, "/");
-        return toR;
+        e->val.divE.left = left;
+        e->val.divE.right = right;
+        return e;
     }
     case plusK:
     {
-        expre left = evalEXP(e->val.plusE.left);
-        expre right = evalEXP(e->val.plusE.right);
-        if(!left.which && !left.value)
+        EXP* left = evalEXP(e->val.plusE.left);
+        EXP* right = evalEXP(e->val.plusE.right);
+        if(left->kind == intconstK && !left->val.intconstE)
             return right; /* 0 + x = x */
-        if(!right.which && !right.value)
+        else if(right->kind == intconstK && !right->val.intconstE)
             return left;  /* x + 0 = x */
-        if(!left.which && !right.which)
+        else if(left->kind == intconstK && right->kind == intconstK)
         {
-            toR.which = 0;
-            toR.value = left.value + right.value;
+            toR->kind = intconstK;
+            toR->val.intconstE = left->val.intconstE + right->val.intconstE;
+            return toR;
         }
-        else
-            i_hate_c(&toR, &left, &right, "+");
-        return toR;
+        e->val.plusE.left = left;
+        e->val.plusE.right = right;
+        return e;
     }
     case minusK:
     {
-        expre left = evalEXP(e->val.minusE.left);
-        expre right = evalEXP(e->val.minusE.right);
-        if(!right.which && !right.value)
+        EXP* left = evalEXP(e->val.minusE.left);
+        EXP* right = evalEXP(e->val.minusE.right);
+        if(right->kind == intconstK && !right->val.intconstE)
             return left;  /* x - 0 = x */
-        if(!left.which && !right.which)
+        else if(left->kind == intconstK && right->kind == intconstK)
         {
-            toR.which = 0;
-            toR.value = left.value - right.value;
+            toR->kind = intconstK;
+            toR->val.intconstE = left->val.intconstE - right->val.intconstE;
+            return toR;
         }
-        else
-            i_hate_c(&toR, &left, &right, "-");
-        return toR;
+        e->val.minusE.left = left;
+        e->val.minusE.right = right;
+        return e;
     }
     case moduloK:
     {
-        expre left = evalEXP(e->val.moduloE.left);
-        expre right = evalEXP(e->val.moduloE.right);
-        if(!right.which && !right.value)   
+        EXP* left = evalEXP(e->val.moduloE.left);
+        EXP* right = evalEXP(e->val.moduloE.right);
+        if(right->kind == intconstK && !right->val.intconstE)   
         {
             printf("Error - modulo by 0\n");
             exit(0);
         }
-        if(!right.which && right.value == 1)
+        else if(right->kind == intconstK && right->val.intconstE == 1)
         {   /* x % 1 == 0 */
-            toR.which = 0;
-            toR.value = 0;
+            toR->kind = intconstK;
+            toR->val.intconstE = 0;
         }
-        else if(!left.which && !right.which)
+        else if(left->kind == intconstK && right->kind == intconstK)
         {
-            toR.which = 0;
-            toR.value = left.value % right.value;
+            toR->kind = intconstK;
+            toR->val.intconstE = left->val.intconstE % right->val.intconstE;
         }
         else
-            i_hate_c(&toR, &left, &right, "%");
+        {
+            e->val.minusE.left = left;
+            e->val.minusE.right = right;
+            return e;
+        }
         return toR;
     }
     case absK:
     {
-        expre only = evalEXP(e->val.absE.left);
-        if(!only.which)
+        EXP* only = evalEXP(e->val.absE.left);
+        if(only->kind == intconstK)
         {
-            toR.which = 0;
-            toR.value = abs(only.value);
+            toR->kind = intconstK;
+            toR->val.intconstE = abs(only->val.intconstE);
+            return toR;
         }
-        else
-        {
-            toR.which = 1;
-            toR.expression = (char*)malloc(sizeof(char) * (strlen(only.expression) + 6));
-            sprintf(toR.expression, "abs(%s)", only.expression);
-        }
-        return toR;
+        e->val.absE.left = only;
+        return e;
     }
     case exponentK:
     {   /* Can't check 0 ** x because 0 ** 0 == 1 */
-        expre left = evalEXP(e->val.exponentE.left);
-        expre right = evalEXP(e->val.exponentE.right);
-        if(!right.which && !right.value)
+        EXP* left = evalEXP(e->val.exponentE.left);
+        EXP* right = evalEXP(e->val.exponentE.right);
+        if(right->kind == intconstK && !right->val.intconstE)
         {   /* x ** 0 == 1 */
-            toR.which = 0;
-            toR.value = 1;
+            toR->kind = intconstK;
+            toR->val.intconstE = 1;
         }
-        else if(!right.which && right.value == 1)
+        else if(right->kind == intconstK && right->val.intconstE == 1)
             return left;  /* x ** 1 == x */
-        else if(!left.which && left.value == 1)
+        else if(left->kind == intconstK && left->val.intconstE == 1)
         {   /* 1 ** x == 1 */
-            toR.which = 0;
-            toR.value = 1;
+            toR->kind = intconstK;
+            toR->val.intconstE = 1;
         }
-        else if(!left.which && !right.which)
+        else if(left->kind == intconstK && right->kind == intconstK)
         {
-            toR.which = 0;
-            toR.value = pow(left.value, right.value);
+            toR->kind = intconstK;
+            toR->val.intconstE = pow(left->val.intconstE, right->val.intconstE);
         }
         else
-            i_hate_c(&toR, &left, &right, "**");
+        {
+            e->val.exponentE.left = left;
+            e->val.exponentE.right = right;
+            return e;
+        }
         return toR;
     }
     default: 
-	   printf("ERROR: Impossible type for an expression node.");
-	   exit(0);
+       printf("ERROR: Impossible type for an expression node.");
+       exit(0);
   }
 }
