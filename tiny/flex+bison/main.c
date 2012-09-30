@@ -17,6 +17,6 @@ int main()
   prettyEXP(theexpression, 0);
   printf("\nis: ");
   prettyEXP(evalEXP(theexpression), 0);
-  printf("\n");
+  printf("\n\n");
   return(1);
 }

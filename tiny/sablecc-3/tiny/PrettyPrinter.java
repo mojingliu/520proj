@@ -16,49 +16,116 @@ public class PrettyPrinter extends DepthFirstAdapter {
       System.out.flush();
   }
 
+  private static boolean parenMe(Node node, int level)
+  {
+    if(level >= 1 && (node instanceof APlusExp || node instanceof AMinusExp))
+      return true;
+    if(level >= 2 && (node instanceof AMultExp || node instanceof ADivdExp || node instanceof AModExp))
+      return true;
+    if(level >= 3 && (node instanceof APowExp))
+      return true;
+    return false;
+  }
+
   /* plus */ 
   public void caseAPlusExp(APlusExp node) {
-      puts("(");
-      node.getL().apply(this);
+      //puts("(");
+      boolean parenit = false;
+      Node left = node.getL();
+      parenit = parenMe(left, 0);
+      if(parenit)
+        puts("(");
+      left.apply(this);
+      if(parenit)
+        puts(")");
       puts("+");
-      node.getR().apply(this);
-      puts(")");
+      Node right = node.getR();
+      parenit = parenMe(right, 1);
+      if(parenit)
+        puts("(");
+      right.apply(this);
+      if(parenit)
+        puts(")");
   }
 
   /* minus */
   public void caseAMinusExp(AMinusExp node) { 
-      puts("(");
-      node.getL().apply(this);
+      boolean parenit = false;
+      Node left = node.getL();
+      parenit = parenMe(left, 0);
+      if(parenit)
+        puts("(");
+      left.apply(this);
+      if(parenit)
+        puts(")");
       puts("-");
-      node.getR().apply(this);
-      puts(")");
+      Node right = node.getR();
+      parenit = parenMe(right, 1);
+      if(parenit)
+        puts("(");
+      right.apply(this);
+      if(parenit)
+        puts(")");
   }
 
   /* mult */
   public void caseAMultExp(AMultExp node) { 
-      puts("(");
-      node.getL().apply(this);
+      boolean parenit;
+      Node left = node.getL();
+      parenit = parenMe(left, 1);
+      if(parenit)
+        puts("(");
+      left.apply(this);
+      if(parenit)
+        puts(")");
       puts("*");
+      Node right = node.getR();
+      parenit = parenMe(right, 2);
+      if(parenit)
+        puts("(");
       node.getR().apply(this);
-      puts(")");
+      if(parenit)
+        puts(")");
   }
 
   /* div */
   public void caseADivdExp(ADivdExp node) {
-      puts("(");
-      node.getL().apply(this);
+      boolean parenit;
+      Node left = node.getL();
+      parenit = parenMe(left, 1);
+      if(parenit)
+        puts("(");
+      left.apply(this);
+      if(parenit)
+        puts(")");
       puts("/");
+      Node right = node.getR();
+      parenit = parenMe(right, 2);
+      if(parenit)
+        puts("(");
       node.getR().apply(this);
-      puts(")");
+      if(parenit)
+        puts(")");
   }
 
   /* mod */
   public void caseAModExp(AModExp node) {
-      puts("(");
-      node.getL().apply(this);
+      boolean parenit;
+      Node left = node.getL();
+      parenit = parenMe(left, 1);
+      if(parenit)
+        puts("(");
+      left.apply(this);
+      if(parenit)
+        puts(")");
       puts("%");
+      Node right = node.getR();
+      parenit = parenMe(right, 2);
+      if(parenit)
+        puts("(");
       node.getR().apply(this);
-      puts(")");
+      if(parenit)
+        puts(")");
   }
 
   /* abs */
@@ -70,11 +137,22 @@ public class PrettyPrinter extends DepthFirstAdapter {
 
   /* pow */
   public void caseAPowExp(APowExp node) {
-      puts("(");
-      node.getL().apply(this);
+      boolean parenit;
+      Node left = node.getL();
+      parenit = parenMe(left, 3);
+      if(parenit)
+        puts("(");
+      left.apply(this);
+      if(parenit)
+        puts(")");
       puts("**");
+      Node right = node.getR();
+      parenit = parenMe(right, 2);
+      if(parenit)
+        puts("(");
       node.getR().apply(this);
-      puts(")");
+      if(parenit)
+        puts(")");
   }
 
   /* identifier */

@@ -1,128 +1,122 @@
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(1+2)
-is: 
-3
+1+2
+is: 3
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(1-2)
-is: 
--1
+1-2
+is: -1
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(2*3)
-is: 
-6
+2*3
+is: 6
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(6/3)
-is: 
-2
+6/3
+is: 2
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-((1+2)-3)
-is: 
-0
+1+2-3
+is: 0
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(1+(2*3))
-is: 
-7
+1+2*3
+is: 7
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-((3*8)*2)
-is: 
-48
+3*8*2
+is: 48
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-((1-2)+3)
-is: 
-2
+1-2+3
+is: 2
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-((2/2)-3)
-is: 
--2
+2/2-3
+is: -2
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(3*(2+2))
-is: 
-12
+1+(2+3)
+is: 6
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-((1+2)-(3-4))
-is: 
-4
+2+3+1
+is: 6
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-((2*3)+(2/2))
-is: 
-7
+3*(2+2)
+is: 12
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(2-((2+4)/2))
-is: 
--1
+1+2-(3-4)
+is: 4
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-((2*(2+4))-1)
-is: 
-11
+2*3+2/2
+is: 7
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-((2*(2+4))/2)
-is: 
-6
+2-(2+4)/2
+is: -1
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(4%2)
-is: 
-0
+2*(2+4)-1
+is: 11
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(2%4)
-is: 
-2
+2*(2+4)/2
+is: 6
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(2+(4%2))
-is: 
-2
+4%2
+is: 0
+
+Type in a tiny exp folowed by one or two Ctrl-d's:
+
+The result of evaluating:
+2%4
+is: 2
+
+Type in a tiny exp folowed by one or two Ctrl-d's:
+
+The result of evaluating:
+2+4%2
+is: 2
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 tiny.parser.ParserException: [1,1] expecting: abs, '(', number, id
@@ -133,128 +127,110 @@ tiny.parser.ParserException: [1,5] expecting: abs, '(', number, id
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-abs((4-2))
-is: 
-2
+abs(4-2)
+is: 2
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-abs((2-4))
-is: 
-2
+abs(2-4)
+is: 2
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(2**4)
-is: 
-16
+2**4
+is: 16
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(2**(3**2))
-is: 
-512
+2**3**2
+is: 512
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(2+((2**3)/4))
-is: 
-4
+2+2**3/4
+is: 4
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(5/0)
-is: 
-Division by zero error
+5/0
+is: Division by zero error
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(a/0)
-is: 
-Division by zero error
+a/0
+is: Division by zero error
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 tiny.parser.ParserException: [1,5] expecting: abs, '(', number, id
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(a+4)
-is: 
-(a+4)
+a+4
+is: a+4
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-((4+5)+a)
-is: 
-(9+a)
+4+5+a
+is: 9+a
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(a*0)
-is: 
-0
+a*0
+is: 0
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(a**0)
-is: 
-1
+a**0
+is: 1
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(a**1)
-is: 
-a
+a**1
+is: a
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(1**a)
-is: 
-1
+1**a
+is: 1
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(a%0)
-is: 
-Modulus by zero error
+a%0
+is: Modulus by zero error
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-((a+b)%1)
-is: 
-0
+(a+b)%1
+is: 0
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(a-0)
-is: 
-a
+a-0
+is: a
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(a+0)
-is: 
-a
+a+0
+is: a
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
-(0+a)
-is: 
-a
+0+a
+is: a
 

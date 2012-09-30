@@ -21,7 +21,7 @@ class Main {
       PrettyPrinter.print(tree);
 
       /* evaluate */
-      System.out.println("\nis: ");
+      System.out.print("\nis: ");
       PrettyPrinter.print(Evaluator.eval(tree));
       System.out.println("\n");
 

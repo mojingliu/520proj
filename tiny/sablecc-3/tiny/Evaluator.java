@@ -31,8 +31,7 @@ public class Evaluator extends DepthFirstAdapter
   
   private void setIntValue(Node node, int value)
   {
-    Node derp = new ANumberExp(new TNumber(value + ""));
-    setValue(node, derp);
+    setValue(node, new ANumberExp(new TNumber(value + "")));
   }
 
   private Node getValue(Node node)

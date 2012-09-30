@@ -41,7 +41,7 @@ EXP* evalEXP(EXP *e)
         EXP* right = evalEXP(e->val.divE.right);
         if(right->kind == intconstK && !right->val.intconstE)
         {
-            printf("Error - division by 0\n");
+            printf("Error - division by 0\n\n");
             exit(0);
         }
         if(left->kind == intconstK && right->kind == intconstK)
@@ -96,7 +96,7 @@ EXP* evalEXP(EXP *e)
         EXP* right = evalEXP(e->val.moduloE.right);
         if(right->kind == intconstK && !right->val.intconstE)   
         {
-            printf("Error - modulo by 0\n");
+            printf("Error - modulo by 0\n\n");
             exit(0);
         }
         else if(right->kind == intconstK && right->val.intconstE == 1)
@@ -159,7 +159,7 @@ EXP* evalEXP(EXP *e)
         return toR;
     }
     default: 
-       printf("ERROR: Impossible type for an expression node.");
+       printf("ERROR: Impossible type for an expression node.\n\n");
        exit(0);
   }
 }
