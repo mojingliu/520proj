@@ -31,7 +31,7 @@ public class PrettyPrinter extends DepthFirstAdapter {
       node.getL().apply(this);
       puts("-");
       node.getR().apply(this);
-      puts("}");
+      puts(")");
   }
 
   /* mult */
@@ -68,8 +68,8 @@ public class PrettyPrinter extends DepthFirstAdapter {
     puts(")");
   }
 
-  /* mod */
-  public void caseAPowrExp(APowrExp node) {
+  /* pow */
+  public void caseAPowExp(APowExp node) {
       puts("(");
       node.getL().apply(this);
       puts("**");
