@@ -38,19 +38,25 @@ cst_exp {-> exp} =
 | {factor}      factor {-> factor.exp};
 
 factor {-> exp} =
-  {cst_mult}    factor star term 
-                {-> New exp.mult(factor.exp,term.exp)}
-| {cst_divd}    factor slash term 
-                {-> New exp.divd(factor.exp,term.exp)}
-| {cst_mod}     factor mod term
-                {-> New exp.mod(factor.exp,term.exp)}
+  {cst_mult}    factor star power 
+                {-> New exp.mult(factor.exp,power.exp)}
+| {cst_divd}    factor slash power 
+                {-> New exp.divd(factor.exp,power.exp)}
+| {cst_mod}     factor mod power
+                {-> New exp.mod(factor.exp,power.exp)}
 | {power}       power {-> power.exp};
 
 power {-> exp } =
   {cst_pow}     term pow power 
                 {-> New exp.pow(term.exp, power.exp)}
+| {uminus}      uminus
+                {-> uminus.exp };
+
+uminus {-> exp } =
+  {cst_uminus}  minus term
+                {-> New exp.uminus(term.exp)}
 | {term}        term
-                {-> term.exp };
+                {-> term.exp };   
 
 term {-> exp} =
   {paren}       l_par cst_exp r_par 
@@ -71,5 +77,6 @@ exp =
 | {mod}      [l]:exp [r]:exp
 | {pow}      [l]:exp [r]:exp
 | {abs}      exp
+| {uminus}   exp
 | {id}       id 
 | {number}   number;

@@ -119,11 +119,23 @@ The result of evaluating:
 is: 2
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
-tiny.parser.ParserException: [1,1] expecting: abs, '(', number, id
+
+The result of evaluating:
+0-abs(abs(5)-6)
+is: -1
+
 Type in a tiny exp folowed by one or two Ctrl-d's:
-tiny.parser.ParserException: [1,1] expecting: abs, '(', number, id
+
+The result of evaluating:
+0-5-6
+is: -11
+
 Type in a tiny exp folowed by one or two Ctrl-d's:
-tiny.parser.ParserException: [1,5] expecting: abs, '(', number, id
+
+The result of evaluating:
+abs(0-2)
+is: 2
+
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
@@ -167,7 +179,35 @@ a/0
 is: Division by zero error
 
 Type in a tiny exp folowed by one or two Ctrl-d's:
-tiny.parser.ParserException: [1,5] expecting: abs, '(', number, id
+
+The result of evaluating:
+4*(0-2)
+is: -8
+
+Type in a tiny exp folowed by one or two Ctrl-d's:
+
+The result of evaluating:
+abs(4*(0-2))
+is: 8
+
+Type in a tiny exp folowed by one or two Ctrl-d's:
+
+The result of evaluating:
+3+abs(4*(0-2))
+is: 11
+
+Type in a tiny exp folowed by one or two Ctrl-d's:
+
+The result of evaluating:
+(0-2)**3+abs(4*(0-2))
+is: 0
+
+Type in a tiny exp folowed by one or two Ctrl-d's:
+
+The result of evaluating:
+a/((0-2)**3+abs(4*(0-2)))
+is: Division by zero error
+
 Type in a tiny exp folowed by one or two Ctrl-d's:
 
 The result of evaluating:
