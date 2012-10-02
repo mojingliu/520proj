@@ -1,0 +1,5 @@
+1. We have changed our minds and are deciding to use the bison+flex toolkit.  We found it easier to use than the SableCC-3 toolkit and while it might take a little longer to work with we felt like it was easier to grasp.  It was more verbose but avoided some of the issues we ran into using SableCC.
+
+2. SableCC-3 took a little bit of time and effort to get working the way we wanted (especially unary minus).  We also opted to use git for version control, and then just paste our finished product back into the svn directory for submission.  Benson also had a little trouble getting everything working on Ubuntu, but that was probably just Ubunutu's fault. Brian opted to use Cygwin which also contained several hurdles to get set up, but now everything should be working smoothly for both team members. It wasn't overly time consuming.  It was fun and VERY satisfying once everything was working.   
+
+3. Next year make the students implement ! (factorial).  That shouldn't be too difficult but would be another unary operation that could raise its own issues.

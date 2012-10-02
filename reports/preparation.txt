@@ -1,0 +1,22 @@
+1. We have several things in common - we both prefer Java to C, we both
+ have taken several classes together, we both have similar code style.  We have 
+a few differences - Brian is more interested in game design whereas Benson is
+ more interested in web design and web apps.  Brian's strengths: lots of 
+ experience in Java.  Benson's strengths: flexible schedule, some experience
+ in Java.
+
+2. We're going to use Sable. It seems like a better fit since we're going to use
+ Java, and the fact that it was designed by a McGill alum doesn't hurt.
+
+3. Problems - Brian is taking a heavier courseload and might be busy with other
+work. 
+
+4. For scheduling group meetings, Benson will be be on campus on the days when
+he doesn't have class, and Brian will be available in between his classes.  
+Meetings will be planned for these times.
+
+5. We are planning on using pair programming to do most of the work, so this 
+should keep the work fairly even.  Our roles will be identical because we will
+be doing all work simultaneously. This will also make sure we both have equal
+knowledge of how the different parts of the compiler work.  We will use agile 
+development, which we are both familiar with from past group projects.
