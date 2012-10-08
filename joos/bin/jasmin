@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#
+# jasmin - runs the Jasmin assembler assuming JOOSDIR is already set 
+# 
+# Usage:
+#     jasmin [-d <directory>] <filename> [<filename> ...]
+#
+
+"$JAVADIRU/bin/java" -classpath "`cygpath -w -p $JOOSDIR/jasmin/classes:`$CLASSPATH" jasmin.Main $*

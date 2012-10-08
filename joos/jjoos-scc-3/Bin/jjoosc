@@ -1,0 +1,18 @@
+#!/bin/csh
+#
+# joosc - compile JOOS source programs into class files and verify them
+#       - assume that CLASSPATH is set
+#
+# usage:  joosc f1.java f2.java ... fn.joos
+#  
+# note:  you should name each source file for ordinary classes with
+#        .java extensions and all external classes with .joos extensions
+
+
+if ( { echo ==== joosing $* && jjoos $JOOSDIR/Extern/*.joos $* } )  then
+  foreach f ( $* )
+    if ( $f != "-O" && $f:e != "joos" ) then
+      echo ======== jasmin of $f:r.j && $JOOSDIR/Bin/jasmin $f:r.j 
+    endif
+  end
+endif

@@ -1,0 +1,44 @@
+BENCHMARK 01
+file TESTING/Benchmarks/Fall99/01Benchmark/board.java... no diff: OK
+file TESTING/Benchmarks/Fall99/01Benchmark/date.java... no diff: OK
+BENCHMARK 02
+file TESTING/Benchmarks/Fall99/02Benchmark/IntegerBox.java... no diff: OK
+file TESTING/Benchmarks/Fall99/02Benchmark/Reader.java... no diff: OK
+file TESTING/Benchmarks/Fall99/02Benchmark/ReaderWriter.java... no diff: OK
+file TESTING/Benchmarks/Fall99/02Benchmark/Writer.java... no diff: OK
+BENCHMARK 03
+file TESTING/Benchmarks/Fall99/03Benchmark/Benchmark.java... no diff: OK
+file TESTING/Benchmarks/Fall99/03Benchmark/Field.java... no diff: OK
+file TESTING/Benchmarks/Fall99/03Benchmark/ID_Field.java... no diff: OK
+file TESTING/Benchmarks/Fall99/03Benchmark/NameField.java... no diff: OK
+file TESTING/Benchmarks/Fall99/03Benchmark/Record.java... no diff: OK
+file TESTING/Benchmarks/Fall99/03Benchmark/RecordList.java... no diff: OK
+file TESTING/Benchmarks/Fall99/03Benchmark/RecordListNode.java... no diff: OK
+file TESTING/Benchmarks/Fall99/03Benchmark/ThreeFieldRecord.java... no diff: OK
+BENCHMARK 04
+file TESTING/Benchmarks/Fall99/04Benchmark/jrep.java... no diff: OK
+BENCHMARK 05
+file TESTING/Benchmarks/Fall99/05Benchmark/Element.java... no diff: OK
+file TESTING/Benchmarks/Fall99/05Benchmark/Index.java... no diff: OK
+file TESTING/Benchmarks/Fall99/05Benchmark/Main.java... no diff: OK
+file TESTING/Benchmarks/Fall99/05Benchmark/Node.java... no diff: OK
+BENCHMARK 06
+file TESTING/Benchmarks/Fall99/06Benchmark/Article.java... no diff: OK
+file TESTING/Benchmarks/Fall99/06Benchmark/Customer.java... no diff: OK
+file TESTING/Benchmarks/Fall99/06Benchmark/Depanneur.java... no diff: OK
+BENCHMARK 07
+file TESTING/Benchmarks/Fall99/07Benchmark/BinaryArray.java... no diff: OK
+file TESTING/Benchmarks/Fall99/07Benchmark/TestBoth.java... no diff: OK
+BENCHMARK 09
+file TESTING/Benchmarks/Fall99/09Benchmark/Matrix.java... no diff: OK
+file TESTING/Benchmarks/Fall99/09Benchmark/MatrixMultOptimizer.java... no diff: OK
+BENCHMARK 10
+file TESTING/Benchmarks/Fall99/10Benchmark/RSA.java... no diff: OK
+file TESTING/Benchmarks/Fall99/10Benchmark/decry.java... no diff: OK
+file TESTING/Benchmarks/Fall99/10Benchmark/encry.java... no diff: OK
+EXTERN CLASSES
+file TESTING/Extern/appletlib.joos... no diff: OK
+file TESTING/Extern/awtlib.joos... no diff: OK
+file TESTING/Extern/javalib.joos... no diff: OK
+file TESTING/Extern/jooslib.joos... no diff: OK
+file TESTING/Extern/netlib.joos... no diff: OK

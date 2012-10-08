@@ -1,0 +1,180 @@
+===================
+FALL99 BENCHMARKS
+===================
+BENCHMARK 01
+file TESTING/Benchmarks/Fall99/01Benchmark/board.java... no diff: OK
+file TESTING/Benchmarks/Fall99/01Benchmark/date.java... no diff: OK
+BENCHMARK 02
+file TESTING/Benchmarks/Fall99/02Benchmark/IntegerBox.java... no diff: OK
+file TESTING/Benchmarks/Fall99/02Benchmark/Reader.java... no diff: OK
+file TESTING/Benchmarks/Fall99/02Benchmark/ReaderWriter.java... no diff: OK
+file TESTING/Benchmarks/Fall99/02Benchmark/Writer.java... no diff: OK
+BENCHMARK 03
+file TESTING/Benchmarks/Fall99/03Benchmark/Benchmark.java... no diff: OK
+file TESTING/Benchmarks/Fall99/03Benchmark/Field.java... no diff: OK
+file TESTING/Benchmarks/Fall99/03Benchmark/ID_Field.java... no diff: OK
+file TESTING/Benchmarks/Fall99/03Benchmark/NameField.java... no diff: OK
+file TESTING/Benchmarks/Fall99/03Benchmark/Record.java... no diff: OK
+file TESTING/Benchmarks/Fall99/03Benchmark/RecordList.java... no diff: OK
+file TESTING/Benchmarks/Fall99/03Benchmark/RecordListNode.java... no diff: OK
+file TESTING/Benchmarks/Fall99/03Benchmark/ThreeFieldRecord.java... no diff: OK
+BENCHMARK 04
+file TESTING/Benchmarks/Fall99/04Benchmark/jrep.java... no diff: OK
+BENCHMARK 05
+file TESTING/Benchmarks/Fall99/05Benchmark/Element.java... no diff: OK
+file TESTING/Benchmarks/Fall99/05Benchmark/Index.java... no diff: OK
+file TESTING/Benchmarks/Fall99/05Benchmark/Main.java... no diff: OK
+file TESTING/Benchmarks/Fall99/05Benchmark/Node.java... no diff: OK
+BENCHMARK 06
+file TESTING/Benchmarks/Fall99/06Benchmark/Article.java... no diff: OK
+file TESTING/Benchmarks/Fall99/06Benchmark/Customer.java... no diff: OK
+file TESTING/Benchmarks/Fall99/06Benchmark/Depanneur.java... no diff: OK
+BENCHMARK 07
+file TESTING/Benchmarks/Fall99/07Benchmark/BinaryArray.java... no diff: OK
+file TESTING/Benchmarks/Fall99/07Benchmark/TestBoth.java... no diff: OK
+BENCHMARK 09
+file TESTING/Benchmarks/Fall99/09Benchmark/Matrix.java... no diff: OK
+file TESTING/Benchmarks/Fall99/09Benchmark/MatrixMultOptimizer.java... no diff: OK
+BENCHMARK 10
+file TESTING/Benchmarks/Fall99/10Benchmark/RSA.java... no diff: OK
+file TESTING/Benchmarks/Fall99/10Benchmark/decry.java... no diff: OK
+file TESTING/Benchmarks/Fall99/10Benchmark/encry.java... no diff: OK
+===================
+WINTER99 BENCHMARKS
+===================
+BENCHMARK 01
+file TESTING/Benchmarks/Winter99/01/ass.java... no diff: OK
+BENCHMARK 02
+file TESTING/Benchmarks/Winter99/02/ScanBuffer.java... no diff: OK
+file TESTING/Benchmarks/Winter99/02/TriDraw.java... no diff: OK
+file TESTING/Benchmarks/Winter99/02/Triangle.java... no diff: OK
+file TESTING/Benchmarks/Winter99/02/Vertex.java... no diff: OK
+BENCHMARK 03
+file TESTING/Benchmarks/Winter99/03/CList.java... no diff: OK
+file TESTING/Benchmarks/Winter99/03/Hanoi.java... no diff: OK
+file TESTING/Benchmarks/Winter99/03/Main.java... no diff: OK
+file TESTING/Benchmarks/Winter99/03/Tower.java... no diff: OK
+BENCHMARK 04
+file TESTING/Benchmarks/Winter99/04/BigNumber.java... no diff: OK
+file TESTING/Benchmarks/Winter99/04/Digit.java... no diff: OK
+BENCHMARK 05
+file TESTING/Benchmarks/Winter99/05/BoardNode.java... no diff: OK
+file TESTING/Benchmarks/Winter99/05/QueenSolver.java... no diff: OK
+file TESTING/Benchmarks/Winter99/05/UniqueBoards.java... no diff: OK
+BENCHMARK 06
+file TESTING/Benchmarks/Winter99/06/AutoShow.java... no diff: OK
+file TESTING/Benchmarks/Winter99/06/LandTransportation.java... no diff: OK
+file TESTING/Benchmarks/Winter99/06/PrivateVehicle.java... no diff: OK
+file TESTING/Benchmarks/Winter99/06/PublicTransportation.java... no diff: OK
+file TESTING/Benchmarks/Winter99/06/TransTest.java... no diff: OK
+file TESTING/Benchmarks/Winter99/06/Transportation.java... no diff: OK
+BENCHMARK 07
+file TESTING/Benchmarks/Winter99/07/IntegerTriple.java... no diff: OK
+file TESTING/Benchmarks/Winter99/07/RSADemo.java... no diff: OK
+file TESTING/Benchmarks/Winter99/07/RSAKeyPair.java... no diff: OK
+BENCHMARK 08
+file TESTING/Benchmarks/Winter99/08/Flex.java... no diff: OK
+file TESTING/Benchmarks/Winter99/08/Spring.java... no diff: OK
+file TESTING/Benchmarks/Winter99/08/Weight.java... no diff: OK
+BENCHMARK 09
+file TESTING/Benchmarks/Winter99/09/Averager.java... no diff: OK
+file TESTING/Benchmarks/Winter99/09/Test.java... no diff: OK
+BENCHMARK 10
+file TESTING/Benchmarks/Winter99/10/Chef.java... no diff: OK
+file TESTING/Benchmarks/Winter99/10/Kitchen.java... no diff: OK
+file TESTING/Benchmarks/Winter99/10/Person.java... no diff: OK
+file TESTING/Benchmarks/Winter99/10/Room.java... no diff: OK
+BENCHMARK 11
+file TESTING/Benchmarks/Winter99/11/MyPoint.java... no diff: OK
+file TESTING/Benchmarks/Winter99/11/ThreePoints.java... no diff: OK
+BENCHMARK 12
+file TESTING/Benchmarks/Winter99/12/BSTree.java... no diff: OK
+file TESTING/Benchmarks/Winter99/12/BSTreeNode.java... no diff: OK
+file TESTING/Benchmarks/Winter99/12/CSuffixTreeFrame.java... no diff: OK
+file TESTING/Benchmarks/Winter99/12/CSuffixTreeNode.java... no diff: OK
+file TESTING/Benchmarks/Winter99/12/MyInteger.java... no diff: OK
+file TESTING/Benchmarks/Winter99/12/RunMe.java... no diff: OK
+BENCHMARK 13
+file TESTING/Benchmarks/Winter99/13/BST.java... no diff: OK
+file TESTING/Benchmarks/Winter99/13/IntArray.java... no diff: OK
+file TESTING/Benchmarks/Winter99/13/IntObject.java... no diff: OK
+file TESTING/Benchmarks/Winter99/13/Maine.java... no diff: OK
+file TESTING/Benchmarks/Winter99/13/TreeNode.java... no diff: OK
+================
+PROGS BENCHMARKS
+================
+PROG AppletGraphics
+file TESTING/Benchmarks/Progs/AppletGraphics/DemoFont.java... no diff: OK
+file TESTING/Benchmarks/Progs/AppletGraphics/DemoFont2.java... no diff: OK
+file TESTING/Benchmarks/Progs/AppletGraphics/DrawArcs.java... no diff: OK
+file TESTING/Benchmarks/Progs/AppletGraphics/DrawPoly.java... no diff: OK
+file TESTING/Benchmarks/Progs/AppletGraphics/MyLabel2.java... no diff: OK
+file TESTING/Benchmarks/Progs/AppletGraphics/Rectangle2.java... no diff: OK
+file TESTING/Benchmarks/Progs/AppletGraphics/ShowColors.java... no diff: OK
+PROG AwtDemos
+file TESTING/Benchmarks/Progs/AwtDemos/AllComponents.java... no diff: OK
+file TESTING/Benchmarks/Progs/AwtDemos/AllEvents.java... no diff: OK
+file TESTING/Benchmarks/Progs/AwtDemos/BlankCanvas.java... no diff: OK
+file TESTING/Benchmarks/Progs/AwtDemos/InfoDialog.java... no diff: OK
+file TESTING/Benchmarks/Progs/AwtDemos/IntVector.java... no diff: OK
+file TESTING/Benchmarks/Progs/AwtDemos/Line.java... no diff: OK
+file TESTING/Benchmarks/Progs/AwtDemos/Main.java... no diff: OK
+file TESTING/Benchmarks/Progs/AwtDemos/MultiLineLabel.java... no diff: OK
+file TESTING/Benchmarks/Progs/AwtDemos/ReallyQuitDialog.java... no diff: OK
+file TESTING/Benchmarks/Progs/AwtDemos/ScrollableScribble.java... no diff: OK
+file TESTING/Benchmarks/Progs/AwtDemos/StringVector.java... no diff: OK
+file TESTING/Benchmarks/Progs/AwtDemos/YesNoDialog.java... no diff: OK
+PROG ImageDemos
+file TESTING/Benchmarks/Progs/ImageDemos/Animator.java... no diff: OK
+file TESTING/Benchmarks/Progs/ImageDemos/Animator2.java... no diff: OK
+file TESTING/Benchmarks/Progs/ImageDemos/Animator2Run.java... no diff: OK
+file TESTING/Benchmarks/Progs/ImageDemos/AnimatorRun.java... no diff: OK
+file TESTING/Benchmarks/Progs/ImageDemos/Imagemap.java... no diff: OK
+file TESTING/Benchmarks/Progs/ImageDemos/ImagemapRectangle.java... no diff: OK
+PROG Network
+file TESTING/Benchmarks/Progs/Network/ReverseURL.java... no diff: OK
+file TESTING/Benchmarks/Progs/Network/TestURL.java... no diff: OK
+PROG Simple
+file TESTING/Benchmarks/Progs/Simple/Benchmark.java... no diff: OK
+file TESTING/Benchmarks/Progs/Simple/Cons.java... no diff: OK
+file TESTING/Benchmarks/Progs/Simple/ExtBenchmark.java... no diff: OK
+file TESTING/Benchmarks/Progs/Simple/ExtCons.java... no diff: OK
+file TESTING/Benchmarks/Progs/Simple/Hello.java... no diff: OK
+file TESTING/Benchmarks/Progs/Simple/ShowRuntime.java... no diff: OK
+file TESTING/Benchmarks/Progs/Simple/StrCat.java... no diff: OK
+file TESTING/Benchmarks/Progs/Simple/SyncBox.java... no diff: OK
+file TESTING/Benchmarks/Progs/Simple/TestComp.java... no diff: OK
+file TESTING/Benchmarks/Progs/Simple/TestEqual.java... no diff: OK
+file TESTING/Benchmarks/Progs/Simple/TestForInc.java... no diff: OK
+file TESTING/Benchmarks/Progs/Simple/TestIO.java... no diff: OK
+file TESTING/Benchmarks/Progs/Simple/TestIOlist.java... no diff: OK
+file TESTING/Benchmarks/Progs/Simple/TestNull.java... no diff: OK
+file TESTING/Benchmarks/Progs/Simple/TestShortCircuit.java... no diff: OK
+file TESTING/Benchmarks/Progs/Simple/TestString.java... no diff: OK
+file TESTING/Benchmarks/Progs/Simple/Tree.java... no diff: OK
+file TESTING/Benchmarks/Progs/Simple/UseBenchmark.java... no diff: OK
+file TESTING/Benchmarks/Progs/Simple/UseBox.java... no diff: OK
+file TESTING/Benchmarks/Progs/Simple/UseCons.java... no diff: OK
+file TESTING/Benchmarks/Progs/Simple/UseExtCons.java... no diff: OK
+PROG Threads
+file TESTING/Benchmarks/Progs/Threads/ConsumeInteger.java... no diff: OK
+file TESTING/Benchmarks/Progs/Threads/ConsumeIntegerSync.java... no diff: OK
+file TESTING/Benchmarks/Progs/Threads/HoldInteger.java... no diff: OK
+file TESTING/Benchmarks/Progs/Threads/HoldIntegerSync.java... no diff: OK
+file TESTING/Benchmarks/Progs/Threads/PrintTest.java... no diff: OK
+file TESTING/Benchmarks/Progs/Threads/PrintThread.java... no diff: OK
+file TESTING/Benchmarks/Progs/Threads/ProduceInteger.java... no diff: OK
+file TESTING/Benchmarks/Progs/Threads/ProduceIntegerSync.java... no diff: OK
+file TESTING/Benchmarks/Progs/Threads/SharedCell.java... no diff: OK
+file TESTING/Benchmarks/Progs/Threads/SharedCellSync.java... no diff: OK
+PROG WIGapplets
+file TESTING/Benchmarks/Progs/WIGapplets/First1.java... no diff: OK
+file TESTING/Benchmarks/Progs/WIGapplets/TicTacToe.java... no diff: OK
+==============
+EXTERN CLASSES
+==============
+file TESTING/Extern/appletlib.joos... no diff: OK
+file TESTING/Extern/awtlib.joos... no diff: OK
+file TESTING/Extern/javalib.joos... no diff: OK
+file TESTING/Extern/jooslib.joos... no diff: OK
+file TESTING/Extern/netlib.joos... no diff: OK

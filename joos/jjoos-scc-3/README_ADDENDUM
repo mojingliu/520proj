@@ -1,0 +1,21 @@
+UPGRADE OF THE JJOOS COMPILER
+
+The JJOOS was upgraded to use the SableCC3.0 compiler generator during the summer of 
+2003. The main change was in the JJOOS grammar which now has a set of rules which 
+generate an Abstract Syntax Tree instead of a Concrete Syntax Tree which was the case 
+with the previous version of SableCC. There were changes to other files as well and 
+that has been reflected in the history at the top of each file. We now require only 
+a single pass of the fixer. 
+
+SableCC was updated to SableCC3.0 by Kevin Agbakpem at the University of Quebec at 
+Montreal. 
+
+Enjoy!
+
+September 14, 2004
+
+Ahmer Ahmedani
+ahmer.ahmedani@mail.mcgill.ca
+
+Feng Qian
+fqian@cs.mcgill.ca

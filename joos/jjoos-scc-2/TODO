@@ -1,0 +1,13 @@
+TODO LIST
+
+PEEPHOLE OPTIMIZER
+- starting point: code/PeepholeOptimizer.java
+- recommended design: one class per peephole pattern, dynamically load peepholes based on a text file listing of peephole names
+- remaining A- peephole patterns
+
+A+ REMAINING ADDITIONS
+- optimal stack limit computation
+- A+ peephole patterns
+
+DEFINITE ASSIGNMENT MODULE
+- port from JOOSC

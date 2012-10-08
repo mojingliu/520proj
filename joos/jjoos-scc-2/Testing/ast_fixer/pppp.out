@@ -1,0 +1,2 @@
+extern public final class URL extends Object in "java.net" { public URL ( String protocol , String host , int port , String file ) ; public URL ( String protocol , String host , String file ) ; public URL ( String spec ) ; public URL ( URL context , String spec ) ; public boolean equals ( Object obj ) ; public String getFile ( ) ; public String getHost ( ) ; public int getPort ( ) ; public String getProtocol ( ) ; public String getRef ( ) ; public boolean sameFile ( URL other ) ; public String toExternalForm ( ) ; public String toString ( ) ; } 
+ 

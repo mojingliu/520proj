@@ -1,0 +1,2 @@
+import joos.lib.*; public class Writer extends Thread { protected IntegerBox box ; protected int counter ; public Writer ( IntegerBox b , int i ) { super ( ( Thread ) null ) ; box = b ; counter = i ; } public void run ( ) { int i ; i = 0 ; while ( i < counter ) { box . put ( i ) ; i = i + 1 ; } } } 
+ 
