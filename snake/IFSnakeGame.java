@@ -8,9 +8,9 @@ class IFSnakeGame
         SnakeHead snake = new SnakeHead(0, 0);
         Scanner sc = new Scanner(System.in);
         int applex = 3;
-        int appley = 0;
-        int roomw = 5;
-        int roomh = 5;
+        int appley = 3;
+        int roomw = 8;
+        int roomh = 8;
         while(true)
         {
             String cmd = sc.nextLine();
@@ -205,7 +205,8 @@ class SnakeHead extends SnakeBody
         int direction = head.getFacing();
         int diffX = head.getX() - appleX;
         int diffY = head.getY() - appleY;  // positive: head is below apple
-        int newDiffX, newDiffY, minDiff;
+        int newDiffX, newDiffY;
+        int minDiff = width+height;
         String toR = "";
         SnakeBody sn;
         switch(direction)
@@ -226,8 +227,13 @@ class SnakeHead extends SnakeBody
                     newDiffX = head.getX() - sn.getX();
                     newDiffY = head.getY() - sn.getY();
                     if(newDiffX == 0 && newDiffY > 0)
-                        toR += "You see your own body " + newDiffY + " feet in front of you!";
+                    {
+                        if(newDiffY < minDiff)
+                            minDiff = newDiffY;
+                    }
                 }
+                if(minDiff != width+height)
+                    toR += "You see your own body " + minDiff + " feet in front of you!";
                 if(toR == "")
                     toR = "There's a wall " + (head.getY()+1) + " feet in front of you.";
                 return toR;
@@ -242,13 +248,19 @@ class SnakeHead extends SnakeBody
                         toR += "You see an apple " + Math.abs(diffX) + " ahead and to your left!\n";
                 }
                 sn = head;
+
                 for(;sn != null; sn = sn.rest)
                 {
                     newDiffX = head.getX() - sn.getX();
                     newDiffY = head.getY() - sn.getY();
                     if(newDiffY == 0 && newDiffX < 0)
-                        toR += "You see your own body " + (-1*newDiffX) + " feet in front of you!";
+                    {
+                        if((-1*newDiffX) < minDiff)
+                            minDiff = (-1*newDiffX);
+                    }
                 }
+                if(minDiff != width+height)
+                    toR += "You see your own body " + minDiff + " feet in front of you!";
                 if(toR == "")
                     toR = "There's a wall " + (width-head.getX()) + " feet in front of you.";
                 return toR;
@@ -268,8 +280,13 @@ class SnakeHead extends SnakeBody
                     newDiffX = head.getX() - sn.getX();
                     newDiffY = head.getY() - sn.getY();
                     if(newDiffX == 0 && newDiffY < 0)
-                        toR += "You see your own body " + (-1*newDiffY) + " feet in front of you!";
+                    {
+                        if((-1*newDiffY) < minDiff)
+                            minDiff = (-1*newDiffY);
+                    }
                 }
+                if(minDiff != width+height)
+                    toR += "You see your own body " + minDiff + " feet in front of you!";
                 if(toR == "")
                     toR = "There's a wall " + (height - head.getY()) + " feet in front of you.";
                 return toR;
@@ -289,8 +306,13 @@ class SnakeHead extends SnakeBody
                     newDiffX = head.getX() - sn.getX();
                     newDiffY = head.getY() - sn.getY();
                     if(newDiffY == 0 && newDiffX > 0)
-                        toR += "You see your own body " + newDiffX + " feet in front of you!";
+                    {
+                        if(newDiffX < minDiff)
+                            minDiff = newDiffX;
+                    }
                 }
+                if(minDiff != width+height)
+                    toR += "You see your own body " + minDiff + " feet in front of you!";
                 if(toR == "")
                     toR = "There's a wall " + (head.getX()+1) + " feet in front of you.";
                 return toR;
