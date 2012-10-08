@@ -7,10 +7,9 @@ class IFSnakeGame
         System.out.println("You are a snake, and you are hungry for apples.");
         SnakeHead snake = new SnakeHead(0, 0);
         Scanner sc = new Scanner(System.in);
-        int applex = 3;
-        int appley = 3;
         int roomw = 8;
         int roomh = 8;
+        Apple apple = new Apple(roomw, roomh, "snake");
         while(true)
         {
             String cmd = sc.nextLine();
@@ -18,10 +17,11 @@ class IFSnakeGame
                 System.out.println("You are " + snake.getLength() + " feet long.");
             else if(cmd.equalsIgnoreCase("forward"))
             {
-                if(snake.move(applex, appley))
+                if(snake.move(apple))
                 {
                     System.out.println("Mmm! You eat the apple.");
                     System.out.println("You feel yourself growing longer.");
+                    apple.randomize(roomw, roomh);
                 }
                 else
                     System.out.println("You slither forward.");
@@ -29,10 +29,11 @@ class IFSnakeGame
             else if(cmd.equalsIgnoreCase("left"))
             {
                 snake.turnLeft();
-                if(snake.move(applex, appley))
+                if(snake.move(apple))
                 {
                     System.out.println("Mmm! There was an apple to your left!");
                     System.out.println("You feel yourself growing longer.");
+                    apple.randomize(roomw, roomh);
                 }
                 else
                     System.out.println("You turn to your left and slither forward a bit.");
@@ -40,10 +41,11 @@ class IFSnakeGame
             else if(cmd.equalsIgnoreCase("right"))
             {
                 snake.turnRight();
-                if(snake.move(applex, appley))
+                if(snake.move(apple))
                 {
                     System.out.println("Mmm! There was an apple to your right!");
                     System.out.println("You feel yourself growing longer.");
+                    apple.randomize(roomw, roomh);
                 }
                 else
                     System.out.println("You turn to your right and slither forward a bit.");
@@ -52,6 +54,11 @@ class IFSnakeGame
             {
                 System.out.println("Goodbye.");
                 return;
+            }
+            else
+            {
+                System.out.println("I don't know that command.");
+                continue;
             }
             if(snake.getX() < 0 || snake.getX() >= roomw || snake.getY() < 0 || snake.getY() >= roomh)
             {
@@ -66,9 +73,31 @@ class IFSnakeGame
                 System.out.println("You were " + snake.getLength() + " feet long when you died.");
                 return;
             }
-            System.out.println(snake.printInfo(roomw, roomh, applex, appley));
-            System.out.println(snake.printGame(roomw, roomh, applex, appley));
+            System.out.println(snake.printInfo(roomw, roomh, apple));
+            System.out.println(snake.printBoard(roomw, roomh, apple));
         }
+    }
+}
+
+class Apple
+{
+    protected int x;
+    protected int y;
+    protected PseudoRandom rand;
+    public Apple(int boardx, int boardy, String seed)
+    {
+        super();
+        rand = new PseudoRandom(seed);
+        randomize(boardx, boardy);
+    }
+    public int getX()
+        {return x;}
+    public int getY()
+        {return y;}
+    public void randomize(int boardx, int boardy)
+    {
+        x = rand.randint(0, boardx - 1);
+        y = rand.randint(0, boardy - 1);
     }
 }
 
@@ -148,8 +177,10 @@ class SnakeHead extends SnakeBody
         {return facing;}
     public int getLength()
         {return length;}
-    public boolean move(int applex, int appley)
+    public boolean move(Apple apple)
     {   // returns if you ate an apple
+        int applex = apple.getX();
+        int appley = apple.getY();
         _move();  // guarantees that you grew a guy
         if(x == applex && y == appley)
         {   // congrats
@@ -199,9 +230,11 @@ class SnakeHead extends SnakeBody
             facing = 1;
     }
 
-    public String printInfo(int width, int height, int appleX, int appleY)
+    public String printInfo(int width, int height, Apple apple)
     {
         SnakeHead head = this;
+        int appleX = apple.getX();
+        int appleY = apple.getY();
         int direction = head.getFacing();
         int diffX = head.getX() - appleX;
         int diffY = head.getY() - appleY;  // positive: head is below apple
@@ -320,11 +353,13 @@ class SnakeHead extends SnakeBody
         return "";
     }
 
-    public String printGame(int boardx, int boardy, int applex, int appley)
+    public String printBoard(int boardx, int boardy, Apple apple)
     {
         String toR = "";
         int i;
         int j;
+        int applex = apple.getX();
+        int appley = apple.getY();
         SnakeBody sn = rest;
         for(i=0; i<boardy; i++)
         {
