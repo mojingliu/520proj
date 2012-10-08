@@ -1,0 +1,86 @@
+stuff for snake
+
+output string:
+
+You are facing ___.  You see a (wall, tail, apple) in the distance.
+You are ___ units long.
+
+
+diffX = headX - appleX (positive = head right of apple, negative = head left of apple)
+diffY = headY - appleY (positive = head below apple, negative = head above apple)
+
+up: ==============================================
+  apple:
+  if diffY > 0 && abs(diffY) > abs(diffX):
+    if diffX == 0:
+      "Apple is diffY straight ahead"
+    else if diffX < 0:
+      "Apple is diffY ahead and to your right"
+    else:
+      "Apple is diffY ahead and to your left"
+
+  body:
+  for each body element
+    compute newDiffX, newDiffY
+    if newDiffX == 0 && newDiffY > 0
+      "Your body is newDiffY in front of you"
+
+  else:
+    "there's a wall headY in front of you"
+==================================================
+right:
+  apple:
+  if diffX < 0 && abs(diffX) > abs(diffY):
+    if diffY == 0:
+      "Apple is diffX straight ahead"
+    else if diffY < 0:
+      "Apple is diffX ahead and to your right"
+    else:
+      "Apple is diffX ahead and to your left"
+
+  body:
+  for each body element
+    compute newDiffX, newDiffY
+    if newDiffY == 0 && newDiffX < 0
+      "Your body is newDiffX in front of you"
+
+  else:
+    "there's a wall width - headX in front of you"
+==================================================
+down:
+  apple:
+  if diffY < 0 && abs(diffY) > abs(diffX):
+    if diffX == 0:
+      "Apple is abs(diffY) straight ahead"
+    else if diffX < 0:
+      "Apple is abs(diffY) ahead and to your left"
+    else:
+      "Apple is abs(diffY) ahead and to your right"
+
+  body:
+  for each body element
+    compute newDiffX, newDiffY
+    if newDiffX == 0 && newDiffY < 0
+      "Your body is newDiffY in front of you"
+  else:
+    "there's a wall height - headY in front of you"
+===================================================
+left:
+  apple:
+  if diffX > 0 && abs(diffX) > abs(diffY):
+    if diffY == 0:
+      "Apple is diffY straight ahead"
+    else if diffY < 0:
+      "Apple is diffY ahead and to your left"
+    else:
+      "Apple is diffY ahead and to your right"
+
+  body:
+  for each body element
+    compute newDiffX, newDiffY
+    if newDiffY == 0 && newDiffX > 0
+      "Your body is newDiffX in front of you"
+
+  else:
+    "there's a wall headX in front of you"
+=================================================
