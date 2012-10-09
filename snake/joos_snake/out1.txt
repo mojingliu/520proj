@@ -1,0 +1,82 @@
+You are a snake, and you are hungry for apples.
+You see an apple 5 feet ahead and to your left!
+
+You slither forward.
+There's a wall 7 feet in front of you.
+You slither forward.
+There's a wall 6 feet in front of you.
+You slither forward.
+There's a wall 5 feet in front of you.
+You slither forward.
+There's a wall 4 feet in front of you.
+You slither forward.
+There's a wall 3 feet in front of you.
+You slither forward.
+There's a wall 2 feet in front of you.
+You slither forward.
+There's a wall 1 feet in front of you.
+You turn to your left and slither forward a bit.
+You see an apple 3 ahead and to your left!
+
+You slither forward.
+There's a wall 3 feet in front of you.
+You slither forward.
+There's a wall 2 feet in front of you.
+You slither forward.
+There's a wall 1 feet in front of you.
+You turn to your left and slither forward a bit.
+You see an apple 1 feet straight ahead!
+
+Mmm! You eat the apple.
+You feel yourself growing longer.
+There's a wall 6 feet in front of you.
+You turn to your left and slither forward a bit.
+There's a wall 7 feet in front of you.
+You slither forward.
+There's a wall 6 feet in front of you.
+You turn to your left and slither forward a bit.
+You see an apple 1 feet straight ahead!
+
+Mmm! You eat the apple.
+You feel yourself growing longer.
+There's a wall 1 feet in front of you.
+You turn to your left and slither forward a bit.
+There's a wall 2 feet in front of you.
+You slither forward.
+There's a wall 1 feet in front of you.
+You turn to your left and slither forward a bit.
+You see an apple 2 feet straight ahead!
+
+You slither forward.
+You see an apple 1 feet straight ahead!
+
+Mmm! You eat the apple.
+You feel yourself growing longer.
+There's a wall 5 feet in front of you.
+You turn to your left and slither forward a bit.
+You see an apple 2 feet ahead and to your left!
+
+You turn to your left and slither forward a bit.
+There's a wall 3 feet in front of you.
+You turn to your right and slither forward a bit.
+You see an apple 1 feet straight ahead!
+
+Mmm! You eat the apple.
+You feel yourself growing longer.
+There's a wall 5 feet in front of you.
+You turn to your right and slither forward a bit.
+There's a wall 5 feet in front of you.
+You slither forward.
+There's a wall 4 feet in front of you.
+You turn to your right and slither forward a bit.
+You see an apple 2 feet straight ahead!
+
+You slither forward.
+You see an apple 1 feet straight ahead!
+
+Mmm! You eat the apple.
+You feel yourself growing longer.
+There's a wall 1 feet in front of you.
+You slither forward.
+Ouch! You ran headfirst into a wall and died.
+You were 6 feet long when you died.
