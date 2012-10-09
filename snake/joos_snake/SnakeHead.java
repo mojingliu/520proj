@@ -238,11 +238,11 @@ public class SnakeHead extends SnakeBody
             toR += "\n";
         }
         replace = y * (boardx + 1) + x;
-        toR = toR.substring(0, replace) + "O" + toR.substring(replace + 1, toR.length()-1);
+        toR = toR.substring(0, replace) + "O" + toR.substring(replace + 1, toR.length());
         for(; sn != null; sn = sn.getRest())
         {
             replace = sn.getY() * (boardx + 1) + sn.getX();
-            toR = toR.substring(0, replace) + "#" + toR.substring(replace + 1, toR.length()-1);
+            toR = toR.substring(0, replace) + "#" + toR.substring(replace + 1, toR.length());
         }
         return toR;
     }

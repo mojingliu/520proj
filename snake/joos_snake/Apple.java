@@ -1,12 +1,14 @@
+import joos.lib.*;
+
 public class Apple
 {
     protected int x;
     protected int y;
-    //protected PseudoRandom rand;
-    public Apple(int boardx, int boardy, String seed)
+    protected JoosRandom rand;
+    public Apple(int boardx, int boardy, int seed)
     {
         super();
-        //rand = new PseudoRandom(seed);
+        rand = new JoosRandom(seed);
         this.randomize(boardx, boardy);
     }
     public int getX()
@@ -15,9 +17,11 @@ public class Apple
         {return y;}
     public void randomize(int boardx, int boardy)
     {
-        x = 3;
-        y = 3;
-        //x = rand.randint(0, boardx - 1);
-        //y = rand.randint(0, boardy - 1);
+        x = rand.nextInt() % boardx;
+        if(x < 0)
+            x *= -1;
+        y = rand.nextInt() % boardy;
+        if(y < 0)
+            y *= -1;
     }
 }

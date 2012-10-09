@@ -14,15 +14,24 @@ public class IFSnakeGame
         Apple apple;
         String cmd;
         boolean printinfo;
+        boolean cheat;
 
+        printinfo = true;
+        cheat = false;
         sc = new JoosIO();
         sc.println("You are a snake, and you are hungry for apples.");
-        snake = new SnakeHead(0, 0);
         roomw = 8;
         roomh = 8;
-        apple = new Apple(roomw, roomh, "snake");
+        snake = new SnakeHead(0, roomh/2);
+        apple = new Apple(roomw, roomh, 1);
         while(true)
         {
+            if(printinfo)
+            {
+                sc.println(snake.printInfo(roomw, roomh, apple));
+                if(cheat)
+                    sc.println(snake.printBoard(roomw, roomh, apple));
+            }
             printinfo = true;
             cmd = sc.readLine();
             if(cmd.equalsIgnoreCase("length"))
@@ -62,10 +71,19 @@ public class IFSnakeGame
                 else
                     sc.println("You turn to your right and slither forward a bit.");
             }
+            else if(cmd.equalsIgnoreCase("cheat"))
+            {
+                cheat = !cheat;
+            }
             else if(cmd.equalsIgnoreCase("quit"))
             {
                 sc.println("Goodbye.");
                 return;
+            }
+            else if(cmd.equalsIgnoreCase("help"))
+            {
+                sc.println("You may choose to go 'forward', 'left', or 'right'.\nAlternatively, you may opt to 'quit' or 'cheat'.");
+                printinfo = false;
             }
             else
             {
@@ -84,11 +102,6 @@ public class IFSnakeGame
                 sc.println("The poison quickly sets in and you die.");
                 sc.println("You were " + snake.getLength() + " feet long when you died.");
                 return;
-            }
-            if(printinfo)
-            {
-                sc.println(snake.printInfo(roomw, roomh, apple));
-                sc.println(snake.printBoard(roomw, roomh, apple));
             }
         }
     }
