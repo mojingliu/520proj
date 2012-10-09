@@ -417,9 +417,13 @@ returnexpression : /* empty */
 assignment : tIDENTIFIER '=' expression
              {$$ = makeEXPassign($1,$3);}
            | tIDENTIFIER tINC
-             {$$ = makeEXPassign($1, makeEXPplus(makeEXPid($1), makeEXPintconst(1)));}
+             {$$ = makeEXPminus(
+               makeEXPassign($1, makeEXPplus(makeEXPid($1), makeEXPintconst(1))),
+               makeEXPintconst(1));}
            | tIDENTIFIER tDEC
-             {$$ = makeEXPassign($1, makeEXPminus(makeEXPid($1), makeEXPintconst(1)));}
+             {$$ = makeEXPplus(
+               makeEXPassign($1, makeEXPminus(makeEXPid($1), makeEXPintconst(1))),
+               makeEXPintconst(1));}
            | tINC tIDENTIFIER
              {$$ = makeEXPassign($2, makeEXPplus(makeEXPid($2), makeEXPintconst(1)));}
            | tDEC tIDENTIFIER
