@@ -275,10 +275,10 @@ class SnakeHead extends SnakeBody
                 {
                     if(diffY == 0)
                         toR += "You see an apple " + Math.abs(diffX) + " feet straight ahead!\n";
-                    else if(diffX > 0)
-                        toR += "You see an apple " + Math.abs(diffX) + " feet ahead and to your right!\n";
+                    else if(diffY > 0)
+                        toR += "You see an apple " + Math.abs(diffX) + " feet ahead and to your left!\n";
                     else
-                        toR += "You see an apple " + Math.abs(diffX) + " ahead and to your left!\n";
+                        toR += "You see an apple " + Math.abs(diffX) + " ahead and to your right!\n";
                 }
                 sn = head;
 
@@ -328,10 +328,10 @@ class SnakeHead extends SnakeBody
                 {
                     if(diffY == 0)
                         toR += "You see an apple " + Math.abs(diffX) + " feet straight ahead!\n";
-                    else if(diffX < 0)
-                        toR += "You see an apple " + Math.abs(diffX) + " feet ahead and to your left!\n";
+                    else if(diffY > 0)
+                        toR += "You see an apple " + Math.abs(diffX) + " feet ahead and to your right!\n";
                     else
-                        toR += "You see an apple " + Math.abs(diffX) + " ahead and to your right!\n";
+                        toR += "You see an apple " + Math.abs(diffX) + " ahead and to your left!\n";
                 }
                 sn = head;
                 for(;sn != null; sn = sn.rest)
