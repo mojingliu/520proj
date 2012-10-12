@@ -1,0 +1,75 @@
+<title>Exercises on scanners and parsers</title>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+<h1>Week 2</h1>
+<h1>Exercises on scanners and parsers</h1>
+
+<ol>
+
+<li>Implement 3 different <font face=courier><code>flex</code></font>-based scanners that:<p>
+    <ol>
+    <li>Format text in 80-column blocks while removing multiple blanks,
+        leading blanks, and trailing blanks.
+    <li>Remove all tags from an HTML document.
+    <li>Introduce plausible spelling errors.
+    </ol>
+<p>
+Provide a Makefile that includes a "check" target for testing the
+scanners that works with sample input and output files that you also
+provide.
+<p>
+
+<li>What do the following regular expressions match?<p>
+    <ol>
+    <li><font face=courier><code>\"([^\"])*\"</code></font>
+    <li><font face=courier><code>http:[^?]*?</code></font>
+    <li><font face=courier><code>[-+]?[0-9]*\.[0-9]+([eE][-+]?[0-9]+)?</code></font>
+    </ol>
+<p>
+
+<li>A question from a previous year said, "Read the <font
+face=courier><code>flex</code></font> documentation and discuss
+the full syntax for regular expressions."  Since you could simply echo
+back the manual to answer that, instead explain what
+the following regular expressions do:<p>
+
+<ol>
+<li><font face=courier><code>(^|[ \t\r\n])((ftp|http|https|gopher|mailto|news|nntp|telnet|wais|file|prospero|aim|webcal):(([A-Za-z0-9$_.+!*(),;/?:@&~=-])|%[A-Fa-f0-9]{2}){2,}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*(),;/?:@&~=%-]*))?([A-Za-z0-9$_+!*();/?:~-]))</code></font>
+<li><font face=courier><code>(^|[ \t\r\n<;(])((([A-Za-z0-9$_.+%=-])|%[A-Fa-f0-9]{2})+@(([A-Za-z0-9$_.+!*,;/?:%&=-])|%[A-Fa-f0-9]{2})+\.[a-zA-Z0-9]{1,4})</code></font>
+</ol>
+<p>
+
+That is, identify what you think they are attempting to match, provide
+an English description of each component of the regular expression,
+and talk about any problems with respect to RFC specifications if you
+can spot or know about them.
+
+<li>Invent a grammar for a small language that is amusing in some
+way.  Amusing is defined as being able to make your instructor laugh.
+Provide the following:<p>
+<ol>
+<li>A BNF grammar
+<li>An EBNF grammar for the same thing
+<li>Railroad syntax diagrams
+<li>An English description of the language and grammar.
+</ol><p>
+You should draw the syntax diagrams using rail.sty or some other
+automated tool.  You won't fail the exercise if you draw them by hand, but since
+you'll need an automated tool later in the course you should really
+just learn how to do it now.  If you want to see how they were typeset for your
+slides, look at the <a href="../slides/">slides directory</a>, in particular <a
+href="../slides/scanparse.tex">scanparse.tex</a> and <a
+href="../slides/build_scanparse.sh">build_scanparse.sh<a>.
+Cookies if you can write a working Makefile.
+<p>
+</ol>
+</td></tr>
+</table>
+<p>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+Maintained by Christopher J. F. Pickett
+Last modified Tue Sep 11 00:00:45 EDT 2007.
+<a href="../index.html">[HOME]</a>
+</td></tr>
+</table>

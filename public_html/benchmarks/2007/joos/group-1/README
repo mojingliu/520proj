@@ -1,0 +1,77 @@
+Group-1: Andrew Casey, Andy Zhang, Pavel Patzev
+
+Overview:
+--------
+
+Our JOOS benchmark implements some basic directed graph algorithms from CLRS.
+In particular, the main program reads a list of directed edges from stdin and
+writes a list of strongly-connected components to stdout.
+
+
+Running the Driver:
+------------------
+
+The main method for the program is in the driver class:
+
+java -cp ".:$JOOSDIR" Driver < in1
+
+The expected output is in file out1.
+
+Input Format:
+
+source-vertex1 dest-vertex1
+source-vertex2 dest-vertex2
+...
+
+Output Format:
+
+comp1-vertex1 ... comp1-vertexM
+comp2-vertex1 ... comp2-vertexN
+...
+
+Test Input/Output:
+
+The sample input is a directed graph of 25 vertices (numbered 1-25).
+An edge runs from vertex N to vertex M if N divides M or if M is greater
+than N and they are congruent modulo 7.
+
+The sample output lists the two strongly-connected components of the specified graph.
+
+
+Aspects of JOOS:
+---------------
+
+Our benchmark captures a variety of elements of the JOOS programming language.
+In particular:
+
+Abstract classes: Graph
+Inheritance and polymorphism: GraphImpl
+Object-orientation: DFS
+Block-level declarations: Driver.main
+Recursion: DFS.dfs
+Overloaded constructors: DFS
+
+Furthermore, most control structures and declaration types are represented.
+
+Optimizer Tidbits:
+
+In addition to the pointless polymorphism of the Graph and GraphImpl classes,
+Driver contains a number of pointless operations that may be optimizable.
+In particular:
+
+- declaring objects that are never used
+- using write-only variables
+- copying objects to themselves
+- writing to the same object in two consecutive statements
+- empty statements
+- spurious blocks
+- needlessly complicated expressions (e.g. - (-1))
+- string concatenation
+- pointless casting (Vector p in Driver.java)
+- unused functions (vectorMin in Driver.java)
+
+Other:
+
+We decided to implement sets and maps using the existing extern declarations (rather than importing HashSet and HashMap) so that more of the functionality of our program would be written in JOOS.  That is, we did not want to waste the opportunity to implement some basic data structures so that they could be benchmarked.
+
+We decided to create a JUnit test suite (note: written in Java rather than JOOS) to test our benchmark so that we could modify it (to make optimization more interesting) without losing correctness.

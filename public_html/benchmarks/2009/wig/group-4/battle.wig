@@ -1,0 +1,540 @@
+service {
+
+	const html Chooser = <html><head>
+		</head>
+		<body>
+			<table style="margin-left:auto;margin-right:auto">
+				<tr>
+					<td style="text-align:center;font-weight:bold">Choose Your Avatar!!!</td>
+					<td style="text-align:center;font-weight:bold">Choose Your Computer Opponent!!!</td>
+				</tr>
+				<tr valign="middle">
+					<td id="avatar_picture">
+						<table>
+							<tr>
+								<td>
+									<image style="float:left" width="200px" src="" id="avatar_img"></image>
+								</td>
+								<td>
+									<table>
+										<tr id="strength">
+											<td>Strength</td>
+											<td><[avatar_strength]></td>
+										</tr>
+										<tr id="compassion">
+											<td>Compassion</td>
+											<td><[avatar_compassion]></td>
+										</tr>
+										<tr id="stamina">
+											<td>Stamina</td>
+											<td><[avatar_stamina]></td>
+										</tr>
+										<tr id="magic">
+											<td>Magic</td>
+											<td><[avatar_magic]></td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+					<td id="computer_picture">
+						<table>
+							<tr>
+								<td>
+									<image style="float:left" width="200px" src="" id="computer_img"></image>
+								</td>
+								<td>
+									<table>
+										<tr id="strength">
+											<td>Strength</td>
+											<td><[computer_strength]></td>
+										</tr>
+										<tr id="compassion">
+											<td>Compassion</td>
+											<td><[computer_compassion]></td>
+										</tr>
+										<tr id="stamina">
+											<td>Stamina</td>
+											<td><[computer_stamina]></td>
+										</tr>
+										<tr id="magic">
+											<td>Magic</td>
+											<td><[computer_magic]></td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td>
+					    <input type="radio" name="avatar" value="he-man">He-Man</input>
+					    <br>
+					    <input type="radio" name="avatar" value="t-rex">T-Rex</input>
+					    <br>
+					    <input type="radio" name="avatar" value="chris-pickett">Chris Pickett</input>
+					    <br>
+					    <input type="radio" name="avatar" value="barack-obama">Barack Obama</input>
+					</td>
+					<td>
+					    <input type="radio" name="computer" value="skeletor">Skeletor</input>
+					    <br>
+					    <input type="radio" name="computer" value="bowser">Bowser</input>
+					    <br>
+					    <input type="radio" name="computer" value="newt">Newt Gingrich</input>
+					    <br>
+					    <input type="radio" name="computer" value="queen">The Queen of England</input>
+					</td>
+				</tr>
+			</table>
+			<script>
+				//this is a workaround. because WIG doesn't allow us to plug into attributes, we need to put
+				//that logic somewhere else. So we do it in script.
+				//Note also the single-quotes. that's something else that WIG forces us to use. It chokes on double-quotes.
+				var avatar_img = document.getElementById('avatar_img');
+				var computer_img = document.getElementById('computer_img');
+				avatar_img.src = '<[avatar_img_url]>';
+				computer_img.src = '<[computer_img_url]>';
+			</script>
+			<input type="radio" name="doExit" value="1">Exit</input>
+		</body></html>;
+
+	const html End = <html> <body bgcolor="#334433">
+        	<br>
+		<center>
+                <br><br><br><br>
+		<h1>GOODBYE!</h1>
+		<br>
+		</center>
+	</body></html>;
+
+
+	const html FieldOfBattle = <html><head>
+		</head>
+		<body>
+			<table style="margin-left:auto;margin-right:auto">
+				<tr>
+					<td style="text-align:center;font-weight:bold">Choose Your Avatar!!!</td>
+					<td style="text-align:center;font-weight:bold">Choose Your Computer Opponent!!!</td>
+				</tr>
+				<tr valign="middle">
+					<td id="avatar_picture">
+						<table>
+							<tr>
+								<td>
+									<image style="float:left" width="200px" src="" id="avatar_img"></image>
+								</td>
+								<td>
+									<table>
+										<tr id="strength">
+											<td>Strength</td>
+											<td><[avatar_strength]></td>
+										</tr>
+										<tr id="compassion">
+											<td>Compassion</td>
+											<td><[avatar_compassion]></td>
+										</tr>
+										<tr id="stamina">
+											<td>Stamina</td>
+											<td><[avatar_stamina]></td>
+										</tr>
+										<tr id="magic">
+											<td>Magic</td>
+											<td><[avatar_magic]></td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+					<td id="computer_picture">
+						<table>
+							<tr>
+								<td>
+									<image style="float:left" width="200px" src="" id="computer_img"></image>
+								</td>
+								<td>
+									<table>
+										<tr id="strength">
+											<td>Strength</td>
+											<td><[computer_strength]></td>
+										</tr>
+										<tr id="compassion">
+											<td>Compassion</td>
+											<td><[computer_compassion]></td>
+										</tr>
+										<tr id="stamina">
+											<td>Stamina</td>
+											<td><[computer_stamina]></td>
+										</tr>
+										<tr id="magic">
+											<td>Magic</td>
+											<td><[computer_magic]></td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Hit points remaining: <[avatar_hp]>
+					</td>
+					<td>
+						Hit points remaining: <[computer_hp]>
+					</td>
+				</tr>
+			</table>
+			<input type="radio" name="action" value="attack">Attack!</input>
+			<input type="radio" name="action" value="heal">Heal...</input>
+			<input type="radio" name="action" value="magic">Use Magic!</input>
+			<script>
+				//this is a workaround. because WIG doesn't allow us to plug into attributes, we need to put
+				//that logic somewhere else. So we do it in script.
+				//Note also the single-quotes. that's something else that WIG forces us to use. It chokes on double-quotes.
+				var avatar_img = document.getElementById('avatar_img');
+				var computer_img = document.getElementById('computer_img');
+				avatar_img.src = '<[avatar_img_url]>';
+				computer_img.src = '<[computer_img_url]>';
+			</script>
+		</body></html>;
+
+	const html Results = <html><body><head></head><body>
+		<h1><[exitText]></h1>
+		Avatar Hit points remaining: <[avatar_hp]> <br>
+		Computer Hit points remaining: <[computer_hp]> <br>
+		</body></html>;
+
+
+	//we declare all of our major data structures here.
+	//really these are consts and should never change, but I cant seem to do assignments here...
+	string he_man_url;
+	int he_man_strength;
+	int he_man_stamina;
+	int he_man_compassion;
+	int he_man_magic;
+
+	string t_rex_url;
+	int t_rex_strength;
+	int t_rex_stamina;
+	int t_rex_compassion;
+	int t_rex_magic;
+
+	string chris_pickett_url;
+	int chris_pickett_strength;
+	int chris_pickett_stamina;
+	int chris_pickett_compassion;
+	int chris_pickett_magic;
+
+	string barack_obama_url;
+	int barack_obama_strength;
+	int barack_obama_stamina;
+	int barack_obama_compassion;
+	int barack_obama_magic;
+
+	string skeletor_url;
+	int skeletor_strength;
+	int skeletor_stamina;
+	int skeletor_compassion;
+	int skeletor_magic;
+
+	string bowser_url;
+	int bowser_strength;
+	int bowser_stamina;
+	int bowser_compassion;
+	int bowser_magic;
+
+	string newt_url;
+	int newt_strength;
+	int newt_stamina;
+	int newt_compassion;
+	int newt_magic;
+
+	string queen_url;
+	int queen_strength;
+	int queen_stamina;
+	int queen_compassion;
+	int queen_magic;
+
+
+	string current_avatar;
+	string current_computer;
+
+	string current_avatar_url;
+	int current_avatar_strength;
+	int current_avatar_stamina;
+	int current_avatar_compassion;
+	int current_avatar_magic;
+
+	string current_computer_url;
+	int current_computer_strength;
+	int current_computer_stamina;
+	int current_computer_compassion;
+	int current_computer_magic;
+
+	int seed;
+
+	void initDataStructures(){
+	    //this is where we set up our data structures
+
+		he_man_url = "http://upload.wikimedia.org/wikipedia/en/d/d3/He-man.jpg";
+		he_man_strength = 6;
+		he_man_stamina = 87;
+		he_man_compassion = 12;
+		he_man_magic = 46;
+
+		t_rex_url = "http://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Palais_de_la_Decouverte_Tyrannosaurus_rex_p1050042.jpg/800px-Palais_de_la_Decouverte_Tyrannosaurus_rex_p1050042.jpg";
+		t_rex_strength = 37;
+		t_rex_stamina = 72;
+		t_rex_compassion = 41;
+		t_rex_magic = 84;
+
+		chris_pickett_url = "http://www.sable.mcgill.ca/~cpicke/papers/pickett-07-software-SRC-poster.jpg";
+		chris_pickett_strength = 23;
+		chris_pickett_stamina = 4;
+		chris_pickett_compassion = 62;
+		chris_pickett_magic = 79;
+
+		barack_obama_url = "http://upload.wikimedia.org/wikipedia/commons/e/e9/Official_portrait_of_Barack_Obama.jpg";
+		barack_obama_strength = 57;
+		barack_obama_stamina = 12;
+		barack_obama_compassion = 100;
+		barack_obama_magic = 17;
+
+		skeletor_url = "http://upload.wikimedia.org/wikipedia/en/8/8a/Skeletor-spoo.jpg";
+		skeletor_strength = 69;
+		skeletor_stamina = 86;
+		skeletor_compassion = 3;
+		skeletor_magic = 20;
+
+		bowser_url = "http://upload.wikimedia.org/wikipedia/en/8/89/Bowser-Nintendo.png";
+		bowser_strength = 4;
+		bowser_stamina = 21;
+		bowser_compassion = 39;
+		bowser_magic = 56;
+
+		newt_url = "http://upload.wikimedia.org/wikipedia/commons/d/d3/Newt-2004-clipped.jpg";
+		newt_strength = 7;
+		newt_stamina = 42;
+		newt_compassion = 37;
+		newt_magic = 54;
+
+		queen_url = "http://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Elizabeth_II_greets_NASA_GSFC_employees%2C_May_8%2C_2007_edit.jpg/433px-Elizabeth_II_greets_NASA_GSFC_employees%2C_May_8%2C_2007_edit.jpg";
+		queen_strength = 6;
+		queen_stamina = 55;
+		queen_compassion = 72;
+		queen_magic = 89;
+
+		seed = 12;
+	}
+
+	//taken from the game example
+	int nextRandom(){ 
+		int current;
+
+		seed = (25173 * seed + 13849) % 100;
+		return(seed);
+	}
+
+
+	session Choose() {
+		int doExit;
+		//	
+
+		initDataStructures();
+	
+		doExit=0;
+
+		current_avatar = "he-man";
+		current_computer = "skeletor";
+
+		while(doExit!=1){
+
+			//handle the avatars
+			if(current_avatar == "he-man"){
+				current_avatar_url = he_man_url;
+				current_avatar_strength = he_man_strength;
+				current_avatar_stamina = he_man_stamina;
+				current_avatar_compassion = he_man_compassion;
+				current_avatar_magic = he_man_magic;
+			}
+
+			if(current_avatar=="t-rex"){
+				current_avatar_url = t_rex_url;
+				current_avatar_strength = t_rex_strength;
+				current_avatar_stamina = t_rex_stamina;
+				current_avatar_compassion = t_rex_compassion;
+				current_avatar_magic = t_rex_magic;
+			}
+
+			if(current_avatar=="chris-pickett"){
+				current_avatar_url = chris_pickett_url;
+				current_avatar_strength = chris_pickett_strength;
+				current_avatar_stamina = chris_pickett_stamina;
+				current_avatar_compassion = chris_pickett_compassion;
+				current_avatar_magic = chris_pickett_magic;
+			}
+
+			if(current_avatar=="barack-obama"){
+				current_avatar_url = barack_obama_url;
+				current_avatar_strength = barack_obama_strength;
+				current_avatar_stamina = barack_obama_stamina;
+				current_avatar_compassion = barack_obama_compassion;
+				current_avatar_magic = barack_obama_magic;
+			}
+
+			//handle the computers
+			if(current_computer=="skeletor"){
+				current_computer_url = skeletor_url;
+				current_computer_strength = skeletor_strength;
+				current_computer_stamina = skeletor_stamina;
+				current_computer_compassion = skeletor_compassion;
+				current_computer_magic = skeletor_magic;
+			}
+
+			if(current_computer=="bowser"){
+				current_computer_url = bowser_url;
+				current_computer_strength = bowser_strength;
+				current_computer_stamina = bowser_stamina;
+				current_computer_compassion = bowser_compassion;
+				current_computer_magic = bowser_magic;
+			}
+
+			if(current_computer=="newt"){
+				current_computer_url = newt_url;
+				current_computer_strength = newt_strength;
+				current_computer_stamina = newt_stamina;
+				current_computer_compassion = newt_compassion;
+				current_computer_magic = newt_magic;
+			}
+
+			if(current_computer=="queen"){
+				current_computer_url = queen_url;
+				current_computer_strength = queen_strength;
+				current_computer_stamina = queen_stamina;
+				current_computer_compassion = queen_compassion;
+				current_computer_magic = queen_magic;
+			}
+
+			show plug Chooser[avatar_img_url = current_avatar_url, 
+									avatar_strength = current_avatar_strength, 
+									avatar_compassion = current_avatar_compassion, 
+									avatar_stamina = current_avatar_stamina, 
+									avatar_magic = current_avatar_magic, 
+									computer_img_url = current_computer_url, 
+									computer_strength = current_computer_strength, 
+									computer_compassion = current_computer_compassion, 
+									computer_stamina = current_computer_stamina, 
+									computer_magic = current_computer_magic] receive[current_avatar = avatar, current_computer=computer, doExit=doExit];
+		}
+
+		exit End;
+	}
+
+	session Fight() {
+		//We should really do a null-check to make sure everything has been initialized
+		//I don't know how to do this though, so right now we just proceed
+		int avatar_hp;
+		int computer_hp;
+		//-1 is computer wins, 0 is a tie, and 1 is avatar wins
+		int battleResults;	
+		int avatarWinsByMagic;	
+		int computerWinsByMagic;	
+		int avatarWinsByStrength;
+		int computerWinsByStrength;
+		int currentRandom;
+		int keepPlaying;
+		string exitText;
+		string currentAction;
+		//
+		avatar_hp = current_avatar_stamina;
+		computer_hp = current_computer_stamina;
+		//
+		keepPlaying = 1;
+
+		while( keepPlaying != 0 ){
+
+			show plug FieldOfBattle[avatar_img_url = current_avatar_url, 
+									avatar_strength = current_avatar_strength, 
+									avatar_compassion = current_avatar_compassion, 
+									avatar_stamina = current_avatar_stamina, 
+									avatar_magic = current_avatar_magic, 
+									computer_img_url = current_computer_url, 
+									computer_strength = current_computer_strength, 
+									computer_compassion = current_computer_compassion, 
+									computer_stamina = current_computer_stamina, 
+									computer_magic = current_computer_magic,
+									avatar_hp = avatar_hp,
+									computer_hp = computer_hp] receive[currentAction=action];
+
+			if(currentAction == "attack"){
+				avatar_hp = avatar_hp - current_computer_strength;
+				computer_hp = computer_hp - current_avatar_strength;
+
+				if(avatar_hp <= 0){
+					computerWinsByStrength = 1;
+				}
+				
+				if(computer_hp <= 0){
+					avatarWinsByStrength = 1;
+				}
+
+			}else if(currentAction == "heal"){
+				avatar_hp = avatar_hp + current_avatar_compassion;
+				computer_hp = computer_hp + current_computer_compassion;
+			}else if(currentAction == "magic"){
+
+				currentRandom = nextRandom();
+
+				if(current_avatar_magic > currentRandom){
+					avatarWinsByMagic = 1;
+				}
+
+				currentRandom = nextRandom();
+
+				if(current_computer_magic > currentRandom){
+					computerWinsByMagic = 1;
+				}
+
+			}
+
+			//magic takes priority
+			if(avatarWinsByMagic == 1 && computerWinsByMagic == 1){
+				battleResults = 0;	
+				keepPlaying = 0;
+				exitText = "It's tie, with both parties slaying the other with a horrible magic spell!!!";
+			}else if( avatarWinsByMagic == 1 && !(computerWinsByMagic == 1) ){
+				battleResults = 1;
+				keepPlaying = 0;
+				exitText = "Through the power of magic, the valiant avatar has vanquished his evil foe!!!";
+			}else if( !(avatarWinsByMagic == 1)  && computerWinsByMagic  == 1 ){
+				battleResults = -1;
+				keepPlaying = 0;
+				exitText = "Evil has risen up and overthrown good with powerful spell!!!";
+			}else{
+				if(avatarWinsByStrength == 1 && computerWinsByStrength == 1){
+					battleResults = 0;	
+					keepPlaying = 0;
+					exitText = "With the strength of one-thousand fardels, the avatar and computer destroy one another with strength!!!";
+				}else if( avatarWinsByStrength  == 1 && !(computerWinsByStrength == 1) ){
+					battleResults = 1;
+					keepPlaying = 0;
+					exitText = "The avatar lifts his mighty sword and slays his opponent! Huzzah!";
+				}else if( !(avatarWinsByStrength  == 1) && computerWinsByStrength == 1 ){
+					battleResults = -1;
+					keepPlaying = 0;
+					exitText = "The horrible computer has slain the avatar with the strength of a mighty blow.";
+				}else{
+					//no one wins, keep playing
+				}
+			}
+
+		}	
+
+		exit plug Results[exitText = exitText,avatar_hp = avatar_hp,computer_hp = computer_hp];
+	
+	}
+}

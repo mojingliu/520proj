@@ -1,0 +1,63 @@
+<title>The A+ project</title>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+<h1>The <img src="images/a+small.gif"> project</h1>
+
+Michael and Laurie's original JOOS compiler is very nice indeed and
+has received the excellent grade of A-.  However, there is room for
+improvement, which could elevate their grade to an amazing A+.  This
+project focuses on four such improvements.
+<p><hr><p>
+
+<h3>C-style comments</h3>
+The A- implementation only allows one-line comments such as:
+<font face=courier><pre>
+// this is a comment
+</pre></font>
+It would also be nice to allow multi-line comments such as:
+<font face=courier><pre>
+/* this is a
+   somewhat
+   longer comment */
+</pre></font>
+This improvement can be implemented by only making changes to the 
+file <a href="joos/a-/joos.l"><font face=courier><code>joos.l</code></font></a>.
+<p><hr><p>
+
+<h3>Increments and for-loops</h3>
+It would be nice to include standard increments and for-loops such as:
+<font face=courier><pre>
+for (i=0; i<10; i++) k=k*i;
+</pre></font>
+These constructs may be introduced as mere syntactic sugar, since
+they can readily be expressed in the JOOS language itself. 
+This improvement can be implemented by only making changes to the 
+files
+<a href="joos/a-/joos.l"><font face=courier><code>joos.l</code></font></a> and
+<a href="joos/a-/joos.y"><font face=courier><code>joos.y</code></font></a>.
+<p><hr><p>
+
+<h3>Correct stack limits</h3>
+The weakest point of the A- implementation is the stupid computation of
+stack limits, which are always assumed to equal 25. It would be much
+nicer to compute the exact limit. This improvement can be implemented by only
+making changes to the 
+file <a href="joos/a-/emit.c"><font face=courier><code>emit.c</code></font></a>.
+<p><hr><p>
+
+<h3>More peephole patterns</h3> 
+The peephole optimizer provides a nice framework, but the A-
+implementation only includes four peephole patterns. Surely, many more
+can be discovered.  This improvement can be implemented by only making
+changes to the file <a href="joos/a-/patterns.h"><font
+face=courier><code>optimize.c</code></font></a>.
+<p>
+</td></tr></table>
+<p>
+<p>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+Maintained by Eric Bodden.
+<a href="index.html">[HOME]</a>
+</td></tr>
+</table>

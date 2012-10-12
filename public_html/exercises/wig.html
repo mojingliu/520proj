@@ -1,0 +1,97 @@
+<title>Exercises on WIG</title>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+<h1>Week 5</h1>
+<h1>Exercises on WIG</h1>
+<ol>
+
+<li>Using some standard language, implement a CGI script that makes
+the <code>Python</code> form on slides 6-7 work to produce the output
+on slide 12.  (This form is simply generated from by a WIG service
+called <code>Python</code> containing a session
+called <code>Questions</code>; it has nothing to do with the
+language.)  Provide a link to it running on your homepage.
+<p>
+<i>Motivation:</i> you will generate CGI scripts as the output of your
+WIG compilers, and so you might want to experiment with or even just
+find out about the different options you have.  For example, by
+default you will target C, but if you are feeling more adventurous you
+can target PHP.  In the past, some groups have even built little stack
+machines.  If you simply don't care and the default C target sounds
+good to you, just don't spend any time on this question.
+<p>
+
+<li>Now implement a WIG service for the <code>Python</code> form.  Use
+a previous WIG compiler binary to compile it, following <a
+href="../howtowig.html">these directions</a>.  Provide a link to it running
+on your homepage.
+<p>
+<i>Motivation:</i> it is critical for you to get the existing WIG
+compilers up and running, and to get basic Hello World-like WIG
+programs working and installable.  It is expected that this question
+will expose some development environment problems.
+<p>
+
+<li>Where unclear, what do the environment variables on slide 9
+contain, and what is the syntax for possible values?  It is acceptable
+to copy and paste from online manuals.
+<p>
+<i>Motivation:</i> trying to understand the specific process by which
+clients interact with servers and servers interact with scripts helps
+demystify some of the communication magic.  If you simply don't care,
+just don't spend any time on this question.
+<p>
+
+<li>The game of NIM consists of some number of piles of matches, for
+example 7 piles of 5 matches each.  Each player must in turn remove
+any number of matches from a single pile.  The winner is the one that
+removes the last match.  Implement a WIG service that allows clients
+to play against a server.  The client should be able to select whether
+the server uses an optimal or non-optimal strategy, and you should
+have an initialization mechanism for determining the number of piles
+and the number of matches in each pile.  Publish the game on your
+homepage and provide a link to it.
+<p>
+<i>Motivation:</i> help familiarize you with the WIG language and
+improve your WIG benchmark programs due for the next milestone.  If
+you want to limit your example to the simplest NIM implementation
+possible with a fixed number of piles and a naive server playing
+strategy, that's fine; however, you will probably discover more things
+about programming in WIG if you try to do this question more fully.
+For example, you could let multiple clients play not only against the
+server but also each other at the same time, and you could also
+arrange for multiple different groups of clients, much like tables at
+poker or bridge tournaments.  (What happens if a player gets up?)
+<p>
+
+<li>For each security issue on slide 36, give an example scenario
+where a violation would be catastrophic.  (For fun, the more
+ridiculous your scenario the better; online banking fraud does not
+count as ridiculous.)  Outline an implementation for each of the given
+solutions.
+<p>
+<i>Motivation:</i> help you think about security issues in
+client-server programming and possible solutions; your WIG compilers
+will implement these solutions.  If you simply don't care, just don't
+spend any time on this question.
+<p>
+
+<li>Read through the code on slides 37-44.  You should understand what
+each line of C code does and how it relates to the input WIG program.
+What parts of this code are unclear?
+<p>
+<i>Motivation:</i> help you start thinking about code generation, and
+find out from you early on what's unclear about the output programs.
+If your compiler generates C-based CGI code, it will end up resembling
+this.
+
+</ol>
+
+</td></tr></table>
+<p>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+Maintained by Christopher J. F. Pickett.
+<a href="index.html">[HOME]</a>
+</td></tr>
+</table>

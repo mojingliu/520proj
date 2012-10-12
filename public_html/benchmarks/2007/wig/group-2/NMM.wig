@@ -1,0 +1,611 @@
+service {
+  const html Place = <html> <body>
+    <pre>
+	a   b   c   d   e   f   g 
+     7  <[sevena]> ----------<[sevend]>-----------<[seveng]>
+        |           |           |
+     6  |   <[sixb]>-------<[sixd]>-------<[sixf]>   |
+        |   |       |       |   |
+     5  |   |   <[fivec]>---<[fived]>---<[fivee]>   |   |
+        |   |   |       |   |   | 
+     4  <[foura]>---<[fourb]>---<[fourc]>       <[foure]>---<[fourf]>---<[fourg]>
+        |   |   |       |   |   | 
+     3  |   |   <[threec]>---<[threed]>---<[threee]>   |   |
+        |   |       |       |   |
+     2  |   <[twob]>-------<[twod]>-------<[twof]>   |
+        |           |           |
+     1  <[onea]> ----------<[oned]>-----------<[oneg]>
+    </pre>
+	<br>
+	<br>
+	<[player]>'s turn
+    <br>
+        Place at (x,y) = (<input type="text" name="xcoord" maxlength="1" size="1" > , <input type="text" name="ycoord" maxlength="1" size="1">)
+	  </body> </html>;
+	  
+                               
+  const html Remove = <html> <body>
+     <pre>
+	a   b   c   d   e   f   g 
+     7  <[sevena]> ----------<[sevend]>-----------<[seveng]>
+        |           |           |
+     6  |   <[sixb]>-------<[sixd]>-------<[sixf]>   |
+        |   |       |       |   |
+     5  |   |   <[fivec]>---<[fived]>---<[fivee]>   |   |
+        |   |   |       |   |   | 
+     4  <[foura]>---<[fourb]>---<[fourc]>       <[foure]>---<[fourf]>---<[fourg]>
+        |   |   |       |   |   | 
+     3  |   |   <[threec]>---<[threed]>---<[threee]>   |   |
+        |   |       |       |   |
+     2  |   <[twob]>-------<[twod]>-------<[twof]>   |
+        |           |           |
+     1  <[onea]> ----------<[oned]>-----------<[oneg]>
+    </pre>
+	<br>
+	<br>
+    <[player]>'s turn
+    <br>
+    Remove (x,y) = (<input type="text" name="xcoord" maxlength="1" size="1" > , <input type="text" name="ycoord" maxlength="1" size="1">)
+  </body> </html>;
+  
+  const html Fly = <html> <body>
+     <pre>
+	a   b   c   d   e   f   g 
+     7  <[sevena]> ----------<[sevend]>-----------<[seveng]>
+        |           |           |
+     6  |   <[sixb]>-------<[sixd]>-------<[sixf]>   |
+        |   |       |       |   |
+     5  |   |   <[fivec]>---<[fived]>---<[fivee]>   |   |
+        |   |   |       |   |   | 
+     4  <[foura]>---<[fourb]>---<[fourc]>       <[foure]>---<[fourf]>---<[fourg]>
+        |   |   |       |   |   | 
+     3  |   |   <[threec]>---<[threed]>---<[threee]>   |   |
+        |   |               |   |
+     2  |   <[twob]>-------<[twod]>-------<[twof]>   |
+        |                       |
+     1  <[onea]> ----------<[oned]>-----------<[oneg]>
+    </pre>
+	<br>
+	<br>
+    <[player]>'s turn
+    <br>
+    Fly from (x,y)= (<input type="text" name="xmovefrom" maxlength="1" size="1" > , <input type="text" name="ymovefrom" maxlength="1" size="1">)"
+   	 To (x,y)= (<input type="text" name="xcoord" maxlength="1" size="1" > , <input type="text" name="ycoord" maxlength="1" size="1">)"
+  </body> </html>;
+
+  const html Move = <html> <body>
+     <pre>
+	a   b   c   d   e   f   g 
+     7  <[sevena]> ----------<[sevend]>-----------<[seveng]>
+        |           |           |
+     6  |   <[sixb]>-------<[sixd]>-------<[sixf]>   |
+        |   |       |       |   |
+     5  |   |   <[fivec]>---<[fived]>---<[fivee]>   |   |
+        |   |   |       |   |   | 
+     4  <[foura]>---<[fourb]>---<[fourc]>       <[foure]>---<[fourf]>---<[fourg]>
+        |   |   |       |   |   | 
+     3  |   |   <[threec]>---<[threed]>---<[threee]>   |   |
+        |   |       |       |   |
+     2  |   <[twob]>-------<[twod]>-------<[twof]>   |
+        |           |           |
+     1  <[onea]> ----------<[oned]>-----------<[oneg]>
+	
+    </pre>
+	<br>
+	<br>
+    <[player]>'s turn
+    <br>
+    Move from (x,y)= (<input type="text" name="xmovefrom" maxlength="1" size="1" > , <input type="text" name="ymovefrom" maxlength="1" size="1">)"
+     To (x,y)= (<input type="text" name="xcoord" maxlength="1" size="1" > , <input type="text" name="ycoord" maxlength="1" size="1">)"
+  </body> </html>;
+
+   const html Done = <html> <body>
+    Game over
+  </body> </html>;
+  const html Win = <html> <body>
+
+    Congradulations, <[winner]>  wins!
+  </body> </html>;
+
+  
+
+  schema board {
+    string sevena;    string sevend;    string seveng;
+    string sixb;    string sixd;    string sixf;  
+    string fivec;    string fived;    string fivee;
+    string foura;    string fourb;    string fourc;
+    string foure;    string fourf;    string fourg;
+    string threec;    string threed;    string threee;
+    string twob;    string twod;    string twof;
+    string onea;    string oned;    string oneg;
+  }
+
+
+  schema info{
+	string player;
+	string phase; 
+	int piecesofp1;
+	int piecesofp2;
+	string winner;
+	int numofturns;
+  }
+
+  tuple board Board;
+  tuple info Info;
+
+
+
+   bool inMill(string x, string y, string player){
+    string c;
+    if (player == "player 1") c = "*";
+    else c= "@";
+
+    if ( x == "1"){
+     if ( y == "a"){ if( (Board.onea == c && Board.oned==c && Board.oneg==c) || (Board.onea== c && Board.foura ==c && Board.sevena == c)) return(true);}
+     if ( y == "d"){ if( (Board.onea == c && Board.oned==c && Board.oneg==c) || (Board.oned== c && Board.twod ==c && Board.threed == c)) return(true);}
+     if ( y == "g"){ if( (Board.onea == c && Board.oned==c && Board.oneg==c) || (Board.oneg== c && Board.fourg ==c && Board.seveng == c)) return(true);}    
+	}
+    if ( x == "2"){
+     if ( y == "b"){ if( (Board.twob == c && Board.twod==c && Board.twof==c) || (Board.twob== c && Board.fourb ==c && Board.sixb == c)) return(true);}
+     if ( y == "d"){ if( (Board.twob == c && Board.twod==c && Board.twof==c) || (Board.oned== c && Board.twod ==c && Board.threed == c)) return(true);}
+     if ( y == "f"){ if( (Board.twob == c && Board.twod==c && Board.twof==c) || (Board.twof== c && Board.fourf ==c && Board.sixf == c)) return(true);}    
+	}
+    if ( x == "3"){
+     if ( y == "c"){ if( (Board.threec == c && Board.threed==c && Board.threee==c) || (Board.threec== c && Board.fourc ==c && Board.fivec == c)) return(true);}
+     if ( y == "d"){ if( (Board.threec == c && Board.threed==c && Board.threee==c) || (Board.threed== c && Board.twod ==c && Board.oned == c)) return(true);}
+     if ( y == "e"){ if( (Board.threec == c && Board.threed==c && Board.threee==c) || (Board.threee== c && Board.foure ==c && Board.fivee == c)) return(true);}    
+	}
+    if ( x == "4"){
+     if ( y == "a"){ if( (Board.foura == c && Board.fourb==c && Board.fourc==c) || (Board.onea== c && Board.foura ==c && Board.sevena == c)) return(true);}
+     if ( y == "b"){ if( (Board.foura == c && Board.fourb==c && Board.fourc==c) || (Board.twob== c && Board.fourb ==c && Board.sixb == c)) return(true);}
+     if ( y == "c"){ if( (Board.foura == c && Board.fourb==c && Board.fourc==c) || (Board.threec== c && Board.fourc ==c && Board.fivec == c)) return(true);}
+     if ( y == "e"){ if( (Board.foure == c && Board.fourf==c && Board.fourg==c) || (Board.threee== c && Board.foure ==c && Board.fivee == c)) return(true);}
+     if ( y == "f"){ if( (Board.foure == c && Board.fourf==c && Board.fourg==c) || (Board.twof== c && Board.fourf ==c && Board.sixf == c)) return(true);}
+     if ( y == "g"){ if( (Board.foure == c && Board.fourf==c && Board.fourg==c) || (Board.oneg== c && Board.fourg ==c && Board.seveng == c)) return(true);}        
+	}
+    if ( x == "5"){
+     if ( y == "c"){ if( (Board.fivec == c && Board.fived==c && Board.fivee==c) || (Board.threec== c && Board.fourc ==c && Board.fivec == c)) return(true);}
+     if ( y == "d"){ if( (Board.fivec == c && Board.fived==c && Board.fivee==c) || (Board.fived== c && Board.sixd ==c && Board.sevend == c)) return(true);}
+     if ( y == "e"){ if( (Board.fivec == c && Board.fived==c && Board.fivee==c) || (Board.threee== c && Board.foure ==c && Board.fivee == c)) return(true);}     
+	}
+    if ( x == "6"){
+     if ( y == "b"){ if( (Board.sixb == c && Board.sixd==c && Board.sixf==c) || (Board.twob== c && Board.fourb ==c && Board.sixb == c)) return(true);}
+     if ( y == "d"){ if( (Board.sixb == c && Board.sixd==c && Board.sixf==c) || (Board.fived== c && Board.sixd ==c && Board.sevend == c)) return(true);}
+     if ( y == "f"){ if( (Board.sixb == c && Board.sixd==c && Board.sixf==c) || (Board.twof== c && Board.fourf ==c && Board.sixf == c)) return(true);}    
+	}
+    if ( x == "7"){
+     if ( y == "a"){ if( (Board.sevena == c && Board.sevend==c && Board.seveng==c) || (Board.onea== c && Board.foura ==c && Board.sevena == c)) return(true);}
+     if ( y == "d"){ if( (Board.sevena == c && Board.sevend==c && Board.seveng==c) || (Board.fived== c && Board.sixd ==c && Board.sevend == c)) return(true);}
+     if ( y == "g"){ if( (Board.sevena == c && Board.sevend==c && Board.seveng==c) || (Board.oneg== c && Board.fourg ==c && Board.seveng == c)) return(true);}    
+	}	
+   return (false);
+  
+  }
+
+  bool hasMill(string player){
+    string c;
+    if (player == "player 1") c = "@";
+    else c= "*";
+
+    if( (Board.onea == c && Board.oned == c && Board.oneg == c) || (Board.onea == c && Board.foura == c && Board.sevena == c) ||
+ 	(Board.oned == c && Board.twod == c && Board.threed == c) || (Board.oneg == c && Board.fourg == c && Board.seveng == c) ||
+	(Board.twob == c && Board.twod == c && Board.twof == c) || (Board.twob == c && Board.fourb == c && Board.sixb == c) ||
+	(Board.twof == c && Board.fourf == c && Board.sixf == c) || (Board.threec == c && Board.threed == c && Board.threee == c) ||
+	(Board.threec == c && Board.fourc == c && Board.fivec == c) || (Board.threee == c && Board.foure == c && Board.fivee == c) || 
+	(Board.foura == c && Board.fourb == c && Board.fourc == c) || (Board.foure == c && Board.fourf == c && Board.fourg == c) ||
+	(Board.fivec == c && Board.fived == c && Board.fivee == c) || (Board.fived == c && Board.sixd == c && Board.sevend == c) ||
+	(Board.sixb == c && Board.sixd == c && Board.sixf == c) || (Board.sevena == c && Board.sevend == c && Board.seveng == c) )
+	return (true);
+    else
+	return (false);  
+  }
+
+
+  bool isAdjacent(string x, string y, string w, string z ){
+	if(x =="7" && y == "a"){
+    		if ((w == "7" && z == "d") ||(w == "4" && z == "a")) return (true);
+		else return (false);
+   		}
+	if(x =="7" && y == "d"){
+ 	  	if ((w == "7" && z == "a") ||(w == "7" && z == "g")) return (true);
+		else return (false);
+   		}
+	if(x =="7" && y == "g"){
+  	 	if ((w == "7" && z == "d") ||(w == "4" && z == "g") ) return (true);
+		else return (false);
+   		}
+	if(x =="6" && y == "b"){
+    		if ((w == "6" && z == "d") ||(w == "4" && z == "b")) return (true);
+		else return (false);
+   		}
+	if(x =="6" && y == "d"){
+ 	  	if ((w == "7" && z == "d") ||(w == "5" && z == "d") ||(w == "6" && z == "b") ||(w == "6" && z == "f")) return (true);
+		else return (false);
+   		}
+	if(x =="6" && y == "f"){
+  	 	if ((w == "6" && z == "d") ||(w == "4" && z == "f")) return (true);
+		else return (false);
+   		}
+	if(x =="5" && y == "c"){
+    		if ((w == "5" && z == "d") ||(w == "4" && z == "c")) return (true);
+		else return (false);
+   		}
+	if(x =="5" && y == "d"){
+ 	  	if ((w == "5" && z == "c") ||(w == "5" && z == "e") ||(w == "6" && z == "d")) return (true);
+		else return (false);
+   		}
+	if(x =="5" && y == "e"){
+  	 	if ((w == "5" && z == "d") ||(w == "4" && z == "e")) return (true);
+		else return (false);
+   		}
+	if(x =="4" && y == "a"){
+    		if ((w == "7" && z == "a") ||(w == "1" && z == "a")) return (true);
+		else return (false);
+   		}
+	if(x =="4" && y == "b"){
+ 	  	if ((w == "6" && z == "d") ||(w == "4" && z == "a") ||(w == "2" && z == "b") ||(w == "4" && z == "c")) return (true);
+		else return (false);
+ 		}
+	if(x =="4" && y == "c"){
+  	 	if ((w == "5" && z == "c") ||(w == "3" && z == "c")) return (true);
+		else return (false);
+   		}
+	if(x =="4" && y == "e"){
+    		if ((w == "5" && z == "e") ||(w == "3" && z == "e")) return (true);
+		else return (false);
+   		}
+	if(x =="4" && y == "f"){
+ 	  	if ((w == "6" && z == "f") ||(w == "2" && z == "f")) return (true);
+		else return (false);
+   		}
+	if(x =="4" && y == "g"){
+  	 	if ((w == "7" && z == "g") ||(w == "1" && z == "g") ) return (true);
+		else return (false);
+   		}
+	if(x =="3" && y == "c"){
+    		if ((w == "4" && z == "c") ||(w == "3" && z == "d")) return (true);
+		else return (false);
+   		}
+	if(x =="3" && y == "d"){
+ 	  	if ((w == "3" && z == "c") ||(w == "3" && z == "e")  ||(w == "2" && z == "d") ) return (true);
+		else return (false);
+   		}
+	if(x =="3" && y == "e"){
+  	 	 if ((w == "4" && z == "e") ||(w == "3" && z == "d")) return (true);
+		else return (false);
+   		}
+	if(x =="2" && y == "b"){
+    		if ((w == "4" && z == "b") ||(w == "2" && z == "d")) return (true);
+		else return (false);
+   		}
+	if(x =="2" && y == "d"){ 
+		if ((w == "3" && z == "d") ||(w == "1" && z == "d")||(w == "2" && z == "b") ||(w == "2" && z == "c"))
+			return (true);
+		else return (false);
+   		}
+	if(x =="2" && y == "f"){
+  	 	if ((w == "2" && z == "d") ||(w == "4" && z == "f")) return (true);
+		else return (false);
+   		}
+	if(x =="1" && y == "a"){
+    		if ((w == "1" && z == "d") ||(w == "4" && z == "a")) return (true);
+		else return (false);
+   		}
+	if(x =="1" && y == "d"){
+ 	  	if ((w == "1" && z == "a") ||(w == "1" && z == "g")) return (true);
+		else return (false);
+   		}
+	if(x =="1" && y == "g"){
+  	 	if ((w == "4" && z == "g") ||(w == "1" && z == "d")) return (true);
+		else return (false);
+   		}
+	}
+
+       
+  bool checkvalid(string x, string y){
+	if(x == "7"){ if (y == "a" || y =="d" || y =="g") return (true);
+	  else	return (false); }
+	if(x == "6"){
+	  if (y == "b" || y=="d" || y =="f")
+		return (true);
+	  else
+		return (false);  }
+	if(x == "5"){
+	  if (y == "c" || y =="d" || y =="e")
+		return (true);
+	  else
+		return (false);	}   
+	if(x == "4"){
+	  if (y == "a" || y =="b" || y=="c"||y =="e"||y =="f"||y =="g")
+		return (true);
+	  else
+		return (false); } 
+   	if(x == "3"){
+	  if (y =="c"||y =="d"||y =="e")
+		return (true);
+	  else
+		return (false); }  	   
+  	if(x== "2"){
+	  if (y =="b"||y =="d"||y =="f")
+		return (true);
+	  else
+		return (false); }  	 
+  	if(x == "1"){
+	  if (y =="a"||y =="d"||y =="g")
+		return (true);
+	  else
+		return (false);} 
+	return (false); }
+  int countpone(){
+	int i;
+	i=0;
+	if (Board.sevena == "@") i=i+1;
+	if (Board.sevend == "@") i=i+1;
+	if (Board.seveng == "@") i=i+1;
+	if (Board.sixb == "@") i=i+1;
+	if (Board.sixd == "@") i=i+1;
+	if (Board.sixf == "@") i=i+1;
+	if (Board.fivec == "@") i=i+1;
+	if (Board.fived == "@") i=i+1;
+	if (Board.fivee == "@") i=i+1;
+	if (Board.foura == "@") i=i+1;
+	if (Board.fourb == "@") i=i+1;
+	if (Board.fourc == "@") i=i+1;
+	if (Board.foure == "@") i=i+1;
+	if (Board.fourf == "@") i=i+1;
+	if (Board.fourg == "@") i=i+1;
+	if (Board.threec == "@") i=i+1;
+	if (Board.threed == "@") i=i+1;
+	if (Board.threee == "@") i=i+1;
+	if (Board.twob == "@") i=i+1;
+        if (Board.twod == "@") i=i+1;
+	if (Board.twof == "@") i=i+1;
+	if (Board.onea == "@") i=i+1;
+	if (Board.oned == "@") i=i+1;
+	if (Board.oneg == "@") i=i+1;
+	return i;
+  }
+
+  int countptwo(){
+	int i;
+	i=0;
+	if (Board.sevena == "*") i=i+1;
+	if (Board.sevend == "*") i=i+1;
+	if (Board.seveng == "*") i=i+1;
+	if (Board.sixb == "*") i=i+1;
+	if (Board.sixd == "*") i=i+1;
+	if (Board.sixf == "*") i=i+1;
+	if (Board.fivec == "*") i=i+1;
+	if (Board.fived == "*") i=i+1;
+	if (Board.fivee == "*") i=i+1;
+	if (Board.foura == "*") i=i+1;
+	if (Board.fourb == "*") i=i+1;
+	if (Board.fourc == "*") i=i+1;
+	if (Board.foure == "*") i=i+1;
+	if (Board.fourf == "*") i=i+1;
+	if (Board.fourg == "*") i=i+1;
+	if (Board.threec == "*") i=i+1;
+	if (Board.threed == "*") i=i+1;
+	if (Board.threee == "*") i=i+1;
+	if (Board.twob == "*") i=i+1;
+        if (Board.twod == "*") i=i+1;
+	if (Board.twof == "*") i=i+1;
+	if (Board.onea == "*") i=i+1;
+	if (Board.oned == "*") i=i+1;
+	if (Board.oneg == "*") i=i+1;
+	return i;
+  }
+  void removepiece(string x, string y){
+	if(x == "7"){ 
+	  if ( y == "a") {Board.sevena = "o";}
+	  if ( y == "d") {Board.sevend = "o";}
+	  if ( y == "g") {Board.seveng = "o";}
+		}
+	if(x == "6"){
+	  if( y == "b") {Board.sixb = "o";}
+	  if( y == "d") {Board.sixd = "o";}
+	  if( y == "f") {Board.sixf = "o";}
+		  }
+	if(x == "5"){
+	  if( y == "c") {Board.fivec = "o";}
+	  if( y == "d") {Board.fived = "o";}
+	  if( y == "e") {Board.fivee = "o";}
+		}   
+	if(x == "4"){
+	  if (y == "a") {Board.foura = "o";}
+	  if (y == "b") {Board.fourb = "o";}
+	  if (y == "c") {Board.fourc = "o";}
+	  if (y == "e") {Board.foure = "o";}
+	  if (y == "f") {Board.fourf = "o";}
+	  if (y == "g") {Board.fourg = "o";}
+		} 
+   	if(x == "3"){
+	  if (y =="c") {Board.threec = "o";}
+	  if (y =="d") {Board.threed = "o";}
+	  if (y =="e") {Board.threee = "o";}
+		 }  	   
+  	if(x== "2"){
+	  if (y =="b") {Board.twob = "o";}
+          if (y =="d") {Board.twod = "o";}
+	  if (y =="f") {Board.twof = "o";}
+		} 	 
+  	if(x == "1"){
+	  if (y =="a") {Board.onea = "o";}
+	  if (y =="d") {Board.oned = "o";}
+	  if (y =="g") {Board.oneg = "o";}
+		}
+  }
+  void updateboard(string x, string y, string player){
+	string c;
+	if (player == "player 1") c = "@";
+	else c = "*";	
+	if(x == "7"){ 
+	  if ( y == "a") {Board.sevena = c;}
+	  if ( y == "d") {Board.sevend = c;}
+	  if ( y == "g") {Board.seveng = c;}
+		}
+	if(x == "6"){
+	  if( y == "b") {Board.sixb = c;}
+	  if( y == "d") {Board.sixd = c;}
+	  if( y == "f") {Board.sixf = c;}
+		  }
+	if(x == "5"){
+	  if( y == "c") {Board.fivec = c;}
+	  if( y == "d") {Board.fived = c;}
+	  if( y == "e") {Board.fivee = c;}
+		}   
+	if(x == "4"){
+	  if (y == "a") {Board.foura = c;}
+	  if (y == "b") {Board.fourb = c;}
+	  if (y == "c") {Board.fourc = c;}
+	  if (y == "e") {Board.foure = c;}
+	  if (y == "f") {Board.fourf = c;}
+	  if (y == "g") {Board.fourg = c;}
+		} 
+   	if(x == "3"){
+	  if (y =="c") {Board.threec = c;}
+	  if (y =="d") {Board.threed = c;}
+	  if (y =="e") {Board.threee = c;}
+		 }  	   
+  	if(x== "2"){
+	  if (y =="b") {Board.twob = c;}
+          if (y =="d") {Board.twod = c;}
+	  if (y =="f") {Board.twof = c;}
+		} 	 
+  	if(x == "1"){
+	  if (y =="a") {Board.onea = c;}
+	  if (y =="d") {Board.oned = c;}
+	  if (y =="g") {Board.oneg = c;}
+		}
+
+  }
+
+  session Play() {
+	string xcoord, ycoord, xmovefrom, ymovefrom;
+      Board.sevena="o";      Board.sevend="o";      Board.seveng="o";
+      Board.sixb="o";      Board.sixd="o";      Board.sixf="o";
+      Board.fivec="o";      Board.fived="o";      Board.fivee="o";
+      Board.foura="o";      Board.fourb="o";      Board.fourc="o"; 
+      Board.foure="o";      Board.fourf="o";      Board.fourg="o";
+      Board.threec="o";      Board.threed="o";      Board.threee="o";
+      Board.twob="o";      Board.twod="o";      Board.twof="o";
+      Board.onea="o";      Board.oned="o";      Board.oneg="o";
+
+      Info.player = "player 1";
+      Info.phase = "place";
+      Info.piecesofp1 =0;
+      Info.piecesofp2 = 0;
+      Info.winner="";
+      Info.numofturns=0;
+      
+      show plug Place [sevena=Board.sevena, sevend=Board.sevend, seveng=Board.seveng, sixb=Board.sixb, sixd=Board.sixd,sixf=Board.sixf, fivec=Board.fivec, fived=Board.fived, fivee=Board.fivee, foura=Board.foura,
+		      fourb=Board.fourb, fourc=Board.fourc, foure=Board.foure, fourf=Board.fourf, fourg=Board.fourg,threec=Board.threec, threed=Board.threed, threee=Board.threee, twob=Board.twob, twod=Board.twod, 
+		      twof=Board.twof, onea=Board.onea, oned=Board.oned, oneg=Board.oneg , player = Info.player] receive[xcoord = xcoord, ycoord=ycoord];
+      Info .numofturns= Info .numofturns +1;
+
+	while(Info.numofturns<=18 && Info.numofturns != 1){
+		if (Info.piecesofp1 == 3 && Info.numofturns != 3 && Info.player == "player 1") Info.phase = "fly";
+		if (Info.piecesofp2 == 3 && Info.numofturns != 3 && Info.player == "player 2") Info.phase = "fly";
+		if(Info.phase == "place"){
+		show plug Place [sevena=Board.sevena, sevend=Board.sevend, seveng=Board.seveng, sixb=Board.sixb, sixd=Board.sixd,
+		      sixf=Board.sixf, fivec=Board.fivec, fived=Board.fived, fivee=Board.fivee, foura=Board.foura,
+		      fourb=Board.fourb, fourc=Board.fourc, foure=Board.foure, fourf=Board.fourf, fourg=Board.fourg,
+		      threec=Board.threec, threed=Board.threed, threee=Board.threee, twob=Board.twob, twod=Board.twod, 
+		      twof=Board.twof, onea=Board.onea, oned=Board.oned, oneg=Board.oneg , player = Info.player] receive[xcoord = xcoord, ycoord=ycoord];
+		if (Info.player == "player 1" && hasMill("player 1"))	Info.phase = "remove";
+		if (Info.player == "player 2" && hasMill("player 2"))   Info.phase = "remove";
+ 		Info.phase = "place";
+ 		Info.numofturns=  Info.numofturns + 1; 
+		updateboard(xcoord, ycoord, Info.player);  	
+		}
+		if(Info.phase == "fly"){
+		 show plug Fly [sevena=Board.sevena, sevend=Board.sevend, seveng=Board.seveng, sixb=Board.sixb, sixd=Board.sixd,
+		      sixf=Board.sixf, fivec=Board.fivec, fived=Board.fived, fivee=Board.fivee, foura=Board.foura,
+		      fourb=Board.fourb, fourc=Board.fourc, foure=Board.foure, fourf=Board.fourf, fourg=Board.fourg,
+		      threec=Board.threec, threed=Board.threed, threee=Board.threee, twob=Board.twob, twod=Board.twod, 
+		      twof=Board.twof, onea=Board.onea, oned=Board.oned, oneg=Board.oneg , player = Info.player] receive[xcoord = xcoord, ycoord=ycoord, xmovefrom = xmovefrom, ymovefrom=ymovefrom];
+		if (Info.player == "player 1" && hasMill("player 1"))	Info.phase = "remove";
+		if (Info.player == "player 2" && hasMill("player 2"))   Info.phase = "remove";
+ 		Info.phase = "place";
+ 		Info.numofturns=  Info.numofturns + 1; 
+		removepiece(xmovefrom,ymovefrom);
+		updateboard(xcoord, ycoord, Info.player);  
+		}
+		if(Info.phase == "remove"){
+		show plug Remove [sevena=Board.sevena, sevend=Board.sevend, seveng=Board.seveng, sixb=Board.sixb, sixd=Board.sixd,
+		      sixf=Board.sixf, fivec=Board.fivec, fived=Board.fived, fivee=Board.fivee, foura=Board.foura,
+		      fourb=Board.fourb, fourc=Board.fourc, foure=Board.foure, fourf=Board.fourf, fourg=Board.fourg,
+		      threec=Board.threec, threed=Board.threed, threee=Board.threee, twob=Board.twob, twod=Board.twod, 
+		      twof=Board.twof, onea=Board.onea, oned=Board.oned, oneg=Board.oneg , player = Info.player] receive[xcoord = xcoord, ycoord=ycoord];
+		  if (Info.player == "player 1" && hasMill("player 1"))	Info.phase = "remove";
+		 if (Info.player == "player 2" && hasMill("player 2"))   Info.phase = "remove";
+ 		 Info.phase = "place";
+ 		 Info.numofturns=  Info.numofturns + 1; 
+		 removepiece(xcoord,ycoord);
+
+		 }	
+		
+		if(Info.player == "player 1") Info.player = "player 2";
+		else Info.player = "player 1";
+		Info.piecesofp1 = countpone();
+		Info.piecesofp2=countptwo();
+	}
+       	
+	
+	
+
+	 while (Info.winner == "") {
+		if (Info.piecesofp1 == 3 && Info.numofturns != 3 && Info.player == "player 1") Info.phase = "fly";
+		if (Info.piecesofp2 == 3 && Info.numofturns != 3 && Info.player == "player 2") Info.phase = "fly";
+		if(Info.phase == "move"){
+		show plug Move [sevena=Board.sevena, sevend=Board.sevend, seveng=Board.seveng, sixb=Board.sixb, sixd=Board.sixd,
+		      sixf=Board.sixf, fivec=Board.fivec, fived=Board.fived, fivee=Board.fivee, foura=Board.foura,
+		      fourb=Board.fourb, fourc=Board.fourc, foure=Board.foure, fourf=Board.fourf, fourg=Board.fourg,
+		      threec=Board.threec, threed=Board.threed, threee=Board.threee, twob=Board.twob, twod=Board.twod, 
+		      twof=Board.twof, onea=Board.onea, oned=Board.oned, oneg=Board.oneg , player = Info.player] receive[xcoord = xcoord, ycoord=ycoord, xmovefrom = xmovefrom, ymovefrom=ymovefrom];
+		if (Info.player == "player 1" && hasMill("player 1"))	Info.phase = "remove";
+		if (Info.player == "player 2" && hasMill("player 2"))   Info.phase = "remove";
+ 		Info.phase = "place";
+ 		Info.numofturns=  Info.numofturns + 1; 
+		removepiece(xmovefrom,ymovefrom);
+		updateboard(xcoord, ycoord, Info.player);  	
+		}
+		if(Info.phase == "fly"){
+		 show plug Fly [sevena=Board.sevena, sevend=Board.sevend, seveng=Board.seveng, sixb=Board.sixb, sixd=Board.sixd,
+		      sixf=Board.sixf, fivec=Board.fivec, fived=Board.fived, fivee=Board.fivee, foura=Board.foura,
+		      fourb=Board.fourb, fourc=Board.fourc, foure=Board.foure, fourf=Board.fourf, fourg=Board.fourg,
+		      threec=Board.threec, threed=Board.threed, threee=Board.threee, twob=Board.twob, twod=Board.twod, 
+		      twof=Board.twof, onea=Board.onea, oned=Board.oned, oneg=Board.oneg , player = Info.player] receive[xcoord = xcoord, ycoord=ycoord, xmovefrom = xmovefrom, ymovefrom=ymovefrom];
+		if (Info.player == "player 1" && hasMill("player 1"))	Info.phase = "remove";
+		if (Info.player == "player 2" && hasMill("player 2"))   Info.phase = "remove";
+ 		Info.phase = "place";
+ 		Info.numofturns=  Info.numofturns + 1; 
+		removepiece(xmovefrom,ymovefrom);
+		updateboard(xcoord, ycoord, Info.player);  
+		}
+		if(Info.phase == "remove"){
+		show plug Remove [sevena=Board.sevena, sevend=Board.sevend, seveng=Board.seveng, sixb=Board.sixb, sixd=Board.sixd,
+		      sixf=Board.sixf, fivec=Board.fivec, fived=Board.fived, fivee=Board.fivee, foura=Board.foura,
+		      fourb=Board.fourb, fourc=Board.fourc, foure=Board.foure, fourf=Board.fourf, fourg=Board.fourg,
+		      threec=Board.threec, threed=Board.threed, threee=Board.threee, twob=Board.twob, twod=Board.twod, 
+		      twof=Board.twof, onea=Board.onea, oned=Board.oned, oneg=Board.oneg , player = Info.player] receive[xcoord = xcoord, ycoord=ycoord];
+		  if (Info.player == "player 1" && hasMill("player 1"))	Info.phase = "remove";
+		 if (Info.player == "player 2" && hasMill("player 2"))   Info.phase = "remove";
+ 		 Info.phase = "place";
+ 		 Info.numofturns=  Info.numofturns + 1; 
+		 removepiece(xcoord,ycoord);
+
+		 }	
+		if(Info.player == "player 1") Info.player = "player 2";
+		else Info.player = "player 1";
+		Info.piecesofp1 = countpone();
+		Info.piecesofp2=countptwo();
+ 	}    
+
+	show Done;
+    exit plug Win [winner=Info.winner];
+   
+  }
+}
+
+

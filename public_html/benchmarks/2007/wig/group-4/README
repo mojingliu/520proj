@@ -1,0 +1,11 @@
+To get a forum with capacity 100 messages, simply run
+
+$ make
+
+
+To choose your own capacity (good for stress-testing, possibly), run
+
+$ ./generator.py <capacity> [<output]>
+
+If the output file is not specified, the WIG source will be written to
+standard out.

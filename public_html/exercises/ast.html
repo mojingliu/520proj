@@ -1,0 +1,35 @@
+<title>Exercises on abstract syntax trees</title>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+<h1>Week 3</h1>
+<h1>Exercises on abstract syntax trees</h1>
+
+Study the A- code for parsing JOOS programs and building and weeding
+abstract syntax trees, specifically the files joos.l, joos.y, tree.c,
+tree.h, weed.c, and weed.h.  Answer the following questions:
+
+<ol>
+<li>How could calloc() simplify the scanner?  Is there a good reason
+not to use it?
+
+<li>Why do we need the *noshortif productions (rules)?  Illustrate
+with example input.
+
+<li>Why do we need the *ne* productions?  What does "ne" stand for?
+
+<li>What kinds of illegal input are weeded out?  For each kind of
+illegal input, explain why the designers of the JOOS language made it
+illegal.
+
+<li>How could an LALR(1) parser could avoid building backwards lists?
+Illustrate with an example from joos.y and tree.c.
+</ol>
+
+</td></tr></table>
+<p>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+Maintained by Christopher J. F. Pickett.
+<a href="index.html">[HOME]</a>
+</td></tr>
+</table>

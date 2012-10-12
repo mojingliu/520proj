@@ -1,0 +1,18 @@
+Group 09
+Kacper Wysocki and Louis Kearns
+
+After reviewing the WIG benchmarks for previous years we decided to
+implement a simple game of Blackjack for our WIG service. We think
+it's pretty cool.
+
+wig10 won't compile our wig service properly, because string literals
+compile double-double quoted. Example:
+
+WIG: return "A";
+C: return ""A"";
+
+wig4 doesn't show the "continue" button on a "show" statement, and
+wig18 can't deal with comments, so we stuck with pwig. It should be
+noted however that pwig segfaults instead of printing an error when it
+encounters invalid return statements. Again, nothing but wig10 worked
+on the bsd machines, so we compiled on mimi and installed on freebsd.

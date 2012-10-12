@@ -1,0 +1,21 @@
+// Louis Kearns and Kacper Wysocki were here Oct 1st 2004.
+// This is a *proper* thread. It has both join() _and_ start(). 
+// JoosThreads did not have start(), while the Thread extern class did
+// not have join()
+
+extern public class UsableThread in "mylib"{
+  public UsableThread(Thread t);
+  // get at constants
+  public int MAX_PRIORITY();
+  public int MIN_PRIORITY();
+  public int NORM_PRIORITY();
+  // get at static methods
+  public int activeCount();
+  public Thread currentThread();
+  public void dumpStack();
+  public boolean sleep(int millis);  // returns true if interrupted
+  public void yield();
+  // make a join that takes an int argument and returns bool
+  public synchronized boolean join(int millis); //  returns true if interrupted
+	public void start(); // throws IllegalThreadStateException
+}

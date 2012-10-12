@@ -1,0 +1,27 @@
+Benchmark: KnightsTour
+
+incl:   KnigthsTour.java 
+        FindTour.java 
+        Vertex.java 
+        BitMap.java 
+        TwoDVector.java
+
+        in1
+        out1
+
+Jennifer Lhotak and Imran Majid
+
+This program implements the knights tour algorithm. As it is a very
+slow algorithm, it only ever finishes for inputs of 1-6 and sometimes
+8 if enough memory is available.
+
+Some sample input is in a file called in1 and the corresponding output
+is in a file called out1.
+
+To compile use jjoosc KnigthsTour.java FindTour.java Vertex.java
+BitMap.java TwoDVector.java.
+
+To run say java KnightsTour < in1 > out1.
+
+Alternatively to run say java KnightsTour and you will be prompted for
+an input.

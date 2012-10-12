@@ -1,0 +1,668 @@
+BENCHMARK shop ./group01 shop
+========== INSTALLATION OF bsdwig4 SCRIPT STARTED
+========== INSTALLATION OF bsdwig4 SCRIPT FINISHED
+========== INSTALLATION OF bsdwig18 SCRIPT STARTED
+========== INSTALLATION OF bsdwig18 SCRIPT FINISHED
+========== INSTALLATION OF bsdperfectwig SCRIPT STARTED
+shop.c:28:16: warning: multi-line string literals are deprecated
+shop.c:33:16: warning: multi-line string literals are deprecated
+shop.c:37:16: warning: multi-line string literals are deprecated
+shop.c:40:16: warning: multi-line string literals are deprecated
+shop.c:43:16: warning: multi-line string literals are deprecated
+shop.c:46:16: warning: multi-line string literals are deprecated
+shop.c:49:16: warning: multi-line string literals are deprecated
+shop.c:64:16: warning: multi-line string literals are deprecated
+shop.c:69:16: warning: multi-line string literals are deprecated
+shop.c:72:16: warning: multi-line string literals are deprecated
+shop.c:75:16: warning: multi-line string literals are deprecated
+shop.c:79:16: warning: multi-line string literals are deprecated
+shop.c:82:16: warning: multi-line string literals are deprecated
+shop.c:85:16: warning: multi-line string literals are deprecated
+shop.c:88:16: warning: multi-line string literals are deprecated
+shop.c:93:16: warning: multi-line string literals are deprecated
+shop.c:98:16: warning: multi-line string literals are deprecated
+shop.c:103:16: warning: multi-line string literals are deprecated
+shop.c:106:16: warning: multi-line string literals are deprecated
+shop.c:109:16: warning: multi-line string literals are deprecated
+shop.c:114:16: warning: multi-line string literals are deprecated
+shop.c:119:16: warning: multi-line string literals are deprecated
+shop.c:124:16: warning: multi-line string literals are deprecated
+shop.c:127:16: warning: multi-line string literals are deprecated
+shop.c:130:16: warning: multi-line string literals are deprecated
+shop.c:135:16: warning: multi-line string literals are deprecated
+shop.c:140:16: warning: multi-line string literals are deprecated
+shop.c:145:16: warning: multi-line string literals are deprecated
+shop.c:148:16: warning: multi-line string literals are deprecated
+shop.c:151:16: warning: multi-line string literals are deprecated
+shop.c:156:16: warning: multi-line string literals are deprecated
+shop.c:161:16: warning: multi-line string literals are deprecated
+shop.c:166:16: warning: multi-line string literals are deprecated
+shop.c:169:16: warning: multi-line string literals are deprecated
+shop.c:172:16: warning: multi-line string literals are deprecated
+shop.c:175:16: warning: multi-line string literals are deprecated
+shop.c:178:16: warning: multi-line string literals are deprecated
+shop.c:181:16: warning: multi-line string literals are deprecated
+shop.c:184:16: warning: multi-line string literals are deprecated
+shop.c:198:16: warning: multi-line string literals are deprecated
+shop.c:203:16: warning: multi-line string literals are deprecated
+shop.c:206:16: warning: multi-line string literals are deprecated
+shop.c:209:16: warning: multi-line string literals are deprecated
+shop.c:212:16: warning: multi-line string literals are deprecated
+shop.c:215:16: warning: multi-line string literals are deprecated
+shop.c:218:16: warning: multi-line string literals are deprecated
+shop.c:223:16: warning: multi-line string literals are deprecated
+shop.c:228:16: warning: multi-line string literals are deprecated
+shop.c:233:16: warning: multi-line string literals are deprecated
+shop.c:236:16: warning: multi-line string literals are deprecated
+shop.c:239:16: warning: multi-line string literals are deprecated
+shop.c:244:16: warning: multi-line string literals are deprecated
+shop.c:249:16: warning: multi-line string literals are deprecated
+shop.c:254:16: warning: multi-line string literals are deprecated
+shop.c:257:16: warning: multi-line string literals are deprecated
+shop.c:260:16: warning: multi-line string literals are deprecated
+shop.c:265:16: warning: multi-line string literals are deprecated
+shop.c:270:16: warning: multi-line string literals are deprecated
+shop.c:275:16: warning: multi-line string literals are deprecated
+shop.c:278:16: warning: multi-line string literals are deprecated
+shop.c:281:16: warning: multi-line string literals are deprecated
+shop.c:286:16: warning: multi-line string literals are deprecated
+shop.c:291:16: warning: multi-line string literals are deprecated
+shop.c:296:16: warning: multi-line string literals are deprecated
+shop.c:299:16: warning: multi-line string literals are deprecated
+shop.c:302:16: warning: multi-line string literals are deprecated
+shop.c:305:16: warning: multi-line string literals are deprecated
+shop.c:308:16: warning: multi-line string literals are deprecated
+shop.c:311:16: warning: multi-line string literals are deprecated
+shop.c:314:16: warning: multi-line string literals are deprecated
+shop.c:328:16: warning: multi-line string literals are deprecated
+shop.c:331:16: warning: multi-line string literals are deprecated
+shop.c:334:16: warning: multi-line string literals are deprecated
+shop.c:349:16: warning: multi-line string literals are deprecated
+shop.c:352:16: warning: multi-line string literals are deprecated
+========== INSTALLATION OF bsdperfectwig SCRIPT FINISHED
+
+BENCHMARK TicTacToeT ./group02 TicTacToeT
+========== INSTALLATION OF bsdwig4 SCRIPT STARTED
+========== INSTALLATION OF bsdwig4 SCRIPT FINISHED
+========== INSTALLATION OF wig10 SCRIPT STARTED
+TicTacToeT.c:49:12: warning: multi-line string literals are deprecated
+TicTacToeT.c:52:12: warning: multi-line string literals are deprecated
+TicTacToeT.c:57:12: warning: multi-line string literals are deprecated
+TicTacToeT.c:62:12: warning: multi-line string literals are deprecated
+TicTacToeT.c:67:12: warning: multi-line string literals are deprecated
+TicTacToeT.c:70:12: warning: multi-line string literals are deprecated
+TicTacToeT.c:73:12: warning: multi-line string literals are deprecated
+TicTacToeT.c:78:12: warning: multi-line string literals are deprecated
+TicTacToeT.c:83:12: warning: multi-line string literals are deprecated
+TicTacToeT.c:88:12: warning: multi-line string literals are deprecated
+TicTacToeT.c:91:12: warning: multi-line string literals are deprecated
+TicTacToeT.c:94:12: warning: multi-line string literals are deprecated
+TicTacToeT.c:99:12: warning: multi-line string literals are deprecated
+TicTacToeT.c:104:12: warning: multi-line string literals are deprecated
+TicTacToeT.c:109:12: warning: multi-line string literals are deprecated
+TicTacToeT.c:112:12: warning: multi-line string literals are deprecated
+TicTacToeT.c:115:12: warning: multi-line string literals are deprecated
+TicTacToeT.c:119:12: warning: multi-line string literals are deprecated
+TicTacToeT.c: In function `function_toggleplayer':
+TicTacToeT.c:341: syntax error before "O"
+TicTacToeT.c:343: syntax error before "X"
+chmod: TicTacToeT10.cgi: No such file or directory
+mv: rename TicTacToeT10.cgi to /home/user/cpicke/public_html/cgi-bin/TicTacToeT10.cgi: No such file or directory
+========== INSTALLATION OF wig10 SCRIPT ABORTED
+
+BENCHMARK puzzle ./group03 puzzle
+========== INSTALLATION OF bsdwig4 SCRIPT STARTED
+========== INSTALLATION OF bsdwig4 SCRIPT FINISHED
+========== INSTALLATION OF wig10 SCRIPT STARTED
+puzzle.c:43:12: warning: multi-line string literals are deprecated
+puzzle.c:48:12: warning: multi-line string literals are deprecated
+puzzle.c:51:12: warning: multi-line string literals are deprecated
+puzzle.c:56:12: warning: multi-line string literals are deprecated
+puzzle.c:59:12: warning: multi-line string literals are deprecated
+puzzle.c:62:12: warning: multi-line string literals are deprecated
+puzzle.c:66:12: warning: multi-line string literals are deprecated
+puzzle.c:80:12: warning: multi-line string literals are deprecated
+puzzle.c:83:12: warning: multi-line string literals are deprecated
+puzzle.c:92:12: warning: multi-line string literals are deprecated
+puzzle.c:95:12: warning: multi-line string literals are deprecated
+puzzle.c:100:12: warning: multi-line string literals are deprecated
+puzzle.c:114:12: warning: multi-line string literals are deprecated
+puzzle.c:119:12: warning: multi-line string literals are deprecated
+========== INSTALLATION OF wig10 SCRIPT FINISHED
+========== INSTALLATION OF bsdwig18 SCRIPT STARTED
+========== INSTALLATION OF bsdwig18 SCRIPT FINISHED
+========== INSTALLATION OF bsdperfectwig SCRIPT STARTED
+puzzle.c:28:16: warning: multi-line string literals are deprecated
+puzzle.c:33:16: warning: multi-line string literals are deprecated
+puzzle.c:36:16: warning: multi-line string literals are deprecated
+puzzle.c:41:16: warning: multi-line string literals are deprecated
+puzzle.c:44:16: warning: multi-line string literals are deprecated
+puzzle.c:47:16: warning: multi-line string literals are deprecated
+puzzle.c:51:16: warning: multi-line string literals are deprecated
+puzzle.c:65:16: warning: multi-line string literals are deprecated
+puzzle.c:68:16: warning: multi-line string literals are deprecated
+puzzle.c:77:16: warning: multi-line string literals are deprecated
+puzzle.c:80:16: warning: multi-line string literals are deprecated
+puzzle.c:85:16: warning: multi-line string literals are deprecated
+puzzle.c:99:16: warning: multi-line string literals are deprecated
+puzzle.c:104:16: warning: multi-line string literals are deprecated
+========== INSTALLATION OF bsdperfectwig SCRIPT FINISHED
+
+BENCHMARK tictactoe ./group04 tictactoe
+========== INSTALLATION OF bsdwig4 SCRIPT STARTED
+========== INSTALLATION OF bsdwig4 SCRIPT FINISHED
+========== INSTALLATION OF bsdwig18 SCRIPT STARTED
+========== INSTALLATION OF bsdwig18 SCRIPT FINISHED
+
+BENCHMARK mydate ./group05-mydate mydate
+========== INSTALLATION OF bsdwig4 SCRIPT STARTED
+========== INSTALLATION OF bsdwig4 SCRIPT FINISHED
+========== INSTALLATION OF wig10 SCRIPT STARTED
+mydate.c:43:12: warning: multi-line string literals are deprecated
+mydate.c:48:12: warning: multi-line string literals are deprecated
+mydate.c:51:12: warning: multi-line string literals are deprecated
+mydate.c:55:12: warning: multi-line string literals are deprecated
+mydate.c:58:12: warning: multi-line string literals are deprecated
+mydate.c:62:12: warning: multi-line string literals are deprecated
+mydate.c:65:12: warning: multi-line string literals are deprecated
+mydate.c:79:12: warning: multi-line string literals are deprecated
+mydate.c:84:12: warning: multi-line string literals are deprecated
+mydate.c:87:12: warning: multi-line string literals are deprecated
+mydate.c:92:12: warning: multi-line string literals are deprecated
+mydate.c:95:12: warning: multi-line string literals are deprecated
+mydate.c:99:12: warning: multi-line string literals are deprecated
+mydate.c:113:12: warning: multi-line string literals are deprecated
+mydate.c:118:12: warning: multi-line string literals are deprecated
+mydate.c:121:12: warning: multi-line string literals are deprecated
+mydate.c:126:12: warning: multi-line string literals are deprecated
+mydate.c:129:12: warning: multi-line string literals are deprecated
+mydate.c:134:12: warning: multi-line string literals are deprecated
+mydate.c:137:12: warning: multi-line string literals are deprecated
+mydate.c:141:12: warning: multi-line string literals are deprecated
+mydate.c:155:12: warning: multi-line string literals are deprecated
+mydate.c:160:12: warning: multi-line string literals are deprecated
+mydate.c:163:12: warning: multi-line string literals are deprecated
+mydate.c:168:12: warning: multi-line string literals are deprecated
+mydate.c:171:12: warning: multi-line string literals are deprecated
+mydate.c:176:12: warning: multi-line string literals are deprecated
+mydate.c:179:12: warning: multi-line string literals are deprecated
+mydate.c:184:12: warning: multi-line string literals are deprecated
+mydate.c:187:12: warning: multi-line string literals are deprecated
+mydate.c:192:12: warning: multi-line string literals are deprecated
+mydate.c:196:12: warning: multi-line string literals are deprecated
+mydate.c:210:12: warning: multi-line string literals are deprecated
+mydate.c:215:12: warning: multi-line string literals are deprecated
+========== INSTALLATION OF wig10 SCRIPT FINISHED
+========== INSTALLATION OF bsdwig18 SCRIPT STARTED
+========== INSTALLATION OF bsdwig18 SCRIPT FINISHED
+========== INSTALLATION OF bsdperfectwig SCRIPT STARTED
+mydate.c:28:16: warning: multi-line string literals are deprecated
+mydate.c:33:16: warning: multi-line string literals are deprecated
+mydate.c:36:16: warning: multi-line string literals are deprecated
+mydate.c:40:16: warning: multi-line string literals are deprecated
+mydate.c:43:16: warning: multi-line string literals are deprecated
+mydate.c:47:16: warning: multi-line string literals are deprecated
+mydate.c:50:16: warning: multi-line string literals are deprecated
+mydate.c:64:16: warning: multi-line string literals are deprecated
+mydate.c:69:16: warning: multi-line string literals are deprecated
+mydate.c:72:16: warning: multi-line string literals are deprecated
+mydate.c:77:16: warning: multi-line string literals are deprecated
+mydate.c:80:16: warning: multi-line string literals are deprecated
+mydate.c:84:16: warning: multi-line string literals are deprecated
+mydate.c:98:16: warning: multi-line string literals are deprecated
+mydate.c:103:16: warning: multi-line string literals are deprecated
+mydate.c:106:16: warning: multi-line string literals are deprecated
+mydate.c:111:16: warning: multi-line string literals are deprecated
+mydate.c:114:16: warning: multi-line string literals are deprecated
+mydate.c:119:16: warning: multi-line string literals are deprecated
+mydate.c:122:16: warning: multi-line string literals are deprecated
+mydate.c:126:16: warning: multi-line string literals are deprecated
+mydate.c:140:16: warning: multi-line string literals are deprecated
+mydate.c:145:16: warning: multi-line string literals are deprecated
+mydate.c:148:16: warning: multi-line string literals are deprecated
+mydate.c:153:16: warning: multi-line string literals are deprecated
+mydate.c:156:16: warning: multi-line string literals are deprecated
+mydate.c:161:16: warning: multi-line string literals are deprecated
+mydate.c:164:16: warning: multi-line string literals are deprecated
+mydate.c:169:16: warning: multi-line string literals are deprecated
+mydate.c:172:16: warning: multi-line string literals are deprecated
+mydate.c:177:16: warning: multi-line string literals are deprecated
+mydate.c:181:16: warning: multi-line string literals are deprecated
+mydate.c:195:16: warning: multi-line string literals are deprecated
+mydate.c:200:16: warning: multi-line string literals are deprecated
+mydate.c: In function `session_Calendar':
+mydate.c:212: syntax error before "continue"
+mydate.c:230: syntax error before "continue"
+mydate.c:231: syntax error before "continue"
+mydate.c:231: syntax error before ')' token
+mydate.c:238: syntax error before "continue"
+mydate.c:238: syntax error before "continue"
+mydate.c:253: syntax error before '=' token
+mydate.c:253: syntax error before "continue"
+mydate.c:270: syntax error before "continue"
+mydate.c:270: syntax error before "continue"
+mydate.c:285: syntax error before '=' token
+mydate.c:285: syntax error before "continue"
+mydate.c:290: syntax error before '=' token
+mydate.c:302: syntax error before "continue"
+mydate.c:302: syntax error before "continue"
+mydate.c:317: syntax error before '=' token
+mydate.c:317: syntax error before "continue"
+mydate.c:322: syntax error before '=' token
+mydate.c:334: syntax error before "continue"
+mydate.c:334: syntax error before "continue"
+mydate.c:349: syntax error before '=' token
+mydate.c:349: syntax error before "continue"
+mydate.c:354: syntax error before '=' token
+mydate.c:355: syntax error before "continue"
+mydate.c:355: syntax error before ')' token
+mydate.c: At top level:
+mydate.c:365: warning: parameter names (without types) in function declaration
+mydate.c:365: warning: data definition has no type or storage class
+mydate.c:366: conflicting types for `SESSIONID'
+/home/user/hendren/WIG/PerfectWig/perfectwig_run.h:28: previous declaration of `SESSIONID'
+mydate.c:366: warning: initialization makes integer from pointer without a cast
+mydate.c:366: warning: data definition has no type or storage class
+mydate.c:368: conflicting types for `const_html_ByeBye'
+mydate.c:189: previous declaration of `const_html_ByeBye'
+mydate.c:368: warning: data definition has no type or storage class
+mydate.c:369: syntax error before numeric constant
+cp: mydate.cgi: No such file or directory
+chmod: /home/user/cpicke/public_html/cgi-bin/mydate.cgi: No such file or directory
+========== INSTALLATION OF bsdperfectwig SCRIPT ABORTED
+
+BENCHMARK todo ./group05-todo todo
+========== INSTALLATION OF bsdwig4 SCRIPT STARTED
+todo.c: In function `main':
+todo.c:165: warning: deprecated use of label at end of compound statement
+========== INSTALLATION OF bsdwig4 SCRIPT FINISHED
+========== INSTALLATION OF wig10 SCRIPT STARTED
+todo.c:43:12: warning: multi-line string literals are deprecated
+todo.c:48:12: warning: multi-line string literals are deprecated
+todo.c:51:12: warning: multi-line string literals are deprecated
+todo.c:55:12: warning: multi-line string literals are deprecated
+todo.c:58:12: warning: multi-line string literals are deprecated
+todo.c:62:12: warning: multi-line string literals are deprecated
+todo.c:76:12: warning: multi-line string literals are deprecated
+todo.c:83:12: warning: multi-line string literals are deprecated
+todo.c:97:12: warning: multi-line string literals are deprecated
+todo.c:104:12: warning: multi-line string literals are deprecated
+todo.c:118:12: warning: multi-line string literals are deprecated
+todo.c:123:12: warning: multi-line string literals are deprecated
+todo.c:126:12: warning: multi-line string literals are deprecated
+todo.c:131:12: warning: multi-line string literals are deprecated
+todo.c:134:12: warning: multi-line string literals are deprecated
+todo.c:148:12: warning: multi-line string literals are deprecated
+todo.c:151:12: warning: multi-line string literals are deprecated
+todo.c:156:12: warning: multi-line string literals are deprecated
+todo.c:159:12: warning: multi-line string literals are deprecated
+todo.c:162:12: warning: multi-line string literals are deprecated
+todo.c:165:12: warning: multi-line string literals are deprecated
+todo.c:168:12: warning: multi-line string literals are deprecated
+todo.c:171:12: warning: multi-line string literals are deprecated
+todo.c:176:12: warning: multi-line string literals are deprecated
+todo.c:179:12: warning: multi-line string literals are deprecated
+todo.c:182:12: warning: multi-line string literals are deprecated
+todo.c:185:12: warning: multi-line string literals are deprecated
+todo.c:188:12: warning: multi-line string literals are deprecated
+todo.c:191:12: warning: multi-line string literals are deprecated
+todo.c:194:12: warning: multi-line string literals are deprecated
+todo.c:208:12: warning: multi-line string literals are deprecated
+todo.c:213:12: warning: multi-line string literals are deprecated
+todo.c:216:12: warning: multi-line string literals are deprecated
+todo.c:219:12: warning: multi-line string literals are deprecated
+========== INSTALLATION OF wig10 SCRIPT FINISHED
+========== INSTALLATION OF bsdwig18 SCRIPT STARTED
+========== INSTALLATION OF bsdwig18 SCRIPT FINISHED
+========== INSTALLATION OF bsdperfectwig SCRIPT STARTED
+todo.c:28:16: warning: multi-line string literals are deprecated
+todo.c:33:16: warning: multi-line string literals are deprecated
+todo.c:36:16: warning: multi-line string literals are deprecated
+todo.c:40:16: warning: multi-line string literals are deprecated
+todo.c:43:16: warning: multi-line string literals are deprecated
+todo.c:47:16: warning: multi-line string literals are deprecated
+todo.c:61:16: warning: multi-line string literals are deprecated
+todo.c:68:16: warning: multi-line string literals are deprecated
+todo.c:82:16: warning: multi-line string literals are deprecated
+todo.c:89:16: warning: multi-line string literals are deprecated
+todo.c:103:16: warning: multi-line string literals are deprecated
+todo.c:108:16: warning: multi-line string literals are deprecated
+todo.c:111:16: warning: multi-line string literals are deprecated
+todo.c:116:16: warning: multi-line string literals are deprecated
+todo.c:119:16: warning: multi-line string literals are deprecated
+todo.c:133:16: warning: multi-line string literals are deprecated
+todo.c:136:16: warning: multi-line string literals are deprecated
+todo.c:141:16: warning: multi-line string literals are deprecated
+todo.c:144:16: warning: multi-line string literals are deprecated
+todo.c:147:16: warning: multi-line string literals are deprecated
+todo.c:150:16: warning: multi-line string literals are deprecated
+todo.c:153:16: warning: multi-line string literals are deprecated
+todo.c:156:16: warning: multi-line string literals are deprecated
+todo.c:161:16: warning: multi-line string literals are deprecated
+todo.c:164:16: warning: multi-line string literals are deprecated
+todo.c:167:16: warning: multi-line string literals are deprecated
+todo.c:170:16: warning: multi-line string literals are deprecated
+todo.c:173:16: warning: multi-line string literals are deprecated
+todo.c:176:16: warning: multi-line string literals are deprecated
+todo.c:179:16: warning: multi-line string literals are deprecated
+todo.c:193:16: warning: multi-line string literals are deprecated
+todo.c:198:16: warning: multi-line string literals are deprecated
+todo.c:201:16: warning: multi-line string literals are deprecated
+todo.c:204:16: warning: multi-line string literals are deprecated
+========== INSTALLATION OF bsdperfectwig SCRIPT FINISHED
+
+BENCHMARK wiki ./group06 wiki
+========== INSTALLATION OF wig10 SCRIPT STARTED
+wiki.c:51:12: warning: multi-line string literals are deprecated
+wiki.c:56:12: warning: multi-line string literals are deprecated
+wiki.c:59:12: warning: multi-line string literals are deprecated
+wiki.c:64:12: warning: multi-line string literals are deprecated
+wiki.c:67:12: warning: multi-line string literals are deprecated
+wiki.c:71:12: warning: multi-line string literals are deprecated
+wiki.c:74:12: warning: multi-line string literals are deprecated
+wiki.c:88:12: warning: multi-line string literals are deprecated
+wiki.c:93:12: warning: multi-line string literals are deprecated
+wiki.c:96:12: warning: multi-line string literals are deprecated
+wiki.c:100:12: warning: multi-line string literals are deprecated
+wiki.c:106:12: warning: multi-line string literals are deprecated
+wiki.c:112:12: warning: multi-line string literals are deprecated
+wiki.c:118:12: warning: multi-line string literals are deprecated
+wiki.c:124:12: warning: multi-line string literals are deprecated
+wiki.c:130:12: warning: multi-line string literals are deprecated
+wiki.c:133:12: warning: multi-line string literals are deprecated
+wiki.c:136:12: warning: multi-line string literals are deprecated
+wiki.c:139:12: warning: multi-line string literals are deprecated
+wiki.c:153:12: warning: multi-line string literals are deprecated
+wiki.c:158:12: warning: multi-line string literals are deprecated
+wiki.c:163:12: warning: multi-line string literals are deprecated
+wiki.c:166:12: warning: multi-line string literals are deprecated
+wiki.c:169:12: warning: multi-line string literals are deprecated
+wiki.c:172:12: warning: multi-line string literals are deprecated
+wiki.c:177:12: warning: multi-line string literals are deprecated
+wiki.c:182:12: warning: multi-line string literals are deprecated
+wiki.c:187:12: warning: multi-line string literals are deprecated
+wiki.c:190:12: warning: multi-line string literals are deprecated
+wiki.c:193:12: warning: multi-line string literals are deprecated
+wiki.c:207:12: warning: multi-line string literals are deprecated
+wiki.c:212:12: warning: multi-line string literals are deprecated
+wiki.c:215:12: warning: multi-line string literals are deprecated
+wiki.c:221:12: warning: multi-line string literals are deprecated
+wiki.c:226:12: warning: multi-line string literals are deprecated
+wiki.c:229:12: warning: multi-line string literals are deprecated
+wiki.c:234:12: warning: multi-line string literals are deprecated
+wiki.c:239:12: warning: multi-line string literals are deprecated
+wiki.c:243:12: warning: multi-line string literals are deprecated
+wiki.c:246:12: warning: multi-line string literals are deprecated
+wiki.c:251:12: warning: multi-line string literals are deprecated
+wiki.c:254:12: warning: multi-line string literals are deprecated
+wiki.c:257:12: warning: multi-line string literals are deprecated
+wiki.c:260:12: warning: multi-line string literals are deprecated
+wiki.c:263:12: warning: multi-line string literals are deprecated
+wiki.c:266:12: warning: multi-line string literals are deprecated
+wiki.c:280:12: warning: multi-line string literals are deprecated
+wiki.c:285:12: warning: multi-line string literals are deprecated
+wiki.c:290:12: warning: multi-line string literals are deprecated
+wiki.c:304:12: warning: multi-line string literals are deprecated
+wiki.c:309:12: warning: multi-line string literals are deprecated
+wiki.c:313:12: warning: multi-line string literals are deprecated
+========== INSTALLATION OF wig10 SCRIPT FINISHED
+
+BENCHMARK startrek ./group07 startrek
+========== INSTALLATION OF bsdwig4 SCRIPT STARTED
+========== INSTALLATION OF bsdwig4 SCRIPT FINISHED
+
+BENCHMARK mailinglist ./group08 mailinglist
+========== INSTALLATION OF bsdwig4 SCRIPT STARTED
+========== INSTALLATION OF bsdwig4 SCRIPT FINISHED
+========== INSTALLATION OF wig10 SCRIPT STARTED
+mailinglist.c:43:12: warning: multi-line string literals are deprecated
+mailinglist.c:48:12: warning: multi-line string literals are deprecated
+mailinglist.c:54:12: warning: multi-line string literals are deprecated
+mailinglist.c:57:12: warning: multi-line string literals are deprecated
+mailinglist.c:62:12: warning: multi-line string literals are deprecated
+mailinglist.c:66:12: warning: multi-line string literals are deprecated
+mailinglist.c:70:12: warning: multi-line string literals are deprecated
+mailinglist.c:74:12: warning: multi-line string literals are deprecated
+mailinglist.c:77:12: warning: multi-line string literals are deprecated
+mailinglist.c:91:12: warning: multi-line string literals are deprecated
+mailinglist.c:96:12: warning: multi-line string literals are deprecated
+mailinglist.c:99:12: warning: multi-line string literals are deprecated
+mailinglist.c:102:12: warning: multi-line string literals are deprecated
+mailinglist.c:105:12: warning: multi-line string literals are deprecated
+mailinglist.c:108:12: warning: multi-line string literals are deprecated
+mailinglist.c:111:12: warning: multi-line string literals are deprecated
+mailinglist.c:114:12: warning: multi-line string literals are deprecated
+mailinglist.c:117:12: warning: multi-line string literals are deprecated
+mailinglist.c:122:12: warning: multi-line string literals are deprecated
+mailinglist.c:126:12: warning: multi-line string literals are deprecated
+mailinglist.c:130:12: warning: multi-line string literals are deprecated
+mailinglist.c:134:12: warning: multi-line string literals are deprecated
+mailinglist.c:137:12: warning: multi-line string literals are deprecated
+mailinglist.c:151:12: warning: multi-line string literals are deprecated
+mailinglist.c:156:12: warning: multi-line string literals are deprecated
+mailinglist.c:159:12: warning: multi-line string literals are deprecated
+mailinglist.c:162:12: warning: multi-line string literals are deprecated
+mailinglist.c:165:12: warning: multi-line string literals are deprecated
+mailinglist.c:168:12: warning: multi-line string literals are deprecated
+mailinglist.c:171:12: warning: multi-line string literals are deprecated
+mailinglist.c:174:12: warning: multi-line string literals are deprecated
+mailinglist.c:178:12: warning: multi-line string literals are deprecated
+mailinglist.c:183:12: warning: multi-line string literals are deprecated
+mailinglist.c:187:12: warning: multi-line string literals are deprecated
+mailinglist.c:191:12: warning: multi-line string literals are deprecated
+mailinglist.c:195:12: warning: multi-line string literals are deprecated
+mailinglist.c:198:12: warning: multi-line string literals are deprecated
+mailinglist.c:212:12: warning: multi-line string literals are deprecated
+mailinglist.c:219:12: warning: multi-line string literals are deprecated
+mailinglist.c:224:12: warning: multi-line string literals are deprecated
+mailinglist.c:228:12: warning: multi-line string literals are deprecated
+mailinglist.c:231:12: warning: multi-line string literals are deprecated
+mailinglist.c:236:12: warning: multi-line string literals are deprecated
+mailinglist.c:241:12: warning: multi-line string literals are deprecated
+mailinglist.c:246:12: warning: multi-line string literals are deprecated
+mailinglist.c:249:12: warning: multi-line string literals are deprecated
+mailinglist.c:252:12: warning: multi-line string literals are deprecated
+mailinglist.c:257:12: warning: multi-line string literals are deprecated
+mailinglist.c:262:12: warning: multi-line string literals are deprecated
+mailinglist.c:267:12: warning: multi-line string literals are deprecated
+mailinglist.c:270:12: warning: multi-line string literals are deprecated
+mailinglist.c:273:12: warning: multi-line string literals are deprecated
+mailinglist.c:278:12: warning: multi-line string literals are deprecated
+mailinglist.c:283:12: warning: multi-line string literals are deprecated
+mailinglist.c:288:12: warning: multi-line string literals are deprecated
+mailinglist.c:291:12: warning: multi-line string literals are deprecated
+mailinglist.c:294:12: warning: multi-line string literals are deprecated
+mailinglist.c:299:12: warning: multi-line string literals are deprecated
+mailinglist.c:304:12: warning: multi-line string literals are deprecated
+mailinglist.c:309:12: warning: multi-line string literals are deprecated
+mailinglist.c:312:12: warning: multi-line string literals are deprecated
+mailinglist.c:315:12: warning: multi-line string literals are deprecated
+mailinglist.c:319:12: warning: multi-line string literals are deprecated
+mailinglist.c:324:12: warning: multi-line string literals are deprecated
+mailinglist.c:328:12: warning: multi-line string literals are deprecated
+mailinglist.c:332:12: warning: multi-line string literals are deprecated
+mailinglist.c:336:12: warning: multi-line string literals are deprecated
+mailinglist.c:339:12: warning: multi-line string literals are deprecated
+mailinglist.c:353:12: warning: multi-line string literals are deprecated
+mailinglist.c:360:12: warning: multi-line string literals are deprecated
+mailinglist.c:367:12: warning: multi-line string literals are deprecated
+mailinglist.c:373:12: warning: multi-line string literals are deprecated
+mailinglist.c:377:12: warning: multi-line string literals are deprecated
+mailinglist.c:381:12: warning: multi-line string literals are deprecated
+mailinglist.c:385:12: warning: multi-line string literals are deprecated
+mailinglist.c:399:12: warning: multi-line string literals are deprecated
+mailinglist.c:404:12: warning: multi-line string literals are deprecated
+mailinglist.c:409:12: warning: multi-line string literals are deprecated
+========== INSTALLATION OF wig10 SCRIPT FINISHED
+========== INSTALLATION OF bsdwig18 SCRIPT STARTED
+========== INSTALLATION OF bsdwig18 SCRIPT FINISHED
+
+BENCHMARK blackjack ./group09 blackjack
+========== INSTALLATION OF bsdwig4 SCRIPT STARTED
+blackjack.c: In function `main':
+blackjack.c:488: warning: deprecated use of label at end of compound statement
+blackjack.c:604: warning: deprecated use of label at end of compound statement
+========== INSTALLATION OF bsdwig4 SCRIPT FINISHED
+========== INSTALLATION OF wig10 SCRIPT STARTED
+blackjack.c:48:12: warning: multi-line string literals are deprecated
+blackjack.c:51:12: warning: multi-line string literals are deprecated
+blackjack.c:65:12: warning: multi-line string literals are deprecated
+blackjack.c:68:12: warning: multi-line string literals are deprecated
+blackjack.c:86:12: warning: multi-line string literals are deprecated
+blackjack.c:89:12: warning: multi-line string literals are deprecated
+blackjack.c:108:12: warning: multi-line string literals are deprecated
+blackjack.c:111:12: warning: multi-line string literals are deprecated
+blackjack.c:114:12: warning: multi-line string literals are deprecated
+blackjack.c:119:12: warning: multi-line string literals are deprecated
+blackjack.c:122:12: warning: multi-line string literals are deprecated
+blackjack.c:147:12: warning: multi-line string literals are deprecated
+blackjack.c:152:12: warning: multi-line string literals are deprecated
+blackjack.c:155:12: warning: multi-line string literals are deprecated
+blackjack.c:158:12: warning: multi-line string literals are deprecated
+blackjack.c:176:12: warning: multi-line string literals are deprecated
+blackjack.c:179:12: warning: multi-line string literals are deprecated
+blackjack.c:182:12: warning: multi-line string literals are deprecated
+blackjack.c:203:12: warning: multi-line string literals are deprecated
+blackjack.c:208:12: warning: multi-line string literals are deprecated
+blackjack.c:211:12: warning: multi-line string literals are deprecated
+blackjack.c:236:12: warning: multi-line string literals are deprecated
+blackjack.c:241:12: warning: multi-line string literals are deprecated
+blackjack.c:259:12: warning: multi-line string literals are deprecated
+blackjack.c:262:12: warning: multi-line string literals are deprecated
+blackjack.c:280:12: warning: multi-line string literals are deprecated
+blackjack.c:283:12: warning: multi-line string literals are deprecated
+blackjack.c:288:12: warning: multi-line string literals are deprecated
+blackjack.c:291:12: warning: multi-line string literals are deprecated
+blackjack.c:308:12: warning: multi-line string literals are deprecated
+blackjack.c:311:12: warning: multi-line string literals are deprecated
+blackjack.c:316:12: warning: multi-line string literals are deprecated
+blackjack.c:320:12: warning: multi-line string literals are deprecated
+blackjack.c:337:12: warning: multi-line string literals are deprecated
+blackjack.c:340:12: warning: multi-line string literals are deprecated
+blackjack.c:347:12: warning: multi-line string literals are deprecated
+blackjack.c:351:12: warning: multi-line string literals are deprecated
+blackjack.c:368:12: warning: multi-line string literals are deprecated
+blackjack.c:371:12: warning: multi-line string literals are deprecated
+blackjack.c:378:12: warning: multi-line string literals are deprecated
+blackjack.c:382:12: warning: multi-line string literals are deprecated
+blackjack.c:399:12: warning: multi-line string literals are deprecated
+blackjack.c:402:12: warning: multi-line string literals are deprecated
+blackjack.c:407:12: warning: multi-line string literals are deprecated
+blackjack.c:411:12: warning: multi-line string literals are deprecated
+blackjack.c:428:12: warning: multi-line string literals are deprecated
+blackjack.c:431:12: warning: multi-line string literals are deprecated
+blackjack.c: In function `function_itos':
+blackjack.c:512: syntax error before "A"
+blackjack.c:520: syntax error before "J"
+blackjack.c:528: syntax error before "Q"
+blackjack.c:536: syntax error before "K"
+blackjack.c:544: syntax error before numeric constant
+blackjack.c:552: syntax error before numeric constant
+blackjack.c:560: syntax error before numeric constant
+blackjack.c:568: syntax error before numeric constant
+blackjack.c:576: syntax error before numeric constant
+blackjack.c:584: syntax error before numeric constant
+blackjack.c:592: syntax error before numeric constant
+blackjack.c:600: syntax error before numeric constant
+blackjack.c:608: syntax error before numeric constant
+chmod: blackjack10.cgi: No such file or directory
+mv: rename blackjack10.cgi to /home/user/cpicke/public_html/cgi-bin/blackjack10.cgi: No such file or directory
+========== INSTALLATION OF wig10 SCRIPT ABORTED
+========== INSTALLATION OF bsdperfectwig SCRIPT STARTED
+blackjack.c:28:16: warning: multi-line string literals are deprecated
+blackjack.c:31:16: warning: multi-line string literals are deprecated
+blackjack.c:45:16: warning: multi-line string literals are deprecated
+blackjack.c:48:16: warning: multi-line string literals are deprecated
+blackjack.c:66:16: warning: multi-line string literals are deprecated
+blackjack.c:69:16: warning: multi-line string literals are deprecated
+blackjack.c:88:16: warning: multi-line string literals are deprecated
+blackjack.c:91:16: warning: multi-line string literals are deprecated
+blackjack.c:94:16: warning: multi-line string literals are deprecated
+blackjack.c:99:16: warning: multi-line string literals are deprecated
+blackjack.c:102:16: warning: multi-line string literals are deprecated
+blackjack.c:127:16: warning: multi-line string literals are deprecated
+blackjack.c:132:16: warning: multi-line string literals are deprecated
+blackjack.c:135:16: warning: multi-line string literals are deprecated
+blackjack.c:138:16: warning: multi-line string literals are deprecated
+blackjack.c:156:16: warning: multi-line string literals are deprecated
+blackjack.c:159:16: warning: multi-line string literals are deprecated
+blackjack.c:162:16: warning: multi-line string literals are deprecated
+blackjack.c:183:16: warning: multi-line string literals are deprecated
+blackjack.c:188:16: warning: multi-line string literals are deprecated
+blackjack.c:191:16: warning: multi-line string literals are deprecated
+blackjack.c:216:16: warning: multi-line string literals are deprecated
+blackjack.c:221:16: warning: multi-line string literals are deprecated
+blackjack.c:239:16: warning: multi-line string literals are deprecated
+blackjack.c:242:16: warning: multi-line string literals are deprecated
+blackjack.c:260:16: warning: multi-line string literals are deprecated
+blackjack.c:263:16: warning: multi-line string literals are deprecated
+blackjack.c:268:16: warning: multi-line string literals are deprecated
+blackjack.c:271:16: warning: multi-line string literals are deprecated
+blackjack.c:288:16: warning: multi-line string literals are deprecated
+blackjack.c:291:16: warning: multi-line string literals are deprecated
+blackjack.c:296:16: warning: multi-line string literals are deprecated
+blackjack.c:300:16: warning: multi-line string literals are deprecated
+blackjack.c:317:16: warning: multi-line string literals are deprecated
+blackjack.c:320:16: warning: multi-line string literals are deprecated
+blackjack.c:327:16: warning: multi-line string literals are deprecated
+blackjack.c:331:16: warning: multi-line string literals are deprecated
+blackjack.c:348:16: warning: multi-line string literals are deprecated
+blackjack.c:351:16: warning: multi-line string literals are deprecated
+blackjack.c:358:16: warning: multi-line string literals are deprecated
+blackjack.c:362:16: warning: multi-line string literals are deprecated
+blackjack.c:379:16: warning: multi-line string literals are deprecated
+blackjack.c:382:16: warning: multi-line string literals are deprecated
+blackjack.c:387:16: warning: multi-line string literals are deprecated
+blackjack.c:391:16: warning: multi-line string literals are deprecated
+blackjack.c:408:16: warning: multi-line string literals are deprecated
+blackjack.c:411:16: warning: multi-line string literals are deprecated
+========== INSTALLATION OF bsdperfectwig SCRIPT FINISHED
+
+BENCHMARK dice ./group10 dice
+========== INSTALLATION OF bsdwig4 SCRIPT STARTED
+========== INSTALLATION OF bsdwig4 SCRIPT FINISHED
+========== INSTALLATION OF wig10 SCRIPT STARTED
+dice.c:44:12: warning: multi-line string literals are deprecated
+dice.c:49:12: warning: multi-line string literals are deprecated
+dice.c:53:12: warning: multi-line string literals are deprecated
+dice.c:66:12: warning: multi-line string literals are deprecated
+dice.c:71:12: warning: multi-line string literals are deprecated
+dice.c:74:12: warning: multi-line string literals are deprecated
+dice.c:77:12: warning: multi-line string literals are deprecated
+dice.c:80:12: warning: multi-line string literals are deprecated
+dice.c:83:12: warning: multi-line string literals are deprecated
+dice.c:88:12: warning: multi-line string literals are deprecated
+dice.c:91:12: warning: multi-line string literals are deprecated
+dice.c:94:12: warning: multi-line string literals are deprecated
+dice.c:97:12: warning: multi-line string literals are deprecated
+dice.c:100:12: warning: multi-line string literals are deprecated
+dice.c:103:12: warning: multi-line string literals are deprecated
+dice.c:117:12: warning: multi-line string literals are deprecated
+dice.c:124:12: warning: multi-line string literals are deprecated
+dice.c:129:12: warning: multi-line string literals are deprecated
+dice.c:132:12: warning: multi-line string literals are deprecated
+========== INSTALLATION OF wig10 SCRIPT FINISHED
+
+BENCHMARK PopularOper ./group11 PopularOper
+========== INSTALLATION OF bsdwig4 SCRIPT STARTED
+========== INSTALLATION OF bsdwig4 SCRIPT FINISHED
+========== INSTALLATION OF wig10 SCRIPT STARTED
+PopularOper.c:43:12: warning: multi-line string literals are deprecated
+PopularOper.c:49:12: warning: multi-line string literals are deprecated
+PopularOper.c:52:12: warning: multi-line string literals are deprecated
+PopularOper.c:55:12: warning: multi-line string literals are deprecated
+PopularOper.c:59:12: warning: multi-line string literals are deprecated
+PopularOper.c:63:12: warning: multi-line string literals are deprecated
+PopularOper.c:66:12: warning: multi-line string literals are deprecated
+PopularOper.c:69:12: warning: multi-line string literals are deprecated
+PopularOper.c:72:12: warning: multi-line string literals are deprecated
+PopularOper.c:75:12: warning: multi-line string literals are deprecated
+PopularOper.c:78:12: warning: multi-line string literals are deprecated
+PopularOper.c:93:12: warning: multi-line string literals are deprecated
+PopularOper.c:96:12: warning: multi-line string literals are deprecated
+PopularOper.c:102:12: warning: multi-line string literals are deprecated
+PopularOper.c:108:12: warning: multi-line string literals are deprecated
+========== INSTALLATION OF wig10 SCRIPT FINISHED
+========== INSTALLATION OF bsdwig18 SCRIPT STARTED
+========== INSTALLATION OF bsdwig18 SCRIPT FINISHED
+

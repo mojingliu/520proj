@@ -1,0 +1,99 @@
+<title>JOOS examples</title>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+<h1><img src="images/joos32.gif"> examples</h1>
+
+The following directories contain programs written in the JOOS language.  In
+each directory you will find a Makefile which shows how to build the 
+programs in the directory, i.e. which <font face=courier><code>.java</code></font> files go together to form
+an application.   
+
+The following directories contain Java applications (not applets). 
+<ul>
+<li><a href="joos/programs/AwtDemos"><font face=courier><code>AwtDemos</code></font></a>:
+examples of using the Abstract Windows Toolkit.
+<li><a href="joos/programs/Network"><font face=courier><code>Network</code></font></a>:
+simple examples of interacting over the network.
+<li><a href="joos/programs/Simple"><font face=courier><code>Simple</code></font></a>:
+a relatively large collection of simple Java programs.
+<li><a href="joos/programs/Threads"><font face=courier><code>Threads</code></font></a>:
+simple multithreaded programs.
+</ul>
+
+The following directories contain Java applets.  Once compiled, you
+should be able to run any of the <font
+face=courier><code>.html</code></font> files in the first two
+directories via the JDK <font
+face=courier><code>appletviewer</code></font>, or via a browser that
+supports Java.
+
+<ul>
+<li><a href="joos/programs/AppletGraphics"><font face=courier><code>AppletGraphics</code></font></a>:
+simple graphics program to be displayed via a browser.
+<li><a href="joos/programs/ImageDemos"><font face=courier><code>ImageDemos</code></font></a>:
+two techniques for displaying an animation.
+<li><a href="joos/programs/WIGapplets"><font face=courier><code>WIGapplets</code></font></a>:
+examples of WIG applets.
+</ul>
+
+Most examples have been taken from textbooks and modified so that they are 
+written in JOOS.  The changes made to make them into JOOS programs include:
+
+<ul>
+<li>Making the constructors explicit, and making them conform to JOOS specifications
+with an explicit call to the <font face=courier><code>super</code></font> constructor.
+
+<li>Since JOOS does not support constants, all constants (particularly
+those from the Java <font face=courier><code>awt</code></font> libraries) 
+must be accessed via nullary functions
+found in the JOOS libarary class called <font face=courier><code>JoosConstants</code></font>.  You may refer
+to the file 
+<font face=courier><code>joos/lib/JoosConstants.java</code></font> to see all of the
+constants supported in this manner.
+
+<li>Since JOOS does not support overloading, the 
+<a href="jooslib.html">
+JOOS external declarations</a>
+only support one alternative for each method in Java libraries, usually the most general one.  
+In some cases, for example the <font face=courier><code>add()</code></font>
+ method in the  <font face=courier><code>Container</code></font> class,
+both alternatives are really needed.   In this case there is a JOOS 
+wrapper class called <font face=courier><code>JoosContainer</code></font>
+ that provided a new name for 
+each kind of <font face=courier><code>add()</code></font>: <code>addString()</code> and <code>addPosition()</code>.
+ 
+<li>  Some Java libarary classes have static members and/or classes.  In
+order to get this functionality, one needs to use the appropriate wrapper
+JOOS class. 
+A good example of this is the <font face=courier><code>JoosDimension</code></font> class that
+provides a wrapper to the Java <font face=courier><code>Dimension</code></font> class. 
+
+<li> Java has quite a rich class structure to support various kinds of I/O.
+All JOOS I/O is simple, and is done using the functions found in the
+<font face=courier><code>JoosIO</code></font> class.
+
+<li> JOOS does not support exceptions, and so it is not possible to 
+directly call Java library methods that raise exceptions that must
+be caught, i.e. exceptions that are not <font face=courier><code>RuntimeException</code></font>s.  Thus, some
+JOOS libarary classes are provided that wrap the exception raising
+methods inside a method that catches the exception and returns true if
+an exception was caught, e.g. <font face=courier><code>sleep()</code></font> in 
+<font face=courier><code>JoosThread</code></font>.
+
+<li>  Since JOOS does not support real numbers, and some 
+<font face=courier><code>awt</code></font> functions 
+require real numbers as input (<font face=courier><code>GridBagConstraints</code></font>), 
+there is a JOOS version
+(<font face=courier><code>JoosGridBagConstraints</code></font>), that uses <code>JoosFractions</code>
+to represent non-integers.
+</ul>
+ 
+</table>
+<p>
+<p>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+Maintained by Eric Bodden.
+<a href="index.html">[HOME]</a>
+</td></tr>
+</table>

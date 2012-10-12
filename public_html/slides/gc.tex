@@ -1,0 +1,1162 @@
+\input{input/boilerplate.tex}
+
+\aarhus{
+\newpagestyle{dOvsstyle}{dOvs'98 Week 47 \hfil Garbage collection}{\hfil \thepage}
+}
+
+\mcgill{
+\newpagestyle{dOvsstyle}{COMP 520 \courseterm  \hfil Garbage collection (\thepage)}{}
+}
+ 
+\slidepagestyle{dOvsstyle}
+
+\begin{slide*}
+\begin{tabbing}
+\aarhus{{\Large\bf Week 47}\\}
+~\\
+{\Huge\bf Garbage collection}\\
+\end{tabbing}
+\begin{center}
+\setlength{\unitlength}{1600sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(8187,7191)(3289,-8140)
+\thinlines
+\put(8851,-1711){\circle*{100}}
+\put(8851,-2311){\circle*{100}}
+\put(8701,-2461){\framebox(300,900){}}
+\put(8701,-1861){\line( 1, 0){300}}
+\put(8701,-2161){\line( 1, 0){300}}
+\put(5551,-1711){\circle*{100}}
+\put(5551,-2311){\circle*{100}}
+\put(5401,-2461){\framebox(300,900){}}
+\put(5401,-1861){\line( 1, 0){300}}
+\put(5401,-2161){\line( 1, 0){300}}
+\put(4051,-1411){\circle*{100}}
+\put(4051,-1711){\circle*{100}}
+\put(4051,-2461){\circle*{100}}
+\put(4051,-2761){\circle*{100}}
+\put(4051,-3211){\circle*{100}}
+\put(4051,-4261){\circle*{100}}
+\put(4051,-4561){\circle*{100}}
+\put(4051,-5311){\circle*{100}}
+\put(4051,-5611){\circle*{100}}
+\put(4051,-6061){\circle*{100}}
+\put(4051,-7111){\circle*{100}}
+\put(4051,-7411){\circle*{100}}
+\put(3901,-1861){\framebox(300,900){}}
+\put(3901,-2911){\framebox(300,900){}}
+\put(3901,-3661){\framebox(300,600){}}
+\put(3901,-4711){\framebox(300,900){}}
+\put(3901,-5761){\framebox(300,900){}}
+\put(3901,-6511){\framebox(300,600){}}
+\put(3901,-7561){\framebox(300,900){}}
+\put(3901,-1261){\line( 1, 0){300}}
+\put(3901,-1561){\line( 1, 0){300}}
+\put(3901,-2311){\line( 1, 0){300}}
+\put(3901,-2611){\line( 1, 0){300}}
+\put(3901,-3361){\line( 1, 0){300}}
+\put(3901,-4111){\line( 1, 0){300}}
+\put(3901,-4411){\line( 1, 0){300}}
+\put(3901,-5161){\line( 1, 0){300}}
+\put(3901,-5461){\line( 1, 0){300}}
+\put(3901,-6211){\line( 1, 0){300}}
+\put(3901,-6961){\line( 1, 0){300}}
+\put(3901,-7261){\line( 1, 0){300}}
+\put(4051,-2461){\line( 1, 0){450}}
+\put(4501,-2461){\line( 0, 1){1350}}
+\put(4501,-1111){\vector(-1, 0){300}}
+\put(4051,-3211){\line(-1, 0){450}}
+\put(3601,-3211){\line( 0,-1){3150}}
+\put(3601,-6361){\vector( 1, 0){300}}
+\put(4051,-4261){\line(-1, 0){750}}
+\put(3301,-4261){\line( 0,-1){2550}}
+\put(3301,-6811){\vector( 1, 0){600}}
+\put(4051,-4561){\line( 1, 0){450}}
+\put(4501,-4561){\line( 0,-1){450}}
+\put(4501,-5011){\vector(-1, 0){300}}
+\put(4051,-6061){\line( 1, 0){750}}
+\put(4801,-6061){\line( 0, 1){2850}}
+\put(4801,-3211){\vector(-1, 0){600}}
+\put(5551,-1711){\line(-1, 0){600}}
+\put(4951,-1711){\line( 0,-1){450}}
+\put(4951,-2161){\vector(-1, 0){750}}
+\put(4051,-2761){\line(-1, 0){750}}
+\put(3301,-2761){\line( 0,-1){1200}}
+\put(3301,-3961){\vector( 1, 0){600}}
+\put(5551,-2311){\line( 0,-1){1650}}
+\put(5551,-3961){\vector(-1, 0){1350}}
+\put(7351,-1411){\circle*{100}}
+\put(7351,-1711){\circle*{100}}
+\put(7351,-2461){\circle*{100}}
+\put(7351,-2761){\circle*{100}}
+\put(7351,-3211){\circle*{100}}
+\put(7351,-4261){\circle*{100}}
+\put(7351,-4561){\circle*{100}}
+\put(7351,-5311){\circle*{100}}
+\put(7351,-5611){\circle*{100}}
+\put(7351,-6061){\circle*{100}}
+\put(7351,-7111){\circle*{100}}
+\put(7351,-7411){\circle*{100}}
+\put(10351,-1411){\circle*{100}}
+\put(10351,-1711){\circle*{100}}
+\put(10351,-2461){\circle*{100}}
+\put(10351,-2761){\circle*{100}}
+\put(10351,-3511){\circle*{100}}
+\put(10351,-3811){\circle*{100}}
+\put(7351,-2161){\circle*{100}}
+\put(7351,-1111){\circle*{100}}
+\put(7351,-3961){\circle*{100}}
+\put(10201,-1861){\framebox(300,900){}}
+\put(10201,-1261){\line( 1, 0){300}}
+\put(10201,-1561){\line( 1, 0){300}}
+\put(7201,-1861){\framebox(300,900){}}
+\put(7201,-2911){\framebox(300,900){}}
+\put(7201,-3661){\framebox(300,600){}}
+\put(7201,-4711){\framebox(300,900){}}
+\put(7201,-5761){\framebox(300,900){}}
+\put(7201,-6511){\framebox(300,600){}}
+\put(7201,-7561){\framebox(300,900){}}
+\put(7201,-1261){\line( 1, 0){300}}
+\put(7201,-1561){\line( 1, 0){300}}
+\put(7201,-2311){\line( 1, 0){300}}
+\put(7201,-2611){\line( 1, 0){300}}
+\put(7201,-3361){\line( 1, 0){300}}
+\put(7201,-4111){\line( 1, 0){300}}
+\put(7201,-4411){\line( 1, 0){300}}
+\put(7201,-5161){\line( 1, 0){300}}
+\put(7201,-5461){\line( 1, 0){300}}
+\put(7201,-6211){\line( 1, 0){300}}
+\put(7201,-6961){\line( 1, 0){300}}
+\put(7201,-7261){\line( 1, 0){300}}
+\put(7351,-3211){\line(-1, 0){450}}
+\put(6901,-3211){\line( 0,-1){3150}}
+\put(6901,-6361){\vector( 1, 0){300}}
+\put(7351,-4261){\line(-1, 0){750}}
+\put(6601,-4261){\line( 0,-1){2550}}
+\put(6601,-6811){\vector( 1, 0){600}}
+\put(7351,-6061){\line( 1, 0){750}}
+\put(8101,-6061){\line( 0, 1){2850}}
+\put(8101,-3211){\vector(-1, 0){600}}
+\put(7351,-2761){\line(-1, 0){750}}
+\put(6601,-2761){\line( 0,-1){1200}}
+\put(6601,-3961){\vector( 1, 0){600}}
+\put(10201,-2911){\framebox(300,900){}}
+\put(10201,-2311){\line( 1, 0){300}}
+\put(10201,-2611){\line( 1, 0){300}}
+\put(10201,-3961){\framebox(300,900){}}
+\put(10201,-3361){\line( 1, 0){300}}
+\put(10201,-3661){\line( 1, 0){300}}
+\put(8851,-1711){\line( 1, 0){750}}
+\put(9601,-1711){\line( 0, 1){675}}
+\put(9601,-1036){\vector( 1, 0){600}}
+\put(7351,-2161){\line( 1, 0){750}}
+\put(8101,-2161){\line( 0, 1){975}}
+\put(8101,-1186){\vector( 1, 0){2100}}
+\put(8851,-2311){\line( 1, 0){750}}
+\put(9601,-2311){\line( 0, 1){225}}
+\put(9601,-2086){\vector( 1, 0){600}}
+\put(7351,-2461){\line(-1, 0){450}}
+\put(6901,-2461){\line( 0, 1){1350}}
+\put(6901,-1111){\vector( 1, 0){300}}
+\put(7351,-1111){\line( 1, 0){450}}
+\put(7801,-1111){\line( 0,-1){1650}}
+\put(7801,-2761){\line( 1, 0){1800}}
+\put(9601,-2761){\line( 0,-1){450}}
+\put(9601,-3211){\vector( 1, 0){600}}
+\put(7351,-3961){\line( 1, 0){2550}}
+\put(9901,-3961){\line( 0, 1){1725}}
+\put(9901,-2236){\vector( 1, 0){300}}
+\put(10351,-1411){\line( 1, 0){750}}
+\put(11101,-1411){\line( 0,-1){1800}}
+\put(11101,-3211){\vector(-1, 0){600}}
+\put(10351,-2461){\line(-1, 0){1050}}
+\put(9301,-2461){\line( 0,-1){4350}}
+\put(9301,-6811){\vector(-1, 0){1800}}
+\put(7351,-4561){\line( 1, 0){450}}
+\put(7801,-4561){\line( 0,-1){375}}
+\put(7801,-4936){\vector(-1, 0){300}}
+\put(10351,-2761){\line(-1, 0){600}}
+\put(9751,-2761){\line( 0,-1){2325}}
+\put(9751,-5086){\vector(-1, 0){2250}}
+\put(10351,-1711){\line( 1, 0){450}}
+\put(10801,-1711){\line( 0,-1){375}}
+\put(10801,-2086){\vector(-1, 0){300}}
+\put(11326,-2236){\vector(-1, 0){825}}
+\put(11326,-4111){\vector(-1, 0){825}}
+\end{picture}
+\end{center}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+A {\em garbage collector\/} is part of the run-time system:
+it reclaims heap-allocated records that are no longer used.\\
+
+A garbage collector should:
+\begin{itemize}
+\item reclaim {\em all\/} unused records;
+\item spend very little time per record;
+\item not cause significant delays; and
+\item allow all of memory to be used.
+\end{itemize}
+
+These are difficult and often conflicting requirements.
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Life without garbage collection:
+\begin{itemize}
+\item unused records must be explicitly deallocated;
+\item superior if done correctly;
+\item but it is easy to miss some records; and
+\item it is dangerous to handle pointers.
+\end{itemize}
+\vspace*{2ex}
+
+Memory leaks in real life ({\tt ical v.2.1}):\\
+
+\begin{barenv}
+\setstretch{4}
+\setwidth{7}
+\setstyle{\tiny}
+\setxaxis{0}{24}{1}\setxname{\tiny hours}
+\setyaxis{0}{31}{1}\setyname{\tiny MB}
+\setnumberpos{empty}
+\bar{3.732}{8}
+\bar{4.604}{8}
+\bar{5.516}{8}
+\bar{6.332}{8}
+\bar{7.156}{8}
+\bar{7.988}{8}
+\bar{8.812}{8} 
+\bar{9.732}{8} 
+\bar{10.556}{8}
+\bar{11.428}{8}
+\bar{12.444}{8}
+\bar{13.268}{8}
+\bar{14.092}{8}
+\bar{14.908}{8}
+\bar{15.732}{8}
+\bar{16.748}{8}
+\bar{18.292}{8}
+\bar{19.804}{8}
+\bar{21.316}{8}
+\bar{23.012}{8}
+\bar{24.542}{8}
+\bar{26.028}{8}
+\bar{27.540}{8}
+\bar{29.052}{8}
+\bar{30.556}{8}
+\end{barenv}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Which records are {\em dead}, i.e. no longer in use?
+
+Ideally, records that will never be accessed in the future
+execution of the program.
+
+But that is of course undecidable...\\
+
+Basic conservative assumption:
+
+A record is {\em live\/} if it is reachable from a 
+stack-based program variable, otherwise dead.\\
+
+Dead records may still be pointed to by other dead records.
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+A heap with live and dead records:\\
+
+\begin{center}
+\setlength{\unitlength}{0.0005500in}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(2637,6624)(1576,-7573)
+\thicklines
+\put(1951,-1711){\circle*{100}}
+\put(1951,-2311){\circle*{100}}
+\put(3451,-1411){\circle*{100}}
+\put(3451,-1711){\circle*{100}}
+\put(3451,-2461){\circle*{100}}
+\put(3451,-2761){\circle*{100}}
+\put(3451,-3211){\circle*{100}}
+\put(3451,-4261){\circle*{100}}
+\put(3451,-4561){\circle*{100}}
+\put(3451,-5311){\circle*{100}}
+\put(3451,-5611){\circle*{100}}
+\put(3451,-6061){\circle*{100}}
+\put(3451,-7111){\circle*{100}}
+\put(3451,-7411){\circle*{100}}
+\put(1801,-2461){\framebox(300,900){}}
+\put(1801,-1861){\line( 1, 0){300}}
+\put(1801,-2161){\line( 1, 0){300}}
+\put(3301,-1861){\framebox(300,900){}}
+\put(3301,-2911){\framebox(300,900){}}
+\put(3301,-3661){\framebox(300,600){}}
+\put(3301,-4711){\framebox(300,900){}}
+\put(3301,-5761){\framebox(300,900){}}
+\put(3301,-6511){\framebox(300,600){}}
+\put(3301,-7561){\framebox(300,900){}}
+\put(3301,-1261){\line( 1, 0){300}}
+\put(3301,-1561){\line( 1, 0){300}}
+\put(3301,-2311){\line( 1, 0){300}}
+\put(3301,-2611){\line( 1, 0){300}}
+\put(3301,-3361){\line( 1, 0){300}}
+\put(3301,-4111){\line( 1, 0){300}}
+\put(3301,-4411){\line( 1, 0){300}}
+\put(3301,-5161){\line( 1, 0){300}}
+\put(3301,-5461){\line( 1, 0){300}}
+\put(3301,-6211){\line( 1, 0){300}}
+\put(3301,-6961){\line( 1, 0){300}}
+\put(3301,-7261){\line( 1, 0){300}}
+\put(1951,-2311){\line( 1, 0){450}}
+\put(2401,-2311){\line( 0,-1){1650}}
+\put(2401,-3961){\vector( 1, 0){900}}
+\put(3451,-2461){\line( 1, 0){450}}
+\put(3901,-2461){\line( 0, 1){1350}}
+\put(3901,-1111){\vector(-1, 0){300}}
+\put(3451,-2761){\line( 1, 0){450}}
+\put(3901,-2761){\line( 0,-1){1200}}
+\put(3901,-3961){\vector(-1, 0){300}}
+\put(3451,-3211){\line(-1, 0){450}}
+\put(3001,-3211){\line( 0,-1){3150}}
+\put(3001,-6361){\vector( 1, 0){300}}
+\put(3451,-4261){\line(-1, 0){750}}
+\put(2701,-4261){\line( 0,-1){2550}}
+\put(2701,-6811){\vector( 1, 0){600}}
+\put(3451,-4561){\line( 1, 0){450}}
+\put(3901,-4561){\line( 0,-1){450}}
+\put(3901,-5011){\vector(-1, 0){300}}
+\put(3451,-6061){\line( 1, 0){750}}
+\put(4201,-6061){\line( 0, 1){2850}}
+\put(4201,-3211){\vector(-1, 0){600}}
+\put(1951,-1711){\line( 1, 0){750}}
+\put(2701,-1711){\line( 0,-1){450}}
+\put(2701,-2161){\vector( 1, 0){600}}
+\put(1576,-1786){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}p}}}
+\put(1576,-2086){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}q}}}
+\put(1576,-2386){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}r}}}
+\put(1856,-2086){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}37}}}
+\put(3356,-1186){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}12}}}
+\put(3356,-2236){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}15}}}
+\put(3396,-3586){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}7}}}
+\put(3356,-4036){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}37}}}
+\put(3356,-5086){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}59}}}
+\put(3356,-6886){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}20}}}
+\put(3396,-6436){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}9}}}
+\end{picture}
+\end{center}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+The mark-and-sweep algorithm:
+
+\begin{itemize}
+\item explore pointers starting from the program variables, and {\em mark\/} all
+records encountered;
+\item {\em sweep\/} through all records in the heap and reclaim the unmarked ones; also
+\item unmark all marked records.
+\end{itemize}
+
+Assumptions:
+ 
+\begin{itemize}
+\item we know the size of each record; 
+\item we know which fields are pointers; and
+\item reclaimed records are kept in a {\tt freelist}.
+\end{itemize}
+
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Pseudo code for mark-and-sweep:\\
+
+\begin{scriptsize}
+\begin{tabbing}
+XX\=XX\=XX\=XX\=XX\=\kill
+{\bf function} DFS($x$)\\
+\>{\bf if} $x$ is a pointer into the heap {\bf then}\\
+\>\>{\bf if} record $x$ is not marked {\bf then}\\
+\>\>\>mark record $x$\\
+\>\>\>{\bf for} $i$:=$1$ {\bf to} $|x|$ {\bf do}\\
+\>\>\>\>DFS($x.f_i$)\\
+\\
+\\
+{\bf function} Mark()\\
+\>{\bf for} each program variable $v$ {\bf do}\\
+\>\>DFS($v$)\\
+\\
+\\
+{\bf function} Sweep()\\
+\>$p$ := first address in heap\\
+\>{\bf while} $p$ $<$ last address in heap {\bf do}\\
+\>\>{\bf if} record $p$ is marked {\bf then}\\
+\>\>\>unmark record $p$\\
+\>\>{\bf else}\\
+\>\>\>$p.f_1$ := {\tt freelist}\\
+\>\>\>{\tt freelist} := $p$\\
+\>\>$p$ := $p$+sizeof(record $p$)
+\end{tabbing}
+\end{scriptsize}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Marking and sweeping:\\
+
+\begin{center}
+\setlength{\unitlength}{0.0004000in}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(7137,6624)(1576,-7573)
+\thicklines
+\put(1951,-1711){\circle*{100}}
+\put(1951,-2311){\circle*{100}}
+\put(3451,-1411){\circle*{100}}
+\put(3451,-1711){\circle*{100}}
+\put(3451,-2461){\circle*{100}}
+\put(3451,-2761){\circle*{100}}
+\put(3451,-3211){\circle*{100}}
+\put(3451,-4261){\circle*{100}}
+\put(3451,-4561){\circle*{100}}
+\put(3451,-5311){\circle*{100}}
+\put(3451,-5611){\circle*{100}}
+\put(3451,-6061){\circle*{100}}
+\put(3451,-7111){\circle*{100}}
+\put(3451,-7411){\circle*{100}}
+\put(7876,-1411){\circle*{100}}
+\put(7876,-1711){\circle*{100}}
+\put(7876,-2461){\circle*{100}}
+\put(7876,-2761){\circle*{100}}
+\put(7876,-3211){\circle*{100}}
+\put(7876,-4261){\circle*{100}}
+\put(7876,-4561){\circle*{100}}
+\put(7876,-5311){\circle*{100}}
+\put(7876,-5611){\circle*{100}}
+\put(7876,-6061){\circle*{100}}
+\put(7876,-7111){\circle*{100}}
+\put(7876,-7411){\circle*{100}}
+\put(6151,-6061){\circle*{100}}
+\put(1801,-2461){\framebox(300,900){}}
+\put(1801,-1861){\line( 1, 0){300}}
+\put(1801,-2161){\line( 1, 0){300}}
+\put(3301,-1861){\framebox(300,900){}}
+\put(3301,-2911){\framebox(300,900){}}
+\put(3301,-3661){\framebox(300,600){}}
+\put(3301,-4711){\framebox(300,900){}}
+\put(3301,-5761){\framebox(300,900){}}
+\put(3301,-6511){\framebox(300,600){}}
+\put(3301,-7561){\framebox(300,900){}}
+\put(3301,-1261){\line( 1, 0){300}}
+\put(3301,-1561){\line( 1, 0){300}}
+\put(3301,-2311){\line( 1, 0){300}}
+\put(3301,-2611){\line( 1, 0){300}}
+\put(3301,-3361){\line( 1, 0){300}}
+\put(3301,-4111){\line( 1, 0){300}}
+\put(3301,-4411){\line( 1, 0){300}}
+\put(3301,-5161){\line( 1, 0){300}}
+\put(3301,-5461){\line( 1, 0){300}}
+\put(3301,-6211){\line( 1, 0){300}}
+\put(3301,-6961){\line( 1, 0){300}}
+\put(3301,-7261){\line( 1, 0){300}}
+\put(1951,-2311){\line( 1, 0){450}}
+\put(2401,-2311){\line( 0,-1){1650}}
+\put(2401,-3961){\vector( 1, 0){900}}
+\put(3451,-2461){\line( 1, 0){450}}
+\put(3901,-2461){\line( 0, 1){1350}}
+\put(3901,-1111){\vector(-1, 0){300}}
+\put(3451,-2761){\line( 1, 0){450}}
+\put(3901,-2761){\line( 0,-1){1200}}
+\put(3901,-3961){\vector(-1, 0){300}}
+\put(3451,-3211){\line(-1, 0){450}}
+\put(3001,-3211){\line( 0,-1){3150}}
+\put(3001,-6361){\vector( 1, 0){300}}
+\put(3451,-4261){\line(-1, 0){750}}
+\put(2701,-4261){\line( 0,-1){2550}}
+\put(2701,-6811){\vector( 1, 0){600}}
+\put(3451,-4561){\line( 1, 0){450}}
+\put(3901,-4561){\line( 0,-1){450}}
+\put(3901,-5011){\vector(-1, 0){300}}
+\put(3451,-6061){\line( 1, 0){750}}
+\put(4201,-6061){\line( 0, 1){2850}}
+\put(4201,-3211){\vector(-1, 0){600}}
+\put(1951,-1711){\line( 1, 0){750}}
+\put(2701,-1711){\line( 0,-1){450}}
+\put(2701,-2161){\vector( 1, 0){600}}
+\put(6226,-2461){\framebox(300,900){}}
+\put(6226,-1861){\line( 1, 0){300}}
+\put(6226,-2161){\line( 1, 0){300}}
+\put(7726,-1861){\framebox(300,900){}}
+\put(7726,-2911){\framebox(300,900){}}
+\put(7726,-3661){\framebox(300,600){}}
+\put(7726,-4711){\framebox(300,900){}}
+\put(7726,-5761){\framebox(300,900){}}
+\put(7726,-6511){\framebox(300,600){}}
+\put(7726,-7561){\framebox(300,900){}}
+\put(7726,-1261){\line( 1, 0){300}}
+\put(7726,-1561){\line( 1, 0){300}}
+\put(7726,-2311){\line( 1, 0){300}}
+\put(7726,-2611){\line( 1, 0){300}}
+\put(7726,-3361){\line( 1, 0){300}}
+\put(7726,-4111){\line( 1, 0){300}}
+\put(7726,-4411){\line( 1, 0){300}}
+\put(7726,-5161){\line( 1, 0){300}}
+\put(7726,-5461){\line( 1, 0){300}}
+\put(7726,-6211){\line( 1, 0){300}}
+\put(7726,-6961){\line( 1, 0){300}}
+\put(7726,-7261){\line( 1, 0){300}}
+\put(6376,-2311){\line( 1, 0){450}}
+\put(6826,-2311){\line( 0,-1){1650}}
+\put(6826,-3961){\vector( 1, 0){900}}
+\put(7876,-2461){\line( 1, 0){450}}
+\put(8326,-2461){\line( 0, 1){1350}}
+\put(8326,-1111){\vector(-1, 0){300}}
+\put(7876,-2761){\line( 1, 0){450}}
+\put(8326,-2761){\line( 0,-1){1200}}
+\put(8326,-3961){\vector(-1, 0){300}}
+\put(7876,-4261){\line(-1, 0){750}}
+\put(7126,-4261){\line( 0,-1){2550}}
+\put(7126,-6811){\vector( 1, 0){600}}
+\put(7876,-4561){\line( 1, 0){450}}
+\put(8326,-4561){\line( 0,-1){450}}
+\put(8326,-5011){\vector(-1, 0){300}}
+\put(6376,-1711){\line( 1, 0){750}}
+\put(7126,-1711){\line( 0,-1){450}}
+\put(7126,-2161){\vector( 1, 0){600}}
+\put(3601,-1036){\line( 1, 0){ 75}}
+\put(3601,-1046){\line( 1, 0){ 75}}
+\put(3601,-1026){\line( 1, 0){ 75}}
+\put(3601,-2076){\line( 1, 0){ 75}}
+\put(3601,-2086){\line( 1, 0){ 75}}
+\put(3601,-2096){\line( 1, 0){ 75}}
+\put(3601,-3876){\line( 1, 0){ 75}}
+\put(3601,-3886){\line( 1, 0){ 75}}
+\put(3601,-3896){\line( 1, 0){ 75}}
+\put(3601,-4926){\line( 1, 0){ 75}}
+\put(3601,-4936){\line( 1, 0){ 75}}
+\put(3601,-4946){\line( 1, 0){ 75}}
+\put(3601,-6726){\line( 1, 0){ 75}}
+\put(3601,-6736){\line( 1, 0){ 75}}
+\put(3601,-6746){\line( 1, 0){ 75}}
+\put(6001,-6211){\framebox(300,300){}}
+\put(6151,-6061){\vector( 1, 0){1575}}
+\put(7876,-6061){\line( 1, 0){825}}
+\put(8701,-6061){\line( 0, 1){2850}}
+\put(8701,-3211){\vector(-1, 0){675}}
+\put(1856,-2086){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}37}}}
+\put(1576,-1786){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}p}}}
+\put(1576,-2086){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}q}}}
+\put(1576,-2386){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}r}}}
+\put(3356,-1186){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}12}}}
+\put(3356,-2236){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}15}}}
+\put(3396,-3586){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}7}}}
+\put(3356,-4036){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}37}}}
+\put(3356,-5086){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}59}}}
+\put(3356,-6886){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}20}}}
+\put(3396,-6436){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}9}}}
+\put(6001,-1786){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}p}}}
+\put(6001,-2086){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}q}}}
+\put(6001,-2386){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}r}}}
+\put(7781,-1186){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}12}}}
+\put(7781,-2236){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}15}}}
+\put(7821,-3586){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}7}}}
+\put(7781,-4036){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}37}}}
+\put(7781,-5086){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}59}}}
+\put(7781,-6886){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}20}}}
+\put(7821,-6436){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}9}}}
+\put(6281,-2086){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}37}}}
+\put(5776,-6436){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\ttdefault}{\mddefault}{\updefault}freelist}}}
+\end{picture}
+\end{center}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Analysis of mark-and-sweep:
+
+\begin{itemize}
+\item assume the heap has size $H$ words; and
+\item assume that $R$ words are reachable.
+\end{itemize}
+
+The cost of garbage collection is:
+$$c_1R + c_2H$$
+Realistic values are:
+$$10R + 3H$$
+
+The cost per reclaimed word is:
+$$ \frac{c_1R + c_2H}{H-R}$$
+
+\begin{itemize}
+\item if $R$ is close to $H$, then this is expensive;
+\item the lower bound is $c_2$;
+\item increase the heap when $R > 0.5H$; then
+\item the cost per word is $c_1 + 2c_2 \approx 16$.
+\end{itemize}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Other relevant issues:\\
+
+\begin{itemize}
+\item The DFS recursion stack could have size $H$ (and has at least size $\log H$), which
+may be too much; however, the recursion stack can cleverly
+be embedded in the fields of marked records (pointer reversal).
+
+\item Records can be kept sorted by sizes in the {\tt freelist}. Records may be split into 
+smaller pieces if necessary.
+
+\item The heap may become {\em fragmented}: 
+containing many small free records but none that are large
+enough.
+\end{itemize}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+The reference counting algorithm:
+
+\begin{itemize}
+\item maintain a counter of the references to each record;
+\item for each assignment, update the counters appropriately; and
+\item a record is dead when its counter is zero.
+\end{itemize}
+
+Advantages:
+
+\begin{itemize}
+\item is simple and attractive;
+\item catches dead records immediately; and
+\item does not cause long pauses.
+\end{itemize}
+
+Disadvantages:
+
+\begin{itemize}
+\item cannot detect cycles of dead records; and
+\item is much too expensive.
+\end{itemize}
+
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Pseudo code for reference counting:\\
+
+\begin{tabbing}
+XX\=XX\=XX\=XX\=XX\=XX\=XX\=XX\=XX\=\kill
+{\bf function} Increment($x$)\\
+\>$x$.count := $x$.count$+1$\\
+\\
+\\
+{\bf function} Decrement($x$)\\
+\>$x$.count := $x$.count$-1$\\
+\>{\bf if} $x$.count=0 {\bf then}\\
+\>\>PutOnFreelist($x$)\\
+\\
+\\
+{\bf function} PutOnFreelist($x$)\\
+\>Decrement($x.f_1$)\\
+\>$x.f_1$ := {\tt freelist}\\
+\>{\tt freelist} := $x$\\
+\\
+\\
+{\bf function} RemoveFromFreelist($x$)\\
+\>{\bf for} $i$:=$2$ {\bf to} $|x|$ {\bf do}\\
+\>\>Decrement($x.f_i$)
+\end{tabbing}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+The stop-and-copy algorithm:
+
+\begin{itemize}
+\item divide the heap into two parts;
+\item only use one part at a time;
+\item when it runs full, copy live records to the other part; and
+\item switch the roles of the two parts.
+\end{itemize}
+
+Advantages:
+
+\begin{itemize}
+\item allows fast allocation (no {\tt freelist});
+\item avoids fragmentation; 
+\item collects in time proportional to $R$; and
+\item avoids stack and pointer reversal.
+\end{itemize}
+
+Disadvantage:
+
+\begin{itemize}
+\item wastes half your memory.
+\end{itemize}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+Before and after stop-and-copy:\\
+
+\begin{center}
+\setlength{\unitlength}{1400sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(8787,5787)(889,-7636)
+\thinlines
+\put(2401,-2761){\framebox(300,900){}}
+\put(2401,-2161){\line( 1, 0){300}}
+\put(2401,-2461){\line( 1, 0){300}}
+\put(1201,-3361){\framebox(300,900){}}
+\put(1201,-2761){\line( 1, 0){300}}
+\put(1201,-3061){\line( 1, 0){300}}
+\put(1201,-6361){\framebox(300,900){}}
+\put(1201,-5761){\line( 1, 0){300}}
+\put(1201,-6061){\line( 1, 0){300}}
+\put(1201,-5161){\framebox(300,900){}}
+\put(1201,-4561){\line( 1, 0){300}}
+\put(1201,-4861){\line( 1, 0){300}}
+\put(7351,-2011){\circle*{100}}
+\put(7351,-2311){\circle*{100}}
+\put(7351,-2611){\circle*{100}}
+\put(7201,-2761){\framebox(300,900){}}
+\put(7201,-2161){\line( 1, 0){300}}
+\put(7201,-2461){\line( 1, 0){300}}
+\put(8551,-2011){\circle*{100}}
+\put(8551,-2311){\circle*{100}}
+\put(8551,-2611){\circle*{100}}
+\put(8401,-2761){\framebox(300,900){}}
+\put(8401,-2161){\line( 1, 0){300}}
+\put(8401,-2461){\line( 1, 0){300}}
+\put(8401,-3736){\framebox(300,900){}}
+\put(8551,-2986){\circle*{100}}
+\put(8551,-3286){\circle*{100}}
+\put(8551,-3586){\circle*{100}}
+\put(8401,-3136){\line( 1, 0){300}}
+\put(8401,-3436){\line( 1, 0){300}}
+\put(8551,-3961){\circle*{100}}
+\put(8551,-4261){\circle*{100}}
+\put(8551,-4561){\circle*{100}}
+\put(8401,-4711){\framebox(300,900){}}
+\put(8401,-4111){\line( 1, 0){300}}
+\put(8401,-4411){\line( 1, 0){300}}
+\put(1351,-2611){\circle*{100}}
+\put(1351,-2911){\circle*{100}}
+\put(1351,-3211){\circle*{100}}
+\put(1351,-4411){\circle*{100}}
+\put(1351,-4711){\circle*{100}}
+\put(1351,-5011){\circle*{100}}
+\put(1351,-5611){\circle*{100}}
+\put(1351,-5911){\circle*{100}}
+\put(1351,-6211){\circle*{100}}
+\put(2551,-2011){\circle*{100}}
+\put(2551,-2311){\circle*{100}}
+\put(2551,-2611){\circle*{100}}
+\put(2551,-2611){\circle*{100}}
+\put(901,-6661){\framebox(900,4800){}}
+\put(3301,-6661){\framebox(900,4800){}}
+\put(5701,-6661){\framebox(900,4800){}}
+\put(8101,-6661){\framebox(900,4800){}}
+\put(2551,-2011){\line(-1, 0){450}}
+\put(2101,-2011){\line( 0,-1){600}}
+\put(2101,-2611){\vector(-1, 0){600}}
+\put(2551,-2611){\line( 0,-1){3000}}
+\put(2551,-5611){\vector(-1, 0){1050}}
+\put(7351,-2011){\vector( 1, 0){1050}}
+\put(7351,-2611){\line( 1, 0){450}}
+\put(7801,-2611){\line( 0,-1){375}}
+\put(7801,-2986){\vector( 1, 0){600}}
+\put(8551,-3286){\line( 1, 0){375}}
+\put(8926,-3286){\line( 0,-1){675}}
+\put(8926,-3961){\vector(-1, 0){225}}
+\put(1351,-5911){\line(-1, 0){375}}
+\put(976,-5911){\line( 0, 1){1500}}
+\put(976,-4411){\vector( 1, 0){225}}
+\put(2401,-7261){\line( 0, 1){600}}
+\put(2401,-6661){\vector(-1, 0){600}}
+\put(9601,-4711){\vector(-1, 0){600}}
+\put(9601,-6661){\vector(-1, 0){600}}
+\put(701,-6900){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}from-space}}}
+\put(3226,-6900){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}to-space}}}
+\put(5626,-6900){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}to-space}}}
+\put(7901,-6900){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}from-space}}}
+\put(9676,-4786){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\ttdefault}{\mddefault}{\updefault}next}}}
+\put(9676,-6736){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\ttdefault}{\mddefault}{\updefault}limit}}}
+\put(2151,-7411){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\ttdefault}{\mddefault}{\updefault}next}}}
+\put(2151,-7636){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\ttdefault}{\mddefault}{\updefault}limit}}}
+\end{picture}
+\end{center}
+
+\begin{itemize}
+\item {\tt next} and {\tt limit} indicate the available heap space; and
+\item copied records are contiguous in memory.
+\end{itemize}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Pseudo code for stop-and-copy:
+
+\begin{tabbing}
+XX\=XX\=XX\=XX\=XX\=XX\=XX\=XX\=XX\=\kill
+{\bf function} Forward($p$)\\
+\>{\bf if} $p$ $\in$ from-space {\bf then}\\
+\>\>{\bf if} $p.f_1$ $\in$ to-space {\bf then}\\
+\>\>\>{\bf return} $p.f_1$\\
+\>\>{\bf else}\\
+\>\>\>{\bf for} $i$:=$1$ {\bf to} $|p|$ {\bf do}\\
+\>\>\>\>{\tt next}.$f_i$ := $p.f_i$\\
+\>\>\>$p.f_1$ := {\tt next}\\
+\>\>\>{\tt next} := {\tt next} + sizeof(record $p$)\\
+\>\>\>{\bf return} $p.f_1$\\
+\>{\bf else} {\bf return} $p$\\
+\\
+{\bf function} Copy()\\
+\>{\tt scan} := {\tt next} := start of to-space\\
+\>{\bf for} each program variable $v$ {\bf do}\\
+\>\>$v$ := Forward($v$)\\
+\>{\bf while} {\tt scan} $<$ {\tt next} {\bf do}\\
+\>\>{\bf for} $i$:=$1$ {\bf to} $|${\tt scan}$|$ {\bf do}\\
+\>\>\>{\tt scan}$.f_i$ := Forward({\tt scan}$.f_i$)\\
+\>\>{\tt scan} := {\tt scan} + sizeof(record {\tt scan})
+\end{tabbing}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Snapshots of stop-and-copy:\\
+
+\setlength{\unitlength}{1600sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(8187,7191)(3289,-8140)
+\thinlines
+\put(8851,-1711){\circle*{100}}
+\put(8851,-2311){\circle*{100}}
+\put(8701,-2461){\framebox(300,900){}}
+\put(8701,-1861){\line( 1, 0){300}}
+\put(8701,-2161){\line( 1, 0){300}}
+\put(8726,-2086){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}37}}}
+\put(8476,-1786){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}p}}}
+\put(8476,-2086){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}q}}}
+\put(8476,-2386){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}r}}}
+\put(5551,-1711){\circle*{100}}
+\put(5551,-2311){\circle*{100}}
+\put(5401,-2461){\framebox(300,900){}}
+\put(5401,-1861){\line( 1, 0){300}}
+\put(5401,-2161){\line( 1, 0){300}}
+\put(5426,-2086){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}37}}}
+\put(5851,-1786){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}p}}}
+\put(5851,-2086){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}q}}}
+\put(5851,-2386){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}r}}}
+\put(4051,-1411){\circle*{100}}
+\put(4051,-1711){\circle*{100}}
+\put(4051,-2461){\circle*{100}}
+\put(4051,-2761){\circle*{100}}
+\put(4051,-3211){\circle*{100}}
+\put(4051,-4261){\circle*{100}}
+\put(4051,-4561){\circle*{100}}
+\put(4051,-5311){\circle*{100}}
+\put(4051,-5611){\circle*{100}}
+\put(4051,-6061){\circle*{100}}
+\put(4051,-7111){\circle*{100}}
+\put(4051,-7411){\circle*{100}}
+\put(3901,-1861){\framebox(300,900){}}
+\put(3901,-2911){\framebox(300,900){}}
+\put(3901,-3661){\framebox(300,600){}}
+\put(3901,-4711){\framebox(300,900){}}
+\put(3901,-5761){\framebox(300,900){}}
+\put(3901,-6511){\framebox(300,600){}}
+\put(3901,-7561){\framebox(300,900){}}
+\put(3901,-1261){\line( 1, 0){300}}
+\put(3901,-1561){\line( 1, 0){300}}
+\put(3901,-2311){\line( 1, 0){300}}
+\put(3901,-2611){\line( 1, 0){300}}
+\put(3901,-3361){\line( 1, 0){300}}
+\put(3901,-4111){\line( 1, 0){300}}
+\put(3901,-4411){\line( 1, 0){300}}
+\put(3901,-5161){\line( 1, 0){300}}
+\put(3901,-5461){\line( 1, 0){300}}
+\put(3901,-6211){\line( 1, 0){300}}
+\put(3901,-6961){\line( 1, 0){300}}
+\put(3901,-7261){\line( 1, 0){300}}
+\put(4051,-2461){\line( 1, 0){450}}
+\put(4501,-2461){\line( 0, 1){1350}}
+\put(4501,-1111){\vector(-1, 0){300}}
+\put(4051,-3211){\line(-1, 0){450}}
+\put(3601,-3211){\line( 0,-1){3150}}
+\put(3601,-6361){\vector( 1, 0){300}}
+\put(4051,-4261){\line(-1, 0){750}}
+\put(3301,-4261){\line( 0,-1){2550}}
+\put(3301,-6811){\vector( 1, 0){600}}
+\put(4051,-4561){\line( 1, 0){450}}
+\put(4501,-4561){\line( 0,-1){450}}
+\put(4501,-5011){\vector(-1, 0){300}}
+\put(4051,-6061){\line( 1, 0){750}}
+\put(4801,-6061){\line( 0, 1){2850}}
+\put(4801,-3211){\vector(-1, 0){600}}
+\put(5551,-1711){\line(-1, 0){600}}
+\put(4951,-1711){\line( 0,-1){450}}
+\put(4951,-2161){\vector(-1, 0){750}}
+\put(4051,-2761){\line(-1, 0){750}}
+\put(3301,-2761){\line( 0,-1){1200}}
+\put(3301,-3961){\vector( 1, 0){600}}
+\put(5551,-2311){\line( 0,-1){1650}}
+\put(5551,-3961){\vector(-1, 0){1350}}
+\put(3926,-1186){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}12}}}
+\put(3926,-2236){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}15}}}
+\put(3976,-3586){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}7}}}
+\put(3926,-4036){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}37}}}
+\put(3926,-5086){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}59}}}
+\put(3926,-6886){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}20}}}
+\put(3976,-6436){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}9}}}
+\put(3826,-8086){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}before}}}
+\put(7351,-1411){\circle*{100}}
+\put(7351,-1711){\circle*{100}}
+\put(7351,-2461){\circle*{100}}
+\put(7351,-2761){\circle*{100}}
+\put(7351,-3211){\circle*{100}}
+\put(7351,-4261){\circle*{100}}
+\put(7351,-4561){\circle*{100}}
+\put(7351,-5311){\circle*{100}}
+\put(7351,-5611){\circle*{100}}
+\put(7351,-6061){\circle*{100}}
+\put(7351,-7111){\circle*{100}}
+\put(7351,-7411){\circle*{100}}
+\put(10351,-1411){\circle*{100}}
+\put(10351,-1711){\circle*{100}}
+\put(10351,-2461){\circle*{100}}
+\put(10351,-2761){\circle*{100}}
+\put(10351,-3511){\circle*{100}}
+\put(10351,-3811){\circle*{100}}
+\put(7351,-2161){\circle*{100}}
+\put(7351,-1111){\circle*{100}}
+\put(7351,-3961){\circle*{100}}
+\put(10201,-1861){\framebox(300,900){}}
+\put(10201,-1261){\line( 1, 0){300}}
+\put(10201,-1561){\line( 1, 0){300}}
+\put(7201,-1861){\framebox(300,900){}}
+\put(7201,-2911){\framebox(300,900){}}
+\put(7201,-3661){\framebox(300,600){}}
+\put(7201,-4711){\framebox(300,900){}}
+\put(7201,-5761){\framebox(300,900){}}
+\put(7201,-6511){\framebox(300,600){}}
+\put(7201,-7561){\framebox(300,900){}}
+\put(7201,-1261){\line( 1, 0){300}}
+\put(7201,-1561){\line( 1, 0){300}}
+\put(7201,-2311){\line( 1, 0){300}}
+\put(7201,-2611){\line( 1, 0){300}}
+\put(7201,-3361){\line( 1, 0){300}}
+\put(7201,-4111){\line( 1, 0){300}}
+\put(7201,-4411){\line( 1, 0){300}}
+\put(7201,-5161){\line( 1, 0){300}}
+\put(7201,-5461){\line( 1, 0){300}}
+\put(7201,-6211){\line( 1, 0){300}}
+\put(7201,-6961){\line( 1, 0){300}}
+\put(7201,-7261){\line( 1, 0){300}}
+\put(7351,-3211){\line(-1, 0){450}}
+\put(6901,-3211){\line( 0,-1){3150}}
+\put(6901,-6361){\vector( 1, 0){300}}
+\put(7351,-4261){\line(-1, 0){750}}
+\put(6601,-4261){\line( 0,-1){2550}}
+\put(6601,-6811){\vector( 1, 0){600}}
+\put(7351,-6061){\line( 1, 0){750}}
+\put(8101,-6061){\line( 0, 1){2850}}
+\put(8101,-3211){\vector(-1, 0){600}}
+\put(7351,-2761){\line(-1, 0){750}}
+\put(6601,-2761){\line( 0,-1){1200}}
+\put(6601,-3961){\vector( 1, 0){600}}
+\put(10201,-2911){\framebox(300,900){}}
+\put(10201,-2311){\line( 1, 0){300}}
+\put(10201,-2611){\line( 1, 0){300}}
+\put(10201,-3961){\framebox(300,900){}}
+\put(10201,-3361){\line( 1, 0){300}}
+\put(10201,-3661){\line( 1, 0){300}}
+\put(8851,-1711){\line( 1, 0){750}}
+\put(9601,-1711){\line( 0, 1){675}}
+\put(9601,-1036){\vector( 1, 0){600}}
+\put(7351,-2161){\line( 1, 0){750}}
+\put(8101,-2161){\line( 0, 1){975}}
+\put(8101,-1186){\vector( 1, 0){2100}}
+\put(8851,-2311){\line( 1, 0){750}}
+\put(9601,-2311){\line( 0, 1){225}}
+\put(9601,-2086){\vector( 1, 0){600}}
+\put(7351,-2461){\line(-1, 0){450}}
+\put(6901,-2461){\line( 0, 1){1350}}
+\put(6901,-1111){\vector( 1, 0){300}}
+\put(7351,-1111){\line( 1, 0){450}}
+\put(7801,-1111){\line( 0,-1){1650}}
+\put(7801,-2761){\line( 1, 0){1800}}
+\put(9601,-2761){\line( 0,-1){450}}
+\put(9601,-3211){\vector( 1, 0){600}}
+\put(7351,-3961){\line( 1, 0){2550}}
+\put(9901,-3961){\line( 0, 1){1725}}
+\put(9901,-2236){\vector( 1, 0){300}}
+\put(10351,-1411){\line( 1, 0){750}}
+\put(11101,-1411){\line( 0,-1){1800}}
+\put(11101,-3211){\vector(-1, 0){600}}
+\put(10351,-2461){\line(-1, 0){1050}}
+\put(9301,-2461){\line( 0,-1){4350}}
+\put(9301,-6811){\vector(-1, 0){1800}}
+\put(7351,-4561){\line( 1, 0){450}}
+\put(7801,-4561){\line( 0,-1){375}}
+\put(7801,-4936){\vector(-1, 0){300}}
+\put(10351,-2761){\line(-1, 0){600}}
+\put(9751,-2761){\line( 0,-1){2325}}
+\put(9751,-5086){\vector(-1, 0){2250}}
+\put(10351,-1711){\line( 1, 0){450}}
+\put(10801,-1711){\line( 0,-1){375}}
+\put(10801,-2086){\vector(-1, 0){300}}
+\put(11326,-2236){\vector(-1, 0){825}}
+\put(11326,-4111){\vector(-1, 0){825}}
+\put(7276,-3586){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}7}}}
+\put(7226,-5086){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}59}}}
+\put(7226,-6886){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}20}}}
+\put(7276,-6436){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}9}}}
+\put(10226,-1186){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}15}}}
+\put(10226,-2236){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}37}}}
+\put(10226,-3286){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}12}}}
+\put(11476,-2311){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\ttdefault}{\mddefault}{\updefault}scan}}}
+\put(11476,-4186){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\ttdefault}{\mddefault}{\updefault}next}}}
+\put(6351,-8086){\makebox(0,0)[lb]{\smash{\SetFigFont{6}{14.4}{\familydefault}{\mddefault}{\updefault}after forwarding p and q and scanning 1 record}}}
+\end{picture}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Analysis of stop-and-copy:
+
+\begin{itemize}
+\item assume the heap has size $H$ words; and
+\item assume that $R$ words are reachable.
+\end{itemize}
+
+The cost of garbage collection is:
+$$ c_3R $$
+A realistic value is:
+$$ 10R $$
+The cost per reclaimed word is:
+$$ \frac{c_3R}{\frac{H}{2}-R} $$
+\begin{itemize}
+\item this has no lower bound as $H$ grows;
+\item if $H=4R$ then the cost is $c_3 \approx 10$.
+\end{itemize}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+Earlier assumptions:
+\begin{itemize}
+\item we know the size of each record; and
+\item we know which fields are pointers.
+\end{itemize}
+
+For object-oriented languages, each record already
+contains a pointer to a class descriptor.
+
+For general languages, we must sacrifice a few bytes
+per record.
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+We use mark-and-sweep or stop-and-copy.\\
+
+But garbage collection is still expensive:\\
+$\approx$ 100 instructions for a small object!\\
+
+Each algorithm can be further extended by:
+
+\begin{itemize}
+\item generational collection (to make it run faster); and
+\item incremental (or concurrent) collection (to make it run smoother).
+\end{itemize}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Generational collection:
+\begin{itemize}
+\item observation: the young die quickly;
+\item hence the collector should focus on young records;
+\item divide the heap into generations: $G_0, G_1, G_2, \ldots$;
+\item all records in $G_i$ are younger than records in $G_{i+1}$;
+\item collect $G_0$ often, $G_1$ less often, and so on; and
+\item promote a record from $G_i$ to $G_{i+1}$ when it survives several collections.
+\end{itemize}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+How to collect the $G_0$ generation:
+\begin{itemize}
+\item roots are no longer just program variables but also pointers from
+$G_1, G_2, \ldots$;
+\item it might be very expensive to find those pointers;
+\item fortunately, they are rare; so
+\item we can try to remember them.
+\end{itemize}
+
+Ways to remember:
+\begin{itemize}
+\item maintain a list of all updated records (use marks to make this a set); or
+\item mark pages of memory that contain updated records (in hardware or software).
+\end{itemize}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Incremental collection:
+\begin{itemize}
+\item garbage collection may cause long pauses;
+\item this is undesirable for interactive or real-time programs; so
+\item try to interleave the garbage collection with the program execution.
+\end{itemize}
+
+Two players access the heap:
+\begin{itemize}
+\item the {\em mutator}: creates records and moves pointers around; and
+\item the {\em collector}: tries to collect garbage.
+\end{itemize}
+Some invariants are clearly required to make this work.
+
+The mutator will suffer some slowdown to maintain these invariants.
+\vfil
+\end{slide*}
+ 
+\end{document}
+

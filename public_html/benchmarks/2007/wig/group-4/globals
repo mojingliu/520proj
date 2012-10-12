@@ -1,0 +1,21 @@
+/*
+topics
+- string: topic name
+- int: index of last message in messages
+
+messages
+- string: message
+- int: index of previous message in messages or -1 for first is first message
+
+usernames
+- string: username
+- int: index of topic
+
+*/
+tuple Array topics;
+tuple Array usernames;
+tuple Array messages;
+int messageCount;
+int topicCount;
+int arraySize; //should be initialized to the size of the array
+

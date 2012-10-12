@@ -1,0 +1,23 @@
+Group 08
+Shahla Almasri and Bill Song
+
+WIG service:
+===============
+We have written and tested a mailing list WIG service. In this service,
+users can join the group (mailing-list), or see who the group members are.
+It consists of three pages:
+1- Welcome page: It shows a counter of how many users visited the page so
+far. It also asks the user to select one of the following actions: "Join
+Us", "Show Members, or "Quit Now".
+2- Join Us page: In this page the user fills in their information (name,
+phone, and email). At least one field must be filled    in in order to be
+able to submit the form.
+3- Show Members page: In this page a list of all members is shown.
+
+>From each page you can easily navigate to the other two pages.
+
+We have tried to implement the service with having an array of tuples but
+got an error message about Schema not being implemented. So we switched to
+having just strings.
+
+We compiled it with bsdwig4.

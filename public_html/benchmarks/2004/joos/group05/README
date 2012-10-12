@@ -1,0 +1,21 @@
+For more details on the actual benchmarks, please look at the source
+code in Main.java
+
+To compile with JAVAC, try: sh javacCompile.sh
+To compile with JOOSC, try: sh jooscComiple.sh
+
+
+Note: both these scripts depend on the enviornment and path variables
+explained on the 520 homepage. They will also delete all .class and .j
+files in the directory they are executed in.
+
+
+
+
+To run the benchmark do:
+java Main < in1 > out1  
+
+Where inputSize.txt is a text file with:
+Line 1: integer   <-- Size of the vector that will be filled with random #'s
+Line 2: integer   <-- Size of the queue (and the vector that will test it) 
+ 

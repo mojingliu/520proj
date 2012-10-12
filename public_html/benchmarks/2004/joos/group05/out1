@@ -1,0 +1,20 @@
+
+Please enter an integer size for the vector test
+Please enter an integer size for the queue test
+
+-------------------------------------------
+
+Starting Benchmark Suite:
+1) Arithemetic test with 1000*1000 repetitions
+
+2) Vector storage of random elements with vector size: 10000
+
+3) Object oriented queue of random elements of size: 10000
+
+-------------------------------------------
+
+Arithmetic Test ---------- PASSED
+Vector Test -------------- PASSED
+Queue Test --------------- PASSED
+
+-------------------------------------------

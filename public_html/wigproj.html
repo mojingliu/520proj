@@ -1,0 +1,75 @@
+<title>The WIG project</title>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+<h1>The <img src="images/wig32.gif"> project</font></h1>
+You must implement the language WIG, which is an acronym for
+<i>Web Interface Generator</i>.  <h3>The WIG Language</h3> WIG is a
+proper subset of <a href="http://www.brics.dk/bigwig/index.html">
+<font face=courier>&lt;bigwig&gt;</font></a> restricted to a specific
+<a href="wiggrammar.txt">grammar</a>.  We also provide you with <a
+href="wiggrammar_bison.txt">bison</a> and <a
+href="wiggrammar_sablecc.txt">sablecc</a> versions with all conflicts
+resolved.  An introduction to the WIG language and its intended uses
+is contained in the <a href="slides/wig.pdf">slides for lectures on
+WIG</a>. WIG does not have a detailed language definition; it is part
+of your project to determine the precise semantics for your own
+version of the language.  Most of WIG looks just like the language C;
+the primary issues to discuss are html constants, tuples, and the
+constructs <font face=courier>plug</font> and <font
+face=courier>show</font>.
+
+<h3>Requirements</h3>
+You must work in groups of sizes two or three.
+<p>
+There is a strict deadline for the project:
+the <a href="deliverables/WIGcompiler.html">compiler</a> and the
+<a href="deliverables/WIGreport.html">report</a> in week 14.
+<p>
+Your compiler <i>must</i> work, at least for a subset of WIG.  A
+compiler that won't generate working code for even the smallest
+examples will not be accepted.  Apart from that, your implementation
+will be evaluated on structure, correctness, and elegance of both your
+compiler and the generated CGI-scripts.
+<p>
+The report must document all the choices that you have made during the
+project.  Your report can be informally written (i.e. it does not
+need to read like a technical manual) and may assume familiarity with
+the WIG project.  A longer report is not necessarily a better one, but
+don't exclude anything of interest.
+
+<h3>Restrictions or extensions</h3>
+
+If you feel the WIG project is too large, then make simplifying
+restrictions rather than give up. For example, if you throw out
+functions or tuples, then you are left with a smaller but still
+coherent language. It is important that you clearly state what
+restrictions you have made; your potential maximal grade will of
+course go down, but you will not be severely penalized.  It is still
+possible to get an A for a WIG compiler that does not implement
+tuples. However, such a compiler must be complete and correct in all
+other aspects.
+<p>
+If you feel the WIG project is too small, then it would be a good idea
+to extend it with some features. However, you <i>must</i> follow these
+rules:
+<ul>
+<li>you must first have an implementation of standard WIG;
+<li>your language must be a strict superset of standard WIG; and
+<li>your extensions must be motivated and documented.
+</ul>
+
+Ideas for extensions are obviously available from the <a
+href="http://www.brics.dk/bigwig/index.html"><font
+face=courier>&lt;bigwig&gt;</font></a> language.  Your potential
+maximal grade will of course go up, but you should mainly do this to
+challenge yourself.
+
+</td></tr></table>
+<p>
+<p>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+Maintained by Chris Pickett.
+<a href="index.html">[HOME]</a>
+</td></tr>
+</table>

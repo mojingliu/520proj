@@ -1,0 +1,32 @@
+#!/bin/sh
+#
+# joosc - compiles JOOS source programs into class files and verify them
+#       - JAVADIR, JOOSDIR must be set
+#       - uses C JOOS compiler (cjoos)
+#
+# usage:  joosc [OPTIONS] <java-file> ... [<joos-file> ...]
+#  
+# note:  you should name each source file for ordinary classes with
+#        .java extensions and all external classes with .joos extensions
+
+
+if ( echo ==== joosing $* && \
+     $JOOSDIR/Bin/internal/cjoos $JOOSDIR/Extern/*.joos $* ); then
+	for f in $*; do
+		case $f in *.java)
+		   BASE=`basename $f .java`
+		   DIR=`dirname $f`
+		   echo ======= jasmin of $DIR/$BASE.j
+		   ${JOOSDIR}/Bin/jasmin -d $DIR $DIR/$BASE.j
+		esac
+	done
+	for f in $*; do
+		case $f in *.java)
+		   BASE=`basename $f .java`
+		   DIR=`dirname $f`
+		   echo ======= verify of $BASE.class
+		   ( CLASSPATH=$DIR:$CLASSPATH;
+		     $JAVADIR/bin/javap -verify $BASE )
+		esac
+	done	
+fi

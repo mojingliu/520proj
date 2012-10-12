@@ -1,0 +1,257 @@
+Milestone: CGI vs. WIG
+---------------------
+
+
+Wig Benchmark
+-------------
+
+1. Overview
+For the Wig benchmark we implemented 2 independent sessions (programs):
+- Emailer 
+  (http://www.cs.mcgill.ca/~bvarba/cgi-bin/emailer10.cgi?Emailer):
+    gives the user a simplified way of send an email from
+	any email address to any other email address. 
+	No knowledge of Telnet is required, the program generates a Telnet 
+	script which could be easily placed in a script file and run in the 
+	terminal.
+	Contains 2 Pages:
+		#Email Creation Page - 
+					this is where the user creates his/hers emails
+		#Script instructions - 
+					this page tells the user how to use the generated script.
+		#Statistics page - 
+					provides info about connections and emails wrote
+				   	upon session termination.
+
+- Wigolator 0.09
+  (http://www.cs.mcgill.ca/~bvarba/cgi-bin/emailer10.cgi?Wigolator):
+    is an extremely convinient program for free public sharing and 
+	editing of documents online!
+	Wigolator 0.09 is in pre alpha version, but has great potential
+	to be the new wikipedia or google docs. ;)	
+	It supports storage for 6 text documents with unique names.
+	It has complete support for creating, deleting and editing
+	the user documents. It is accessible by anyone, just by providing the
+	URL of the webpage. Simply Great! No more Hustle!
+
+	Contains 2 Pages:
+		#Main Page - 
+					this is where user can create a new document, or proceed
+					on to the List Docs page, or quit
+		#List Documents Page - 
+					this page provides a list of all the documents.
+					The user can choose which one he/she would like
+					to manipulate, and choose what to do:Delete,Edit.
+					Also the user can return to the Main Page or Quit.
+		#Edit Document Page - 
+					This is where the user edits the content of a document.
+		#Status page - 
+					When a document is saved or deleted successfully the 
+					user is notified.
+		#Statistics page - 
+					upon session termination provides info about how many
+					documents have been created and deleted and how many times 
+					the edit operation has been performed.
+
+2. Setting the Envirnment:
+	This time around setting the environment was relatively easy:
+	created the wig home and path env variable in by bash_profile both on
+	freebsd.cs.mcgill.ca and our own computers.
+	We programed compiled for sntax errors locally on our computers. First
+	we were using the wig18 compiler but it eventually started giving
+	segmentation faults and we started using wig10 which worked perfectly.
+	using scp we copy the emailer.wig file to 
+	freebsd.cs.mcgill.ca:~/public_html/cgi_bin
+	and on freebsd with ssh we made a short script to compile the wig service
+	with wig10 and run the .install.
+
+3. To run: open browser and go to: 
+	http://www.cs.mcgill.ca/~bvarba/cgi-bin/emailer10.cgi?SessionName
+	where SessionName is either:
+
+	Wigolator
+	Emailer
+	
+   Assuming the environment for wig is set properly:	
+   To compile:
+	wig10 emailer.wig
+   To install:
+	bash emailer.install
+
+	to make sure it will run change all the privilages to 777 with chmod
+
+4. Design
+
+-Emailer
+The design of the emailer is quite simple:
+We have 3 states machine:
+
+		Entry point										 Termination
+		----------------		   	 -----------------		 --------------
+		|Create email 1|  <--------> |Disply Script 2|------>|Statistics 3|
+		----------------	   	     -----------------		 --------------
+
+The session keeps 4 local variables to indicate the from,to,subject,text
+of the email and passes them from one page to the other.
+
+The program consists of a while loop which cycles between state 1 to 2 until
+eventually in state 2 the user decied to quit and the program teminates at 3.
+
+The Create email is the entry page. Javascipt is used to provide
+email validation check for the "to" and "from" email addresses. 
+When the user types an email and changes focus, 
+a popup announces that the email is invalid.
+
+There is a small hack which we used inorder to be able to use a text field as
+a valid recognized by wig form element. The way the hack works is as follows:
+When making the html page in wig we create <input> form element with a given name
+say X INSIDE the content of a textarea form element which has the exact same
+name X.  	
+Like this:
+<textarea name="body_text" id = "body_text" onFocus="doClear(this)">
+  <input name="body_text" type="text" size=1 hidden></textarea>	
+
+As you see both form elements have the same name but the input form element,
+which is the only one recognized by wig is inside the textarea which is
+ignored by wig. Now by doing this, we trcik wig by taking the value of
+the textarea when the form is submited, since the input element technically
+is only text in the textarea as interpreted by the browser.
+Now the only issue is, that we still have the text of the input element
+displying in the textarea. To eliminate this, we use javascript!
+Either onLoad even of the page in the body tag or also as shown above,
+possible in onFocus event of the textarea. We call a javascript function
+which gets the form elemnt of the given name and replaces the default value
+with an empty string. Perfect! Now we have a usable textarea in wig!!!
+
+After the email components has been filled in and the iser presses Continue
+The script instructions page is displayed. At this point the user can quit or
+create a new email by selecting the appropriate radio button and clicking 
+Continue.
+If the user chooses quit the statistics page is displayed and the session
+finishes.
+
+
+-Wigolator -
+This is slightly more challanging and user more wig features.
+It has essentially 6 possible states:
+
+		Entry Point
+		-----------
+		|		  | <------Failure/Success---
+		|		  |	 						|
+		|Main Page|					   -----------------			 
+		|		  |------------------> |Creating Doc   |
+		|	1	  |			           |     2		   |
+|------>|		  |					   -----------------
+|		|		  |	
+|		-----------
+|			|	|												Termination
+|			|	|											 -----------------
+|			|	-----------------------Quit_action---------->|Statistics Page|
+|			|										-------->|		6		 |
+|		View_docs									|	 	 -----------------
+|			|		 ------------------				|
+|			-------->|List Documents  |--Quit_action-
+|	 				 |			      |
+Main_page_action-----|		3		  |
+					 |				  |			
+			-------->|				  |	<----Failure/Success----|
+			|		 ------------------							|
+			|			|			|							|
+			|			|			|							|
+			|			|			|			  			--------------
+			|			|			----delete_action------>|Deleting Doc |
+		   	|---|		|						  			|	 5		  |
+				|		|									--------------
+			  Save		|							
+				|		|		
+				| 	edit_action	
+				|		|		
+        --------------  |		
+	    |Editing Doc |	|		
+		|	   4	 |<--		
+		--------------			
+				
+
+To achieve the above state machine, the program uses 2 while loops in the
+session. Outer while loop is for the Main Page state with condition Quit
+to terminate.If the user selects View action then he ends up the inner loop.
+The inner while loop is for the List Documents page(3), since 
+state 4, 5 return to state 3 after execution.To go back to state 1 the user
+selects Main Page action.
+
+In order to store the possible 6 documents, without the presence of arrays
+we have created 6 global tuples of type schema Doc. The Doc type is created
+to represent a document and it contains a name and a body. As you can see
+a document is simply a unique name and a body, both as strings.
+Inside the session we keep track of the states and switch between them
+using a local do_action variable, which gets the selected on the page action
+and changes states appropriately.
+In order to implement the add/delete/edit/exists operations we made 
+several helper functions. Each function mainly compares the name of
+a given document with the name field of each of the 6 tuples and if there is a
+match some action is performed. 
+Add:
+	No document name match: pick the first empty doc tuple and replace the name
+							field the the given name and the body with new body.
+							This is used to create adocument with empty body.
+	Match document name: do nothing	
+
+Delete:
+	No document name match: do nothing
+	Match document name: replace the name and body of the document by empty 
+						 string 	
+
+Edit:
+	No document name match: do nothing
+	Match document name: replace the body of the document by the given new
+						  body string 
+
+At executing successfully each of the above operation states we update some 
+local statistics variables conserning how many documents have been created,
+deleted and edited.
+
+Exists: 
+	No document name match: return false
+	Match document name: true
+
+
+Anothor way of accessing the name and body of a document is by using an index
+from 0-5 using getDocName and getDocBody. These helper functions are used
+after the List Documents page, where we have hard coded radio butons with 
+values 0-5, and after validation that the name is not empty, we use
+the value index to look up a document. Ofcourse it would have been 
+very useful if wig had the ability to have dynamic placeholders for the
+tag attribute values. But since it does not, this is the way we thought of
+in order to provide the functionality.
+In the List Documents page we always populate the names of the documents
+but since some might be empty (or "unexistant" as the user would see it)
+We still have the static radio button. With some extra java script these empty
+field could be removed, but this is only extra sugar for next version ;).
+Validation against dealing with empty names exists, and names can not be 
+changed.
+
+We use again a sligtly modified version of the textarea hack from the Emailer
+in order to achieve the document editing page. Now The difference here is that
+we do not want to delete the default value of the text area, instead
+we only replace in the javascript function the specific match
+of the input form element tag (with so leading spaces...) with an empty string.
+Now obviously this is a small limitation of the program, since any such specific 
+match in the text area will be reaplaced every time the document is opened
+for editing. 
+Also another limitatation is that any html code will break the html page
+and not display or act strangely...
+(understandable, so no html tags in documents)
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,11 @@
+Group 05
+James Li and Denis Dube
+
+This group did two WIG benchmarks.
+
+1) a personal TODO listing. It works fairly well, except that lack of
+SQL database and/or file support really limits what I can do to say 1
+user/password and 6 messages. I compiled it with WIG18.
+
+** It only works with username/password of guest/guest **
+

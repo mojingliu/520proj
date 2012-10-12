@@ -1,0 +1,54 @@
+<title>Exercises on virtual machines</title>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+<h1>Week 8</h1>
+<h1>Exercises on virtual machines</h1>
+<ul>
+<li>Translate the following class into Java Virtual Machine bytecode by hand:
+
+<pre>
+public class Cons {
+  protected Object first;
+  protected Cons rest;
+ 
+  public Cons(Object f, Cons r) 
+  { super();
+    first = f; rest = r;
+  }
+ 
+  public void setFirst(Object newfirst) 
+  { first = newfirst; }
+ 
+  public Object getFirst() 
+  { return first; }
+ 
+  public Cons getRest()
+  { return rest; }
+ 
+  public boolean member(Object item)
+  { if (first.equals(item))
+       return true;
+    else if (rest==null)
+       return false;
+    else
+       return rest.member(item);
+  }
+}
+</pre>
+
+Can you beat <code>joosa+</code> in terms of bytes required for all
+methods in the class?  What about <code>javac</code>?  You probably
+want to refer to the <a
+href="http://java.sun.com/docs/books/vmspec/2nd-edition/html/VMSpecTOC.doc.html">JVM
+specification</a>.
+
+</ul>
+<p>
+</td></tr></table>
+<p>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+Maintained by Christopher J. F. Pickett.
+<a href="index.html">[HOME]</a>
+</td></tr>
+</table>

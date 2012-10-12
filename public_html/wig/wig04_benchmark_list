@@ -1,0 +1,5 @@
+chat	./examples/classic	chat
+counter	./examples/classic	counter
+game	./examples/classic	game
+poll	./examples/classic	poll
+tiny	./examples/classic	tiny

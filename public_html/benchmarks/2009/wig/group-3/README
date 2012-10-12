@@ -1,0 +1,4 @@
+The benchmark is an online shop service (a wig shop!). It lets you choose your product,
+fill shipment address and calculates the total cost. It uses most features of
+Wig, like holes, plugging, input, receiving, integer arithmetic, string
+comparison, ...

@@ -1,0 +1,44 @@
+<title>The JOOS project</title>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+<h1>The <img src="images/joos32.gif"> project</h1>
+You must implement the language JOOS, which is an
+acronym for <i>Java's Object-Oriented Subset</i>. JOOS is a proper
+subset of Java, defined as follows:<p>
+<ul>
+<li>its context-free syntax is restricted to the following 
+<a href="joosgrammar.txt">grammar</a>;
+<li>subclassing must not change the signature of a method;
+<li>local declarations must come at the beginning of the
+        statement sequence in a block;
+<li>protected fields cannot be accessed from outside of their class or
+        its subclasses; and
+<li>every path through a non-void method must return a value.
+</ul><p>
+In addition, JOOS defines a concept of <i>extern</i> classes, which
+provide a convenient interface to the Java libraries without
+requiring the compiler to parse Java class files. An extern class
+looks like this:<p>
+<font face=courier><pre>
+// java.lang.Integer - Section 20.6, page 487
+extern public final class Integer in "java.lang" {
+    public Integer(int value);
+    public String toString();
+    public boolean equals(Object obj);
+    public int intValue();
+}
+</pre></font>
+It defines a class name and some method signatures, along with
+a file name that is guaranteed to provide the implementation. The
+JOOS compiler will implicitly trust this specification. If it is
+incorrect, then the compiled JOOS class file may fail at 
+class loading time.
+</td></tr></table>
+<p>
+<p>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+Maintained by Chris Pickett.
+<a href="index.html">[HOME]</a>
+</td></tr>
+</table>

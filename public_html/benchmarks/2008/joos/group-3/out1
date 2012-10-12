@@ -1,0 +1,35 @@
+Please select the buildings from the list:
+
+Number: 0 Name: McConnell
+Number: 1 Name: Trottier
+Number: 2 Name: Roddick_Gates
+Number: 3 Name: Milton_Gates
+Number: 4 Name: Sherbrook_University
+Number: 5 Name: Entrance_McConnell_University
+Number: 6 Name: Entrance_McConnell_Milton
+Number: 7 Name: Entrance_Trottier_University
+Number: 8 Name: Entrance_Trottier_Campus
+Number: 9 Name: Cross_Lowerfield
+Number: 10 Name: Cross_Arts_Building
+Number: 11 Name: Cross_Campus_Milton
+
+Start	Destination
+
+Please follow the directions: 
+Now you are at Roddick_Gates
+Please head for Sherbrook_University
+Please head for Entrance_McConnell_University
+Well done! You are at Milton_Gates
+Thank you for using McMap!
+
+Please follow the directions: 
+Now you are at Entrance_McConnell_Milton
+Please head for McConnell
+Please head for Entrance_McConnell_University
+Please head for Sherbrook_University
+Well done! You are at Roddick_Gates
+Thank you for using McMap!
+
+Sorry, there is no path between the two destinations.
+Thank you for using McMap!
+

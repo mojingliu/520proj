@@ -1,0 +1,116 @@
+service {
+  const html Intro = <html> <body>
+    Hello, this is Dr. Suresh, your electronic psychiatrist. What is your name? 
+    <input name="name" type="text" size=20>
+  </body> </html>;
+
+  const html Postintro = <html> <body>
+    Welcome <[name]>, tell me about why you came to see me.
+    <input name="problem" type="text" size=100> 
+  </body> </html>;
+
+  const html Feel = <html> <body>
+    Uh huh\, and how does that make you feel?
+    <input name="feel" type="text" size=100> 
+  </body> </html>;
+  
+  const html Elaborate = <html> <body>
+    Please elaborate.
+    <input name="explain" type="text" size=100> 
+  </body> </html>;
+
+  const html Think = <html> <body>
+    Why do you think that?
+    <input name="think" type="text" size=100>
+  </body> </html>;
+
+ const html Why = <html> <body>
+    Why?
+    <input name="why" type="text" size=100>
+  </body> </html>;
+
+  const html Hug = <html> <body>
+    Do you need a hug?
+   Yes <input name="hug" type="radio" value="yes">
+  </body> </html>;
+
+  const html Yes = <html> <body>
+   *HUG*
+   I hope you feel better. I think you should play a lot of sports and get your endorphin level up.
+   This has been a productive meeting. That will be $50.
+    Thank you, come again.
+  </body> </html>;
+
+  const html No= <html> <body>
+    That's fine. I don't even have arms. I have another appointment so we'll stop our meeting here.
+    That will be $50.
+    Thank you, come again.
+  </body> </html>;
+
+ const html record = <html> <body>
+   For your record: <br>
+   <[name]> <br>
+   Reason why you are talking to an electronic psychiatrist: <br>
+   <[reason]> <br>
+   Feeling: <br>
+   <[feeling]><br>
+   Elaborate:<br>
+   <[elaborate]><br>
+   Why you think the way you do:<br>
+   <[think]><br>
+   Why <br>
+   <[why1]><br>
+   Why <br>
+   <[why2]><br>
+   Why<br>
+   <[why3]> <br>
+
+  </body> </html>;
+
+ 
+
+
+  schema recording {
+	string name;
+	string reason;
+	string feeling;
+   	string elaborate;
+ 	string think;
+	string whyone;
+	string whytwo;
+	string whythree; 
+  }
+  tuple recording Record;
+  
+  session Interrogate() {
+	int i;
+    	string name, problem, feeling, elaboration,thoughts, whyone, whytwo,whythree, hug;
+	show Intro receive [name = name];
+	Record.name=name;
+	show plug Postintro [name = name] receive[problem= problem];
+	Record.reason=problem;
+	show Feel receive [feeling = feel];
+	Record.feeling=feeling;
+	show Elaborate receive [ elaboration =explain];
+	Record.elaborate=elaboration;
+    	show Think receive [thoughts = think];
+	Record.think= thoughts;
+	i=0;
+	show Why receive [whyone = why];
+	Record.whyone=whyone;
+	show Why receive [whytwo = why];
+	Record.whytwo=whytwo;
+	show Why receive [whythree = why];
+	Record.whythree=whythree;
+	show Hug receive [hug = hug];
+	if (hug=="yes"){
+		show Yes;
+	}
+	else{
+		show No;
+	}
+
+	exit plug record [name=Record.name, reason=Record.reason, feeling=Record.feeling, elaborate=Record.elaborate, think=Record.think, why1=Record.whyone, why2=Record.whytwo, why3=Record.whythree];
+}
+
+}

@@ -1,0 +1,1359 @@
+\input{input/boilerplate.tex}
+
+\aarhus{
+\newpagestyle{dOvsstyle}{dOvs'98 Week 49 \hfil Static analysis}{\hfil \thepage}
+}
+
+\mcgill{
+\newpagestyle{dOvsstyle}{COMP 520 \courseterm  \hfil Static analysis (\thepage)}{}
+}
+ 
+\slidepagestyle{dOvsstyle}
+
+\begin{slide*}
+\begin{tabbing}
+\aarhus{{\Large\bf Week 49}\\}
+~\\
+{\Huge\bf Static analysis}\\
+\end{tabbing}
+\begin{center}
+\setlength{\unitlength}{2300sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(4824,5805)(1489,-5386)
+\thinlines
+\put(1576,-1036){\line( 1, 0){ 75}}
+\put(1726,-1036){\line( 1, 0){225}}
+\put(1576,-1111){\line( 1, 0){225}}
+\put(1876,-1111){\line( 1, 0){150}}
+\put(1576,-1186){\line( 1, 0){150}}
+\put(1801,-1186){\line( 1, 0){225}}
+\put(1576,-1261){\line( 1, 0){ 75}}
+\put(1726,-1261){\line( 1, 0){ 75}}
+\put(1876,-1261){\line( 1, 0){150}}
+\put(1576,-1336){\line( 1, 0){ 75}}
+\put(1726,-1336){\line( 1, 0){225}}
+\put(1576,-1411){\line( 1, 0){225}}
+\put(1876,-1411){\line( 1, 0){150}}
+\put(1576,-1486){\line( 1, 0){150}}
+\put(1801,-1486){\line( 1, 0){225}}
+\put(1576,-1561){\line( 1, 0){ 75}}
+\put(1726,-1561){\line( 1, 0){ 75}}
+\put(1876,-1561){\line( 1, 0){150}}
+\put(1576,-1636){\line( 1, 0){ 75}}
+\put(1726,-1636){\line( 1, 0){225}}
+\put(1576,-1711){\line( 1, 0){225}}
+\put(1876,-1711){\line( 1, 0){150}}
+\put(1576,-1786){\line( 1, 0){150}}
+\put(1801,-1786){\line( 1, 0){225}}
+\put(1576,-1861){\line( 1, 0){ 75}}
+\put(1726,-1861){\line( 1, 0){ 75}}
+\put(1876,-1861){\line( 1, 0){150}}
+\put(1576,-2836){\line( 1, 0){ 75}}
+\put(1726,-2836){\line( 1, 0){225}}
+\put(1576,-2911){\line( 1, 0){225}}
+\put(1876,-2911){\line( 1, 0){150}}
+\put(1576,-2986){\line( 1, 0){150}}
+\put(1801,-2986){\line( 1, 0){225}}
+\put(1576,-3061){\line( 1, 0){ 75}}
+\put(1726,-3061){\line( 1, 0){ 75}}
+\put(1876,-3061){\line( 1, 0){150}}
+\put(1576,-3136){\line( 1, 0){ 75}}
+\put(1726,-3136){\line( 1, 0){225}}
+\put(1576,-3211){\line( 1, 0){225}}
+\put(1876,-3211){\line( 1, 0){150}}
+\put(1576,-3286){\line( 1, 0){150}}
+\put(1801,-3286){\line( 1, 0){225}}
+\put(1576,-3361){\line( 1, 0){ 75}}
+\put(1726,-3361){\line( 1, 0){ 75}}
+\put(1876,-3361){\line( 1, 0){150}}
+\put(1576,-4561){\line( 1, 0){ 75}}
+\put(1726,-4561){\line( 1, 0){225}}
+\put(1576,-4636){\line( 1, 0){225}}
+\put(1876,-4636){\line( 1, 0){150}}
+\put(1576,-4711){\line( 1, 0){150}}
+\put(1801,-4711){\line( 1, 0){225}}
+\put(1576,-4786){\line( 1, 0){ 75}}
+\put(1726,-4786){\line( 1, 0){ 75}}
+\put(1876,-4786){\line( 1, 0){150}}
+\put(1801,-2761){\vector( 0, 1){600}}
+\put(1576,-1936){\line( 1, 0){300}}
+\put(1576,-2011){\line( 1, 0){ 75}}
+\put(1726,-2011){\line( 1, 0){300}}
+\put(1576,-2086){\line( 1, 0){150}}
+\put(1801,-2086){\line( 1, 0){ 75}}
+\put(1951,-2086){\line( 1, 0){ 75}}
+\put(1576,-3361){\line( 1, 0){ 75}}
+\put(1726,-3361){\line( 1, 0){225}}
+\put(1576,-3436){\line( 1, 0){225}}
+\put(1876,-3436){\line( 1, 0){150}}
+\put(1576,-3511){\line( 1, 0){150}}
+\put(1801,-3511){\line( 1, 0){225}}
+\put(1576,-3586){\line( 1, 0){ 75}}
+\put(1726,-3586){\line( 1, 0){ 75}}
+\put(1876,-3586){\line( 1, 0){150}}
+\put(1576,-4336){\line( 1, 0){ 75}}
+\put(1726,-4336){\line( 1, 0){225}}
+\put(1576,-4411){\line( 1, 0){225}}
+\put(1876,-4411){\line( 1, 0){150}}
+\put(1576,-4486){\line( 1, 0){150}}
+\put(1801,-4486){\line( 1, 0){225}}
+\put(1576,-4561){\line( 1, 0){ 75}}
+\put(1726,-4561){\line( 1, 0){ 75}}
+\put(1876,-4561){\line( 1, 0){150}}
+\put(4351,-3061){\circle*{120}}
+\put(3976,-811){\circle*{120}}
+\put(4576,-1411){\circle*{120}}
+\put(4351,-2311){\circle*{120}}
+\put(1501,-4861){\framebox(600,600){}}
+\put(1501,-3661){\framebox(600,900){}}
+\put(1501,-2161){\framebox(600,1200){}}
+\put(1801,-4261){\vector( 0, 1){600}}
+\put(2101,-4561){\vector( 3, 2){2250}}
+\put(2101,-1561){\vector( 3,-2){2250}}
+\put(2101,-3061){\vector( 1, 0){2175}}
+\put(2101,-1561){\vector( 3,-1){2250}}
+\put(4351,-3061){\line( 0, 1){750}}
+\put(2101,-3061){\vector( 3, 2){2475}}
+\put(4351,-2311){\line( 1, 4){225}}
+\put(4576,-1411){\line(-1, 1){600}}
+\put(2101,-4561){\vector( 1, 2){1875}}
+\put(4501,239){\line(-2,-3){1800}}
+\put(2701,-2461){\line( 2,-3){1800}}
+\put(4501,-5161){\line( 2, 3){1800}}
+\put(6301,-2461){\line(-2, 3){1800}}
+\put(4400,314){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}$\top$}}}
+\put(4390,-5410){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}$\bot$}}}
+\end{picture}
+\end{center}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+{\em Static analysis\/} determines interesting properties of programs to enable
+some optimizations.
+
+All interesting properties are actually undecidable, so the analysis computes
+a conservative approximation:
+\begin{itemize}
+\item if we say {\em yes}, then the property definitely holds;
+\item if we say {\em no}, then the property may or may not hold;
+\item only the {\em yes\/} answer will help us to perform the optimization;
+\item a trivial analysis will say {\em no\/} always; so
+\item the art is to say {\em yes\/} as often as possible.
+\end{itemize}
+Properties need not be simply {\em yes\/} or {\em no}, in which case the
+notion of {\em approximation\/} is more subtle.
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Static analysis may take place:
+\begin{itemize}
+\item at the source code level;
+\item at some intermediate level; or
+\item at the machine code level.
+\end{itemize}
+\vspace*{2em}
+
+Static analysis may look at:
+\begin{itemize}
+\item basic blocks only;
+\item an entire function (intraprocedural); or
+\item the whole program (interprocedural).
+\end{itemize}
+In each case, we are maximally pessimistic at the boundaries.\\
+
+The precision and cost of an analysis rises as we include more information.
+\vfil
+\end{slide*}
+
+\begin{slide*}
+Simple static analysis:
+\begin{itemize}
+\item is merely advanced weeding;
+\item uses symbol and type information; and
+\item is recursive in the program syntax.
+\end{itemize}
+\vspace*{2em}
+
+An example is the {\em definite assignment\/} requirement in Java and JOOS:
+\begin{itemize}
+\item local variables must be assigned before they are read;
+\item this is undecidable; but
+\item the language specification dictates a specific conservative approximation.
+\end{itemize}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+For each program point, compute a set of local variables that:
+\begin{itemize}
+\item contains only variables that have definitely been assigned;
+\item may be too small, since the analysis is conservative; and
+\item depends on the set computed for the previous program point.
+\end{itemize}
+\vspace*{2em}
+
+It accepts:
+\begin{scriptsize}
+\begin{verbatim}
+{ int k;
+  if (flag) k = 3; else k = 4;
+  System.out.println(k);
+}
+\end{verbatim}
+\end{scriptsize}
+but rejects:
+\begin{scriptsize}
+\begin{verbatim}
+{ int k;
+  if (flag) k = 3; 
+  if (!flag) k = 4;
+  System.out.println(k);
+}
+\end{verbatim}
+\end{scriptsize}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+JOOS code for statements:
+\begin{scriptsize}
+\begin{verbatim}
+ASNSET *defasnSTATEMENT(STATEMENT *s, ASNSET *before)
+{ if (s!=NULL) {
+     switch (s->kind) {
+       case skipK:
+            return before;
+       case expK:
+            return defasnEXP(s->val.expS,before);
+       case returnK:
+            if (s->val.returnS!=NULL)
+               (void)defasnEXP(s->val.returnS,before);
+            return setUniversal();
+       case sequenceK:
+            return 
+              defasnSTATEMENT(s->val.sequenceS.second,
+                 defasnSTATEMENT(s->val.sequenceS.first,
+                                 before)
+              );
+       case ifelseK:
+            return 
+              setIntersect(
+                defasnSTATEMENT(s->val.ifelseS.thenpart,
+                  defasnEXPassume(s->val.ifelseS.condition,
+                                  before,1)
+                ),
+                defasnSTATEMENT(s->val.ifelseS.elsepart,
+                  defasnEXPassume(s->val.ifelseS.condition,
+                                  before,0)
+                )
+              );
+       case ...
+  } }
+\end{verbatim}
+\end{scriptsize}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+To make the analysis more precise, it considers boolean expressions in more detail.\\
+
+The procedure {\tt defasnEXPassume(...,b)} assumes the expression evalutes to {\tt b}.\\
+
+This refinement handles a case like:
+\begin{scriptsize}
+\begin{verbatim}
+{ int k;
+  if (a>0 && (k=b)>0) System.out.println(k);
+}
+\end{verbatim}
+\end{scriptsize}
+which would otherwise be rejected.\\
+
+In general, a static analysis becomes more precise when it may
+make further assumptions about the context. 
+\vfil
+\end{slide*}
+
+\begin{slide*}
+The definite assignment analysis is particularly simple:
+
+there are no recursive dependencies between the computed sets.\\
+
+This allows a simple implementation:\\ a top-down traversal of the
+parse tree.\\
+
+For more sophisticated analyses, we generate equations and compute the solution
+as a fixed point.
+\vfil
+\end{slide*}
+
+\begin{slide*}
+For the JIT compiler, we want to optimize the use of registers:
+\begin{tt}
+\begin{tabbing}
+XXXXXXXXXXXXX\=XXXXXX\=\kill
+\\
+mov 1,R3  \>   $\Longrightarrow$ \>   mov 1,R1 \\
+mov R3,R1 \\
+ 
+\end{tabbing}
+\end{tt}
+This requires knowledge about the future uses of registers:\\
+
+The optimization is only sound if the value of {\tt R3} is not used
+later on.
+
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+For basic block register allocation,  which variables
+need to be written back to memory?
+
+The na\"ive scheme:
+\begin{itemize}
+\item must write all those variables that are {\em only\/} in
+registers.
+\end{itemize}
+
+A better scheme:
+\begin{itemize}
+\item write all those variables that are only in registers {\em and\/} whose
+values might be used later on.
+\end{itemize}
+
+This could avoid many useless spills.
+\vfil
+\end{slide*}
+
+\begin{slide*}
+In both examples, we need to know if some {\tt R$_i$} might be used later on.
+If so, it is called {\em live}; otherwise, it is called {\em dead}.\\
+
+A static analysis can conservatively approximate liveness at each program point.
+
+Exact liveness is of course undecidable.\\
+
+A trivial analysis will call everything live, which precludes all optimizations.
+
+A superior analysis will identify more dead variables.
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Liveness analysis for VirtualRISC:
+
+\begin{itemize}
+\item build a control flow graph (goto graph);
+\item define dataflow equations for each node;
+\item compute the least solution of these equations.
+\end{itemize}
+
+For basic blocks the computation is trivial.
+
+For intraprocedural analysis we must compute a minimal fixed point in a lattice.
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Consider a simple basic block:
+
+\begin{scriptsize}
+\begin{alltt}
+
+mov 3,\underline{R1}
+mov 4,\underline{R2}
+add R1,R2,\underline{R3}
+mov R3,\underline{R0}
+return
+
+\end{alltt}
+\end{scriptsize}
+The \underline{underlined} registers are written (defined), the others are merely read
+(used).
+
+The control flow graph is:\\
+
+~~~~~~~~~~~~~~~~~~\setlength{\unitlength}{2000sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(912,3750)(2401,-5086)
+\thinlines
+\put(3301,-1561){\vector( 0,-1){600}}
+\put(3301,-2461){\vector( 0,-1){600}}
+\put(3301,-3361){\vector( 0,-1){600}}
+\put(3301,-4261){\vector( 0,-1){600}}
+\put(2401,-1486){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S1:  mov 3,\underline{R1}}}}
+\put(2401,-2386){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S2:  mov 4,\underline{R2}}}}
+\put(2401,-3286){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S3:  add R1,R2,\underline{R3}}}}
+\put(2401,-4186){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S4:  mov R3,\underline{R0}}}}
+\put(2401,-5086){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S5:  return}}}
+\end{picture}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Each instruction uses some registers and defines some registers:\\
+
+\setlength{\unitlength}{2000sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(4800,4290)(2401,-5086)
+\put(5401,-961){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}{\rm uses({\tt S}$_i$)}}}}
+\put(7201,-961){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}{\rm defines({\tt S}$_i$)}}}}
+\put(5401,-1486){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{\}}}}
+\put(7201,-1486){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{R1\}}}}
+\put(5401,-2386){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{\}}}}
+\put(7201,-2386){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{R2\}}}}
+\put(5401,-3286){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{R1,R2\}}}}
+\put(7201,-3286){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{R3\}}}}
+\put(5401,-4186){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{R3\}}}}
+\put(7201,-4186){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{R0\}}}}
+\put(5401,-5086){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{R0\}}}}
+\put(7201,-5086){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{\}}}}
+\thinlines
+\put(3301,-1561){\vector( 0,-1){600}}
+\put(3301,-2461){\vector( 0,-1){600}}
+\put(3301,-3361){\vector( 0,-1){600}}
+\put(3301,-4261){\vector( 0,-1){600}}
+\put(2401,-1486){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S1:  mov 3,\underline{R1}}}}
+\put(2401,-2386){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S2:  mov 4,\underline{R2}}}}
+\put(2401,-3286){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S3:  add R1,R2,\underline{R3}}}}
+\put(2401,-4186){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S4:  mov R3,\underline{R0}}}}
+\put(2401,-5086){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S5:  return}}}
+\end{picture}\\
+
+The register {\tt R0} is implicitly used for the return value.
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Let out({\tt S}$_i$) be the variables that are live just {\em after\/} {\tt S}$_i$ and
+in({\tt S}$_i$) those that are live just {\em before\/} {\tt S}$_i$:
+
+~~~~~~~~~~~~~~~~~~\setlength{\unitlength}{2000sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(1200,1524)(2401,-3973)
+\thinlines
+\put(3301,-2461){\vector( 0,-1){600}}
+\put(3301,-3361){\vector( 0,-1){600}}
+\put(2351,-3280){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S$_i$:  op X,Y,Z}}}
+\put(3601,-3661){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}{\rm out({\tt S}$_i$)}}}}
+\put(3601,-2836){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}{\rm in({\tt S}$_i$)}}}}
+\end{picture}\\
+
+Then we have the dataflow equation:\\
+
+in({\tt S}$_i$) = uses({\tt S}$_i$) $\cup$ (out({\tt S}$_i$) $-$ defines({\tt S}$_i$))\\
+
+We add those registers that are used in the current instruction and delete those that are
+defined here.
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Since out({\tt S5}) = {\tt \{\}}, it follows that:\\
+
+in({\tt S5}) = uses({\tt S5}) = {\tt \{R0\}}\\
+
+We can continue to unravel the equations:
+\begin{scriptsize}
+\begin{tabbing}
+XXX\=out({\tt S5}) \=\kill
+\\
+\>out({\tt S4})\>= in({\tt S5}) = {\tt \{R0\}}\\
+\>in({\tt S4})\>= uses({\tt S4}) $\cup$ (out({\tt S4}) $-$ defines({\tt S4}))\\
+\>            \>= {\tt \{R3\}} $\cup$ ({\tt \{R0\}} $-$ {\tt \{R0\}})\\
+\>            \>= {\tt \{R3\}}\\
+\>out({\tt S3})\>= in({\tt S4}) = {\tt \{R3\}}\\
+\>in({\tt S3})\>= uses({\tt S3}) $\cup$ (out({\tt S3}) $-$ defines({\tt S3}))\\
+\>            \>= {\tt \{R1,R2\}} $\cup$ ({\tt \{R3\}} $-$ {\tt \{R3\}})\\
+\>            \>= {\tt \{R1,R2\}}
+\end{tabbing}
+\end{scriptsize}
+and so on:\vspace*{1ex}\\
+\setlength{\unitlength}{1800sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(6600,4290)(2401,-5086)
+\put(5401,-961){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}{\rm uses({\tt S$_i$})}}}}
+\put(7201,-961){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}{\rm defines({\tt S$_i$})}}}}
+\put(5401,-1486){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{\}}}}
+\put(7201,-1486){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{R1\}}}}
+\put(5401,-2386){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{\}}}}
+\put(7201,-2386){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{R2\}}}}
+\put(5401,-3286){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{R1,R2\}}}}
+\put(7201,-3286){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{R3\}}}}
+\put(5401,-4186){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{R3\}}}}
+\put(7201,-4186){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{R0\}}}}
+\put(5401,-5086){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{R0\}}}}
+\put(7201,-5086){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{\}}}}
+\put(3401,-1561){\vector( 0,-1){600}}
+\put(3401,-2461){\vector( 0,-1){600}}
+\put(3401,-3361){\vector( 0,-1){600}}
+\put(3401,-4261){\vector( 0,-1){600}}
+\put(2401,-1486){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S1:  mov 3,\underline{R1}}}}
+\put(2401,-2386){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S2:  mov 4,\underline{R2}}}}
+\put(2401,-3286){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S3:  add R1,R2,\underline{R3}}}}
+\put(2401,-4186){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S4:  mov R3,\underline{R0}}}}
+\put(2401,-5086){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S5:  return}}}
+\put(9001,-961){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}{\rm in({\tt S$_i$})}}}}
+\put(9001,-1486){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{\}}}}
+\put(9001,-2386){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{R1\}}}}
+\put(9001,-3286){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{R1,R2\}}}}
+\put(9001,-4186){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{R3\}}}}
+\put(9001,-5086){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{R0\}}}}
+\end{picture}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+In basic blocks we use the equation:
+$$\mbox{out({\tt S$_i$})} = \mbox{in({\tt S$_{i+1}$})}$$
+
+If we have branches, then a node in the control flow graph may have
+several successors.
+
+In this case, we must use the equation:
+$$\mbox{out({\tt S$_i$})} = \bigcup_{\displaystyle x \in \mbox{succ({\tt S$_i$})}}\mbox{in($x$)}$$
+
+But now the equations are cyclic and cannot simply be unraveled.
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Consider the small piece of C code:
+
+\begin{scriptsize}
+\begin{verbatim}
+{ int i, sum_even, sum_odd, sum;
+  i = 1;
+  sum_even = 0;
+  sum_odd = 0;
+  sum = 0;
+  while (i < 10)
+   { if (i%2 == 0) sum_even = sum_even + i;
+     else sum_odd = sum_odd + i;
+     sum = sum + i;
+     i++;
+   }
+}
+\end{verbatim}
+\end{scriptsize}
+It yields the following VirtualRISC code:
+\begin{scriptsize}
+\begin{alltt}
+        mov 1,\underline{R1}          // R1 is i
+        mov 0,\underline{R2}          // R2 is sum_even
+        mov 0,\underline{R3}          // R3 is sum_odd
+        mov 0,\underline{R4}          // R4 is sum
+loop:
+        andcc R1,1,\underline{R5}    // R5 = R1 & 1
+        cmp R5,0
+        bne else         // if R5 != 0 goto else
+        add R2,R1,\underline{R2}     // R2 = R2 + R1; even case
+        b endif
+else:
+        add R3,R1,\underline{R3}     // R3 = R3 + R1; odd case
+endif:
+        add R4,R1,\underline{R4}     // R4 = R4 + R1; update sum
+        add R1,1,\underline{R1}      // R1 = R1 + 1;  increment i
+        cmp R1,9 
+        ble loop         // if i <= 9 goto loop
+\end{alltt}
+\end{scriptsize}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+The control flow graph:\\
+
+
+~~~~~~~~~\setlength{\unitlength}{1700sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(5712,10050)(901,-10486)
+\thinlines
+\put(3401,-661){\vector( 0,-1){600}}
+\put(3401,-1561){\vector( 0,-1){600}}
+\put(3401,-2461){\vector( 0,-1){600}}
+\put(3401,-3361){\vector( 0,-1){600}}
+\put(2401,-586){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S1: mov 1,R1}}}
+\put(2401,-1486){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S2: mov 0,R2}}}
+\put(2401,-2386){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S3: mov 0,R3}}}
+\put(2401,-3286){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S4: mov 0,R4}}}
+\put(2401,-4186){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S5: andcc R1,1,R5}}}
+\put(3401,-5161){\vector( 0,-1){600}}
+\put(3401,-7861){\vector( 0,-1){600}}
+\put(3401,-8761){\vector( 0,-1){600}}
+\put(3401,-9661){\vector( 0,-1){600}}
+\put(3001,-6061){\vector(-3,-2){900}}
+\put(3601,-6061){\vector( 3,-2){900}}
+\put(2101,-6961){\vector( 3,-2){900}}
+\put(4501,-6961){\vector(-3,-2){900}}
+\put(3401,-4261){\vector( 0,-1){600}}
+\put(4301,-10411){\line( 1, 0){2300}}
+\put(6601,-10411){\line( 0, 1){6300}}
+\put(6601,-4111){\vector(-1, 0){1350}}
+\put(2401,-5086){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S6: cmp R5,0}}}
+\put(2401,-5986){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S7: bne S9}}}
+\put(901,-6886){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S8:~add R2,R1,R2}}}
+\put(3901,-6886){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S9:~add R3,R1,R3}}}
+\put(2401,-7786){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S10:~add R4,R1,R4}}}
+\put(2401,-8686){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S11:~add R1,1,R1}}}
+\put(2401,-9586){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S12:~cmp R1,9}}}
+\put(2401,-10486){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S13:~ble S5}}}
+\end{picture}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+To unravel the liveness equations, we should start with:
+$$\mbox{out({\tt S13})} = \mbox{in({\tt S5})}$$
+but we have not computed in({\tt S5}) yet, so this will not work!\\
+
+If in({\tt S1}),\ldots,in({\tt S13}) are known, then we can unravel the code as before
+and obtain the sets in({\tt S1}),\ldots,in({\tt S13}) once again.\\
+
+But this means that unraveling is a function:
+$$ f: {\cal P}(R)^{13} \rightarrow {\cal P}(R)^{13} $$
+where $R = \{\mbox{\tt R1},\mbox{\tt R2},\ldots,\mbox{\tt R5}\}$.
+A solution is a fixed point, and we want the minimal one.
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Two fundamental observations:
+\begin{itemize}
+\item the set $D = {\cal P}(R)^{13}$ is a finite {\em lattice}:
+      $$ \forall x,y\in D: x\sqcap y \in D \;\wedge\; x\sqcup y\in D$$
+      where $\sqsubseteq$ is point-wise set inclusion; and
+\item the unraveling function $f$ is {\em monotonic}:
+      $$ \forall x,y\in D: x\sqsubseteq y \Rightarrow f(x) \sqsubseteq f(y)$$
+      since $g(x) = A \cup (x - B)$ is monotonic.
+\end{itemize}
+\vspace*{2ex}
+
+The fixed point theorem:
+
+Any monotonic function $f$ on a finite lattice $D$ has the unique minimal fixed point:
+$$ \bigsqcup_i f^i(\bot) $$
+which is always obtained after finitely many iterations.
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+For $D = {\cal P}(R)^{13}$ we have that:
+$$ \bot = (\emptyset,\emptyset,\ldots,\emptyset) $$
+so we start with the sets in({\tt S$_i$}) = \mbox{\tt \{\}} and keep unraveling
+until they no longer change. \\
+
+Note that:
+$$ \top = (R,R,\ldots,R) $$
+is always a safe answer, but clearly useless and
+pessimistic.
+
+Observe that the maximal fixed-point:
+$$ \sqcap_i f^i(\top) $$
+may in general be smaller than $\top$.
+\vfil
+\end{slide*}
+
+
+\begin{slide*}
+Computing the minimal fixed point:\\
+
+\renewcommand{\arraystretch}{1}
+\renewcommand{\tabcolsep}{1.0ex}
+\begin{scriptsize}
+\begin{tt}
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+ & {\rm uses} & {\rm defs} & {\rm succ} & $\bot$ & $f(\bot)$ & $f^2(\bot)$  \\\hline
+S1 &      & R1& S2& \{\}& \{\}&  \{\}\\\hline
+S2 &      & R2& S3& \{\}& \{\}& \{\} \\\hline
+S3 &      & R3& S4& \{\}& \{\}& \{\} \\\hline
+S4 &      & R4& S5& \{\}& \{\}& \{R1\} \\\hline
+S5 & R1   & R5& S6& \{\}&\{R1\} & \{R1\}  \\\hline
+S6 & R5   & & S7& \{\}& \{R5\}& \{R5\}\\\hline
+S7 &      & & S8,S9& \{\}& \{\}& \{R1,R2,R3\} \\\hline
+S8 & R1,R2& R2& S10& \{\}& \{R1,R2\}& \{R1,R2,R4\} \\\hline
+S9 & R1,R3& R3& S10& \{\}& \{R1,R3\}& \{R1,R3,R4\} \\\hline
+S10 & R1,R4& R4& S11& \{\}&  \{R1,R4\}& \{R1,R4\}\\\hline
+S11 & R1& R1& S12& \{\}& \{R1\} & \{R1\}\\\hline
+S12 & R1& & S13& \{\}&  \{R1\}& \{R1\}\\\hline
+S13 &   & & S5& \{\}&  \{\}& \{R1\}\\\hline
+\end{tabular}
+\end{tt}
+\end{scriptsize}
+\vspace*{2ex}
+
+The function is:
+$$ f(X_1,X_2,\ldots,X_{13}) = (Y_1,Y_2,\ldots,Y_{13})$$
+where:
+$$ Y_i = \mbox{uses}(\mbox{\tt S}_i) \cup
+         ( \bigcup_{\displaystyle \mbox{\tt S}_j\!\in\!\mbox{succ}(\mbox{\tt S}_i)}
+           \!\!\!\!\!X_j - \mbox{defs}(\mbox{\tt S}_i) )$$
+\vfil
+\end{slide*}
+
+\begin{slide*}
+\renewcommand{\arraystretch}{1}
+\renewcommand{\tabcolsep}{1.0ex}
+\begin{scriptsize}
+\begin{tt}
+\begin{tabular}{|l|l|l|l|}
+\hline
+& $f^3(\bot)$ & $f^4(\bot)$ & $f^5(\bot)$ \\\hline
+S1 & \{\}& \{\}& \{\}\\\hline
+S2 & \{\}& \{R1\}& \{R1\}\\\hline
+S3 & \{R1\}& \{R1\}& \{R1\}\\\hline
+S4 & \{R1\}& \{R1\}& \{R1,R2,R3\}\\\hline
+S5 & \{R1\}& \{R1,R2,R3\}& \{R1,R2,R3,R4\}\\\hline
+S6 & \{R1,R2,R3,R5\}& \{R1,R2,R3,R4,R5\}& \{R1,R2,R3,R4,R5\}\\\hline
+S7 & \{R1,R2,R3,R4\}& \{R1,R2,R3,R4\}& \{R1,R2,R3,R4\}\\\hline
+S8 & \{R1,R2,R4\}& \{R1,R2,R4\}& \{R1,R2,R4\}\\\hline
+S9 & \{R1,R3,R4\}& \{R1,R3,R4\}& \{R1,R3,R4\}\\\hline
+S10 & \{R1,R4\}& \{R1,R4\}& \{R1,R4\}\\\hline
+S11 & \{R1\}& \{R1\}& \{R1\}\\\hline
+S12 & \{R1\}& \{R1\}& \{R1,R2,R3\}\\\hline
+S13 & \{R1\}& \{R1,R2,R3\}& \{R1,R2,R3,R4\}\\\hline
+\multicolumn{4}{l}{}\\
+%\end{tabular}
+%\end{tt}
+%\end{scriptsize}
+%
+%\begin{scriptsize}
+%\begin{tt}
+%\begin{tabular}{|l|l|l|l|}
+\hline
+& $f^6(\bot)$ & $f^7(\bot)$ & $f^8(\bot)$ \\\hline
+S1 & \{\}& \{\}& \{\}\\\hline
+S2 & \{R1\}& \{R1\}& \{R1\}\\\hline
+S3 & \{R1,R2\}& \{R1,R2\}& \{R1,R2\}\\\hline
+S4 & \{R1,R2,R3\}& \{R1,R2,R3\}& \{R1,R2,R3\}\\\hline
+S5 & \{R1,R2,R3,R4\}& \{R1,R2,R3,R4\}& \{R1,R2,R3,R4\}\\\hline
+S6 & \{R1,R2,R3,R4,R5\}& \{R1,R2,R3,R4,R5\}& \{R1,R2,R3,R4,R5\}\\\hline
+S7 & \{R1,R2,R3,R4\}& \{R1,R2,R3,R4\}& \{R1,R2,R3,R4\}\\\hline
+S8 & \{R1,R2,R4\}& \{R1,R2,R4\}& \{R1,R2,R3,R4\}\\\hline
+S9 & \{R1,R3,R4\}& \{R1,R3,R4\}& \{R1,R2,R3,R4\}\\\hline
+S10 & \{R1,R4\}& \{R1,R2,R3,R4\}& \{R1,R2,R3,R4\}\\\hline
+S11 & \{R1,R2,R3\}& \{R1,R2,R3,R4\}& \{R1,R2,R3,R4\}\\\hline
+S12 & \{R1,R2,R3,R4\}& \{R1,R2,R3,R4\}& \{R1,R2,R3,R4\}\\\hline
+S13 & \{R1,R2,R3,R4\}& \{R1,R2,R3,R4\}& \{R1,R2,R3,R4\}\\\hline
+\end{tabular}
+\end{tt}
+\end{scriptsize}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+A turbo fixed point technique:\\
+
+\begin{center}
+\setlength{\unitlength}{3000sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(3624,2124)(2089,-3373)
+\thicklines
+\put(4801,-1261){\line( 0,-1){2100}}
+\put(5401,-1261){\line( 0,-1){2100}}
+\put(4201,-1561){\line( 1, 0){1500}}
+\put(4201,-1861){\line( 1, 0){1500}}
+\put(4201,-2161){\line( 1, 0){1500}}
+\put(4201,-2461){\line( 1, 0){1500}}
+\put(4201,-2761){\line( 1, 0){1500}}
+\put(4201,-3061){\line( 1, 0){1500}}
+\put(5101,-2011){\vector(-1, 0){600}}
+\put(5101,-2011){\vector(-2, 1){600}}
+\put(5101,-2011){\vector(-1, 1){600}}
+\put(5101,-2011){\vector(-3,-4){225}}
+\put(5101,-2011){\vector( 0,-1){975}}
+\put(5101,-2011){\vector(-1,-3){225}}
+\put(2701,-1261){\line( 0,-1){2100}}
+\put(3301,-1261){\line( 0,-1){2100}}
+\put(2101,-1561){\line( 1, 0){1500}}
+\put(2101,-1861){\line( 1, 0){1500}}
+\put(2101,-2161){\line( 1, 0){1500}}
+\put(2101,-2461){\line( 1, 0){1500}}
+\put(2101,-2761){\line( 1, 0){1500}}
+\put(2101,-3061){\line( 1, 0){1500}}
+\put(3001,-2011){\vector(-1, 1){600}}
+\put(3001,-2011){\vector(-2, 1){600}}
+\put(3001,-2011){\vector(-1, 0){600}}
+\put(3001,-2011){\vector(-2,-1){600}}
+\put(3001,-2011){\vector(-1,-1){600}}
+\put(3001,-2011){\vector(-2,-3){600}}
+\end{picture}
+\end{center}
+
+The improved function is:
+$$ f_{\Delta}(X_1,X_2,\ldots,X_{13}) = (Y_1,Y_2,\ldots,Y_{13})$$
+where:
+$$ 
+Y_i = \mbox{uses}(\mbox{\tt S}_i) \cup
+         ( \bigcup_{\displaystyle \mbox{\tt S}_j\!\in\!\mbox{succ}(\mbox{\tt S}_i)}
+           \!\!\!\!\!Z_j - \mbox{defs}(\mbox{\tt S}_i) )
+\;\;\;\;\;
+$$
+$$
+Z_j = \left\{
+\begin{array}{ll}
+Y_j & \mbox{if $j>i$}\\
+X_j & \mbox{otherwise}
+\end{array} \right.\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;
+$$
+\vfil
+\end{slide*}
+
+\begin{slide*}
+Improved fixed point computation:\\
+
+\renewcommand{\tabcolsep}{1.0ex}
+\begin{scriptsize}
+\begin{tt}
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+ & $\bot$ & $f_{\Delta}(\bot)$ & $f_{\Delta}^2(\bot)$ & $f_{\Delta}^3(\bot)$ 
+\\\hline
+S1 & \{\}& \{\}&  \{\} &\{\} \\\hline
+S2 & \{\}& \{\}& \{R1\}  &\{R1\} \\\hline
+S3 & \{\}& \{\}& \{R1,R2\}  &\{R1,R2\} \\\hline
+S4 & \{\}& \{\}& \{R1,R2,R3\}  &\{R1,R2,R3\} \\\hline
+S5 & \{\}&\{R1\} & \{R1,R2,R3,R4\}   &\{R1,R2,R3,R4\} \\\hline
+S6 & \{\}& \{R5\}& \{R1,R2,R3,R4,R5\} &\{R1,R2,R3,R4,R5\} \\\hline
+S7 & \{\}& \{\}& \{R1,R2,R3,R4\}  &\{R1,R2,R3,R4\} \\\hline
+S8 & \{\}& \{R1,R2\}& \{R1,R2,R4\}  &\{R1,R2,R3,R4\} \\\hline
+S9 & \{\}& \{R1,R3\}& \{R1,R3,R4\}  &\{R1,R2,R3,R4\} \\\hline
+S10 & \{\}&  \{R1,R4\}& \{R1,R4\} &\{R1,R2,R3,R4\} \\\hline
+S11 & \{\}& \{R1\} & \{R1\} &\{R1,R2,R3,R4\} \\\hline
+S12  & \{\}&  \{R1\}& \{R1\} &\{R1,R2,R3,R4\} \\\hline
+S13  & \{\}&  \{\}& \{R1\} &\{R1,R2,R3,R4\} \\\hline
+\end{tabular}
+\end{tt}
+\end{scriptsize}
+\vspace*{2ex}
+
+Number of iterations is down from 8 to 3.
+
+\vfil
+\end{slide*}
+
+\begin{slide*}
+Liveness analysis is used for register allocation in optimizing
+compilers.
+
+In the basic block case, reduce spills to those variables that are
+only in registers {\em and\/} live.
+
+In the intraprocedural case, construct a graph whose nodes are
+variables:
+\begin{center}
+\setlength{\unitlength}{2000sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(4741,2491)(2093,-4419)
+\thinlines
+\put(3301,-2461){\circle{450}}
+\put(4951,-2161){\circle{450}}
+\put(3301,-4186){\circle{450}}
+\put(5851,-3811){\circle{450}}
+\put(6601,-2161){\circle{450}}
+\put(2326,-3286){\circle{450}}
+\put(3526,-2461){\line( 4, 1){1200}}
+\put(3301,-2686){\line( 0,-1){1275}}
+\put(4951,-2386){\line( 3,-4){900}}
+\put(3076,-2461){\line(-5,-4){750}}
+\put(3076,-4186){\line(-1, 1){675}}
+\put(2251,-3361){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}a}}}
+\put(3226,-4261){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}c}}}
+\put(6526,-2236){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}f}}}
+\put(3226,-2536){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}b}}}
+\put(4876,-2236){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}d}}}
+\put(5776,-3886){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}e}}}
+\end{picture}
+\end{center}
+and where edges connect nodes that are live at the same time.
+
+Register allocation is now reduced to finding a minimal graph coloring:
+\begin{verbatim}
+   { {a,d,f}, {b,e}, {c} }
+\end{verbatim}
+and assigning a register to each color.
+
+\vfil
+\end{slide*}
+
+\begin{slide*}
+Liveness analysis is a {\em backwards\/} analysis, since we
+unravel from the future towards the past.\\
+
+An example of a {\em forwards\/} analysis is constant propagation:\\
+
+
+\setlength{\unitlength}{2000sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(3000,3765)(2401,-5086)
+\thinlines
+\put(3301,-1561){\vector( 0,-1){600}}
+\put(3301,-2461){\vector( 0,-1){600}}
+\put(3301,-3361){\vector( 0,-1){600}}
+\put(3301,-4261){\vector( 0,-1){600}}
+\put(2401,-1486){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S1:  mov 3,R1}}}
+\put(2401,-2386){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S2:  mov 4,R2}}}
+\put(2401,-3286){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S3:  add R1,R2,R3}}}
+\put(2401,-4186){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S4:  mov R3,R0}}}
+\put(2401,-5086){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}S5:  return}}}
+\put(5401,-1486){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{(R0,?),(R1,?),(R2,?),(R3,?)\}}}}
+\put(5401,-2386){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{(R0,?),(R1,3),(R2,?),(R3,?)\}}}}
+\put(5401,-3286){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{(R0,?),(R1,3),(R2,4),(R3,?)\}}}}
+\put(5401,-4186){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{(R0,?),(R1,3),(R2,4),(R3,7)\}}}}
+\put(5401,-5086){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\{(R0,7),(R1,3),(R2,4),(R3,7)\}}}}
+\end{picture}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+A basic static analysis of JOOS and other object-oriented languages
+is {\em type inference}.\\
+
+Given an expression, what are the possible classes of the
+objects to which it may evaluate?\\
+
+The exact answer is undecidable, so we must conservatively approximate:
+\begin{itemize}
+\item we will accept a set that is too large;
+\item we want it as small as possible; and
+\item a trivial answer includes all classes.
+\end{itemize}
+\vspace*{2ex}
+
+This analysis is interprocedural and requires access to the whole program.
+\vfil
+\end{slide*}
+
+\begin{slide*}
+Possible uses of type inference:\\
+
+\begin{itemize}
+\item inline methods when there is only one possible receiver;
+\item eliminate run-time checks that can be decided statically;
+\item remove code that is never executed; and
+\item approximate the control flow graph to enable other
+static analyses.
+\end{itemize}
+\vspace*{2ex}
+
+In each case, smaller inferred sets will give better results.
+\vfil
+\end{slide*}
+
+\begin{slide*}
+The constraint technique:\\
+
+\begin{itemize}
+\item assign a variable \CC{E} to each occurrence of an expression {\tt E};
+\item assign a variable \CC{m} to each occurrence of a method {\tt m};
+\item the variables range over the set of all classes 
+$C = \{\mbox{\tt C}_1,\mbox{\tt C}_2,\ldots,\mbox{\tt C}_n\}$;
+\item each parse tree node generates a local constraint on the variables; and
+\item the global minimal solution of these constraints is finally computed.
+\end{itemize}
+\vspace*{2ex}
+
+Again, we must compute a minimal fixed point in a finite lattice.
+\vfil
+\end{slide*}
+
+\begin{slide*}
+Each constraint models the flow of objects:
+\begin{itemize}
+\item the assignment ``{\tt i = E}'' yields: $\CC{E} \subseteq \CC{i}$;
+\item the creation ``{\tt new C()}'' yields: $\{\mbox{\tt C}\} \subseteq \CC{new C()}$;
+\item the cast ``{\tt C(E)}'' yields:\\ $\{\mbox{\tt C}\} \subseteq \CC{C(E)}$;
+\item the constant ``{\tt this}'' yields: $\{\mbox{\tt C}\} \subseteq \CC{this}$,\\
+where {\tt C} is the surrounding class; and
+\item the statement ``{\tt return E}'' yields: $\CC{E} \subseteq \CC{m}$,\\ 
+where {\tt m} is the surrounding method.
+\end{itemize}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+The method invocation:
+
+{\tt E.m(E$_1$,E$_2$,\ldots,E$_k$)}
+
+yields the {\em conditional\/} constraints:
+$$
+\mbox{\tt C}_i \in \CC{E} \Rightarrow \left\{
+\begin{array}{l}
+\CC{E$_1$} \subseteq \CC{x$_1$}\\
+\CC{E$_2$} \subseteq \CC{x$_2$}\\
+\vdots\\
+\CC{E$_k$} \subseteq \CC{x$_k$}\\
+\CC{m} \subseteq \CC{E.m(E$_1$,E$_2$,\ldots,E$_k$)}
+\end{array}\right.
+$$
+whenever the class \mbox{\tt C}$_i$ implements a method named {\tt m} which accepts $k$
+arguments named {\tt x}$_1$, {\tt x}$_2$, \ldots, {\tt x}$_k$.
+\vfil
+\end{slide*}
+
+\begin{slide*}
+Since the constraint:
+$$v\subseteq w$$
+holds if and only if the equality:
+$$w = v\cup w$$
+does, we can rewrite a set of constraints into a function:
+$$ f: {\cal P}(C)^k \rightarrow {\cal P}(C)^k $$
+such that fixed-points of $f$ correspond to solutions
+to the constraints.
+\vfil
+\end{slide*}
+
+\begin{slide*}
+For the example constraints:
+$$\begin{array}{l}
+v_1 \subseteq v_2\\
+\mbox{\tt C}_3 \in v_2 \Rightarrow v_3 \subseteq v_1\\
+\{\mbox{C}_7\} \subseteq v_3
+\end{array}
+$$
+we get the function:
+$$
+\begin{array}{l}
+f(X_1,X_2,X_3) = \\
+\;\left\{\!\!\begin{array}{ll}
+(X_1\!\cup\!X_3, X_1\!\cup\!X_2, \{\mbox{C}_7\}\!\cup\!X_3) & \!\mbox{if~} \mbox{\tt C}_3\!\in\!X_2\\
+(X_1,X_1\!\cup\!X_2, \{\mbox{C}_7\}\!\cup\!X_3) & \!\mbox{otherwise}
+\end{array}\right.
+\end{array}
+$$
+\vfil
+\end{slide*}
+
+\begin{slide*}
+Solving the constraints:
+\begin{itemize}
+\item ${\cal P}(C)^k$ is a finite lattice;
+\item each function $f$ is monotonic; and
+\item the least fixed point of $f$ is the unique smallest solution of the constraints.
+\end{itemize}
+\vspace*{2ex}
+
+\begin{center}
+\setlength{\unitlength}{2200sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(5424,5805)(1489,-6886)
+\thinlines
+\put(3601,-2761){\circle*{150}}
+\put(4426,-3361){\circle*{150}}
+\put(4201,-1261){\line(-1,-1){2700}}
+\put(1501,-3961){\line( 1,-1){2700}}
+\put(4201,-6661){\line( 1, 1){2700}}
+\put(6901,-3961){\line(-1, 1){2700}}
+\put(3601,-3361){\vector( 0, 1){525}}
+\put(3601,-4261){\vector( 2, 1){600}}
+\put(3901,-4861){\vector(-1, 2){300}}
+\put(3601,-5161){\vector( 1, 1){300}}
+\put(4201,-5461){\vector(-2, 1){600}}
+\put(4501,-6061){\vector(-1, 2){300}}
+\put(4201,-6661){\vector( 1, 2){300}}
+\put(4201,-3961){\vector(-1, 1){600}}
+\put(3676,-2836){\line( 3,-2){675}}
+\put(4101,-1126){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}$\top$}}}
+\put(4101,-6920){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}$\bot$}}}
+\put(3751,-2816){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}fixed point}}}
+\put(4576,-3436){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}ideal answer}}}
+\end{picture}
+\end{center}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+A tiny JOOS sketch:
+\begin{scriptsize}
+\begin{verbatim}
+public class A {
+  public A() { super(); }
+  public A id(A x) { return x; }
+}
+
+public class B extends A {
+  public B() { super(); }
+  public B me() { return (B)(new A()).id(this); }
+}
+\end{verbatim}
+\end{scriptsize}
+
+The generated constraints are:
+\begin{scriptsize}
+\begin{tabbing}
+$\CC{x}_{\mbox{\tt A}} \subseteq \CC{id}_{\mbox{\tt A}}$\\
+$\CC{x}_{\mbox{\tt B}} \subseteq \CC{id}_{\mbox{\tt B}}$\\
+$\CC{(B)(new A()).id(this)} \subseteq \CC{me}$\\
+$\{\mbox{\tt B}\} \subseteq \CC{(B)(new A()).id(this)}$\\
+$\{\mbox{\tt B}\} \subseteq \CC{this}$\\
+$\{\mbox{\tt A}\} \subseteq \CC{new A()}$\\
+$\mbox{\tt A} \in \CC{new A()} \Rightarrow \CC{this} \subseteq \CC{x}_{\mbox{\tt A}}$\\
+$\mbox{\tt A} \in \CC{new A()} \Rightarrow \CC{id}_{\mbox{\tt A}} \subseteq \CC{(new A()).id(this)}$\\
+$\mbox{\tt B} \in \CC{new A()} \Rightarrow \CC{this} \subseteq \CC{x}_{\mbox{\tt B}}$\\
+$\mbox{\tt B} \in \CC{new A()} \Rightarrow \CC{id}_{\mbox{\tt B}} \subseteq \CC{(new A()).id(this)}$
+\end{tabbing}
+\end{scriptsize}
+The minimal solution is:
+\begin{scriptsize}
+\begin{tabbing}
+$\CC{new A()} = \{\mbox{\tt A}\}$\\
+$\CC{x}_{\mbox{\tt A}} = \CC{id}_{\mbox{\tt A}} = \CC{this} = \CC{(new A()).id(this)} = \{\mbox{\tt B}\}$\\
+$\CC{(B)(new A()).id(this)} = \{\mbox{\tt B}\}$\\
+$\CC{x}_{\mbox{\tt B}} = \CC{id}_{\mbox{\tt B}} = \{\}$
+\end{tabbing}
+\end{scriptsize}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+The generated code for the {\tt me} method is:
+\begin{scriptsize}
+\begin{verbatim}
+.method public me()LB;
+  .limit locals 1
+  .limit stack 2
+  new A
+  dup
+  invokenonvirtual A/<init>()V
+  aload_0
+  invokevirtual A/id(LA;)LA;
+  checkcast B
+  areturn
+.end method
+\end{verbatim}
+\end{scriptsize}
+
+The information $\CC{new A().id(this)} = \{\mbox{\tt B}\}$ 
+eliminates the {\tt checkcast} instruction.
+
+That $\CC{new A()} = \{\mbox{\tt A}\}$ is a singleton further 
+allows inlining of the {\tt id} method:
+
+\begin{scriptsize}
+\begin{verbatim}
+.method public me()LB;
+  .limit locals 1
+  .limit stack 1
+  aload_0
+  areturn
+.end method
+\end{verbatim}
+\end{scriptsize}
+
+With type inference, many little methods become almost free.
+\vfil
+\end{slide*}
+
+\begin{slide*}
+Improving analyses by transformations:
+\begin{itemize}
+\item let $P$ be our set of programs;
+\item let $S: P \rightarrow D$ be an ideal static analysis (uncomputable); and
+\item let $T: P \rightarrow P$ be a program transformation that preserves the semantics.
+\end{itemize}
+Since $S$ gives the ideal information, clearly $S(T(p)) = S(p)$ for all $p\in P$.\\
+
+However, if $A: P \rightarrow D$ is a conservative approximation to $S$, then
+$A(T(p))$ may be different from $A(p)$, perhaps even better.
+\vfil
+\end{slide*}
+
+\begin{slide*}
+Transformations boost analyses: \\
+
+~~~~~~~~~\setlength{\unitlength}{2300sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(4824,5805)(1489,-5386)
+\thinlines
+\put(1576,-1036){\line( 1, 0){ 75}}
+\put(1726,-1036){\line( 1, 0){225}}
+\put(1576,-1111){\line( 1, 0){225}}
+\put(1876,-1111){\line( 1, 0){150}}
+\put(1576,-1186){\line( 1, 0){150}}
+\put(1801,-1186){\line( 1, 0){225}}
+\put(1576,-1261){\line( 1, 0){ 75}}
+\put(1726,-1261){\line( 1, 0){ 75}}
+\put(1876,-1261){\line( 1, 0){150}}
+\put(1576,-1336){\line( 1, 0){ 75}}
+\put(1726,-1336){\line( 1, 0){225}}
+\put(1576,-1411){\line( 1, 0){225}}
+\put(1876,-1411){\line( 1, 0){150}}
+\put(1576,-1486){\line( 1, 0){150}}
+\put(1801,-1486){\line( 1, 0){225}}
+\put(1576,-1561){\line( 1, 0){ 75}}
+\put(1726,-1561){\line( 1, 0){ 75}}
+\put(1876,-1561){\line( 1, 0){150}}
+\put(1576,-1636){\line( 1, 0){ 75}}
+\put(1726,-1636){\line( 1, 0){225}}
+\put(1576,-1711){\line( 1, 0){225}}
+\put(1876,-1711){\line( 1, 0){150}}
+\put(1576,-1786){\line( 1, 0){150}}
+\put(1801,-1786){\line( 1, 0){225}}
+\put(1576,-1861){\line( 1, 0){ 75}}
+\put(1726,-1861){\line( 1, 0){ 75}}
+\put(1876,-1861){\line( 1, 0){150}}
+\put(1576,-2836){\line( 1, 0){ 75}}
+\put(1726,-2836){\line( 1, 0){225}}
+\put(1576,-2911){\line( 1, 0){225}}
+\put(1876,-2911){\line( 1, 0){150}}
+\put(1576,-2986){\line( 1, 0){150}}
+\put(1801,-2986){\line( 1, 0){225}}
+\put(1576,-3061){\line( 1, 0){ 75}}
+\put(1726,-3061){\line( 1, 0){ 75}}
+\put(1876,-3061){\line( 1, 0){150}}
+\put(1576,-3136){\line( 1, 0){ 75}}
+\put(1726,-3136){\line( 1, 0){225}}
+\put(1576,-3211){\line( 1, 0){225}}
+\put(1876,-3211){\line( 1, 0){150}}
+\put(1576,-3286){\line( 1, 0){150}}
+\put(1801,-3286){\line( 1, 0){225}}
+\put(1576,-3361){\line( 1, 0){ 75}}
+\put(1726,-3361){\line( 1, 0){ 75}}
+\put(1876,-3361){\line( 1, 0){150}}
+\put(1576,-4561){\line( 1, 0){ 75}}
+\put(1726,-4561){\line( 1, 0){225}}
+\put(1576,-4636){\line( 1, 0){225}}
+\put(1876,-4636){\line( 1, 0){150}}
+\put(1576,-4711){\line( 1, 0){150}}
+\put(1801,-4711){\line( 1, 0){225}}
+\put(1576,-4786){\line( 1, 0){ 75}}
+\put(1726,-4786){\line( 1, 0){ 75}}
+\put(1876,-4786){\line( 1, 0){150}}
+\put(1801,-2761){\vector( 0, 1){600}}
+\put(1576,-1936){\line( 1, 0){300}}
+\put(1576,-2011){\line( 1, 0){ 75}}
+\put(1726,-2011){\line( 1, 0){300}}
+\put(1576,-2086){\line( 1, 0){150}}
+\put(1801,-2086){\line( 1, 0){ 75}}
+\put(1951,-2086){\line( 1, 0){ 75}}
+\put(1576,-3361){\line( 1, 0){ 75}}
+\put(1726,-3361){\line( 1, 0){225}}
+\put(1576,-3436){\line( 1, 0){225}}
+\put(1876,-3436){\line( 1, 0){150}}
+\put(1576,-3511){\line( 1, 0){150}}
+\put(1801,-3511){\line( 1, 0){225}}
+\put(1576,-3586){\line( 1, 0){ 75}}
+\put(1726,-3586){\line( 1, 0){ 75}}
+\put(1876,-3586){\line( 1, 0){150}}
+\put(1576,-4336){\line( 1, 0){ 75}}
+\put(1726,-4336){\line( 1, 0){225}}
+\put(1576,-4411){\line( 1, 0){225}}
+\put(1876,-4411){\line( 1, 0){150}}
+\put(1576,-4486){\line( 1, 0){150}}
+\put(1801,-4486){\line( 1, 0){225}}
+\put(1576,-4561){\line( 1, 0){ 75}}
+\put(1726,-4561){\line( 1, 0){ 75}}
+\put(1876,-4561){\line( 1, 0){150}}
+\put(4351,-3061){\circle*{120}}
+\put(3976,-811){\circle*{120}}
+\put(4576,-1411){\circle*{120}}
+\put(4351,-2311){\circle*{120}}
+\put(1501,-4861){\framebox(600,600){}}
+\put(1501,-3661){\framebox(600,900){}}
+\put(1501,-2161){\framebox(600,1200){}}
+\put(1801,-4261){\vector( 0, 1){600}}
+\put(2101,-4561){\vector( 3, 2){2250}}
+\put(2101,-1561){\vector( 3,-2){2250}}
+\put(2101,-3061){\vector( 1, 0){2175}}
+\put(2101,-1561){\vector( 3,-1){2250}}
+\put(4351,-3061){\line( 0, 1){750}}
+\put(2101,-3061){\vector( 3, 2){2475}}
+\put(4351,-2311){\line( 1, 4){225}}
+\put(4576,-1411){\line(-1, 1){600}}
+\put(2101,-4561){\vector( 1, 2){1875}}
+\put(4501,239){\line(-2,-3){1800}}
+\put(2701,-2461){\line( 2,-3){1800}}
+\put(4501,-5161){\line( 2, 3){1800}}
+\put(6301,-2461){\line(-2, 3){1800}}
+\put(4400,314){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}$\top$}}}
+\put(4390,-5410){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}$\bot$}}}
+\put(1576,-2536){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}$T$}}}
+\put(1576,-4036){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}$T$}}}
+\put(2091,-4036){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}$A$}}}
+\put(2446,-4531){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}$S$}}}
+\put(2326,-3256){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}$S$}}}
+\put(2181,-2776){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}$A$}}}
+\put(2271,-2041){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}$S$}}}
+\put(2551,-1651){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\familydefault}{\mddefault}{\updefault}$A$}}}
+\end{picture}\\
+The transformation $T$:
+\begin{itemize}
+\item may unfold the program to make it more explicit; or
+\item may itself be an optimization.
+\end{itemize}
+\vfil
+\end{slide*}
+
+\end{document}
+

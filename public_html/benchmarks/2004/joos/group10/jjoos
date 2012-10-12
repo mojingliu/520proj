@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# jjoos - runs the stand-alone JOOS compiler
+#      - JAVADIR, JOOSDIR, SABLECCDIR must be set
+#
+# usage:  jjoos [OPTIONS] [file1.java file2.java file3.joos ...]
+#
+
+
+export CLASSPATH=".:$CLASSPATH:$JJOOSDIR/classes"
+$JAVADIR/bin/java  joosc.Main $*

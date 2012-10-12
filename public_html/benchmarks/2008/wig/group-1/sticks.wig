@@ -1,0 +1,86 @@
+service {
+    const html Welcome = <html> <title> Sticks! </title>
+        <body>
+        <h1> Welcome! </h1>
+        Enter your name. 
+        <input name="name" type="text" size=12>
+        </body>
+    </html>;
+
+    const html PlayBegin = <html> <title> Sticks </title>
+        <body>
+        <h1> Sticks </h1>
+        <hr>
+        <p>
+        Welcome, <[name]>, to the game of Sticks. You see before you a pile of <[num]> sticks. you can remove 1, 2, or 3 sticks, as can your opponent. the player to remove the last stick wins. </p>
+        <p> How many sticks would you like to take? <br>
+        <input name="yournewplay" type="text"> sticks
+        </body> </html>;
+    
+    const html PlayContinue = <html> <title> Sticks </title>
+        <body>
+        <h1> Sticks </h1>
+        <hr>
+        <p>
+        You took: <[youroldplay]> sticks. <br>
+        Your opponent took: <[myplay]> sticks. <br>
+        You now see before you a pile of <[num]> sticks. You can remove 1, 2, or 3 sticks.
+        <p> How many sticks would you like to take? <br>
+        <input name="yournewplay" type="text"> sticks
+        </body> </html>;
+
+     const html PlayError = <html> <title> Sticks </title>
+        <body>
+        <h1> Sticks </h1>
+        <hr>
+        <p>
+        You cannot take that amount of sticks! You are cheating! <br> Let's try that again...
+        You took: <[youroldplay]> sticks. <br>
+        Your opponent took: <[myplay]> sticks. <br>
+        You now see before you a pile of <[num]> sticks. You can remove 1, 2, or 3 sticks.
+        <p> How many sticks would you like to take? <br>
+        <input name="yournewplay" type="text"> sticks
+        </body> </html>;
+ 
+    const html PlayLost = <html> <title> Sticks </title>
+        <body>
+        <h1> Sticks </h1>
+        <hr>
+        <p>
+        You took the last stick! You lose. You're not very good at this... 
+        </p>
+        </body> </html>;
+ 
+    int seed;
+    int rand() {
+        seed = (( (5 * seed)) % 7);
+        return (seed + 5) % 7 + 1;
+    }
+    session Play() {
+        int num;
+        string name;
+        int youroldplay;
+        int myplay;
+        int yournewplay;
+
+
+        num = rand() * 4 + 1;
+        name = "";
+
+        show Welcome receive[name = name];
+        show plug PlayBegin[name = name, num = num] receive[yournewplay = yournewplay];
+        myplay = 4 - yournewplay;
+        num = num - 4;
+        youroldplay = yournewplay;
+        while (num > 0) {
+            show plug PlayContinue[youroldplay = youroldplay, myplay = myplay, num = num] receive[yournewplay=yournewplay];
+            while(yournewplay > 3 || yournewplay == 0 || yournewplay > num) {
+                show plug PlayError[youroldplay = youroldplay, myplay = myplay, num = num] receive[yournewplay=yournewplay];
+            }
+            myplay = 4 - yournewplay;
+            num = num - 4;
+            youroldplay = yournewplay;
+        }
+        exit PlayLost;
+    }
+}

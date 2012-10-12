@@ -1,0 +1,50 @@
+Group--4 Benchmark
+==================
+
+Our benchmark is actually two *very* closely related programs:
+ - Brainfuck
+     a brainfuck interpreter
+ - Brainfuckc
+     an optimising brainfuck compiler emitting stack-optimised jasmin java assembler
+
+A host of support files are included, as are some example brainfuck
+programs, including:
+ - world.bf: prints "Hello World!"
+ - countdown.bf: prints "987654321"
+ - quine.bf: a brainfuck quine; prints its own source code
+
+
+As the benchmark programs must do IO on stdin/stdout, the interpreter
+cannot do brainfuck-related input, as the program to be interpreted
+comes from there.  The compiled output files can.
+
+The output from the compiler does not use any local variables; all
+computation is done using only the operand stack.
+
+Its output is optimised by condensing all adjacent +/- (>/<) to
+single value (pointer) changes.
+
+
+Directions
+----------
+
+Compile all java files with joosc; jasmin all resulting j files.
+
+(This works with our joosa-, but there are possibly strange
+ClassDefNotFound errors when compiling with joosa+.)
+
+(Also note, this compiles with javac *.java providing classpath is set
+up for joos stuff.)
+
+To run a brainfuck program prog.bf in the interpreter, call:
+java Brainfuck < prog.bf
+
+To compile and run a brianfuck program prog.bf with the compiler,
+call:
+java Brainfuckc < prog.bf > prog.j
+jasmin prog.j
+java BrainfuckOut
+
+The best test (ie, the "input" asked for) is on the quine.  Run it on
+quine.bf and check that the output is indeed equal to quine.bf.  Ie,
+quine.bf is the input and the expected output.

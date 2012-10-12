@@ -1,0 +1,64 @@
+#!/bin/sh
+
+# uncomment the next line to see exactly what happens
+# set -x
+
+# command line inputs:
+# $1 : benchmark list filename
+
+export JAVADIR=/usr/local/jdk1.4.2/
+export PATH=..:${JAVADIR}/bin:${PATH}
+export CLASSPATH=.:$WIGDIR/10/wig10-classes.jar:${CLASSPATH}
+
+root_dir=`pwd`
+
+for bench in `cat $1 | cut -f1 | xargs echo`
+  do
+  bench_dir=`grep $bench $1 | cut -f2`
+  bench_main=`grep $bench $1 | cut -f3`
+  echo BENCHMARK ${bench} ${bench_dir} ${bench_main}
+  
+  cd ${bench_dir}
+  
+  find . -type f -name '*.c' | xargs rm -f
+  find . -type f -name '*.cgi' | xargs rm -f
+  find . -type f -name '*.h' | xargs rm -f
+
+  for compiler in bsdwig4 wig10 bsdwig18 bsdperfectwig
+    do
+    rm -rf ${compiler}
+    echo "========== COMPILATION WITH ${compiler} STARTED"
+    ${compiler} ${bench_main}.wig
+    if [ -e "${bench_main}.c" ]; then
+	if [ -e "${bench_main}.install" ]; then
+	    mkdir ${compiler}
+	    mv ${bench_main}.c ${compiler}/
+	    chmod 744 ${bench_main}.install
+	    mv ${bench_main}.install ${compiler}/
+	    if [ -e "${bench_main}_run.h" ]; then
+		mv ${bench_main}_run.h ${compiler}/
+	    fi
+	    case "${compiler}" in
+		bsdwig4) bin_ending="4";;
+		wig10) bin_ending="10";;
+		bsdwig18) bin_ending="18";;
+		bsdperfectwig) bin_ending="";;
+		*) echo "impossible control flow";;
+	    esac
+
+	    echo "========== COMPILATION WITH ${compiler} FINISHED"
+	else
+	    rm -f ${bench_main}.c
+	    echo "========== COMPILATION WITH ${compiler} ABORTED"
+	fi
+    else
+	rm -f ${bench_main}.install
+	echo "========== COMPILATION WITH ${compiler} ABORTED"
+    fi
+
+  done
+    
+  cd ${root_dir}
+
+  echo
+done

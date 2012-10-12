@@ -1,0 +1,61 @@
+Group 06
+Grzegorz Prokopski, Jorge Ressia, and Jacques Le Normand
+
+Service implemented:
+		    WigWiki - Simple Wig-based Wiki pages.
+
+WIG language features used:
+
+    * WigWiki consists of 6 web page types defined with "static"
+	declaration.
+    * Each of pages contains a number of "holes" where previously
+	gathered data is inserted using "show plug Name[ var = var ]"
+	syntax.
+    * Each page is a form on which user can perform 'Send' action.
+	We receive user's decision with "receive[ action = action ]"
+	statment.  User may i.e. choose to view index of pages, view
+	next page or edit content of current WigWiki page.
+    * WigWiki contains allows for 5 web pages whose content may be
+	edited.  The content is held in 5 "tuples" of previously
+	defined "schema".
+    * The variables of "tuples" type containing pages' data are
+	_global_ data, persistent between sessions.
+    * A user initiates his session by choosing his username and
+	password.  These informations are stored in _per-session_
+	variables and are displayed at the end of session, when
+	"exit plug" is executed.
+
+Attached files:
+    * wiki.wig - containing WigWiki service,
+    * runwig10.c - standard library of wig10,
+    * Makefile (uncludes removal of hardcoded path in #include "").
+
+Implementation and deployment:
+    This service has been implemented in WIG language and compiled to
+    a CGI C source using wig10 compiler, ran on SableVM.  The source
+    has been compiled with GCC 2.95 on a Sparc machine running Linux.
+    The service has been deployed and tested on the same machine.
+
+Discussion of implementation of the service:
+
+    Our main goal was to find a small but non-trivial service that would
+    allow us to take advantage of possibly many WIG language features.
+    Each Wiki page by its nature consists of the same set of data which
+    allowed us to use tuples to hold these data.  On this occasion we
+    found the lack of tables in WIG language very constraining because
+    we had to predefine the number of pages (if time permits we might
+    implement arrays in our WIG compiler).
+    
+    The Service life consists of three phases:
+    1. Login
+    2. Page displaying/editing.
+    3. Exit from service.
+
+    Phase 1. and 3. are trivial.  Phase 2. contains the main loop of
+    the service.  In this loop we display pages basing on value of
+    "request", which informs us of the last user's decision, and we
+    handle the data that came back from user.  This loop contains
+    straighforward implementation of switch/case control element
+    constructed with if-else statments (there is no switch in WIG).
+    Each of the switch/case elements handles one possible user's action.
+

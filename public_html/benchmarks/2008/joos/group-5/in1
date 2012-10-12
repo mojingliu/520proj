@@ -1,0 +1,6 @@
+"FALSE ""is ""awesome"@.\.@."
+".100t:72,29+,_47+2_*,$,3+," ".%$8+,\,3+,@,t;,%@14+4/1+,"
+"."Printing Current Stack Values:".10n:n;,`5b:b; 5_+"5 + -5 = "
+.%.n;,"100 + 100 + 100 = ".%100$$++.n;,"Here is a stack trace of 1 + 2:
+".)!
+1 2+#

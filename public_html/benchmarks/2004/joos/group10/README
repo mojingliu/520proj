@@ -1,0 +1,71 @@
+This is the readme file for the "YetAnotherSillyParser" application.
+
+
+CONTEXT:
+
+This application is using joos language (which is a subset to Java
+language) which can be compiled either with regular Java compiler or
+with the Joos compiler.  This parser purpose is to identifier tokens
+only, without any interpretations on the result.  So, an invalid
+expression is processed without any error output to the client.
+
+The grammar supported is quite simple.  You can only enter arithmetic
+expressions with '+' and '-' only, without any identifiers and, on a
+single line.
+
+Examples:
+  1- "3+4"
+  2- "3+4-5+7"
+ 
+
+HOW TO:
+
+How to compile this application ?  
+
+You need to write ./run on the command line to compile the application
+with JOOS compiler.  Or you write "javac *.java" on the command line
+to compile the application with Java compiler.
+
+How to test this application ?
+
+You need to type ./tests on the command line. This script will first
+call ./run and then excecute small tests with in1 file as input and
+out1 & out2 files as output.
+
+The expected results are that out1 is equivalent to in1 AND out2 is
+strictly egal to out1
+
+    Here is the test : 
+    	> java Main <in1 >out1
+    	> java Main <out1 >out2
+
+*** Note by C.P.: the out1==out2 test doesn't matter for this course.
+*** Removing file out2.  You can get it back with 'cp out1 out2'
+
+An important remark is that you can write you own in1 file and the
+test will always be pertinent.
+
+How to comple with Java compiler ?
+
+You need to write "javac *.java" on the command line to compile the
+application and you write "java Main" to execute it.  Be sure to clean
+all generated files before compiling.
+    
+How to excecute the application compiled with Java compiler ?
+
+You need to write "java Main" on the command line to execute it.
+     
+AVAILABLE SCRIPTS
+ 
+You need to check that all available scripts have the excecutable
+property set (use chmod to change it if needed)
+ 
+jjoos script compile all .java files to generate the .j
+ 
+jasmin script compile all .j files to generate .class 
+ 
+run script includes the two previous scripts to compile all .java files 
+to generate .class files using the Joos compiler
+ 
+tests script includes the run script and some tests
+ 

@@ -1,0 +1,93 @@
+/******************************************************************************
+ *                       	JOOS Benchmark          		      *
+ *				  Fall 2004                        	      *
+ *									      *
+ *				   Group 8				      *
+ *			Bill Song and Shahla Almasri			      *
+ ******************************************************************************
+
+Introduction:
+============= 
+This program is a smaple font viewer. The user can set the sample text
+to be displayed by either entering one at the prompt, or by entering
+the name of a saved text file that contains the text. The user can
+also choose to not enter anything, in which case the default string
+"Sample Text" will be used. After that the user can pick the color
+they want, the font to use, and a style (i.e. Bold, Italic). Their
+choice will be reflected on the sample text. When the user choose
+File->Exit from the main menu, the program will inform them of what
+all the selection were. (NOTE: The program has to be closed from File
+-> Exit in order to display an output. If it was closed from the
+little "x" on the upper right-hand side, it will not output anything)
+
+To compile and run the program, type either:
+
+ 	1- make MainJava	
+
+This will invole the Java compiler and then run the program.
+
+	2- make MainJoos	
+
+This will invoke JOOS compiler and then run the	program.
+				
+After the files have been compiled you can run the program by typing:
+	1- java Main
+	2- java Main < inputfile
+	3- java Main > outputfile
+	4- java Main < inputfile > outputfile
+
+	Once the program is run, it will prompt you to enter either a text or
+a file name. You can do one of the following:
+
+1- Don't enter anything (just hit enter): The program will use a
+default text.
+
+2- Enter a file name: The program will open the file and uses its
+contents.
+
+3- Enter some text: The program will use the entered text.
+
+If you do not want an X/Windows to come up, you can use the flag -n
+before specifying your text/file. If you are using the "< inputfile"
+format, be sure to include -n to avoid seeing X/Windows.
+							
+Code Organization:
+==================
+The files can be grouped in four categories:
+1- Wrapper classes (can be found in ./myjoos/lib):
+
+  1.1 JoosBufferedReader.java: 
+    Wrapper around java.io.BufferedReader
+  1.2 JoosCheckBoxMenuItem.java: 
+    Wrapper around javax.swing.JCheckBoxMenuItem
+  1.3 JoosFileReader.java: 
+    Wrapper around java.io.FileReader
+  1.4 JoosFrame.java: 
+    Wrapper around javax.swing.JFrame
+  1.5 JoosMenuItem.java: 
+    Wrapper around javax.swing.JMenuItem
+  1.6 JoosOptionPane.java: 
+    Wrapper around javax.swing.JOptionPane
+  1.7 JoosRadioButtonMenuItem.java: 
+    Wrapper around javax.swing.JRadioButton
+  1.8 MyJoosConstants.java: 
+    A class that contains constants from different swing classes.
+
+2- Extern JOOS files (files with .joos extension):
+
+  2.1 iolib.joos: 
+    The extern definition for different IO classes.
+  2.2 swinglib.joos: 
+    The extern definition for different Swing classes.
+
+3- Main application classes:
+  3.1 Main.java: 
+    The file with a main method.
+  3.2 MenuTest.java: 
+    The application's class.
+4- Miscellaneous file:
+
+  4.1 Makefile: 
+    The make file to compile and run the program.
+  4.2 README: 
+    This text file.

@@ -1,0 +1,157 @@
+<title>How to use SableCC</title>
+<table border="5" cellpadding="5" cellspacing="5" width="100%">
+  <tbody>
+  <tr>
+    <td>
+      <h1>How to use SableCC</h1>
+
+      SableCC is a full <i>compiler compiler</i>.  It is a Java-based
+      tool that performs the same job as flex/bison.  There are two
+      versions of SableCC that you can use, SableCC 2 and SableCC 3.
+      However, since SableCC 3 accepts SableCC 2 grammars, you will
+      actually use the same Java tool for both.
+      <p>
+
+      The difference between them is that SableCC 3 has special rules
+      for CST-&gt;AST transformations and an AST productions section.
+      If you want SableCC 3 to behave like SableCC 2, just omit the
+      transformations and the AST section.
+
+      <h2>1. Making sure prerequisites are installed</h2>
+
+      Before you can use these instructions, you should first follow
+      the instructions on <a href="howtosvn.html">using Subversion in
+      this class</a> and <a href="howtojoosjava.html">setting up your
+      environment for JOOS programs</a>.  This will ensure that Java
+      1.5 is on your PATH and that you have a local copy of SableCC
+      3.2.
+      <p>
+
+      <h2>2. Setting up your environment</h2>
+
+      We need to set up some additional environment variables:
+      <p>
+      
+      <h3>SABLECCDIR</h3>
+
+      Assuming you have checked out the public_html directory from the
+      class SVN repository to <code>$HOME/cs520/public_html</code>,
+      add the following:
+      <p>
+
+      <pre>
+      setenv SABLECCDIR $HOME/cs520/public_html/sablecc/sablecc-3.2
+      </pre>
+      <p>
+
+      or
+      <p>
+
+      <pre>
+      export SABLECCDIR=$HOME/cs520/public_html/sablecc/sablecc-3.2  
+      </pre>
+      <p>
+
+      to your <code>.cshrc</code> or <code>.bash_profile</code> for
+      <code>tcsh</code> or <code>bash</code> respectively.
+
+      <h3>PATH</h3>
+      
+      Now we would the <code>sablecc</code> script on our PATH for easy
+      execution.  Add the following:
+
+      <pre>
+      setenv PATH $SABLECCDIR/bin:$PATH
+      </pre>
+      <p>
+
+      or
+      <p>
+
+      <pre>
+      export PATH=$SABLECCDIR/bin:$PATH
+      </pre>
+      <p>
+
+      to your <code>.cshrc</code> or <code>.bash_profile</code> for
+      <code>tcsh</code> or <code>bash</code> respectively.
+
+      <h2>3. Using SableCC </h2>
+      
+      Now that SableCC is installed, you can input your grammar:
+      <p>
+
+      <pre>
+      $ sablecc grammar.txt
+      </pre>
+      <p>
+
+      This will generate many directories.  You should <b>not</b> add
+      them to the Subversion repository since it is expected that you
+      will write a <code>Makefile</code> or <code>ant</code> task that
+      can call SableCC to generate them for you.  This also means that
+      you should not be modifying the generated code.  If you want to
+      see a <code>Makefile</code> that you can work from then
+      see the SableCC 2 and SableCC 3 Tiny expression language examples.
+
+      <h2>4. Examples</h2>
+
+      There are many examples of SableCC in use that you can learn from:
+      
+      <ul>
+      <li><a href="tiny/sablecc-2">Tiny expression language, SableCC 2 version</a>
+      <li><a href="tiny/sablecc-3">Tiny expression language, SableCC 3 version</a>
+      <li><a href="joos/jjoos-scc-2">JJOOS compiler, SableCC 2 version</a>
+      <li><a href="joos/jjoos-scc-3">JJOOS compiler, SableCC 3 version</a>
+      
+      <li><a href="http://sourceforge.net/projects/sablecc/">Official
+      example SableCC grammars</a> (choose Download->Browse All Files)
+      <li><a href="http://www.mare.ee/indrek/sablecc/#example">Indrek Mare's SableCC 3 example</a>
+      </ul>
+
+      <h2>5. Documentation</h2>
+
+      The documentation for SableCC 2 is excellent.  The documentation
+      of the SableCC 3 AST extensions is somewhat lacking in
+      comparison, but the information you need is generally available.
+      <p>
+      
+      <ul>
+
+      <li><a href="sablecc/sablecc-3.2/README.html">SableCC 3.2 source
+      package README</a>
+
+      <li><a href="http://sablecc.org/wiki/DocumentationPage">Official
+      documentation page</a> (contains link to SableCC 2 thesis, as
+      well as several tutorials)
+
+      <li><a
+      href="http://sablecc.sourceforge.net/documentation.html">Old
+      official documentation page</a> (contains link to SableCC 3
+      thesis, in French, as well as an English tutorial)
+
+      <li><a href="slides/scanparse.pdf">Week 2 slides on Scanning and
+      Parsing</a>
+
+      <li><a href="slides/ast.pdf">Week 3 slides on Abstract Syntax
+      Trees</a>
+
+      </ul>
+      <p>
+
+      If you have questions that your instructor or TA are not able to
+      answer, you can also subscribe to the SableCC mailing list or
+      email Etienne Gagnon directly.  Please be sure to send a copy of
+      any questions or responses to your instructor or TA.
+
+    </td>
+  </tr>
+  </tbody>
+</table>
+<p>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+Maintained by Eric Bodden.
+<a href="index.html">[HOME]</a>
+</td></tr>
+</table>

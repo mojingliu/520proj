@@ -1,0 +1,52 @@
+Group 07 - Benchmark
+--------------------
+Artem Khassanov, Roman Dolgov
+
+Introduction ------------ 
+The archive contains the implementation of the dynamic programming
+solution to the 0-1 Knapsack Problem. 0-1 Knapsack Problem consists of
+the following conditions:
+
+- A thief has a bag that can carry some maximum weight.
+
+- There is a collection of items the thief can take. Each item has a
+certain weight and value. Only one instance of each item can be taken.
+
+- Determine the biggest value the thief can carry away.
+
+How it was done --------------- 
+
+1. The algorithm was taken from
+
+http://www-cse.uta.edu/~holder/courses/cse2320/lectures/l15/node12.html
+
+It consists of considering all possible bags weights and determining
+the best value by taking the first i items. The set of available items
+grows with each iteration by adding item i. For each bag weight, the
+algorithm determines if it’s best to take the item and fill the
+rest with the best possible value of previous i – 1 items and the
+weight that is left after taking this item or leave the item and take
+the best possible value of i - 1 previous items and the current bag
+weight. In the end, the value we get for the set of all available
+items and the maximum bag weight will be the solution.
+
+Usage
+-----
+
+Use javac or joosc to compile Knapsack.java and
+SolveKnapsack.java. Run the class Knapsack.
+
+The item inventory is read from the standard input in the following order:
+Maxiumum weight
+Item 1 Name
+Item 1 Weight
+Item 1 Value
+Item 2 Name
+Item 2 Weight
+Item 2 Value
+...
+
+Each element must be separated by the end-of-line. The program returns
+the maximum value a thief can carry away. It does not return the list
+of the items that a thief should take.
+

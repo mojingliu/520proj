@@ -1,0 +1,28 @@
+Group 07
+Artem Khassanov and Roman Dolgov
+
+WIG Project (07milestoneWIG)
+----------------------------
+The WIG milestone is a text adventure game
+based on popular series Star Trek: The Next Generation.
+
+The main adventure with a goal to complete is started
+if you choose Captain Picard as your character. However,
+you can choose other characters to expolre the environment
+and have actions specific to these characters in some locations.
+
+The project consists of:
+- img directory with resources such as images and sounds.
+- startrek.css with Cascading Style Sheet for the generated HTML.
+- startrek.wig which is the source WIG code.
+
+To install, place:
+- img directory in ~/public_html
+- startrek.css in ~/public_html/cgi-bin
+
+To compile:
+- Run ~hendren/WIG/Bin/bsdwig4 startrek.wig on a BSD machine.
+- Run the script startrek.install produced by WIG 4 compiler.
+
+To execute use the Start session:
+~/cgi-bin/startrek4.cgi?Start

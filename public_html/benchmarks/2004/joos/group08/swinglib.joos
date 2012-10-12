@@ -1,0 +1,136 @@
+// extern classes for swing-related libraries
+
+extern public class MyJoosConstants in "myjoos.lib" {
+   // constructor
+   public MyJoosConstants();
+
+   // constants from javax.swing
+   public int SWING_CENTER();
+   
+   // constants from javax.swing.JFrame
+   public int EXIT_ON_CLOSE();
+   
+   // constants from javax.swing.JOptionPane
+   public int PLAIN_MESSAGE();
+}
+
+// This very particular JoosFrame implements both ActionListener and ItemListener interfaces
+extern public class JoosFrame in "myjoos.lib" { 
+  	public JoosFrame(String title);
+  
+  	public void setDefaultCloseOperation(int action);
+  	public void setJMenuBar(JMenuBar bar);
+  	public Container getContentPane();
+  	public void setVisible(boolean visible);
+  	public void setSize(int width, int height);
+  	public void actionPerformed(ActionEvent event);
+  	public void itemStateChanged(ItemEvent event);
+  	public void repaint();
+}
+
+extern public class JoosMenuItem in "myjoos.lib" { 
+  	public JoosMenuItem(String str);
+  
+  	public void setMnemonic(char m);
+  	public void setSelected(boolean b);
+  
+  	// To get around ActionListener's interface
+  	public void addActionListener(JoosFrame l);
+  
+  	// To get around casting JoosMenuItem to JMenuItem
+  	public JMenuItem getJMenuItem();
+}
+
+extern public class JoosRadioButtonMenuItem in "myjoos.lib" { 
+  public JoosRadioButtonMenuItem(String str);
+  
+    public boolean isSelected();
+	public String getText();
+	public void setSelected(boolean b);
+	
+	// To get around ActionListener's interface
+  	public void addActionListener(JoosFrame l);
+  	
+  	// To get around casting JoosRadioButtonMenuItem to JRadioButtonMenuItem
+  	public JRadioButtonMenuItem getJRadioButtonMenuItem();
+}
+
+extern public class JoosCheckBoxMenuItem in "myjoos.lib" { 
+  	public JoosCheckBoxMenuItem(String str);
+  	
+  	public boolean isSelected();
+  	
+  	// To get around ItemListener's interface
+  	public void addItemListener(JoosFrame l);
+  	
+  	// To get around casting JoosCheckBoxMenuItem to JCheckBoxMenuItem
+  	public JCheckBoxMenuItem getJCheckBoxMenuItem();
+}
+
+extern public class JoosOptionPane in "myjoos.lib" {
+	public JoosOptionPane() ;
+	
+	public void show(Component parent, Object message, String title, int messageType);
+}
+
+extern public class JLabel extends JComponent in "javax.swing" { 
+  	public JLabel(String str, int align);
+}
+
+extern public class JMenu extends JMenuItem in "javax.swing" { 
+  	public JMenu(String str);
+  
+  	public void addSeparator();
+}
+
+extern public class JMenuBar extends JComponent in "javax.swing" { 
+  	public JMenuBar();
+}
+
+extern public class JMenuItem extends AbstractButton in "javax.swing" { 
+  	public JMenuItem(String str);
+  
+  	public void setMnemonic(char m);
+}
+
+extern public class JRadioButtonMenuItem extends JMenuItem in "javax.swing" { 
+  public JRadioButtonMenuItem(String str);
+}
+
+extern public class JCheckBoxMenuItem extends JMenuItem in "javax.swing" { 
+ 	public JCheckBoxMenuItem(String str);
+}
+
+extern public class ButtonGroup in "javax.swing" { 
+	public ButtonGroup();
+  
+  public void add(AbstractButton b);
+}
+
+extern public class AbstractButton extends JComponent in "javax.swing" { 
+  public AbstractButton();
+}
+
+extern public class JComponent extends Container in "java.awt" { 
+  public JComponent();
+}
+
+extern public abstract class AWTEvent extends EventObject in "java.awt" {
+	public AWTEvent();
+	
+	public int getID() ;
+}
+
+extern public class EventObject in "java.util" {
+	public EventObject(Object source);
+	
+	public Object getSource();
+}
+
+extern public class ActionEvent extends AWTEvent in "java.awt.event" {
+	public ActionEvent(Object source, int id, String command) ;
+}
+
+extern public class ItemEvent extends AWTEvent in "java.awt.event" {
+	public ItemEvent() ;
+}

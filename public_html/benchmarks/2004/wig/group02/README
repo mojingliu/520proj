@@ -1,0 +1,26 @@
+Group 02
+Bill Cheung, Riandi Wiguna, and Alim Hassam
+
+==WIG SERVICE==
+Our WIG Service is a game of Tic Tac Toe where a player can only play against
+the computer (which is very naive).
+http://www.cs.mcgill.ca/~bcheun1/cgi-bin/TicTacToeT4.cgi?Move
+
+The CGI script corresponding to our WIG Service would most likely have the
+following pseudo code structure:
+
+board[9];
+
+// run on every request
+recievemove(player_move) {
+  board[player_move] = "X";
+  checkdone(board);
+  computermove(board);
+  checkdone(board);
+  showboard();
+}
+
+showboard() {
+  print(board);
+  print(input player_move);
+}

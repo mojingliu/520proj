@@ -1,0 +1,14 @@
+Mastermind:
+Instructions are on the NewGame session.
+----
+
+This was compiled and tested only with lkwig. It is up at: http://www.cs.mcgill.ca/~afranc18/cgi-bin/mastermind.pl . 
+
+Features covered:
+Tuples (for no real reason other than to have them)
+Loops
+Ifs
+Different sessions
+Functions
+Gaps
+Returns

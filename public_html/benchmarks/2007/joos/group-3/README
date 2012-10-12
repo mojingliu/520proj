@@ -1,0 +1,51 @@
+
+                                                     Ars Driving
+ #                                       #
+ #                                       #   ASCII Road Simulation Driving
+ #                                       #
+ #                               __      #             - or -
+ #                              /  \     #
+ #                              1234     #        The Art of Driving
+ #                  ___         \__/     #
+ #                 )___(         ||      #
+ #    \\\\\        |   |                 #
+ #    |   |        |   |                 #
+ #                 )___(                 #
+ #                                       #
+ #                                       #
+ #                              \\\\\    #
+ #                              |   |    #
+ #                                       #
+ #                                       #
+
+This sounds like a really stupid idea. It is a really stupid idea. Or is it?
+
+There are many ways in which it makes a superb benchmark. But first, the spec:
+
+
+   INPUT: a newline-separated list of words
+
+   OUTPUT: a text file printed in bursts such that when viewed in an
+           ordinary-sized UNIX terminal, it's a full-blown ASCII animation
+           The road signs display the words from the input
+
+This program is far more powerful than the current demo reveals.
+   
+   There is an underlying nearly-continuos coordinate system
+   (since JOOS has no floats, we have a few thousand ints per inch)
+
+   Views are computed with a camera position and zoom level.
+
+   The camera can follow an object (here, it follows the car)
+
+   The world is a set of SpatialObjects, each of which changes however the hell
+   it wants over time, (e.g. usually its position and/or appearance change)
+
+   We built a general-purpose ASCII-art animation framework
+   (offering fillCanvas(char), randomizeCanvas(), drawSprite(), printFrame())
+
+   We were going to add a lot more SpatialObjects, use inheritance more (each
+   car has a Wheel, be it a Tire or SnowTire or BlingBedeckedTire), have a
+   beautiful winding road, have a Steering object handle obstacle avoidance,
+   and much more. Hopefully we'll be able to revise this before bechmark time.
+

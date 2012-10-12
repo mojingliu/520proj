@@ -1,0 +1,186 @@
+service{
+
+  const html Welcome = <html> <body>
+    <h1>Welcome to Memoriz!</h1>
+    Your Name: <input name="name" type="text" size=25>
+    <p>
+     <input name = "choice" type = "radio" value= "play"> Play Game
+    <p>
+     <input name = "choice" type = "radio" value = "highscore"> HighScore
+    <p> 
+     <input name = "choice" type = "radio" value = "exit"> Exit
+  </body> </html>;
+
+
+  const html Encoding = <html> <body>
+    Memorize the following numbers in order. Level <[level]>
+    <p>
+    <[num1]>  -  <[num2]>  -  <[num3]>  -  <[num4]>  -  <[num5]>
+
+    <p>
+    Press go when you are ready!
+    <p>
+  </body> </html>;
+
+
+  const html Retrieval  = <html> <body>
+    It's your turn NOW!
+    <p>
+    Please write down the numbers here in original order:
+    <p>
+    <input name = "ans1"  type = "text" size = 5>  -  <input name = "ans2"  type = "text" size = 5>  -  <input name = "ans3"  type = "text" size = 5>  -  <input name = "ans4"  type = "text" size = 5>  -  <input name = "ans5"  type = "text" size = 5>
+
+  </body> </html>;
+
+  
+  const html Go2NextLevel  = <html> <body>
+    Original Numbers: <[num1]>  -  <[num2]>  -  <[num3]>  -  <[num4]>  -  <[num5]>
+    <p>
+    Your Answer:  <[ans1]>  -  <[ans2]>  -  <[ans3]>  -  <[ans4]>  -  <[ans5]>
+    <p>
+    Congratulations! You have been upgraded to Level <[level]>!
+    <p> 
+    Your current score is <[score]>
+  </body> </html>;
+
+
+  const html HighScore = <html> <body>
+	High Score!
+    <p> Current HIGH Score is <[highScore]>, by <[holder]>.
+  </body> </html>;
+
+
+  const html GameOver = <html> <body>
+    Sorry, <[name]>. your anwser is wrong... 
+    <p>
+    Original Numbers: <[num1]>  -  <[num2]>  -  <[num3]>  -  <[num4]>  -  <[num5]>
+    <p>   
+    Your Answer: <[ans1]>  -  <[ans2]>  -  <[ans3]>  -  <[ans4]>  -  <[ans5]> 
+    <p>
+    Your final score is <[score]>. You are in Level <[level]>.
+    <p><hr>
+         <h1>GAME OVER :P</h1>
+    <hr><p>
+  </body> </html>;
+
+
+  const html Fin = <html> <body>
+        Thank you for play the game! 
+    <p> <[name]>
+    <p> Your final score is <[score]>
+    <p> HIGH score is <[highScore]>
+  </body> </html>;
+
+
+
+schema player {
+int score;
+string name;
+}
+ 
+int seed;	
+tuple player hi;
+
+
+  
+
+int nextRandom()  
+{
+    seed = (25173 * seed + 13849) % 65536;
+    return(seed);
+}
+
+
+session Play()
+{
+   string choice;
+   int num1, num2, num3, num4, num5, ans1, ans2, ans3, ans4, ans5;
+   int level, factor;
+   tuple player pl;
+   int index;
+   
+  
+   
+
+   choice = "exit";
+
+   show Welcome receive[choice = choice, pl.name = name];
+   while(choice != "exit"){
+      if (choice == "highscore")
+         show plug HighScore[highScore = hi.score, holder = hi.name];
+   
+      else if (choice == "play"){
+         level = 1;
+         factor = 10;
+         pl.score = 0; 
+         while (level <= 5){
+            num1 = nextRandom() % factor;
+            num2 = nextRandom() % factor;
+            num3 = nextRandom() % factor;
+            num4 = nextRandom() % factor;
+            num5 = nextRandom() % factor;
+
+            factor = factor * 5; 
+            show plug Encoding [num1 = num1,
+                                num2 = num2, 
+                                num3 = num3,
+                                num4 = num4,
+                                num5 = num5, level = level];
+            show Retrieval receive [ans1 = ans1,
+                                    ans2 = ans2,
+                                    ans3 = ans3,
+                                    ans4 = ans4,
+                                    ans5 = ans5];
+        
+	    if ((ans1 == num1) && (ans2 == num2) && (ans3 == num3) && (ans4 == num4) && (ans5 == num5)) {
+                      
+                       pl.score = 10 * level + pl.score;
+                       level = level +1;
+                       show plug Go2NextLevel [num1 = num1,
+                                   num2 = num2,
+                                   num3 = num3,
+                                   num4 = num4,
+                                   num5 = num5,
+                                   ans1 = ans1,
+                                   ans2 = ans2,
+                                   ans3 = ans3,
+                                    ans4 = ans4,
+                                    ans5 = ans5,
+                                             
+                                               level = level,
+                                           score = pl.score];
+            }
+            else {
+               show plug GameOver [num1 = num1,
+                                   num2 = num2,
+                                   num3 = num3,
+                                   num4 = num4,
+                                   num5 = num5,
+                                   ans1 = ans1,
+                                   ans2 = ans2,
+                                   ans3 = ans3,
+                                    ans4 = ans4,
+                                    ans5 = ans5,
+                                   level = level,
+                                   score = pl.score,
+                                   name = pl.name];
+               level = 10;
+            }
+         }            
+      }
+      if (hi.score <= 0||pl.score >= hi.score) {
+         hi.score = pl.score;
+         hi.name = pl.name;
+      }
+      show Welcome receive[choice = choice, pl.name = name];
+   }
+   exit plug Fin [score = pl.score, name = pl.name, highScore = hi.score];
+}
+
+
+session HiScore()
+{
+	exit plug HighScore[highScore = hi.score, holder = hi.name];
+}
+
+}

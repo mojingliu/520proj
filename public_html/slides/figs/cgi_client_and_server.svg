@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.45.1"
+   sodipodi:docbase="/Users/Chris/Subversion/cs520/2007/public_html/slides/figs"
+   sodipodi:docname="session2.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow2Lstart"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow2Lstart"
+       style="overflow:visible">
+      <path
+         id="path3209"
+         style="font-size:12.0;fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         transform="scale(1.1) translate(1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lend"
+       style="overflow:visible;">
+      <path
+         id="path3194"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none;"
+         transform="scale(0.8) rotate(180) translate(12.5,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow2Lend"
+       style="overflow:visible;">
+      <path
+         id="path3212"
+         style="font-size:12.0;fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round;"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         transform="scale(1.1) rotate(180) translate(1,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.2134937"
+     inkscape:cx="396.19961"
+     inkscape:cy="794.78514"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:window-width="1411"
+     inkscape:window-height="1090"
+     inkscape:window-x="215"
+     inkscape:window-y="22" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g2197">
+      <rect
+         rx="0"
+         ry="18.182745"
+         y="86.656349"
+         x="110.10663"
+         height="36.36549"
+         width="110.10663"
+         id="rect2160"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+      <text
+         id="text2164"
+         y="110.80394"
+         x="141.74979"
+         style="font-size:16px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="110.80394"
+           x="141.74979"
+           id="tspan2166"
+           sodipodi:role="line">Client</tspan></text>
+    </g>
+    <g
+       id="g2192"
+       transform="translate(0,-1.1062622e-4)">
+      <rect
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+         id="rect2162"
+         width="110.10663"
+         height="36.36549"
+         x="410.10663"
+         y="86.656349"
+         ry="18.182745"
+         rx="0" />
+      <text
+         id="text2168"
+         y="110.66331"
+         x="438.43729"
+         style="font-size:16px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="110.66331"
+           x="438.43729"
+           id="tspan2170"
+           sodipodi:role="line">Server</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="447.8671"
+       y="187.31183"
+       id="text2172"><tspan
+         sodipodi:role="line"
+         id="tspan2174"
+         x="447.8671"
+         y="187.31183">init</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="448.50772"
+       y="250.01477"
+       id="text2176"><tspan
+         sodipodi:role="line"
+         id="tspan2178"
+         x="448.50772"
+         y="250.01477">save local state and stop</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="448.50772"
+       y="528.23004"
+       id="text2180"><tspan
+         sodipodi:role="line"
+         id="tspan2182"
+         x="448.50772"
+         y="528.23004">stop</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="38.156036"
+       y="267.10193"
+       id="text2202"><tspan
+         sodipodi:role="line"
+         id="tspan2204"
+         x="38.156036"
+         y="267.10193">browse and submit</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1"
+       d="M 200.71429,247.73456 L 200.71429,277.02028"
+       id="path4363" />
+    <text
+       xml:space="preserve"
+       style="font-size:15.99999428px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="447.91925"
+       y="284.53116"
+       id="text4397"
+       transform="matrix(1,-8.8715504e-6,8.8715504e-6,1,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan4399"
+         x="447.91925"
+         y="284.53116">restore local state and resume</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1"
+       d="M 439.49345,245.93244 L 204.66884,245.93244"
+       id="path4417" />
+    <path
+       id="path4423"
+       d="M 203.84082,279.38886 L 438.66543,279.38886"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-mid:none;marker-end:url(#Arrow2Lend);stroke-opacity:1"
+       d="M 444.28571,186.6479 L 444.28571,245.21932"
+       id="path4439" />
+    <text
+       id="text4442"
+       y="342.01477"
+       x="448.50772"
+       style="font-size:16px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       xml:space="preserve"><tspan
+         y="342.01477"
+         x="448.50772"
+         id="tspan4444"
+         sodipodi:role="line">save local state and stop</tspan></text>
+    <text
+       id="text4446"
+       y="359.10193"
+       x="38.156036"
+       style="font-size:16px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       xml:space="preserve"><tspan
+         y="359.10193"
+         x="38.156036"
+         id="tspan4448"
+         sodipodi:role="line">browse and submit</tspan></text>
+    <path
+       id="path4450"
+       d="M 200.71429,339.73456 L 200.71429,369.02028"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+    <text
+       transform="matrix(1,-8.8715504e-6,8.8715504e-6,1,0,0)"
+       id="text4452"
+       y="376.53116"
+       x="447.91785"
+       style="font-size:15.99999428px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       xml:space="preserve"><tspan
+         y="376.53116"
+         x="447.91785"
+         id="tspan4454"
+         sodipodi:role="line">restore local state and resume</tspan></text>
+    <path
+       id="path4456"
+       d="M 439.49345,337.93244 L 204.66884,337.93244"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1"
+       d="M 203.84082,371.38886 L 438.66543,371.38886"
+       id="path4458" />
+    <path
+       id="path4460"
+       d="M 444.28571,279.47197 L 444.28571,338.04339"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-mid:none;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="448.50772"
+       y="435.1907"
+       id="text4462"><tspan
+         sodipodi:role="line"
+         id="tspan4464"
+         x="448.50772"
+         y="435.1907">save local state and stop</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="38.156036"
+       y="452.27786"
+       id="text4466"><tspan
+         sodipodi:role="line"
+         id="tspan4468"
+         x="38.156036"
+         y="452.27786">browse and submit</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1"
+       d="M 200.71429,432.91049 L 200.71429,462.19621"
+       id="path4470" />
+    <text
+       xml:space="preserve"
+       style="font-size:15.99999428px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="447.91641"
+       y="469.70709"
+       id="text4472"
+       transform="matrix(1,-8.8715504e-6,8.8715504e-6,1,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan4474"
+         x="447.91641"
+         y="469.70709">restore local state and resume</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1"
+       d="M 439.49345,431.10837 L 204.66884,431.10837"
+       id="path4476" />
+    <path
+       id="path4478"
+       d="M 203.84082,464.56479 L 438.66543,464.56479"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-mid:none;marker-end:url(#Arrow2Lend);stroke-opacity:1"
+       d="M 444.28571,372.6479 L 444.28571,431.21932"
+       id="path4480" />
+    <path
+       id="path4483"
+       d="M 444.28571,464.6479 L 444.28571,523.21932"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-mid:none;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
+  </g>
+</svg>

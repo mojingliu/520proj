@@ -1,0 +1,4 @@
+rm *.class
+rm *.j
+./jjoos Lexer.java Node.java Token.java Tree.java Scanner.java Main.java $JOOSDIR/Extern/*.joos
+./jasmin Lexer.j Node.j Token.j Tree.j Scanner.j Main.j

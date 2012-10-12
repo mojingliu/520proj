@@ -1,0 +1,211 @@
+/**
+ * A very simple auction service that can only auction one item at a time!
+ */
+
+service {
+
+	/**
+	 * Plugs
+	 */
+
+	const html Logon = <html> <body>
+		<h1>Welcome to The Auction</h1>
+		Please enter your name:
+		<input name="name" type="text" size=25>
+	</body> </html>;
+
+
+	const html CreateAuction = <html> <body>
+		<h1>Create an auction!</h1>
+		<p>
+		Item name: <input name="item" type="text" size=40> <br>
+		Starting price (in dollars): <input name="price" type="text" size=3> <br>
+		Minimum bid increment: <input name="minBidIncrement" type="text" size=2>
+		</p>
+		
+		<p>
+		<input name="quit" type="radio" value="yes"> Quit now
+		</p>		
+	</body> </html>;
+	
+
+	const html DisplayAuction = <html> <body>
+		<h1>Current Auction</h1>
+		<p>
+		<[msg]>
+		</p>
+		
+		<p>
+		<table border=1 cellpadding=0 cellspacing=0 frame="box">
+		<tr> 
+			<td width="400">Item</td> <td width="100">Current Price</td> 
+			<td width="100"> Minimum Bid increment </td> <td width="100"> High Bidder </td> 
+		</tr>
+		<tr> 
+			<td width="400"> <[item]> </td> <td width="100"> <[price]> </td> 
+			<td width="100"> <[minBidIncrement]> </td> <td width="100"> <[highBidder]> </td> 
+		</tr>
+		</table>
+		</p>
+		
+		<p>
+		Your bid: <input name="bid" type="text" size="3"> <br>
+		<input name="quit" type="radio" value="yes"> Quit now
+		</p>
+		
+	</body></html>;
+	
+	
+	const html CloseAuction = <html> <body>
+		<h1>Your Auction</h1>
+		<p>
+		<table border=1 cellpadding=0 cellspacing=0 frame="box">
+		<tr> <td width="400">Item</td> <td width="100">Current Price</td> <td width="100"> Number of Bids </td> </tr>
+		<tr> <td width="400"> <[item]> </td> <td width="100"> <[price]> </td> <td width="100"> <[bids]> </td> </tr>
+		</table>
+		</p>
+		
+		<p>
+		<input name="choice" type="radio" value="close"> Close auction <br>
+		<input name="choice" type="radio" value="quit"> Quit now
+		</p>
+		
+	</body></html>;
+
+
+	const html ByeBye = <html> <body>
+		<h1>Thanks for using the auction service</h1>
+		<p> <[msg]> </p>
+	</body> </html>;
+
+
+
+
+
+	/**
+	 * Globals & Session
+	 */
+	 
+	string item, itemOwner, highBidder;
+	int bids, price, minBidIncrement;
+	
+	session Auction() {
+
+		string name, choice;
+		string quit, msg, leaveMsg;
+		
+		string nItem;
+		int nPrice, nMinBidIncrement, currentBid;
+		int error;
+		
+		quit = "no";
+		msg = "Good luck!";
+		leaveMsg = "Sorry to see you leave!";
+		error = 1;
+		
+		/**
+		 * Test to see if strings are initialized to empty on declaration
+		 		
+		if (item == "") {
+			exit plug ByeBye[msg = "empty"];
+		} else {
+			exit plug ByeBye[msg = item];
+		}
+	 	 */
+	 	
+	 	show Logon receive [name = name];
+		
+		/**
+		 * If there is no item up for auction allow for it to be created,
+		 * else
+		 * check if the logged on user is the owner of the current auction
+		 * if yes, then display auction and give them the option of closing it.
+		 * else, allow user to bid on auction!
+		 */
+		
+		if (item == "") {
+			show CreateAuction receive[nItem = item, nPrice = price, nMinBidIncrement = minBidIncrement, quit = quit];
+
+			if (quit != "yes") {
+
+				itemOwner = name;
+				bids = 0;
+				item = nItem;
+				price = nPrice;
+				minBidIncrement = nMinBidIncrement;
+				
+				/* How about some error checking over here? */				
+				
+				msg = "Thank you for creating the auction, good luck!";
+
+			} else {			
+				msg = leaveMsg;
+			}
+						
+			exit plug ByeBye[msg = msg];
+
+		} else {
+		
+			if (name == itemOwner) {
+				
+				show plug CloseAuction[item = item, price = price, bids = bids]
+				receive[choice = choice];
+				
+				if (choice == "close") {
+				
+					itemOwner = "";
+					bids = 0;
+					item = "";
+					price = 0;
+					minBidIncrement = 0;				
+					msg = "Thank you for closing the auction, hope you got a fair price!";
+				
+				} else if (choice == "quit") {
+					msg = leaveMsg;
+				}
+				
+				exit plug ByeBye[msg = msg];
+		
+				
+			} else {
+			
+				/**
+				 * This error logic is a little skewed but whatever...
+				 */				
+				while ((error == 1) && (quit != "yes")) {
+
+					if (highBidder == "") {
+						/* Do something? */
+					}
+
+					show plug DisplayAuction[item = item, price = price, minBidIncrement = minBidIncrement, 
+												highBidder = highBidder, msg = msg]
+					receive [currentBid = bid, quit = quit];
+					
+					if ( currentBid > (price + minBidIncrement) ) {
+					
+						price = currentBid;
+						bids = bids + 1;
+						highBidder = name;
+						error = 0;						
+						msg = "Your bid has been registered, come back again soon to see if you are still the highest bidder, good luck!";
+						
+					} else {
+						msg = "You need to bid higher than the current price + the minimum bid increment!";
+					}				
+				}
+				
+				if (quit == "yes") {
+					msg = leaveMsg;				
+				}
+			
+				exit plug ByeBye[msg = msg];						
+				
+			}
+		
+		}
+				
+	}
+  
+}
+

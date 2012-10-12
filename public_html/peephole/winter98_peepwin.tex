@@ -1,0 +1,141 @@
+\documentclass[a4,portrait]{seminar}
+\usepackage{pandora}
+\usepackage{isolatin1}
+\usepackage{color}
+\usepackage{fancybox}
+\usepackage{alltt}
+\usepackage{epsfig}
+\usepackage{bar}
+\begin{document}
+\boldmath
+\slideframe{shadow}
+
+\newpagestyle{dOvsstyle}{Compiler Design \hfil Peephole Competition}{\hfil \thepage}
+ 
+\slidepagestyle{dOvsstyle}
+
+
+
+\begin{slide*}
+\begin{small}
+\begin{verbatim}
+===================================
+|  GROUP  |   STMTS  | BYTE COUNT |
+===================================
+|      1  |    11847 |      22480 |
+|      2  |     9584 |      18468 | *
+|      3  |     8881 |      17296 | 2nd
+|      4  |     9338 |      18004 | *
+|      5  |     9357 |      18175 | *
+|      6  |     9559 |      18455 | *
+|      7  |     9505 |      18293 | *
+|      8  |     9600 |      18478 | *
+|      9  |     9356 |      17994 | *
+|     10  |     9534 |      18281 | *
+|     11  |     9381 |      18211 | *
+|     12  |     8737 |      16975 | 1st
+X     13  |    13204 |      23781 |
+|     14  |    11935 |      22549 |
+|     15  |     9831 |      18943 | 
+|     16  |     8980 |      17495 | 3rd
+|     17  |    10112 |      19252 |
+===================================
+\end{verbatim}
+\end{small}
+\end{slide*}
+
+\begin{slide*}
+\epsfig{file=Figures/groups.eps,width=3in}
+\end{slide*}
+
+\begin{slide*}
+
+Winners are:
+
+\begin{description}
+\item[1st (16975)] Group 12:  Aline, Sergei and Francois
+\item[2nd (17296)] Group 3:   Silva and Jerome 
+\item[3rd (17495)] Group 16:  Andrew, Guillaume and Phillip
+\end{description}
+
+\begin{itemize}
+\item 12 of 17 groups beat JOOS A+
+\item Did McGill beat Aarhus?
+\end{itemize}
+\end{slide*}
+
+
+\begin{slide*}
+\begin{small}
+\begin{verbatim}
+========================================
+|  GROUP  | BCHMK SET |  STMT |  BYTES |
+========================================
+| McGill  |    Aarhus | 11677 |  22568 |
+----------------------------------------
+| McGill  |    McGill |  8737 |  16975 |
+----------------------------------------
+| McGill  |   Total   | 20414 |  39543 | *
+========================================
+| Aarhus  |    Aarhus | 11641 |  22428 |
+----------------------------------------
+| Aarhus  |    McGill |  8852 |  17210 |
+----------------------------------------
+| Aarhus  |   Total   | 20493 |  39638 |
+========================================
+\end{verbatim}
+\end{small}
+\end{slide*}
+
+\begin{slide*}
+
+\begin{itemize}
+\item 
+McGill won on the McGill Benchmarks
+\item
+Aarhus won on the Aarhus Benchmarks
+\item
+McGill won on the overall total.
+\end{itemize}
+\end{slide*}
+
+\begin{slide*}
+\begin{small}
+\begin{verbatim}
+******  McGill benchmarks ********
+========================================
+|    COMPILER    | STMTS |  BYTE COUNT |
+========================================
+|      Joosc(A+) | 13204 |       23781 |
+----------------------------------------
+|     Joosc(A+)O |  9598 |       18486 |
+----------------------------------------
+|  Javac(jdk1.1) |  8704 |       17020 |
+----------------------------------------
+| Javac(jdk1.1)O |  8704 |       17020 |
+----------------------------------------
+| McGill Best    |  8737 |       16975 |
+----------------------------------------
+| Aarhus Best    |  8852 |       17210 |
+----------------------------------------
+| BestMerge A->M |  8702 |       16900 |
+----------------------------------------
+| BestMerge M->A |  8706 |       16912 |
+========================================
+\end{verbatim}
+\end{small}
+\end{slide*}
+
+\begin{slide*}
+\epsfig{file=Figures/cmp.eps,width=3in}
+\end{slide*}
+
+\begin{slide*}
+\begin{itemize}
+\item McGill best beats JDK 1.1;
+\item Combining McGill and Aarhus patterns is better;
+\item But, the order of the patterns matters.
+\end{itemize}
+\end{slide*}
+
+\end{document}

@@ -1,0 +1,25 @@
+Enter maximum weight: 
+Maximum weight is set to 50
+Enter item name: 
+Enter item weight: 
+Enter item value: 
+item1 was added to the inventory with weight 21 and value 10
+Enter item name (press Enter or Ctrl-D to solve): 
+Enter item weight: 
+Enter item value: 
+item2 was added to the inventory with weight 22 and value 5
+Enter item name (press Enter or Ctrl-D to solve): 
+Enter item weight: 
+Enter item value: 
+item3 was added to the inventory with weight 50 and value 20
+Enter item name (press Enter or Ctrl-D to solve): 
+Enter item weight: 
+Enter item value: 
+item4 was added to the inventory with weight 5 and value 13
+Enter item name (press Enter or Ctrl-D to solve): 
+Enter item weight: 
+Enter item value: 
+item5 was added to the inventory with weight 12 and value 20
+Enter item name (press Enter or Ctrl-D to solve): 
+The maximum value of goods you can take is 43
+You will receive these items in the next version ;)

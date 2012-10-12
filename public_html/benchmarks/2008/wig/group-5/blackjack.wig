@@ -1,0 +1,430 @@
+/* blackjack.wig */
+
+/* Written by Wei Wu and Alexis Malozemoff */
+
+service {
+	const html Start = <html><body>
+		<h1>Welcome to Blackjack</h1>
+	   	<p>
+    	Please enter your name:
+    	<input name="username" type="text" size=25>
+	</body></html>;
+
+	const html ShowFirstRound = <html><body>
+		You played <[h_game_num]> games. <br>
+		You won <[h_win_num]> games. <br>
+		Your winning rate is <[h_win_rate]>&#37 <br>
+		The best player is <[h_best_player]> <br>
+		He won <[h_highest_win_num]> games. <br>
+		His winning rate is <[h_highest_win_rate]>&#37 <br>
+		What would you like to do now?<br>
+		Pick a Card<input type="radio" name="pick_or_call" value="6" 
+							checked> <br>
+		Call<input type="radio" name="pick_or_call" value="7"> <br>
+		Quit<input type="radio" name="pick_or_call" value="8">
+	</body></html>;
+
+	const html PlayGame = <html><body>
+		You recieved a <[h_u_num]>.
+			The computer recieved a <[h_c_num]>. <br>
+		Your total score is <[h_u_total]>.
+			The computer's score is <[h_c_total]>. <br>
+		Pick a Card<input type="radio" name="pick_or_call" value="6" 
+							checked> <br>
+		Call<input type="radio" name="pick_or_call" value="7"> <br>
+		Quit<input type="radio" name="pick_or_call" value="8">
+	</body></html>;
+
+	const html PlayGameCompCall = <html><body>
+		You recieved a <[h_u_num]>.  The computer called! <br>
+		Your total score is <[h_u_total]>.
+			The computer's score is <[h_c_total]> <br>
+		Pick a Card<input type="radio" name="pick_or_call" value="6" 
+							checked> <br>
+		Call<input type="radio" name="pick_or_call" value="7"> <br>
+		Quit<input type="radio" name="pick_or_call" value="8">
+	</body></html>;
+
+	const html ShowResultCompUserCall = <html><body>
+		You called!  The computer called! <br>
+		Your total score is <[h_u_total]>.
+			The computer's score is <[h_c_total]> <br>
+		<[h_username]>&#33 <[h_result]> <br>
+		You played <[h_game_num]> games. <br>
+		You won <[h_win_num]> games. <br>
+		Your winning rate is <[h_win_rate]>&#37 <br>
+	</body></html>;
+
+	const html ShowResultQuit = <html><body>
+		<[h_username]>&#33 <[h_result]> <br>
+		You played <[h_game_num]> games. <br>
+		You won <[h_win_num]> games. <br>
+		Your winning rate is <[h_win_rate]>&#37 <br>
+	</body></html>;
+
+	const html TheEnd = <html><body>
+
+		<title>Blackjack</title>
+
+		<h1>Welcome to Blackjack Club</h1>
+
+		<a href="./blackjack.cgi?Play">StartGame</a> <br>
+
+		<a href="./blackjack.cgi?HighScore">High Score</a><br>
+
+	</body></html>;
+
+
+	const html HighScoreList = <html><body>
+		<h1>High Score</h1>
+		Name: <[h_username]> | Games Won: <[h_win_num]> | Winning Percentage: <[h_win_rate]> <br>
+	</body></html>;
+
+	/* global variables */
+
+	schema high_score{
+		int highest_win_rate;
+		int highest_win_num;
+		string best_player;
+	}
+ 
+	int BEST_SCORE;
+	int MEDIAN;
+	int MAX_POINT;
+
+	int C_TURN;
+	int U_TURN;
+	int BOTH_CALL;
+	int CALL_QUIT;
+
+	int C_PICK;
+	int C_CALL;
+	int U_PICK;
+
+	int U_CALL;
+	int QUIT;
+	
+	int C_WIN;
+	int U_WIN;
+	int TIE;
+
+	int seed;
+
+	tuple high_score g_high_score;
+
+	/* initialize the environment */
+	void init()
+	{
+		BEST_SCORE = 21;
+		MEDIAN = 7;
+		MAX_POINT = 13;
+		C_TURN = 0;
+		U_TURN = 1;
+		BOTH_CALL = 2;
+		CALL_QUIT = 3;
+		C_PICK = 4;
+		C_CALL = 5;
+		U_PICK = 6;
+		U_CALL = 7;
+		QUIT = 8;
+		C_WIN = 9;
+		U_WIN = 10;
+		TIE = 11;
+	}
+
+	int abs(int i)
+	{
+		if(i<0){
+			return -i;
+		} else {
+			return i;
+		}
+	}
+	
+
+	/* get a random number using a very poor random number generator */	
+	int get_random()
+	{
+		seed = (25173 * seed + 13849) % 65536;
+		return(seed);
+	}
+
+	/* determine computer choice of whether to pick or call */	
+	int random_choice()
+	{
+		if((get_random() % 2) == 0) {
+			return C_PICK;
+		} else {
+			return C_CALL;
+		}
+	}
+
+	/* simple algorithm to determine computer's move */
+	int c_make_choice(int c_total, int u_total)
+	{
+		int diff;
+
+		if(u_total > BEST_SCORE) {
+			return C_CALL;
+		} else if(u_total > c_total) {
+			return C_PICK;
+		}
+	
+		diff = BEST_SCORE - c_total;
+		
+		if(diff > MEDIAN) {
+			return C_PICK;
+		} else if(diff == MEDIAN) {
+			return random_choice();
+		} else {
+			return C_CALL;
+		}
+
+		return C_CALL;
+	}
+
+	/* determine the winner of the game */
+	int winner(int c_total, int u_total)
+	{
+		int result;
+
+		if (c_total == u_total || 
+					(c_total > BEST_SCORE && u_total > BEST_SCORE)) {
+			return TIE;
+		} else if (c_total > u_total) {
+			if (c_total > BEST_SCORE) {
+				return U_WIN;
+			} else {
+				return C_WIN;
+			}
+		} else {
+			if (u_total > BEST_SCORE) {
+				return C_WIN;
+			} else {
+				return U_WIN;
+			}
+		}
+		return C_CALL;
+	}
+
+	session Play()
+	{
+		int w_u_rand_num;
+		int w_c_rand_num;
+		int w_u_total;
+		int w_c_total;
+		string w_result;
+		string w_username;
+
+		int w_state;
+		int w_c_choice;
+		int w_u_choice;
+
+		int w_game_num;
+		int w_win_num;
+		int w_win_rate;
+
+		int w_is_new_game;
+
+		int w_quit;	/* add it to avoid duplicate code */
+
+		/* get name from player */
+		show Start receive[w_username = username];
+
+		init();
+
+		w_u_rand_num = 0;
+		w_c_rand_num = 0;
+
+		w_u_total = 0;
+		w_c_total = 0;
+
+		w_state = U_TURN;
+		w_c_choice = C_PICK;
+		w_u_choice = U_PICK;
+
+		w_game_num = 0;
+		w_win_num = 0;
+		w_win_rate =0;
+
+		w_is_new_game = 1;
+		w_quit = 0;
+
+		while (w_state != CALL_QUIT) {
+
+			/* It is the computer's turn */
+			if (w_state == C_TURN) {
+
+				/* get computer's choice */
+				w_c_choice = c_make_choice(w_c_total, w_u_total);
+				
+				if (w_c_choice == C_PICK) {
+					w_c_rand_num = get_random();
+					w_c_rand_num = abs(w_c_rand_num) % MAX_POINT + 1;
+					w_c_total = w_c_total + w_c_rand_num;
+				}
+
+				/* determine next state based on what user wants to do */
+				if (w_u_choice == U_PICK) {
+					w_state = U_TURN;
+				} else if (w_u_choice == U_CALL && w_c_choice == C_CALL) {
+					w_state = BOTH_CALL;
+				} else if (w_u_choice == U_CALL && w_c_choice != C_CALL) {
+					w_state = C_TURN;
+				} else if (w_u_choice == QUIT) {
+					w_state = BOTH_CALL;
+					w_quit = QUIT;
+				}
+
+			/* It is the player's turn */
+			} else if (w_state == U_TURN) {
+
+				/* show first round screen if a new game is being played */
+				if (w_is_new_game == 1) {
+					show plug ShowFirstRound [
+						h_game_num = w_game_num,
+						h_win_num = w_win_num,
+						h_win_rate = w_win_rate,
+						h_best_player = g_high_score.best_player,
+						h_highest_win_num = g_high_score.highest_win_num,
+						h_highest_win_rate = g_high_score.highest_win_rate
+					] receive[w_u_choice = pick_or_call];
+				/* computer called */
+				} else if (w_c_choice == C_CALL) {
+					show plug PlayGameCompCall [
+						h_u_num = w_u_rand_num,
+						h_u_total = w_u_total,
+						h_c_total = w_c_total
+					] receive[w_u_choice = pick_or_call];
+				/* computer picked a card */
+				} else {
+					show plug PlayGame [
+						h_u_num = w_u_rand_num,
+						h_u_total = w_u_total,
+						h_c_num = w_c_rand_num,
+						h_c_total = w_c_total
+					] receive[w_u_choice = pick_or_call];
+				}
+
+				if (w_u_choice == U_PICK) {
+					w_is_new_game = 0;	/* game has started */
+					w_u_rand_num =get_random();
+					w_u_rand_num = abs(w_u_rand_num) % MAX_POINT + 1;
+					w_u_total = w_u_total + w_u_rand_num;
+					/* user above 21, forced to call */
+					if (w_u_total >= BEST_SCORE) {
+						w_u_choice = U_CALL;
+					}
+				} else if (w_u_choice == U_CALL) {
+					w_is_new_game = 0;	/* game has started */
+				} else if (w_u_choice == QUIT) {
+					w_state = BOTH_CALL;
+					w_quit = QUIT;
+				}
+
+
+				/* change state depending on what computer decides
+				   to do */ 
+				if (w_c_choice == C_PICK) {
+					w_state = C_TURN;
+				} else if (w_c_choice == C_CALL) {
+					if (w_u_choice == U_PICK) {
+						w_state = U_TURN;
+					} else if (w_u_choice == U_CALL) {
+						w_state = BOTH_CALL;
+					} else if (w_u_choice == QUIT) {
+						w_state = BOTH_CALL;
+						w_quit = QUIT;
+					}
+				}
+
+			/* both computer and user called; game is over */
+			} else if (w_state == BOTH_CALL) {
+
+				/* make sure game has started before incrementing
+				   number of games counter */
+				if (w_is_new_game == 0) {
+					w_game_num = w_game_num + 1;
+				}
+				
+				if (winner(w_c_total, w_u_total) == U_WIN) {
+					w_win_num = w_win_num + 1;
+					w_result = "You won!!!!";
+				} else if (winner(w_c_total, w_u_total) == TIE) {
+					w_result = "You tied the computer...  You better play again to decide who is the true blackjack champion!";
+				} else {
+					w_result = "You lost the game. You're gonna have a better chance in the next one! keep going!";
+				}
+				
+				if (w_game_num > 0) {	
+					w_win_rate = w_win_num * 100 / w_game_num;
+				} else {
+					w_win_rate = 0;
+				}
+
+				/* user is quitting the game */	
+				if (w_quit == QUIT) {
+
+					w_state = CALL_QUIT;	/* this will quit while loop */
+
+					/* see if player got a new record */
+					if ((w_win_rate > g_high_score.highest_win_rate) || 
+							(w_win_num > g_high_score.highest_win_num)) {
+						w_result = "You are the best player I've ever seen! You just got a new record!";
+						g_high_score.highest_win_rate = w_win_rate;
+						g_high_score.highest_win_num = w_win_num;
+						g_high_score.best_player = w_username;
+					} else if ((w_win_rate == g_high_score.highest_win_rate) || 
+							(w_win_num > g_high_score.highest_win_num)) {
+						w_result = "You are one of the best players I've ever seen! You tied the record!";
+					} else {
+						w_result = "You will have better chance next time. Play again to break the record!";
+					}
+				} else {
+					w_state = U_TURN;	/* reset state for next game */
+				}
+
+				if (w_quit == QUIT) {
+					show plug ShowResultQuit [
+						h_username = w_username,
+						h_result = w_result,
+						h_game_num = w_game_num,
+						h_win_num = w_win_num,
+						h_win_rate = w_win_rate
+					];
+				} else {
+					show plug ShowResultCompUserCall [
+						h_u_total = w_u_total,
+						h_c_total = w_c_total,
+						h_username = w_username,
+						h_result = w_result,
+						h_game_num = w_game_num,
+						h_win_num = w_win_num,
+						h_win_rate = w_win_rate
+					];
+				}
+
+				/* reset for next match */
+				w_c_rand_num = 0;
+				w_c_total = 0;
+				w_u_rand_num = 0;
+				w_u_total = 0;
+				w_c_choice = C_PICK;
+				w_u_choice = U_PICK;
+				w_is_new_game = 1;
+			}
+		}
+		exit TheEnd;
+	}
+
+	session HighScore() 
+	{
+		show plug HighScoreList [
+			h_username = g_high_score.best_player,
+			h_win_num = g_high_score.highest_win_num,
+			h_win_rate = g_high_score.highest_win_rate
+		];
+
+		exit TheEnd;
+	}	
+}

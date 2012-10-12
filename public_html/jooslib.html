@@ -1,0 +1,45 @@
+<title>JOOS extern classes</title>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+<h1><img src="images/joos32.gif"> extern classes</h1>
+JOOS contains a simple extension to Java that allows the compiler to access libraries
+without having to parse class files to determine class signatures.
+<p>
+An <font face=courier><code>extern</code></font> class definition contains a class signature along with the name of
+a library that is guaranteed to implement that class. The JOOS compiler trusts this
+information implicitly and generates code accordingly. Thus, if an extern class is
+not correct, then the compiled JOOS program may fail at class loading time.
+<p>
+The following extern classes have been predefined. They are mainly designed to give access
+to the standard Java libraries, either by matching the given signatures or by providing
+special JOOS "wrappers" when the signature of a Java class cannot be expressed in JOOS.
+<p>
+A JOOS program that uses extern classes must <font face=courier><code>import</code></font> the corresponding Java library.
+<ul>
+<li>The file <a href="joos/joos/extern/javalib.joos"><font face=courier><code>javalib.joos</code></font></a>
+    contains extern classes for the libraries <font face=courier><code>"java.lang.*"</code></font> and
+    <font face=courier><code>"java.util.*"</code></font>..
+<li>The file <a href="joos/joos/extern/awtlib.joos"><font face=courier><code>awtlib.joos</code></font></a>
+    contains extern classes for the library <font face=courier><code>"java.awt.*"</code></font>.
+<li>The file <a href="joos/joos/extern/netlib.joos"><font face=courier><code>netlib.joos</code></font></a>
+    contains extern classes for the library <font face=courier><code>"java.net.*"</code></font>.
+<li>The file <a href="joos/joos/extern/appletlib.joos"><font face=courier><code>appletlib.joos</code></font></a>
+    contains extern classes for the library <font face=courier><code>"java.applet.*"</code></font>.
+<li>The file <a href="joos/joos/extern/jooslib.joos"><font face=courier><code>jooslib.joos</code></font></a>
+    contains extern classes for JOOS-specific wrappers in <font face=courier><code>"joos.lib"</code></font>.
+</ul>
+Note that it is easy to write additional extern classes, provided the corresponding
+classes are implemented in some Java library.  When writing an extern,
+remember to include a constructor prototype.
+<p>
+The above extern classes are automatically included when the
+<a href="howtojoosjava.html"><font face=courier><code>joosc</code></font></a> command is used.
+</td></tr></table>
+<p>
+<p>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+Maintained by Eric Bodden.
+<a href="index.html">[HOME]</a>
+</td></tr>
+</table>

@@ -1,0 +1,822 @@
+service {
+   const html DebugHtm = <html>
+	<body><[d]>
+	</body>
+</html>; 
+  
+  const html WelcomeHtm = <html>
+	<body>
+		<h1>Welcome to the greatest version of Mastermind!</h1>
+		<p>
+		If you don't want to be forgotten enter you name:  <br>
+		<input name="name" type="text" size=25>
+		</p>
+		<p>
+     		<input name = "choice" type = "radio" value= "play"> Play Game
+    		</p>
+		<p>
+     		<input name = "choice" type = "radio" value = "highscore"> View HighScore
+    		</p>
+	</body>
+</html>;
+
+  const html HighscoreHtm = <html>
+	<body>  
+		<h1><[end]></h1>
+		<h1>Highscores</h1> <br>
+		<h2>(after <[plays]> plays)</h2>
+		<table>
+		<tr>
+		<th> Record </th>
+		<th> Holder </th>
+		</tr>
+		<tr>
+		<td> <[record1]> </td>
+		<td> <[holder1]> </td>
+		</tr>
+		<tr>
+		<td> <[record2]> </td>
+		<td> <[holder2]> </td>
+		</tr>
+		<tr>
+		<td> <[record3]> </td>
+		<td> <[holder3]> </td>
+		</tr>
+		</table>
+		<a href="MasterMind18.cgi?Board">Play Again!</a> 		
+	</body>
+</html>;
+
+
+  const html Finish= <html>
+	<body>
+		<h1>Thank you for playing!</h1>
+	</body>
+</html>;
+
+
+
+
+
+  const html BoardHtm = <html>
+  <head>
+    <title>MasterMind</title>
+      <style type="text/css">
+      div { visibility: hidden !important; display: none !important;}
+      
+      </style>
+  </head>
+	<body>
+		<h2><[playername]></h2>
+<[cheat]>
+    <[dslots1]>
+	  <table>
+		  <tr>
+			  <td><[dslo11]> = <[dslot11]></td>
+			  <td><[dslo12]> = <[dslot12]></td>				
+			  <td><[dslo13]> = <[dslot13]></td>
+			  <td><[dslo14]> = <[dslot14]></td>
+			  <td><[check1]></td>
+		  </tr>
+    </table>
+    <[islots1]>
+		<table>
+			<tr>
+				<td> 
+					<select name="islot11" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td>
+					<select name="islot12" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>			
+				<td>
+					<select name="islot13" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td>
+					<select name="islot14" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td></td>
+			</tr>
+    </table>
+
+    <[dslots2]>
+		<table>
+		  <tr>
+			  <td><[dslo21]> = <[dslot21]></td>
+			  <td><[dslo22]> = <[dslot22]></td>				
+			  <td><[dslo23]> = <[dslot23]></td>
+			  <td><[dslo24]> = <[dslot24]></td>
+				<td><[check2]></td>
+		  </tr>
+    </table>
+    <[islots2]>
+		<table>
+			<tr>
+				<td>
+					<select name="islot21" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td>
+					<select name="islot22" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>			
+				<td>
+					<select name="islot23" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td>
+					<select name="islot24" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td></td>
+			</tr>
+    </table>
+
+		<[dslots3]>
+		<table>
+		  <tr>
+			  <td><[dslo31]> = <[dslot31]></td>
+			  <td><[dslo32]> = <[dslot32]></td>				
+			  <td><[dslo33]> = <[dslot33]></td>
+			  <td><[dslo34]> = <[dslot34]></td>
+				<td><[check3]></td>
+			</tr>
+    </table>
+    <[islots3]>
+		<table>
+			<tr>
+				<td>
+					<select name="islot31" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td>
+					<select name="islot32" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>			
+				<td>
+					<select name="islot33" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td>
+					<select name="islot34" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td></td>
+			</tr>
+    </table>
+
+		<[dslots4]>
+		<table>
+		  <tr>
+			  <td><[dslo41]> = <[dslot41]></td>
+			  <td><[dslo42]> = <[dslot42]></td>				
+			  <td><[dslo43]> = <[dslot43]></td>
+			  <td><[dslo44]> = <[dslot44]></td>
+				<td><[check4]></td>
+			</tr>
+    </table>
+    <[islots4]>
+		<table>
+			<tr>
+				<td>
+					<select name="islot41" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td>
+					<select name="islot42" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>			
+				<td>
+					<select name="islot43" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td>
+					<select name="islot44" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td></td>
+			</tr>
+    </table>
+
+		<[dslots5]>
+		<table>
+		  <tr>
+			  <td><[dslo51]> = <[dslot51]></td>
+			  <td><[dslo52]> = <[dslot52]></td>				
+			  <td><[dslo53]> = <[dslot53]></td>
+			  <td><[dslo54]> = <[dslot54]></td>
+				<td><[check5]></td>
+			</tr>
+    </table>
+    <[islots5]>
+		<table>
+			<tr>
+				<td>
+					<select name="islot51" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td>
+					<select name="islot52" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>			
+				<td>
+					<select name="islot53" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td>
+					<select name="islot54" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td></td>
+			</tr>
+    </table>
+
+		<[dslots6]>
+		<table>
+		  <tr>
+			  <td><[dslo61]> = <[dslot61]></td>
+			  <td><[dslo62]> = <[dslot62]></td>				
+			  <td><[dslo63]> = <[dslot63]></td>
+			  <td><[dslo64]> = <[dslot64]></td>
+				<td><[check6]></td>
+			</tr>
+    </table>
+    <[islots6]>
+		<table>
+			<tr>
+				<td>
+					<select name="islot61" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td>
+					<select name="islot62" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>			
+				<td>
+					<select name="islot63" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td>
+					<select name="islot64" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td></td>
+			</tr>
+    </table>
+
+		<[dslots7]>
+		<table>
+		  <tr>
+			  <td><[dslo71]> = <[dslot71]></td>
+			  <td><[dslo72]> = <[dslot72]></td>				
+			  <td><[dslo73]> = <[dslot73]></td>
+			  <td><[dslo74]> = <[dslot74]></td>
+				<td><[check7]></td>
+			</tr>
+    </table>
+    <[islots7]>
+		<table>
+			<tr>
+				<td>
+					<select name="islot71" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td>
+					<select name="islot72" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>			
+				<td>
+					<select name="islot73" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td>
+					<select name="islot74" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td></td>
+			</tr>
+    </table>
+
+		<[dslots8]>
+		<table>
+		  <tr>
+			  <td><[dslo81]> = <[dslot81]></td>
+			  <td><[dslo82]> = <[dslot82]></td>				
+			  <td><[dslo83]> = <[dslot83]></td>
+			  <td><[dslo84]> = <[dslot84]></td>
+				<td><[check8]></td>
+			</tr>
+    </table>
+    <[islots8]>
+		<table>
+			<tr>
+				<td>
+					<select name="islot81" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td>
+					<select name="islot82" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>			
+				<td>
+					<select name="islot83" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td>
+					<select name="islot84" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td></td>
+			</tr>
+		</table>
+    <[dslots9]>
+		<table>
+		<tr>
+			<td><[dslo91]> = <[dslot91]></td>
+			<td><[dslo92]> = <[dslot92]></td>
+			<td><[dslo93]> = <[dslot93]></td>
+			<td><[dslo94]> = <[dslot94]></td>
+				<td><[check9]></td>
+		</tr>
+		</table>
+    <[islots9]>
+		<table>
+			<tr>
+				<td>
+					<select name="islot91" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td>
+					<select name="islot92" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>			
+				<td>
+					<select name="islot93" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td>
+					<select name="islot94" size="1">
+						<option>red</option><option>orange</option><option>yellow</option><option>green</option><option>blue</option><option>violet</option>
+					</select>
+				</td>
+				<td></td>
+			</tr>
+		</table>
+    <[dslots10]> <br>
+		<a href="MasterMind18.cgi?Board">Exit Game</a>
+	</body>
+</html>;
+
+
+	schema CB {
+	    int black;
+	    int white;
+	}
+
+  	int seed, round;
+
+	int plays, record1, record2, record3;
+
+
+	bool win, played;  
+
+	string holder1, holder2, holder3;
+
+	string end;
+	string player;
+	  
+	string config1;
+	string config2;
+	string config3;
+	string config4;
+
+
+  int getRand() {
+    // from the game.wig example
+    seed = (25173 * seed + 13849) % 65536; 
+    return(seed);
+  }
+
+  string getRandColor() {
+    int rand;
+    string color;
+
+    rand = getRand() % 6;
+    if (rand == 0) {
+      color = "red";
+    }
+    else if (rand == 1) {
+      color = "orange";
+    }
+    else if (rand == 2) {
+      color = "yellow";
+    }
+    else if (rand == 3) {
+      color = "green";
+    }
+    else if (rand == 4) {
+      color = "blue";
+    }
+    else {
+      color = "violet";
+    }
+    return color;
+  }
+
+
+
+		  tuple CB getCheckBits(string a, string b, string c, string d){
+			int numB;
+			int numW;
+			bool slot1;//Has slot1 (of the guess) been matched yet
+			bool slot2;
+			bool slot3;
+			bool slot4;
+			bool cslot1;
+			bool cslot2;
+			bool cslot3;
+			bool cslot4;
+			tuple CB cb;
+
+			numB = 0;
+			numW = 0;
+			slot1 = false;//Has slot1 (of the guess) been matched yet
+			slot2= false;
+			slot3= false;
+			slot4= false;
+			cslot1= false;
+			cslot2= false;
+			cslot3= false;
+			cslot4= false;
+
+
+			if(a == config1){
+				numB = numB + 1;
+				slot1 = true;
+				cslot1 = true;
+			}
+			if(b == config2){
+				numB = numB + 1;
+				slot2 = true;
+				cslot2 = true;
+			}
+
+			if(c == config3){
+				numB = numB + 1;
+				slot3 = true;
+				cslot3 = true;
+			}
+
+			if(d == config4){
+				numB = numB + 1;
+				slot4 = true;
+				cslot4 = true;
+			}
+			if(!slot1){
+				if(config2 == a && !cslot2){
+						cslot2 = true;
+						numW = numW + 1;
+				}else if(config3 == a && !cslot3) {
+						cslot3 = true;
+						numW = numW + 1;
+				}else if(config4 == a && !cslot4){
+						cslot4 = true;
+						numW = numW + 1;
+				}
+			}
+
+			if(!slot2){
+				if(config1 == b && !cslot1){
+						cslot1 = true;
+						numW = numW + 1;
+				}else if(config3 == b && !cslot3){
+						cslot3 = true;
+						numW = numW + 1;
+				}else if(config4 == b && !cslot4){
+						cslot4 = true;
+						numW = numW + 1;
+				}
+			}
+
+			if(!slot3){
+				if(config1 == c && !cslot1){
+						cslot1 = true;
+						numW = numW + 1;
+				}else if(config2 == c && !cslot2){
+						cslot2 = true;
+						numW = numW + 1;
+				}else if(config4 == c && !cslot4){
+						cslot4 = true;
+						numW = numW + 1;
+				}
+			}
+
+			if(!slot4){
+				if(config1 == d && !cslot1){
+						cslot1 = true;
+						numW = numW + 1;
+				}else if(config2 == d && !cslot2){
+						cslot2 = true;
+						numW = numW + 1;
+				}else if(config3 == d && !cslot3){
+						cslot3 = true;
+						numW = numW + 1;
+				}
+			}
+			cb = tuple {black = numB, white = numW};
+			return cb;
+		}
+
+  string getCheckString(string a, string b, string c, string d) {
+    tuple CB result;
+    string checkstring;
+    int i;
+
+
+    result = getCheckBits(a, b, c, d);
+    checkstring = "";
+    i = 0;
+    while (i < result.white) {
+      checkstring = checkstring + "<img src=white.jpg /> ";
+      if (i == 1) {
+        checkstring = checkstring + "<br>";
+      }
+      i = i + 1;
+    }
+    while (i < result.white + result.black) {
+      checkstring = checkstring + "<img src=black.jpg /> ";
+      if (i == 1) {
+        checkstring = checkstring + "<br>";
+      }
+      i = i + 1;
+    }
+    while (i < 4) {
+      checkstring = checkstring + "<img src=blank_check.jpg /> ";
+      if (i == 1) {
+        checkstring = checkstring + "<br>";
+      }
+      i = i + 1;
+    }
+    return checkstring;
+  }
+
+
+session Board() {
+  string choice;
+	tuple CB result;
+
+	string s11;
+	string s12;
+	string s13;
+	string s14;
+	string s21;
+	string s22;
+	string s23;
+	string s24;
+	string s31;
+	string s32;
+	string s33;
+	string s34;
+	string s41;
+	string s42;
+	string s43;
+	string s44;
+	string s51;
+	string s52;
+	string s53;
+	string s54;
+	string s61;
+	string s62;
+	string s63;
+	string s64;
+	string s71;
+	string s72;
+	string s73;
+	string s74;
+	string s81;
+	string s82;
+	string s83;
+	string s84;
+
+	string s91;
+	string s92;
+	string s93;
+	string s94;
+
+	string c1;
+	string c2;
+	string c3;
+	string c4;
+	string c5;
+	string c6;
+	string c7;
+	string c8;
+
+	string c9;
+
+  string configuration;
+
+
+	s11 = "blank";
+	s12 = "blank";
+	s13 = "blank";
+	s14 = "blank";
+	s21 = "blank";
+	s22 = "blank";
+	s23 = "blank";
+	s24 = "blank";
+	s31 = "blank";
+	s32 = "blank";
+	s33 = "blank";
+	s34 = "blank";
+	s41 = "blank";
+	s42 = "blank";
+	s43 = "blank";
+	s44 = "blank";
+	s51 = "blank";
+	s52 = "blank";
+	s53 = "blank";
+	s54 = "blank";
+	s61 = "blank";
+	s62 = "blank";
+	s63 = "blank";
+	s64 = "blank";
+	s71 = "blank";
+	s72 = "blank";
+	s73 = "blank";
+	s74 = "blank";
+	s81 = "blank";
+	s82 = "blank";
+	s83 = "blank";
+	s84 = "blank";
+
+	s91 = "blank";
+	s92 = "blank";
+	s93 = "blank";
+	s94 = "blank";
+
+	win = false; 
+	show WelcomeHtm receive[player = name, choice = choice];
+	if (choice == "play") {
+    played = true;
+    plays = plays + 1;
+    config1 = getRandColor();
+    config2 = getRandColor();
+    config3 = getRandColor();
+    config4 = getRandColor();
+
+    if (player == "Mr. Crumble") {
+      configuration = config1 + config2 + config3 + config4;
+    }
+    if (player == "reset") {
+      plays = 0;
+      record1 = 0;
+      record2 = 0;
+      record3 = 0;
+      holder1 = "";
+      holder2 = "";
+      holder3 = "";
+    }
+
+    round = 0;
+  	while (round <= 9 && !win ) {
+  		if (round == 1) {
+        show plug BoardHtm[playername = player, cheat = configuration, dslots1 = "<div>", islots1 = "</div>", dslots2 = "", islots2 = "<div>", dslots3 = "</div>", islots3 = "<div>", dslots4 = "</div>", islots4 = "<div>", dslots5 = "</div>", islots5 = "<div>", dslots6 = "</div>", islots6 = "<div>", dslots7 = "</div>", islots7 = "<div>", dslots8 = "</div>", islots8 = "<div>", dslots9 = "</div>", islots9 = "<div>", dslots10 = "</div>", dslo11 = "<img src", dslot11 = s11 + ".jpg />", dslo12 = "<img src", dslot12 = s12 + ".jpg />", dslo13 = "<img src", dslot13 = s13 + ".jpg />", dslo14 = "<img src", dslot14 = s14 + ".jpg />", dslo21 = "<img src", dslot21 = s21 + ".jpg />", dslo22 = "<img src", dslot22 = s22 + ".jpg />", dslo23 = "<img src", dslot23 = s23 + ".jpg />", dslo24 = "<img src", dslot24 = s24 + ".jpg />", dslo31 = "<img src", dslot31 = s31 + ".jpg />", dslo32 = "<img src", dslot32 = s32 + ".jpg />", dslo33 = "<img src", dslot33 = s33 + ".jpg />", dslo34 = "<img src", dslot34 = s34 + ".jpg />", dslo41 = "<img src", dslot41 = s41 + ".jpg />", dslo42 = "<img src", dslot42 = s42 + ".jpg />", dslo43 = "<img src", dslot43 = s43 + ".jpg />", dslo44 = "<img src", dslot44 = s44 + ".jpg />", dslo51 = "<img src", dslot51 = s51 + ".jpg />", dslo52 = "<img src", dslot52 = s52 + ".jpg />", dslo53 = "<img src", dslot53 = s53 + ".jpg />", dslo54 = "<img src", dslot54 = s54 + ".jpg />", dslo61 = "<img src", dslot61 = s61 + ".jpg />", dslo62 = "<img src", dslot62 = s62 + ".jpg />", dslo63 = "<img src", dslot63 = s63 + ".jpg />", dslo64 = "<img src", dslot64 = s64 + ".jpg />", dslo71 = "<img src", dslot71 = s71 + ".jpg />", dslo72 = "<img src", dslot72 = s72 + ".jpg />", dslo73 = "<img src", dslot73 = s73 + ".jpg />", dslo74 = "<img src", dslot74 = s74 + ".jpg />",dslo81 = "<img src", dslot81 = s81 + ".jpg />", dslo82 = "<img src", dslot82 = s82 + ".jpg />", dslo83 = "<img src", dslot83 = s83 + ".jpg />", dslo84 = "<img src", dslot84 = s84 + ".jpg />", dslo91 = "<img src", dslot91 = s91 + ".jpg />", dslo92 = "<img src", dslot92 = s92 + ".jpg />", dslo93 = "<img src", dslot93 = s93 + ".jpg />", dslo94 = "<img src", dslot94 = s94 + ".jpg />", check1 = c1, check2 = c2, check3 = c3, check4 = c4, check5 = c5, check6 = c6, check7 = c7, check8 = c8, check9 = c9] receive [s11 = islot11, s12 = islot12, s13 = islot13, s14 = islot14];
+        c1 = getCheckString(s11,s12,s13,s14);
+   		}
+  		else if (round == 2) {
+      	show plug BoardHtm[playername = player, cheat = configuration, dslots1 = "", islots1 = "<div>", dslots2 = "</div><div>", islots2 = "</div>", dslots3 = "", islots3 = "<div>", dslots4 = "</div>", islots4 = "<div>", dslots5 = "</div>", islots5 = "<div>", dslots6 = "</div>", islots6 = "<div>", dslots7 = "</div>", islots7 = "<div>", dslots8 = "</div>", islots8 = "<div>", dslots9 = "</div>", islots9 = "<div>", dslots10 = "</div>", dslo11 = "<img src", dslot11 = s11 + ".jpg />", dslo12 = "<img src", dslot12 = s12 + ".jpg />", dslo13 = "<img src", dslot13 = s13 + ".jpg />", dslo14 = "<img src", dslot14 = s14 + ".jpg />", dslo21 = "<img src", dslot21 = s21 + ".jpg />", dslo22 = "<img src", dslot22 = s22 + ".jpg />", dslo23 = "<img src", dslot23 = s23 + ".jpg />", dslo24 = "<img src", dslot24 = s24 + ".jpg />", dslo31 = "<img src", dslot31 = s31 + ".jpg />", dslo32 = "<img src", dslot32 = s32 + ".jpg />", dslo33 = "<img src", dslot33 = s33 + ".jpg />", dslo34 = "<img src", dslot34 = s34 + ".jpg />", dslo41 = "<img src", dslot41 = s41 + ".jpg />", dslo42 = "<img src", dslot42 = s42 + ".jpg />", dslo43 = "<img src", dslot43 = s43 + ".jpg />", dslo44 = "<img src", dslot44 = s44 + ".jpg />", dslo51 = "<img src", dslot51 = s51 + ".jpg />", dslo52 = "<img src", dslot52 = s52 + ".jpg />", dslo53 = "<img src", dslot53 = s53 + ".jpg />", dslo54 = "<img src", dslot54 = s54 + ".jpg />", dslo61 = "<img src", dslot61 = s61 + ".jpg />", dslo62 = "<img src", dslot62 = s62 + ".jpg />", dslo63 = "<img src", dslot63 = s63 + ".jpg />", dslo64 = "<img src", dslot64 = s64 + ".jpg />", dslo71 = "<img src", dslot71 = s71 + ".jpg />", dslo72 = "<img src", dslot72 = s72 + ".jpg />", dslo73 = "<img src", dslot73 = s73 + ".jpg />", dslo74 = "<img src", dslot74 = s74 + ".jpg />",dslo81 = "<img src", dslot81 = s81 + ".jpg />", dslo82 = "<img src", dslot82 = s82 + ".jpg />", dslo83 = "<img src", dslot83 = s83 + ".jpg />", dslo84 = "<img src", dslot84 = s84 + ".jpg />", dslo91 = "<img src", dslot91 = s91 + ".jpg />", dslo92 = "<img src", dslot92 = s92 + ".jpg />", dslo93 = "<img src", dslot93 = s93 + ".jpg />", dslo94 = "<img src", dslot94 = s94 + ".jpg />", check1 = c1, check2 = c2, check3 = c3, check4 = c4, check5 = c5, check6 = c6, check7 = c7, check8 = c8, check9 = c9] receive [s21 = islot21, s22 = islot22, s23 = islot23, s24 = islot24];
+        c2 = getCheckString(s21,s22,s23,s24);
+    		if (c1 == "<img src=black.jpg /> <img src=black.jpg /> <br><img src=black.jpg /> <img src=black.jpg /> ") {
+    		  win = true;
+    		}
+  		}
+  		else if (round == 3) {
+      	show plug BoardHtm[playername = player, cheat = configuration, dslots1 = "", islots1 = "<div>", dslots2 = "</div>", islots2 = "<div>", dslots3 = "</div><div>", islots3 = "</div>", dslots4 = "", islots4 = "<div>", dslots5 = "</div>", islots5 = "<div>", dslots6 = "</div>", islots6 = "<div>", dslots7 = "</div>", islots7 = "<div>", dslots8 = "</div>", islots8 = "<div>", dslots9 = "</div>", islots9 = "<div>", dslots10 = "</div>", dslo11 = "<img src", dslot11 = s11 + ".jpg />", dslo12 = "<img src", dslot12 = s12 + ".jpg />", dslo13 = "<img src", dslot13 = s13 + ".jpg />", dslo14 = "<img src", dslot14 = s14 + ".jpg />", dslo21 = "<img src", dslot21 = s21 + ".jpg />", dslo22 = "<img src", dslot22 = s22 + ".jpg />", dslo23 = "<img src", dslot23 = s23 + ".jpg />", dslo24 = "<img src", dslot24 = s24 + ".jpg />", dslo31 = "<img src", dslot31 = s31 + ".jpg />", dslo32 = "<img src", dslot32 = s32 + ".jpg />", dslo33 = "<img src", dslot33 = s33 + ".jpg />", dslo34 = "<img src", dslot34 = s34 + ".jpg />", dslo41 = "<img src", dslot41 = s41 + ".jpg />", dslo42 = "<img src", dslot42 = s42 + ".jpg />", dslo43 = "<img src", dslot43 = s43 + ".jpg />", dslo44 = "<img src", dslot44 = s44 + ".jpg />", dslo51 = "<img src", dslot51 = s51 + ".jpg />", dslo52 = "<img src", dslot52 = s52 + ".jpg />", dslo53 = "<img src", dslot53 = s53 + ".jpg />", dslo54 = "<img src", dslot54 = s54 + ".jpg />", dslo61 = "<img src", dslot61 = s61 + ".jpg />", dslo62 = "<img src", dslot62 = s62 + ".jpg />", dslo63 = "<img src", dslot63 = s63 + ".jpg />", dslo64 = "<img src", dslot64 = s64 + ".jpg />", dslo71 = "<img src", dslot71 = s71 + ".jpg />", dslo72 = "<img src", dslot72 = s72 + ".jpg />", dslo73 = "<img src", dslot73 = s73 + ".jpg />", dslo74 = "<img src", dslot74 = s74 + ".jpg />",dslo81 = "<img src", dslot81 = s81 + ".jpg />", dslo82 = "<img src", dslot82 = s82 + ".jpg />", dslo83 = "<img src", dslot83 = s83 + ".jpg />", dslo84 = "<img src", dslot84 = s84 + ".jpg />", dslo91 = "<img src", dslot91 = s91 + ".jpg />", dslo92 = "<img src", dslot92 = s92 + ".jpg />", dslo93 = "<img src", dslot93 = s93 + ".jpg />", dslo94 = "<img src", dslot94 = s94 + ".jpg />", check1 = c1, check2 = c2, check3 = c3, check4 = c4, check5 = c5, check6 = c6, check7 = c7, check8 = c8, check9 = c9] receive [s31 = islot31, s32 = islot32, s33 = islot33, s34 = islot34];
+        c3 = getCheckString(s31,s32,s33,s34);
+    		if (c2 == "<img src=black.jpg /> <img src=black.jpg /> <br><img src=black.jpg /> <img src=black.jpg /> ") {
+    		  win = true;
+    		}
+  		}
+  		else if (round == 4) {
+      	show plug BoardHtm[playername = player, cheat = configuration, dslots1 = "", islots1 = "<div>", dslots2 = "</div>", islots2 = "<div>", dslots3 = "</div>", islots3 = "<div>", dslots4 = "</div><div>", islots4 = "</div>", dslots5 = "", islots5 = "<div>", dslots6 = "</div>", islots6 = "<div>", dslots7 = "</div>", islots7 = "<div>", dslots8 = "</div>", islots8 = "<div>", dslots9 = "</div>", islots9 = "<div>", dslots10 = "</div>", dslo11 = "<img src", dslot11 = s11 + ".jpg />", dslo12 = "<img src", dslot12 = s12 + ".jpg />", dslo13 = "<img src", dslot13 = s13 + ".jpg />", dslo14 = "<img src", dslot14 = s14 + ".jpg />", dslo21 = "<img src", dslot21 = s21 + ".jpg />", dslo22 = "<img src", dslot22 = s22 + ".jpg />", dslo23 = "<img src", dslot23 = s23 + ".jpg />", dslo24 = "<img src", dslot24 = s24 + ".jpg />", dslo31 = "<img src", dslot31 = s31 + ".jpg />", dslo32 = "<img src", dslot32 = s32 + ".jpg />", dslo33 = "<img src", dslot33 = s33 + ".jpg />", dslo34 = "<img src", dslot34 = s34 + ".jpg />", dslo41 = "<img src", dslot41 = s41 + ".jpg />", dslo42 = "<img src", dslot42 = s42 + ".jpg />", dslo43 = "<img src", dslot43 = s43 + ".jpg />", dslo44 = "<img src", dslot44 = s44 + ".jpg />", dslo51 = "<img src", dslot51 = s51 + ".jpg />", dslo52 = "<img src", dslot52 = s52 + ".jpg />", dslo53 = "<img src", dslot53 = s53 + ".jpg />", dslo54 = "<img src", dslot54 = s54 + ".jpg />", dslo61 = "<img src", dslot61 = s61 + ".jpg />", dslo62 = "<img src", dslot62 = s62 + ".jpg />", dslo63 = "<img src", dslot63 = s63 + ".jpg />", dslo64 = "<img src", dslot64 = s64 + ".jpg />", dslo71 = "<img src", dslot71 = s71 + ".jpg />", dslo72 = "<img src", dslot72 = s72 + ".jpg />", dslo73 = "<img src", dslot73 = s73 + ".jpg />", dslo74 = "<img src", dslot74 = s74 + ".jpg />",dslo81 = "<img src", dslot81 = s81 + ".jpg />", dslo82 = "<img src", dslot82 = s82 + ".jpg />", dslo83 = "<img src", dslot83 = s83 + ".jpg />", dslo84 = "<img src", dslot84 = s84 + ".jpg />", dslo91 = "<img src", dslot91 = s91 + ".jpg />", dslo92 = "<img src", dslot92 = s92 + ".jpg />", dslo93 = "<img src", dslot93 = s93 + ".jpg />", dslo94 = "<img src", dslot94 = s94 + ".jpg />", check1 = c1, check2 = c2, check3 = c3, check4 = c4, check5 = c5, check6 = c6, check7 = c7, check8 = c8, check9 = c9] receive [s41 = islot41, s42 = islot42, s43 = islot43, s44 = islot44];
+        c4 = getCheckString(s41,s42,s43,s44);
+    		if (c3 == "<img src=black.jpg /> <img src=black.jpg /> <br><img src=black.jpg /> <img src=black.jpg /> ") {
+    		  win = true;
+    		}
+  		}
+  		else if (round == 5) {
+      	show plug BoardHtm[playername = player, cheat = configuration, dslots1 = "", islots1 = "<div>", dslots2 = "</div>", islots2 = "<div>", dslots3 = "</div>", islots3 = "<div>", dslots4 = "</div>", islots4 = "<div>", dslots5 = "</div><div>", islots5 = "</div>", dslots6 = "", islots6 = "<div>", dslots7 = "</div>", islots7 = "<div>", dslots8 = "</div>", islots8 = "<div>", dslots9 = "</div>", islots9 = "<div>", dslots10 = "</div>", dslo11 = "<img src", dslot11 = s11 + ".jpg />", dslo12 = "<img src", dslot12 = s12 + ".jpg />", dslo13 = "<img src", dslot13 = s13 + ".jpg />", dslo14 = "<img src", dslot14 = s14 + ".jpg />", dslo21 = "<img src", dslot21 = s21 + ".jpg />", dslo22 = "<img src", dslot22 = s22 + ".jpg />", dslo23 = "<img src", dslot23 = s23 + ".jpg />", dslo24 = "<img src", dslot24 = s24 + ".jpg />", dslo31 = "<img src", dslot31 = s31 + ".jpg />", dslo32 = "<img src", dslot32 = s32 + ".jpg />", dslo33 = "<img src", dslot33 = s33 + ".jpg />", dslo34 = "<img src", dslot34 = s34 + ".jpg />", dslo41 = "<img src", dslot41 = s41 + ".jpg />", dslo42 = "<img src", dslot42 = s42 + ".jpg />", dslo43 = "<img src", dslot43 = s43 + ".jpg />", dslo44 = "<img src", dslot44 = s44 + ".jpg />", dslo51 = "<img src", dslot51 = s51 + ".jpg />", dslo52 = "<img src", dslot52 = s52 + ".jpg />", dslo53 = "<img src", dslot53 = s53 + ".jpg />", dslo54 = "<img src", dslot54 = s54 + ".jpg />", dslo61 = "<img src", dslot61 = s61 + ".jpg />", dslo62 = "<img src", dslot62 = s62 + ".jpg />", dslo63 = "<img src", dslot63 = s63 + ".jpg />", dslo64 = "<img src", dslot64 = s64 + ".jpg />", dslo71 = "<img src", dslot71 = s71 + ".jpg />", dslo72 = "<img src", dslot72 = s72 + ".jpg />", dslo73 = "<img src", dslot73 = s73 + ".jpg />", dslo74 = "<img src", dslot74 = s74 + ".jpg />",dslo81 = "<img src", dslot81 = s81 + ".jpg />", dslo82 = "<img src", dslot82 = s82 + ".jpg />", dslo83 = "<img src", dslot83 = s83 + ".jpg />", dslo84 = "<img src", dslot84 = s84 + ".jpg />", dslo91 = "<img src", dslot91 = s91 + ".jpg />", dslo92 = "<img src", dslot92 = s92 + ".jpg />", dslo93 = "<img src", dslot93 = s93 + ".jpg />", dslo94 = "<img src", dslot94 = s94 + ".jpg />", check1 = c1, check2 = c2, check3 = c3, check4 = c4, check5 = c5, check6 = c6, check7 = c7, check8 = c8, check9 = c9] receive [s51 = islot51, s52 = islot52, s53 = islot53, s54 = islot54];
+        c5 = getCheckString(s51,s52,s53,s54);
+    		if (c4 == "<img src=black.jpg /> <img src=black.jpg /> <br><img src=black.jpg /> <img src=black.jpg /> ") {
+    		  win = true;
+    		}
+  		}
+  		else if (round == 6) {
+      	show plug BoardHtm[playername = player, cheat = configuration, dslots1 = "", islots1 = "<div>", dslots2 = "</div>", islots2 = "<div>", dslots3 = "</div>", islots3 = "<div>", dslots4 = "</div>", islots4 = "<div>", dslots5 = "</div>", islots5 = "<div>", dslots6 = "</div><div>", islots6 = "</div>", dslots7 = "", islots7 = "<div>", dslots8 = "</div>", islots8 = "<div>", dslots9 = "</div>", islots9 = "<div>", dslots10 = "</div>", dslo11 = "<img src", dslot11 = s11 + ".jpg />", dslo12 = "<img src", dslot12 = s12 + ".jpg />", dslo13 = "<img src", dslot13 = s13 + ".jpg />", dslo14 = "<img src", dslot14 = s14 + ".jpg />", dslo21 = "<img src", dslot21 = s21 + ".jpg />", dslo22 = "<img src", dslot22 = s22 + ".jpg />", dslo23 = "<img src", dslot23 = s23 + ".jpg />", dslo24 = "<img src", dslot24 = s24 + ".jpg />", dslo31 = "<img src", dslot31 = s31 + ".jpg />", dslo32 = "<img src", dslot32 = s32 + ".jpg />", dslo33 = "<img src", dslot33 = s33 + ".jpg />", dslo34 = "<img src", dslot34 = s34 + ".jpg />", dslo41 = "<img src", dslot41 = s41 + ".jpg />", dslo42 = "<img src", dslot42 = s42 + ".jpg />", dslo43 = "<img src", dslot43 = s43 + ".jpg />", dslo44 = "<img src", dslot44 = s44 + ".jpg />", dslo51 = "<img src", dslot51 = s51 + ".jpg />", dslo52 = "<img src", dslot52 = s52 + ".jpg />", dslo53 = "<img src", dslot53 = s53 + ".jpg />", dslo54 = "<img src", dslot54 = s54 + ".jpg />", dslo61 = "<img src", dslot61 = s61 + ".jpg />", dslo62 = "<img src", dslot62 = s62 + ".jpg />", dslo63 = "<img src", dslot63 = s63 + ".jpg />", dslo64 = "<img src", dslot64 = s64 + ".jpg />", dslo71 = "<img src", dslot71 = s71 + ".jpg />", dslo72 = "<img src", dslot72 = s72 + ".jpg />", dslo73 = "<img src", dslot73 = s73 + ".jpg />", dslo74 = "<img src", dslot74 = s74 + ".jpg />",dslo81 = "<img src", dslot81 = s81 + ".jpg />", dslo82 = "<img src", dslot82 = s82 + ".jpg />", dslo83 = "<img src", dslot83 = s83 + ".jpg />", dslo84 = "<img src", dslot84 = s84 + ".jpg />", dslo91 = "<img src", dslot91 = s91 + ".jpg />", dslo92 = "<img src", dslot92 = s92 + ".jpg />", dslo93 = "<img src", dslot93 = s93 + ".jpg />", dslo94 = "<img src", dslot94 = s94 + ".jpg />", check1 = c1, check2 = c2, check3 = c3, check4 = c4, check5 = c5, check6 = c6, check7 = c7, check8 = c8, check9 = c9] receive [s61 = islot61, s62 = islot62, s63 = islot63, s64 = islot64];
+        c6 = getCheckString(s61,s62,s63,s64);
+    		if (c5 == "<img src=black.jpg /> <img src=black.jpg /> <br><img src=black.jpg /> <img src=black.jpg /> ") {
+    		  win = true;
+    		}
+  		}
+  		else if (round == 7) {
+      	show plug BoardHtm[playername = player, cheat = configuration, dslots1 = "", islots1 = "<div>", dslots2 = "</div>", islots2 = "<div>", dslots3 = "</div>", islots3 = "<div>", dslots4 = "</div>", islots4 = "<div>", dslots5 = "</div>", islots5 = "<div>", dslots6 = "</div>", islots6 = "<div>", dslots7 = "</div><div>", islots7 = "</div>", dslots8 = "", islots8 = "<div>", dslots9 = "</div>", islots9 = "<div>", dslots10 = "</div>", dslo11 = "<img src", dslot11 = s11 + ".jpg />", dslo12 = "<img src", dslot12 = s12 + ".jpg />", dslo13 = "<img src", dslot13 = s13 + ".jpg />", dslo14 = "<img src", dslot14 = s14 + ".jpg />", dslo21 = "<img src", dslot21 = s21 + ".jpg />", dslo22 = "<img src", dslot22 = s22 + ".jpg />", dslo23 = "<img src", dslot23 = s23 + ".jpg />", dslo24 = "<img src", dslot24 = s24 + ".jpg />", dslo31 = "<img src", dslot31 = s31 + ".jpg />", dslo32 = "<img src", dslot32 = s32 + ".jpg />", dslo33 = "<img src", dslot33 = s33 + ".jpg />", dslo34 = "<img src", dslot34 = s34 + ".jpg />", dslo41 = "<img src", dslot41 = s41 + ".jpg />", dslo42 = "<img src", dslot42 = s42 + ".jpg />", dslo43 = "<img src", dslot43 = s43 + ".jpg />", dslo44 = "<img src", dslot44 = s44 + ".jpg />", dslo51 = "<img src", dslot51 = s51 + ".jpg />", dslo52 = "<img src", dslot52 = s52 + ".jpg />", dslo53 = "<img src", dslot53 = s53 + ".jpg />", dslo54 = "<img src", dslot54 = s54 + ".jpg />", dslo61 = "<img src", dslot61 = s61 + ".jpg />", dslo62 = "<img src", dslot62 = s62 + ".jpg />", dslo63 = "<img src", dslot63 = s63 + ".jpg />", dslo64 = "<img src", dslot64 = s64 + ".jpg />", dslo71 = "<img src", dslot71 = s71 + ".jpg />", dslo72 = "<img src", dslot72 = s72 + ".jpg />", dslo73 = "<img src", dslot73 = s73 + ".jpg />", dslo74 = "<img src", dslot74 = s74 + ".jpg />",dslo81 = "<img src", dslot81 = s81 + ".jpg />", dslo82 = "<img src", dslot82 = s82 + ".jpg />", dslo83 = "<img src", dslot83 = s83 + ".jpg />", dslo84 = "<img src", dslot84 = s84 + ".jpg />", dslo91 = "<img src", dslot91 = s91 + ".jpg />", dslo92 = "<img src", dslot92 = s92 + ".jpg />", dslo93 = "<img src", dslot93 = s93 + ".jpg />", dslo94 = "<img src", dslot94 = s94 + ".jpg />", check1 = c1, check2 = c2, check3 = c3, check4 = c4, check5 = c5, check6 = c6, check7 = c7, check8 = c8, check9 = c9] receive [s71 = islot71, s72 = islot72, s73 = islot73, s74 = islot74];
+        c7 = getCheckString(s71,s72,s73,s74);
+    		if (c6 == "<img src=black.jpg /> <img src=black.jpg /> <br><img src=black.jpg /> <img src=black.jpg /> ") {
+    		  win = true;
+    		}
+  		}
+  		else if (round == 8) {
+      	show plug BoardHtm[playername = player, cheat = configuration, dslots1 = "", islots1 = "<div>", dslots2 = "</div>", islots2 = "<div>", dslots3 = "</div>", islots3 = "<div>", dslots4 = "</div>", islots4 = "<div>", dslots5 = "</div>", islots5 = "<div>", dslots6 = "</div>", islots6 = "<div>", dslots7 = "</div>", islots7 = "<div>", dslots8 = "</div><div>", islots8 = "</div>", dslots9 = "", islots9 = "<div>", dslots10 = "</div>", dslo11 = "<img src", dslot11 = s11 + ".jpg />", dslo12 = "<img src", dslot12 = s12 + ".jpg />", dslo13 = "<img src", dslot13 = s13 + ".jpg />", dslo14 = "<img src", dslot14 = s14 + ".jpg />", dslo21 = "<img src", dslot21 = s21 + ".jpg />", dslo22 = "<img src", dslot22 = s22 + ".jpg />", dslo23 = "<img src", dslot23 = s23 + ".jpg />", dslo24 = "<img src", dslot24 = s24 + ".jpg />", dslo31 = "<img src", dslot31 = s31 + ".jpg />", dslo32 = "<img src", dslot32 = s32 + ".jpg />", dslo33 = "<img src", dslot33 = s33 + ".jpg />", dslo34 = "<img src", dslot34 = s34 + ".jpg />", dslo41 = "<img src", dslot41 = s41 + ".jpg />", dslo42 = "<img src", dslot42 = s42 + ".jpg />", dslo43 = "<img src", dslot43 = s43 + ".jpg />", dslo44 = "<img src", dslot44 = s44 + ".jpg />", dslo51 = "<img src", dslot51 = s51 + ".jpg />", dslo52 = "<img src", dslot52 = s52 + ".jpg />", dslo53 = "<img src", dslot53 = s53 + ".jpg />", dslo54 = "<img src", dslot54 = s54 + ".jpg />", dslo61 = "<img src", dslot61 = s61 + ".jpg />", dslo62 = "<img src", dslot62 = s62 + ".jpg />", dslo63 = "<img src", dslot63 = s63 + ".jpg />", dslo64 = "<img src", dslot64 = s64 + ".jpg />", dslo71 = "<img src", dslot71 = s71 + ".jpg />", dslo72 = "<img src", dslot72 = s72 + ".jpg />", dslo73 = "<img src", dslot73 = s73 + ".jpg />", dslo74 = "<img src", dslot74 = s74 + ".jpg />",dslo81 = "<img src", dslot81 = s81 + ".jpg />", dslo82 = "<img src", dslot82 = s82 + ".jpg />", dslo83 = "<img src", dslot83 = s83 + ".jpg />", dslo84 = "<img src", dslot84 = s84 + ".jpg />", dslo91 = "<img src", dslot91 = s91 + ".jpg />", dslo92 = "<img src", dslot92 = s92 + ".jpg />", dslo93 = "<img src", dslot93 = s93 + ".jpg />", dslo94 = "<img src", dslot94 = s94 + ".jpg />", check1 = c1, check2 = c2, check3 = c3, check4 = c4, check5 = c5, check6 = c6, check7 = c7, check8 = c8, check9 = c9] receive [s81 = islot81, s82 = islot82, s83 = islot83, s84 = islot84];
+        c8 = getCheckString(s81,s82,s83,s84);
+    		if (c7 == "<img src=black.jpg /> <img src=black.jpg /> <br><img src=black.jpg /> <img src=black.jpg /> ") {
+    		  win = true;
+    		}
+  		}
+  		else if (round == 9) {
+      	show plug BoardHtm[playername = player, cheat = configuration, dslots1 = "", islots1 = "<div>", dslots2 = "</div>", islots2 = "<div>", dslots3 = "</div>", islots3 = "<div>", dslots4 = "</div>", islots4 = "<div>", dslots5 = "</div>", islots5 = "<div>", dslots6 = "</div>", islots6 = "<div>", dslots7 = "</div>", islots7 = "<div>", dslots8 = "</div>", islots8 = "<div>", dslots9 = "</div><div>", islots9 = "</div>", dslots10 = "", dslo11 = "<img src", dslot11 = s11 + ".jpg />", dslo12 = "<img src", dslot12 = s12 + ".jpg />", dslo13 = "<img src", dslot13 = s13 + ".jpg />", dslo14 = "<img src", dslot14 = s14 + ".jpg />", dslo21 = "<img src", dslot21 = s21 + ".jpg />", dslo22 = "<img src", dslot22 = s22 + ".jpg />", dslo23 = "<img src", dslot23 = s23 + ".jpg />", dslo24 = "<img src", dslot24 = s24 + ".jpg />", dslo31 = "<img src", dslot31 = s31 + ".jpg />", dslo32 = "<img src", dslot32 = s32 + ".jpg />", dslo33 = "<img src", dslot33 = s33 + ".jpg />", dslo34 = "<img src", dslot34 = s34 + ".jpg />", dslo41 = "<img src", dslot41 = s41 + ".jpg />", dslo42 = "<img src", dslot42 = s42 + ".jpg />", dslo43 = "<img src", dslot43 = s43 + ".jpg />", dslo44 = "<img src", dslot44 = s44 + ".jpg />", dslo51 = "<img src", dslot51 = s51 + ".jpg />", dslo52 = "<img src", dslot52 = s52 + ".jpg />", dslo53 = "<img src", dslot53 = s53 + ".jpg />", dslo54 = "<img src", dslot54 = s54 + ".jpg />", dslo61 = "<img src", dslot61 = s61 + ".jpg />", dslo62 = "<img src", dslot62 = s62 + ".jpg />", dslo63 = "<img src", dslot63 = s63 + ".jpg />", dslo64 = "<img src", dslot64 = s64 + ".jpg />", dslo71 = "<img src", dslot71 = s71 + ".jpg />", dslo72 = "<img src", dslot72 = s72 + ".jpg />", dslo73 = "<img src", dslot73 = s73 + ".jpg />", dslo74 = "<img src", dslot74 = s74 + ".jpg />", dslo81 = "<img src", dslot81 = s81 + ".jpg />", dslo82 = "<img src", dslot82 = s82 + ".jpg />", dslo83 = "<img src", dslot83 = s83 + ".jpg />", dslo84 = "<img src", dslot84 = s84 + ".jpg />", dslo91 = "<img src", dslot91 = s91 + ".jpg />", dslo92 = "<img src", dslot92 = s92 + ".jpg />", dslo93 = "<img src", dslot93 = s93 + ".jpg />", dslo94 = "<img src", dslot94 = s94 + ".jpg />", check1 = c1, check2 = c2, check3 = c3, check4 = c4, check5 = c5, check6 = c6, check7 = c7, check8 = c8, check9 = c9] receive [s91 = islot91, s92 = islot92, s93 = islot93, s94 = islot94];
+        c9 = getCheckString(s91,s92,s93,s94);
+    		if (c8 == "<img src=black.jpg /> <img src=black.jpg /> <br><img src=black.jpg /> <img src=black.jpg /> ") {
+    		  win = true;
+    		}
+  		}
+  		if (!win) {
+    	  		round = round + 1;	
+  		}
+		else {
+		round = round - 1;
+		}
+	  }
+  }
+  else {
+    played = false;
+	}
+	if(played) {
+    if (win) {
+      end = "You won!!!";
+    	if (record1 == 0 || record1 > round) { 
+    		record1 = round;
+      	holder1 = player;
+      }
+      else {
+        if (record2 == 0 || record2 > round) {
+        record2 = round;
+        holder2 = player;
+        }
+        else {
+	        if (record3 == 0 || record3 > round) {
+	        record3 = round;
+	        holder3 = player;			
+	        }
+        }
+      }  
+	  }
+	  else {
+	    end = "Too bad, you lost...";
+	  }
+  }
+  else {
+    end = "";	
+  }
+  exit plug HighscoreHtm [end = end, plays = plays, record1 = record1, holder1 = holder1, record2 = record2, holder2 = holder2, record3 = record3, holder3 = holder3];
+}
+
+}

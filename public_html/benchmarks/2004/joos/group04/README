@@ -1,0 +1,33 @@
+Group 04
+Francois Plamondon
+Oliver Wong
+
+Benchmark
+---------
+Our benchmark program applies different image filters to an input
+image from stdin and outputs the resulting image to stdout.
+
+
+
+How to run
+----------
+java FilterDemo < in1 > output
+
+
+
+Files
+-----
+
+FilterDemo.java is the actual benchmark.
+Filter.java contains the implementation of the filters.
+FilterDemoExterns.joos contains the declarations for our external classes.
+
+The directory imagelib contains the few small external java classes that we
+had to implement:
+JoosImageIO.java 
+JoosSystem2.java 
+BufferedImageConsts.java
+
+in1 is an input image file and out1 is the matching expected output
+file.
+

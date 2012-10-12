@@ -1,0 +1,1173 @@
+.class public BrainfuckOut
+.super java/lang/Object
+.method public <init>()V
+.limit locals 1
+.limit stack 25
+aload_0
+invokenonvirtual java/lang/Object/<init>()V
+return
+.end method
+
+.method public static main([Ljava/lang/String;)V
+.limit locals 3
+.limit stack 25
+.throws java/io/IOException
+; push size of array and create array
+sipush 30000
+newarray int
+; push initial index
+sipush 0
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush -1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 2
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 2
+iadd
+iastore
+
+;move pointer: <>
+sipush 2
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 2
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 2
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 33
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 2
+iadd
+iastore
+
+;move pointer: <>
+sipush 3
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 5
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 22
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 7
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 2
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 2
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 3
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 2
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 3
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 2
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 2
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 7
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 3
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 2
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 2
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 2
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 2
+iadd
+iastore
+
+;move pointer: <>
+sipush 2
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 2
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 2
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 3
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 3
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 2
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 2
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 3
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 2
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 2
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;move pointer: <>
+sipush 2
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;left bracket, beginning of while loop: [ (jump forward to the command after the corresponding ] if the byte at the pointer is zero.)
+dup2
+iaload
+ifeq label_end_0
+label_begin_0:
+
+;left bracket, beginning of while loop: [ (jump forward to the command after the corresponding ] if the byte at the pointer is zero.)
+dup2
+iaload
+ifeq label_end_1
+label_begin_1:
+
+;move pointer: <>
+sipush 2
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;left bracket, beginning of while loop: [ (jump forward to the command after the corresponding ] if the byte at the pointer is zero.)
+dup2
+iaload
+ifeq label_end_2
+label_begin_2:
+
+;move pointer: <>
+sipush 1
+iadd
+;right bracket: ] (jump back to the command after the corresponding [ if the byte at the pointer is nonzero.)
+dup2
+iaload
+ifne label_begin_2
+label_end_2:
+
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;left bracket, beginning of while loop: [ (jump forward to the command after the corresponding ] if the byte at the pointer is zero.)
+dup2
+iaload
+ifeq label_end_3
+label_begin_3:
+
+;move pointer: <>
+sipush -1
+iadd
+;right bracket: ] (jump back to the command after the corresponding [ if the byte at the pointer is nonzero.)
+dup2
+iaload
+ifne label_begin_3
+label_end_3:
+
+;move pointer: <>
+sipush -1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush -1
+iadd
+iastore
+
+;right bracket: ] (jump back to the command after the corresponding [ if the byte at the pointer is nonzero.)
+dup2
+iaload
+ifne label_begin_1
+label_end_1:
+
+;move pointer: <>
+sipush 2
+iadd
+;left bracket, beginning of while loop: [ (jump forward to the command after the corresponding ] if the byte at the pointer is zero.)
+dup2
+iaload
+ifeq label_end_4
+label_begin_4:
+
+;move pointer: <>
+sipush 1
+iadd
+;right bracket: ] (jump back to the command after the corresponding [ if the byte at the pointer is nonzero.)
+dup2
+iaload
+ifne label_begin_4
+label_end_4:
+
+;move pointer: <>
+sipush -1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;move pointer: <>
+sipush -1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;left bracket, beginning of while loop: [ (jump forward to the command after the corresponding ] if the byte at the pointer is zero.)
+dup2
+iaload
+ifeq label_end_5
+label_begin_5:
+
+;move pointer: <>
+sipush -1
+iadd
+;right bracket: ] (jump back to the command after the corresponding [ if the byte at the pointer is nonzero.)
+dup2
+iaload
+ifne label_begin_5
+label_end_5:
+
+;move pointer: <>
+sipush -2
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;right bracket: ] (jump back to the command after the corresponding [ if the byte at the pointer is nonzero.)
+dup2
+iaload
+ifne label_begin_0
+label_end_0:
+
+;move pointer: <>
+sipush 2
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 1
+iadd
+iastore
+
+;left bracket, beginning of while loop: [ (jump forward to the command after the corresponding ] if the byte at the pointer is zero.)
+dup2
+iaload
+ifeq label_end_6
+label_begin_6:
+
+;move pointer: <>
+sipush 1
+iadd
+;right bracket: ] (jump back to the command after the corresponding [ if the byte at the pointer is nonzero.)
+dup2
+iaload
+ifne label_begin_6
+label_end_6:
+
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 3
+iadd
+iastore
+
+;left bracket, beginning of while loop: [ (jump forward to the command after the corresponding ] if the byte at the pointer is zero.)
+dup2
+iaload
+ifeq label_end_7
+label_begin_7:
+
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 10
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 2
+iadd
+iastore
+
+;left bracket, beginning of while loop: [ (jump forward to the command after the corresponding ] if the byte at the pointer is zero.)
+dup2
+iaload
+ifeq label_end_8
+label_begin_8:
+
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush -1
+iadd
+iastore
+
+;move pointer: <>
+sipush -1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush 16
+iadd
+iastore
+
+;move pointer: <>
+sipush 1
+iadd
+;right bracket: ] (jump back to the command after the corresponding [ if the byte at the pointer is nonzero.)
+dup2
+iaload
+ifne label_begin_8
+label_end_8:
+
+;move pointer: <>
+sipush -1
+iadd
+;output value at current position: .
+dup2
+iaload
+getstatic java/lang/System/out Ljava/io/PrintStream;
+swap
+i2c
+invokevirtual java/io/PrintStream/print(C)V
+
+;move pointer: <>
+sipush -1
+iadd
+; increase/decrease value at pointer: +- 
+dup2
+dup2
+iaload
+sipush -1
+iadd
+iastore
+
+;move pointer: <>
+sipush -1
+iadd
+;right bracket: ] (jump back to the command after the corresponding [ if the byte at the pointer is nonzero.)
+dup2
+iaload
+ifne label_begin_7
+label_end_7:
+
+return
+.end method
+ 

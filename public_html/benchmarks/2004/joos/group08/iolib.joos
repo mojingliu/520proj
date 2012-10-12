@@ -1,0 +1,30 @@
+// extern classes for io libraries
+
+extern public class JoosFileReader in "myjoos.lib" { 
+	public JoosFileReader(File file);
+}
+
+extern public class JoosBufferedReader in "myjoos.lib" { 
+	public JoosBufferedReader(JoosFileReader reader);
+	
+	public String readLine();
+	public void close();
+}
+
+extern public class File in "java.io" { 
+	public File(String name);
+	
+	public boolean exists();
+}
+
+extern public abstract class InputStream in "java.io" {
+	public InputStream();
+}
+
+extern public class InputStreamReader extends Reader in "java.io" { 
+	public InputStreamReader(InputStream stream);
+}
+
+extern public class Reader in "java.io" { 
+	public Reader();
+}

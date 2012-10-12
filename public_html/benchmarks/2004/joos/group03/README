@@ -1,0 +1,15 @@
+JOOS Deliverable : benchmark program
+Group 03
+---------------------------------------------- 
+
+The program implements a web link harvester.
+
+Starting from the given web address, the harvester looks for the links
+on the page and follows them.  It continue searching to the depth
+given as the program argument. The search may be restricted to the
+site or the domain.
+
+As the result, the program prints out the search trace specifying the
+found links with the depth level to which they belong. It also gives
+the reason of the link skipping (not following further), e.g. as in
+the case when the maximum depth is reached.

@@ -1,0 +1,63 @@
+-- JOOS Implementation of a Subset of the FALSE Programming Language --
+
+We have implemented a subset of the FALSE language as an interpreter.
+FALSE is an extremely cryptic yet fully functional language.  While
+we did not implement the entire FALSE language, the heart and soul
+of FALSE is implemented.  
+
+FALSE is an entirely stack-based language.  All values are pushed to
+the stack and must be popped off to be used.  Algebra works in reverse
+polish notation, i.e. 5 4+ stores 9 onto the stack.  Please see the 
+Wikipedia page for more detailed information.
+
+The syntax is described below:
+    
+ORIGINAL FALSE:
+"string"    -   Anything between "'s part of a string, even new lines.
+                i.e. "Hello World
+                "
+                Would store the string "Hello World\n" in the stack.
+integer     -   Any numerical characters form a number, i.e. 100
++,-,*,/     -   These are the classic binary operators
+_           -   Negate operator, i.e. 5_ stores -5
+$           -   Duplicate top value on the stack
+%           -   Delete top value on the stack
+\           -   Swap the top two values on the stack
+@           -   Alternate the 1st and the 3rd items.
+.           -   Output the top value on the stack to stdout
+,           -   Output the top value on the stack as an ASCII value
+EXTENSIONS:
+`           -   Output the current stack 
+#           -   Output a stack trace
+!           -   Clear the stack trace
+)           -   Empty the stack
+
+Our implementation only covers the features discussed above.  In addition,
+there is absolutely no error checking, as this is not one of the design
+goals of FALSE :-).  We've implemented an ASCII visualizer to view
+the stack as elements are pushed and popped from it.  Also, we have not
+implemented any control sequences (who needs them!?), and no lamba 
+expressions either.
+
+This interpreter should work perfectly using the above features and
+making no mistakes in your FALSE syntax, i.e. you cannot add a string
+to an integer.  If you do make any mistakes, that is a clear sign you 
+are not ready to program in FALSE.  Go back to Java.
+
+The 'in1' file provides a good demo of FALSE in all its glory.
+To use the interactive interpreter (i.e. with '>' signifying where
+to enter your lines) you need to edit Main.java and change the line
+'takeInputFile = true' to 'takeInputFile = false'.
+
+Code Structure:
+---------------
+Main.java -  The main function, which creates the Parser and takes
+             input from the user which is then sent to the Parser.
+Parser.java - Creates a Performer object and uses that as the stack
+              storage.  The Parser object takes a string and parses it,
+              and uses the Performer object to modify the stack
+Performer.java - This class contains the stack and also a "pretty-printer"
+                 to print the stack.
+
+Enjoy!
+

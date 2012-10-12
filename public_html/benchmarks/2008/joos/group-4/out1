@@ -1,0 +1,14 @@
+Please enter valid input. If you don't know what that is, then too bad.
+
+Oh. My. GOD. THAT IS NOT THE PROPER INPUT FORMAT AT ALL.
+Were you raised on a farm or something?
+Did you even stop and think for a minute about how hard I,
+your overworked, underappreciated processessor would have to
+work to parse your file just because you were too lazy to check
+whether the format was valid? DID YOU THINK OF READING THE
+MAN PAGE? BAD THINGS HAPPEN TO PEOPLE WHO DO NOT READ MAN
+PAGES. (See: http://xkcd.com/293/ )
+
+Let me break down why your input sucks:
+
+Your preprocessor directive cannot be a prime number, you troglodyte

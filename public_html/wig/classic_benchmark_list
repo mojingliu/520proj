@@ -1,0 +1,8 @@
+chat	./examples/classic	chat
+counter	./examples/classic	counter
+gameTuple	./examples/classic	gameTuple
+legomen	./examples/classic	legomen
+poll	./examples/classic	poll
+talk	./examples/classic	talk
+tiny	./examples/classic	tiny
+Ygame	./examples/classic	game

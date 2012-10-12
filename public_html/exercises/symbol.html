@@ -1,0 +1,128 @@
+<title>Exercises on symbol tables</title>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+<h1>Week 6</h1>
+<h1>Exercises on symbol tables</h1>
+<ol>
+<li>Experiment with the following hash functions on 
+    <a href="identifiers.txt">this collection</a> of identifiers:
+<p>
+<ul>
+<li><code>hash = *str;</code>
+<li><code>while (*str) hash = hash + *str++;</code>
+<li><code>while (*str) hash = hash * *str++;</code>
+<li><code>while (*str) hash = (hash << 1) + *str++;</code>
+<li><code>while (*str) hash = (hash << 2) + *str++;</code>
+<li><code>while (*str) hash = (hash << 3) + *str++;</code>
+<li><code>while (*str) hash = (hash * 65599) + *str++;</code>
+<li>An <i>attempt</i> by you at an even better hash function.
+</code>
+</ul>
+<p>
+
+This question requires that you produce a series of 8 graphs that are
+like the 3 graphs in the Week 6 slides.  Assume a hashtable size of
+317.  You can use whatever tools and languages you like; once you have
+a system to generate one graph, the rest should be trivial.
+<p>
+
+This question is not hard (estimate of one hour, at which point you
+should email if you are not making progress), but it is possible to go
+about it the wrong way and spend a long time on it, so keep elegance
+and simplicity in mind and remember the value of one-shot programs.
+If you want scriptable graphing tools that accept plain text input
+then <a href="http://www.gnuplot.info">gnuplot</a> and <a
+href="http://www.r-project.org">GNU R</a> work well.  You may
+alternatively want to copy the format of the graphs out of <a
+href="../slides/symbol.tex">symbol.tex</a>, just be sure to include
+the <code>bar</code> package.
+<p>
+
+<i>Motivation</i>: This is actually a very good question that
+illustrates the use of the scientific method in computer science, and
+for the most part the rest of this course is either math or
+engineering.  We have hypotheses about these hash functions being good
+or bad, and we will test them empirically using a collection of
+identifiers taken from a real-world program.  Conducting experiments
+such as these and producing graphs from them is an important part of
+systems research.  If you are interested more generally in the
+importance of experimental computer science then you might want to
+read <a href="http://www.cs.huji.ac.il/~feit/papers/exp05.pdf">this
+paper</a>.
+<p>
+
+<li>Using a diagram like the one on slide 17 (<b>or better yet, using
+a cactus stack representation of the symbol table, as discussed in
+class on Friday</b>), show the connection between the abstract syntax
+tree and symbol table for the following JOOS class:
+<p>
+<pre>
+public class Cons {
+  protected Object first;
+  protected Cons rest;
+ 
+  public Cons(Object f, Cons r)
+  { super();
+    first = f;
+    rest = r; 
+  }
+ 
+  public void setFirst(Object newfirst)
+  { first = newfirst; }
+ 
+  public boolean member(Object item) 
+  { if (first.equals(item))
+      return true;
+    else if (rest == null)
+      return false;
+    else
+      return rest.member(item);
+  }
+}
+</pre>
+<p>
+<i>Motivation</i>: understanding the relationship between abstract
+syntax trees and symbol tables is important.  If you want to draw this
+by hand that is definitely acceptable.  If you want to use a computer
+then <a href="http://www.inkscape.org">Inkscape</a> is an excellent
+tool, just be sure to draw the arrows last.  If this question is
+taking you too long then simplify the <code>Cons</code> class first.
+<p>
+
+<li>(Optional.)  Formalize the argument that the collection of correct
+JOOS programs is not a context-free language.  If you do not know
+where to start, refer to slide 2 and <a
+href="http://en.wikipedia.org/wiki/Pumping_lemma_for_context-free_languages">this
+Wikipedia page</a>.
+<p>
+<i>Motivation</i>: sometimes it's nice to be reminded that back in the
+beginning the theory people really invented everything.
+<p>
+
+<li>(Optional.)  Study the code for symbol checking JOOS programs.
+Report on anything unclear.
+<p>
+<i>Motivation</i>: the C and Java JOOS compilers are an excellent
+reference for your own WIG compiler, and there are wrong (where
+"wrong" expands to "unnecessarily painful") ways to implement symbol
+tables.
+<p>
+
+</ol>
+<h1>WIG project status</h1>
+<ul>
+
+<li>Discuss how to build a scanner, a parser, a weeder, and abstract
+syntax trees for your version of the WIG language.  Outline your
+strategy for the remaining work.  If you have not met with your group
+for your <a href="../milestones/WIGscanparse.html">upcoming
+milestone</a> then this is an excellent opportunity to brainstorm.  If
+you have already met with your group then summarize your meeting.
+</ul> </td></tr></table>
+<p>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+Maintained by Christopher J. F. Pickett.
+<a href="index.html">[HOME]</a>
+</td></tr>
+</table>

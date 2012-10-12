@@ -1,0 +1,33 @@
+Fat Checker README file (fatchecker.wig)
+========================================
+Fat checker allows you to calculate your body mass index (BMI) in an 
+instant. Once you've entered your weight in kilograms, and your height 
+in centimeters, fat checker redirects you to the Result page. Fat 
+checker additionally tells you the BMI category you fall into. Moreover, 
+fat checker will give you a sample diagnosis for your constitution 
+completely free-of-charge. When you're done reading the results, you can 
+continue to the next page and you'll see the fattest BMI encountered so 
+far.
+
+Check out wikipedia for more information on the BMI:
+http://en.wikipedia.org/wiki/Body_mass_index
+
+
+Installing the benchmark:
+-------------------------
+The WIG file is called fatchecker.wig and it can be compiled as 
+pwig fatchecker.wig which will produce a fatchecker.c and fatchecker.install. 
+You can then install it into your public_html directory using:
+./fatchecker.install
+
+You can access a running version of fatchecker.cgi at
+www.cs.mcgill.ca/~dng5/cgi-bin/fatchecker.cgi?Fat
+
+and the high score at
+www.cs.mcgill.ca/~dng5/cgi-bin/fatchecker.cgi?Score
+
+WIG Features:
+-------------
+Fat Checker uses sessions, sessions' variables, persistent variables, 
+HTML constants, the plug, receive and show constructs and tuples.
+

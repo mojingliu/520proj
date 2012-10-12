@@ -1,0 +1,540 @@
+<title>How to use Subversion</title>
+<table border="5" cellpadding="5" cellspacing="5" width="100%">
+  <tbody>
+  <tr>
+    <td>
+      <h1>How to use Subversion</h1>
+      <p>
+        This is a guide detailing the use of Subversion (SVN) in COMP
+        520.  It contains critical course-specific information as well
+        as instructions that are more generally useful.
+      </p>
+      <h2>1. What is SVN?</h2> 
+
+      Subversion is a <i>version control</i> system.  It allows users to keep track
+      of changes made to any type of electronic data, which are
+      typically source code, web pages or design documents.  It does
+      this with the help of a <i>repository</i>, an <i>SVN server</i>,
+      and an <i>SVN client</i>.
+      <p>
+      Reasons to use SVN:
+      <p>
+      <ul>
+
+      <li><b>Concurrent development</b>: developers can work
+      concurrently.  Your code cannot be overwriten silently when your
+      colleague tries to add his or her code to the same file.
+      Furthermore, your changes are committed atomically, which means
+      that if you try to commit changes to two different files
+      <code>A</code> and <code>B</code> to the repository at the same
+      time as another project member, only one of you will succeed and
+      you will not end up with a situation where one person commits A
+      and the other commits B.  As far as this course is concerned,
+      SVN stops you from having to email files around.
+      <p>
+ 
+      <li><b>Easy distribution of updates</b>: we provide you with
+      access to the course website which contains all public course
+      material, and all you have to do to follow along is <code>svn
+      up</code> and <code>svn log</code>.  At the same time, since all
+      class members share the same repository, we can also follow the
+      progress of individual students and project groups.  Finally, if
+      you want to work on files both at home and at school this makes
+      managing them extremely easy.
+      <p>
+
+      <li><b>Version control</b>: the system creates a new revision every
+      time you commit files, which means you can always roll back
+      safely.  You can also request a diff of what changed in a
+      particular revision, or a range of revisions.  You can also see
+      a log of who changed what, as well as who changed which
+      individual lines in a file.
+      <p>
+      
+      <li><b>Other reasons</b>: See the official documention, <a
+      href="http://svnbook.red-bean.com/">Version Control with
+      Subversion</a>.  You must read chapters 1 and 2 for this course.
+
+      </ul>
+
+      <h2>2. Getting Started</h2>
+
+      In order for us to provide you with access to the class
+      repository, you must send us a DSA <i>ssh public key</i>.  This
+      is one half of a public/private <i>key pair</i> that you create
+      and it allows for secure remote repository access without
+      password authentication.  If you already have an ssh key pair
+      you can skip this next step.<p>
+
+      <pre>
+      $ ssh-keygen -t dsa
+      Generating public/private dsa key pair.
+      Enter file in which to save the key (/home/users/chris/.ssh/id_dsa): 
+      Enter passphrase (empty for no passphrase): 
+      Enter same passphrase again: 
+      Your identification has been saved in /home/users/chris/.ssh/id_dsa.
+      Your public key has been saved in /home/users/chris/.ssh/id_dsa.pub.
+      The key fingerprint is:
+      ab:3c:ce:d3:61:1e:37:75:02:f9:9e:9f:ba:d9:b6:58 chris@localhost
+      </pre>
+
+      Hit enter at all of the prompts.  If you already have an ssh key
+      pair and want to use a different one for this course then you
+      should choose a different location to save the file.  In that
+      case, you can set the environment variable <code>SVN_SSH</code>
+      to <code>ssh -i /path/to/your/private/key/id_dsa</code>.  If you
+      enter a password, you will get annoyed at having to authenticate
+      for each repository access and will end up wanting to use the
+      <code>ssh-agent</code> tool.<p>
+     
+      In the instructions that follow, we will use
+      <code>`whoami`</code> for your CS username, which if entered on
+      a school machine will actually expand to that name in place.  Of
+      course, you can just type your actual username instead.<p>
+      
+      After you have your key pair, create a copy of your
+      <i>public</i> key with your CS username in place of id_dsa:
+      <p>
+      
+      <pre>
+      $ cp .ssh/id_dsa.pub `whoami`.pub
+      </pre>
+
+      and send this file as an attachment to your TA.  They will add
+      it to the <code>.ssh/authorized_keys</code> file for the course
+      account and you will then have repository access.
+
+      <h2>3. Basic Operations</h2>
+
+      This section surveys the fundamental operations that you will
+      need for day-to-day use of SVN.
+      
+      <h3>3.1 Check Out</h3>
+      
+      The first thing you should do is to check out the files from the
+      remote class repository to your local <i>working copy</i>:
+      <p>
+
+      <pre> 
+      $ mkdir cs520
+      $ cd cs520
+      $ svn co svn+ssh://cs520@svn.cs.mcgill.ca/2012/students/`whoami` `whoami`
+      </pre>
+
+      This creates a directory `whoami` which is identical to your CS
+      username as a subdirectory of <code>cs520</code>.  It is your
+      personal student repository, and you will use it to check in all
+      of your individual assignments.  You can rename it to whatever
+      you like, Subversion does not care.  Next, you should check out
+      the course website:
+      <p>
+
+      <pre>
+      $ svn co svn+ssh://cs520@svn.cs.mcgill.ca/2012/public_html public_html
+      </pre>
+
+      This directory contains all of the course information and all of
+      the source code and binaries that you need.  Again, you can
+      rename it to whatever you like.  Finally, after we assign group
+      numbers then you will have access to a folder shared between all
+      members of your group.  With your group number in place of X:
+      <p>
+
+      <pre>
+      $ svn co svn+ssh://cs520@svn.cs.mcgill.ca/2012/groups/group-X group-X
+      </pre>
+
+      will create that group directory for you.  You will use this to
+      check in all group assignments and your course project.
+      <p>
+                  
+      After checking out, you can add, modify or delete files in the
+      local working copy, and nothing will be changed in the
+      repository or visible to anybody else until you <i>commit</i> or
+      <i>check in</i>.
+
+      <h3>3.2 Update</h3>
+      
+      Every time you start working, it is a good idea to make sure
+      your local working copies contain the latest version.  This
+      requires the <code>svn update</code> or <code>svn up</code>
+      command:
+      <p>
+      
+      <pre>
+      $ cd cs520
+      $ cd `whoami`
+      $ svn up
+      $ cd ../public_html
+      $ svn up
+      $ cd ../group-X
+      $ svn up
+      </pre>
+
+      Of course, you can also just do:
+      <p>
+
+      <pre>
+      $ cd cs520
+      $ svn up `whoami` public_html group-X
+      </pre>
+
+      This command recursively updates all files and sub-directories
+      in all working copies.  If you encounter a conflict as indicated
+      by <code>C</code>, you should refer to the Subversion
+      documentation for details on how to resolve it.
+      
+      <h3>3.3 Diff</h3>
+
+      After you update and begin modifying files, you will often want to
+      check the difference between your version and the repository
+      version:
+      <p>
+
+      <pre>
+      $ svn diff
+      </pre>
+
+      This provides a <i>unified diff</i> between your version and the
+      latest repository version on stdout, using exactly the same
+      format as <code>diff -u</code>.  You can also use <code>svn
+      diff</code> to look at the changes between two specific
+      revisions.  For instance:
+      <p>
+
+      <pre>
+      $ svn diff -r2:3
+      </pre>
+      
+      will show you what changed in the repository between revisions 2
+      and 3.  Finally, although <code>svn diff</code> operates on the
+      current directory <code>.</code> by default, you can also
+      specify a particular file, directory, or some local or remote
+      URI.
+      <p>
+      <b>It is a very good idea to run <code>svn diff</code> before
+      committing your changes.</b>
+
+      <h3>3.4 Commit</h3>
+
+      Once finished your local work, your changes will not appear in
+      the repository until you <i>commit</i> them or <i>check them in</i>:
+      <p>
+
+      <pre>      
+      $ svn ci
+      </pre>
+
+      Here, <code>svn ci</code> is an alias for <code>svn
+      commit</code>.  The <code>svn</code> binary will attempt to open
+      an editor for you to leave a log message, and you can control
+      which editor is opened through use of the EDITOR environment
+      variable.  For example, on my system:
+      <p>
+
+      <pre>
+      export EDITOR='emacs -nw'
+      </pre>
+
+      means that <code>svn</code> will open the command line interface
+      to Emacs in the current terminal.  <b>You should always leave a
+      meaningful log message.</b>  For example, if we were to check in
+      changes to the current document at this very moment we might
+      write:
+      <p>
+
+      <pre>
+      * Expand on SVN instructions.
+      --This line, and those below, will be ignored--
+
+      M    howtosvn.html
+      </pre>
+
+      For each individual thing that changed in your commit, create a
+      new bullet point preceded by "<code>* </code>".  This makes it
+      much easier for you, your collaborators, and your instructor and
+      TA to follow along.  If you do not save the file,
+      <code>svn</code> will prompt you to <code>a)bort, c)ontinue,
+      e)dit</code>.  This lets you back out of a commit if you realize
+      you are missing something.  As an alternative to editing a file,
+      you can also specify a log message on the command line:
+      <p>
+
+      <pre>
+      $ svn ci -m "* Expand on SVN instructions."
+      </pre>
+
+      However, given that opening an editor is both fast and much
+      safer in that it provides you with a list of modifications to
+      review, it is best to leave this option for non-interactive
+      scripted use.
+      <p>
+      
+      If you want to check in individual files or directories rather
+      than the current working copy and all files and directories it
+      contains, simply pass them to <code>svn ci</code>.
+      <p>
+
+      <h3>3.5 Add</h3>
+
+      The following command:<p>
+
+      <pre>      
+      $ svn add &lt;file&gt;
+      </pre>
+
+      adds new files or directories to your working copy.  They
+      will not appear in the repository until you run <code>svn
+      ci</code>.  Note that you can disable the recursion when adding
+      directories with the <code>-N</code> flag.
+      
+      <h3>3.6. Copy/Move/Delete</h3>      
+
+      These three commands work similarly to the Unix commands
+      <code>cp</code>, <code>mv</code>, and <code>rm</code>.
+
+      <h4>3.6.1 svn cp</h4>
+
+      <pre>
+      $ svn cp &lt;src&gt; &lt;dest&gt;
+      </pre>
+
+      <code>svn cp</code> will also add the destination file or
+      directory to the working copy.  The advantage of this command is
+      that it maintains version history from before the copy, and that
+      it requires almost no extra storage space in the repository.
+      For example, assume there is a directory called
+      <code>joos/a-</code> that is a subdirectory of the
+      <code>public_html</code> directory for this course that contains
+      some source code you wish to modify for an assignment, and that
+      the instructor has asked you to place your modified source code in
+      <code>group-X/joos/scanparse</code>.  In that case, you need
+      simply enter:
+      <p>
+
+      <pre>
+      $ mkdir group-X/joos                                # make sure parent dir exists
+      $ svn add group-X/joos                              # add empty parent directory
+      $ svn ci group-X/                                   # commit empty parent directory
+      $ svn cp public_html/joos/a- group-X/joos/scanparse # create copy of source code
+      $ svn ci                                            # check in copy of source code
+      </pre>
+
+      In fact, <code>svn cp</code> is really the mechanism for creating
+      <i>branches</i> with SVN.
+      <p>
+
+      If we want to see what you have changed, we need simply ask
+      <code>svn diff</code> for all changes between your initial
+      <code>svn cp</code> command and your current state.
+      
+      <h4>3.6.2 svn mv</h4>
+
+      <pre>
+      $ svn mv &lt;src&gt; &lt;dest&gt;
+      </pre>
+
+      <code>svn mv</code> can either be used to rename files and
+      directories, or to move files or directories to different
+      directories while keeping the same name.  In doing so, it
+      maintains version history.
+      <p>
+
+      <h4>3.6.3 svn rm</h4>
+
+      <pre>
+      $ svn rm &lt;file&gt;
+      </pre>
+
+      <code>svn rm</code> deletes the file or directory from the working copy, as
+      you might expect.
+      <p>
+
+      <i>Important</i>: Like <code>svn add</code>, these three
+      commands just tell SVN that you <i>want</i> to copy/move/delete
+      files, and you have to run <code>svn ci</code> afterwards to
+      commit your change.  <b>It is a good habit to commit
+      immediately after you add/copy/move/delete files.</b>
+      
+      <h3>3.7 Retrieve Log</h3>
+      
+      If you want to look at the repository history, Subversion
+      provides a detailed log upon request:
+      <p>
+
+      <pre>
+      $ svn log | less
+      </pre>
+      
+      If you want to see full paths that are changed, pass the
+      <code>-v</code> option:
+      <p>
+
+      <pre>
+      $ svn log -v | less
+      </pre>
+
+      You can also specify individual files if you are not interested in
+      the entire log for the current directory.
+
+      <h2>4. Less frequently used commands</h2>
+
+      Of course, there are actually many other commands, several of
+      which are quite useful, including <code>svn status</code>,
+      <code>svn revert</code>, <code>svn cleanup</code>, <code>svn
+      merge</code>, and <code>svn resolved</code>.  When things go
+      wrong, and they will go wrong, these commands are there to help
+      you out.  In fact, there is actually a built-in command to teach
+      you about them:
+      
+      <pre>
+      $ svn help
+      usage: svn &lt;subcommand&gt; [options] [args]
+      Subversion command-line client, version 1.4.3.
+      Type 'svn help &lt;subcommand&gt;' for help on a specific subcommand.
+      Type 'svn --version' to see the program version and RA modules
+        or 'svn --version --quiet' to see just the version number.
+      
+      Most subcommands take file and/or directory arguments, recursing
+      on the directories.  If no arguments are supplied to such a
+      command, it recurses on the current directory (inclusive) by default.
+      
+      Available subcommands:
+         add
+         blame (praise, annotate, ann)
+         cat
+         checkout (co)
+         cleanup
+         commit (ci)
+         copy (cp)
+         delete (del, remove, rm)
+         diff (di)
+         export
+         help (?, h)
+         import
+         info
+         list (ls)
+         lock
+         log
+         merge
+         mkdir
+         move (mv, rename, ren)
+         propdel (pdel, pd)
+         propedit (pedit, pe)
+         propget (pget, pg)
+         proplist (plist, pl)
+         propset (pset, ps)
+         resolved
+         revert
+         status (stat, st)
+         switch (sw)
+         unlock
+         update (up)
+
+      Subversion is a tool for version control.
+      For additional information, see http://subversion.tigris.org/
+      </pre>
+
+      <b>If anything is confusing, then again, the Subversion documention
+      is excellent.</b>  We are also happy to help you if you send us
+      a precise and accurate description of your problem or if you
+      come and see us during our office hours.
+
+      <h2>5. Recommend Editing Cycle</h2>
+
+      Although you are free to use SVN as you wish, this is an editing
+      cycle that works very well:
+
+      <pre>
+      svn up           # update
+      svn log | less   # see details of update if there was one
+      while (change not implemented correctly)
+        while (program does not compile)
+          edit files   # implement change
+          make         # try compiling
+        make check     # run automatic tests
+      svn diff         # review changes
+      svn ci           # commit      
+      </pre>
+
+      For source code, the time between commits should be small.
+      Ideally, each commit makes an incremental and self-contained
+      improvement.  If you avoid checking in things that do not work,
+      you will save yourself and others headaches in the future.
+      <p>
+      Of course, you may run into conflicts and other problems, in
+      which case you should refer to the excellent Subversion
+      documentation.
+
+      <h2>6. Other Advice</h2>
+
+      <ul>
+      <li> Do not check in generated source code or binaries.
+      <li> Do not worry about repository disk space: copies are cheap
+      and commits are incremental so you should use <code>svn
+      cp</code> and <code>svn ci</code> liberally.
+      <li> If you check something in, you must run <code>svn up</code>
+      before that change becomes visible to <code>svn log</code> and
+      other operations that examine history.
+      <li> If the prospect of your working copy being deleted scares
+      you, it is probably time to commit.
+      </ul>
+
+      <h2>7. SVN GUI Clients</h2> 
+
+      If you are not used to Unix and the command line interface, life
+      may be easier if you have a GUI client and do not need to type
+      commands in a console.  However, at the same time, this course
+      is an excellent opportunity to improve on your command line
+      abilities, a skill that will serve you well for years to come.
+      <p>
+      
+      Under Windows, you can try <a
+      href="http://tortoisesvn.tigris.org/">TortoiseSVN</a>, an SVN
+      client that integrates commands into your right-click context
+      menu.  It is fairly easy to install and use.
+      <p>
+      
+      For Linux, there is <a
+      href="http://zoneit.free.fr/esvn/index.php">eSVN</a>, although it is
+      apparently not as stable as TortoiseSVN.
+      <p>
+      
+      A cross-platform solutions is <a
+      href="http://subclipse.tigris.org/">SubClipse</a>, an Eclipse
+      plugin that does the same job.  You can find very clear
+      instructions on how to install this plugin here: <a
+      href="http://subclipse.tigris.org/install.html">http://subclipse.tigris.org/install.html</a>.
+      <p>
+
+      <i>SubClipse tip</i>: Using "Synchronize with repository" rather
+      than "Update" will show you more detail when you want to update
+      your local working copy.
+      <p>
+      Finally, if you are looking to use SVN in your own projects, you
+      may be interested in <a
+      href="http://trac.edgewall.org/">Trac</a>, an integrated
+      bug tracking, wiki, and version control system.
+
+      <h2>8. References </h2> 
+      
+      <ol>
+      <li>Official homepage: <a href="http://subversion.tigris.org/">http://subversion.tigris.org/</a>
+      <li>Official documention: <a href="http://svnbook.red-bean.com/">Version Control with Subversion</a>
+      <li>Wikipedia entry: <a href="http://en.wikipedia.org/wiki/Subversion_%28software%29">Subversion software</a>
+      <li>TortoiseSVN homepage: <a href="http://tortoisesvn.tigris.org/">http://tortoisesvn.tigris.org/</a>
+      <li>eSVN homepage: <a href="http://zoneit.free.fr/esvn/index.php">http://zoneit.free.fr/esvn/index.php</a>
+      <li>SubClipse homepage: <a href="http://subclipse.tigris.org/">http://subclipse.tigris.org/</a>
+      <li>Trac homepage: <a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a>
+      </ol>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<p>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+Maintained by Chris Pickett
+<a href="index.html">[HOME]</a>
+</td></tr>
+</table>

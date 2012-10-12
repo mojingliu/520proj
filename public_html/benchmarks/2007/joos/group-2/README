@@ -1,0 +1,25 @@
+COMP 520
+Joos Deliverable: Benchmark
+
+Group 2: Diana Gheorghiu and Gina Jeong
+
+An OBST is an optimal binary search tree. It is designed to take advantage of 
+advanced knowledge of the distribution of searches over the binary tree in 
+order to determine the best way to arrange the nodes. 
+
+The program reads in formated text indicating the number of entries, the 
+percentage chance of searching for each node, the percentage chance of
+searching for it and missing it, as well as the node itself (as a string).
+It then calculates the cost of finding the best tree, and outputs the tree in 
+a descriptive form.
+
+The problem is sloved by dynamic programming so a (possibly) large matrix is 
+used to hold values. To accomodate the move to JOOS, matrix had to be 
+transformed to use only Vectors, the program was changed to accept only 
+Integers and other small changes were added to make the program more 
+interesting.
+
+The file OBST.java contains the source code for the program.
+The file in1 contains the sample input for the program.
+The file out1 contains the sample output for the program.
+

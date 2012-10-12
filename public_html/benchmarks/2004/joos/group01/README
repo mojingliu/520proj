@@ -1,0 +1,49 @@
+COMP-520
+JOOS deliverable: benchmark program
+By Group 1: Dmytro Prykhodko and Leonid Gaiazov
+
+For this deliverable we rewrote one of the older programs from
+Artificial Intelligence CS424. The benchmark implements a Hill
+Climb TSP algorithm. It's an optimization algorithm, which
+attempts to find a solution to the Traveling Sales Person
+problem. This isn't an optimal algorithm, but it provides a
+decent solution. We found that it suits well for a benchmark.
+
+The input is a graph (in a text file). The output is also a
+cycle, also in a text file. The file format is same for both,
+since every cycle is a graph anyways. Also included is a viewer
+that allows one to view the graphs and generate random graphs as
+well.
+
+The algorithm doesn't use much memory, so this is just a
+benchmark with a lot of computation.Since it had to be
+compatible with JOOS, a few modifications to the original were
+made:
+ -everything is in integers. Distance between 2 points is now
+sum of horizontal and vertical distance
+ -the program is now deterministic, nothing is random
+ -graphs are now stored in text files
+
+Files included:
+
+Graph.java      Datatype for an undirected Graph
+GraphNode.java  Datatype for a node in a graph
+HillClimg.java  The actual algorithm implementation and IO
+State.java      Datatype for a state. The point of the algorithm
+is to find a best state
+Vertex.java     Datatype for a 2d vertex
+
+Viewer.jar      Viewer for graph files
+in1             A complete graph with 100 nodes
+out1            The output
+README          This document
+xtra/viewer/*   Sources for the Viewer - doenst compile on JOOS!
+xtra/graph*     Graphs with 25, 50, 100 and 200 nodes
+accordingly
+
+We have tested the benchmark and it compiles and runs using both
+javac and joosc
+
+P.S. please don't forget that TSP is np-complete. Even though
+this isn't an optimal algorithm, it still takes about 20 seconds
+to run on lab6 computers.

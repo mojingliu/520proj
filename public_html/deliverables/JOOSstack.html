@@ -1,0 +1,55 @@
+<title>JOOS deliverable: stack limits</title>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+<h1><img src="../images/joos32.gif"> deliverable: stack limits</h1>
+The weakest point of the A- implementation is the stupid computation of
+stack limits, which are always assumed to equal 25. It would be much
+nicer to compute the exact limit.
+<p>
+This improvement can be implemented by
+only making changes to the file 
+<a href="../joos/a-/emit.c"><code>emit.c</code></a>.
+Note that "<code>struct CODE</code>" in the file
+<a href="../joos/a-/tree.h"><code>tree.h</code></a>
+contains a field "<code>int visited;</code>" which may
+be useful for this task.
+<p>
+You should create a new branch of your A- compiler:<p>
+
+<code>$ svn cp group-X/joos/scanparse group-X/joos/stacklimits</code>
+<code>$ svn ci -m "* Create new A- branch for stack limits deliverable"</code><p>
+
+Then, make your modifications, ensure that you compute the same stack
+limits as the A+ compiler for the class benchmarks, and add a README
+file describing your work and the changes you needed to make.  You
+might also want to write small test programs.  Your goal should be to
+convince us and convince yourselves that your solution is correct.  It
+is fine to leave precise details to comments in the source code.
+Format your text in 80 column blocks for readability, and stick to the
+current JOOS programming style.
+<p>
+Make sure that you do not turn on optimization by passing -O to either
+the A- or A+ compilers.  Otherwise, you might find that for some
+methods the A+ compiler computes a smaller stack limit than your A-
+compiler.  The optimization phase occurs before the emit phase, and
+since optimization can eliminate some unnecessary stack operations,
+this can affect the emitted stack limit.
+<p>
+Your TA will use Subversion to look at your changes and run the class
+benchmarks and your test programs in order to evaluate you.  Remember,
+multiple small test inputs are more useful than one big test input
+that attempts to cover all features; a combination of both is even
+better.
+<p>
+This deliverable is due by midnight on Friday of Week 10.  It will
+count for 3.33% of your grade.  Marks will be generously deducted for
+late submissions.
+</td></tr></table>
+<p>
+<p>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+Maintained by Ismail Badawi.
+<a href="../index.html">[HOME]</a>
+</td></tr>
+</table>

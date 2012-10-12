@@ -1,0 +1,110 @@
+<title>JOOS deliverable: benchmark programs</title>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+<h1><img src="../images/joos32.gif"> deliverable: benchmark
+programs</h1>
+
+Note that this is one of two deliverables due by the end of week 5!
+<p>
+
+Each project group must produce a small JOOS program, i.e. a
+collection of classes and
+a <font face=courier><code>main()</code></font> method.  The combined
+size should be at least 100 non-sequential semicolons (empty
+expression statements are not so useful), but that is really the bare
+minimum for an interesting program.  On unix you can use the
+<a href="../joos/count"><tt>count</tt></a> script to count your lines
+of code.  The program must "do something" and illustrate some
+aspect(s) of JOOS.  This means that if you just write procedural C
+code disguised as JOOS it might be bad for you.  Remember to run and
+test your programs!
+<p>
+
+One important requirement this year is that your benchmarks should do
+something that is both funny and unique. "Funny" is defined as making
+your TA(s) and instructor laugh.  "Unique" is defined as not done by
+any of the groups in previous years.  Computing the factorial function
+is not funny.  Writing a Brainfuck interpreter is not unique.  (That
+said, you could always gamble on finding a way to make computing the
+factorial function funny, but we're talking uncontrollable fits of
+laughter from everybody involved.)  The point of this requirement?  We
+want you to have some fun.
+<p>
+
+Your program should be an application (which it will be if it has a
+main() method), and it should take input from stdin and write output
+to stdout.  It should be possible to put the input in a file called
+<code>in1</code>, and run the program as:<p>
+
+<code>$ java Myprog < in1</code>
+<p>
+
+You should also be able to run the program capturing the expected
+output in a file called <code>out1</code> using:<p>
+
+<code>$ java Myprog < in1 > out1</code>
+<p>
+
+Your program should be deterministic: it must always produce exactly
+the same output for a given input.  This lets us run the benchmarks
+automatically and test the actual output against an expected output
+using diff, which will be important for the peephole contest where
+unsound optimizations can break your programs and mess up the output.
+Furthermore, it must be possible to run the program remotely via ssh
+without X-forwarding.
+<p>
+
+Your test program should be compilable with both javac and joosc.  If
+your program consists of files <code>f1.java f2.java f3.java</code>,
+then you should be able to compile them using:<p>
+
+<code>$ javac f1.java f2.java f3.java</code>
+<p>
+and
+<p>
+<code>$ joosc f1.java f2.java f3.java</code>
+<p>
+
+Recall that joosc automatically links in the joos externs for you.  If
+you need or want to create more externs, feel free to do so.  However,
+your externs may only refer to methods provided in libraries, such as
+those in the JDK.  If you want to use non-JDK libraries, you must
+provide technical support down the road, since other people will be
+running your benchmark.  You may not use externs to include Java code
+that you wrote for this assignment alone as a means to avoid the
+restricted syntax of JOOS.
+<p>
+
+These programs will be the benchmarks for
+the <a href="../peeprules.html">peephole contest</a>.  The more
+features of JOOS you use, the more "interesting" the contest will be:
+you must develop static optimizations to reduce code size.  Feel free
+to make your benchmark program require features of your improved compiler from the
+other concurrent JOOS deliverable, such as for-loops.
+<p>
+The JOOS benchmarks from previous years are available <a
+href="../benchmarks/">here</a>.  They will also appear in
+your <code>public_html</code> directory if you do <code>svn
+    up</code>.  Please look at them for inspiration.
+<p>
+
+You should check your benchmark in to a directory called
+group-X/joos/benchmark/ that contains all of the files that comprise
+your benchmark, a README file describing your benchmark, a test input
+file called <code>in1</code> and the matching output file called
+<code>out1</code>.
+<p>
+
+This deliverable is due by midnight on Friday of Week 5.  It will
+count for 3.33% of your grade.  Marks will be generously deducted for
+late submissions.
+
+</td></tr></table>
+<p>
+<p>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+Maintained by Ismail Badawi.
+<a href="index.html">[HOME]</a>
+</td></tr>
+</table>

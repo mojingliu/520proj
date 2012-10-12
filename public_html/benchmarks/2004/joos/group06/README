@@ -1,0 +1,53 @@
+COMP 520, GROUP no. 6, Fall 2004 - BENCHMARK program
+
+Description:
+
+  The VSMore (Very Simple Matching Of Regular Expressions) program
+  implements a very simple regular expression matching mechanism. It
+  receives two strings (each one on a separate line of input).  The first
+  one is regular expression to match, the second is string that is to be
+  matched against provided regular expression.
+  
+  String being mathed string may only contain the following charcters:
+  
+  a-z A-Z 0-9.
+  
+  The regular expression consists from the same set of characters as string
+  being matched with addition of several special characters, that is:
+  
+  + - one or more occurences of the entity on the left of this character,
+  * - any number of occurrences,
+  ? - one or zero occurrences,
+  [ ] - a set of characters to match, may be combined with the three above.
+  
+Examples:
+  
+  bca*
+  bcaaaaaaaa
+  
+  a+b
+  ab
+  
+  ab?c
+  ac
+  
+  a[bcdefghij]k
+  ack
+  
+  Z+z[xyz]?
+  ZZZZzzzzzzz
+  
+  [101dalmat][456milions]+3li?k*[123tea]*
+  14m3l1t3
+  
+Notes:
+  
+  The implemented algorithm is greedy, that is, at any point of it tries to
+  match as many characters as possible, even if later it gives different
+  results than user could expect.  This is best illustrated on a small
+  example.  The following pair will not match:
+  
+  a*a
+  aa
+
+*** Note by C.P.: I removed in2 and out2 examples.

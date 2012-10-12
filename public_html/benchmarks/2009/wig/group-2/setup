@@ -1,0 +1,10 @@
+#!/bin/bash
+
+REMOTE_PUB_HTML='~/public_html/cgi-bin'
+echo "\nCompiling wig services usng wig18\n"
+echo $PUB_HTML_FOLDER
+wig18 *.wig
+echo "\nCopying to freebsd public/cgi-bin\n"
+scp *.install *.c *.wig ${1}@freebsd.cs.mcgill.ca:${REMOTE_PUB_HTML}
+echo "\nProducing CGI binary.\n"
+ssh -fCT ${1}@freebsd.cs.mcgill.ca "chmod +x ${REMOTE_PUB_HTML}/*.install; ${REMOTE_PUB_HTML}/*.install"

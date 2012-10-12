@@ -1,0 +1,11 @@
+calculator	./examples/classic	calculator
+chat	./examples/classic	chat
+counter	./examples/classic	counter
+game	./examples/classic	game
+gameTuple	./examples/classic	gameTuple
+legomen	./examples/classic	legomen
+poll	./examples/classic	poll
+riddles	./examples/classic	riddles
+talk	./examples/classic	talk
+tiny	./examples/classic	tiny
+tupletorture	./examples/classic	tupletorture

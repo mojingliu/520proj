@@ -1,0 +1,477 @@
+BENCHMARK shop ./group01 shop
+========== COMPILATION WITH bsdwig4 STARTED
+>> Compiling "shop.wig":
+>> Parsing...
+>> Weeding...
+>> Generating symbol table...
+>> Type checking...
+>> Code generation...
+>> Compilation of "shop.wig" done!
+>> Creating install file "shop.install".
+>> Install file "shop.install" done!
+========== COMPILATION WITH bsdwig4 FINISHED
+========== COMPILATION WITH wig10 STARTED
+shop.wig
+Scanning
+Parsing
+Weeding
+Symbol collecting
+Symbol analysis
+Type checking
+wig10.WigException: 137:expression type should be 'string' or'int'.
+
+========== COMPILATION WITH wig10 ABORTED
+========== COMPILATION WITH bsdwig18 STARTED
+
+========== COMPILATION WITH bsdwig18 FINISHED
+========== COMPILATION WITH bsdperfectwig STARTED
+========== COMPILATION WITH bsdperfectwig FINISHED
+
+BENCHMARK TicTacToeT ./group02 TicTacToeT
+========== COMPILATION WITH bsdwig4 STARTED
+>> Compiling "TicTacToeT.wig":
+>> Parsing...
+>> Weeding...
+>> Generating symbol table...
+>> Type checking...
+>> Code generation...
+>> Compilation of "TicTacToeT.wig" done!
+>> Creating install file "TicTacToeT.install".
+>> Install file "TicTacToeT.install" done!
+========== COMPILATION WITH bsdwig4 FINISHED
+========== COMPILATION WITH wig10 STARTED
+TicTacToeT.wig
+Scanning
+Parsing
+Weeding
+Symbol collecting
+Symbol analysis
+Type checking
+Advanced weeding
+Resource allocation
+.......................................................................................................................................
+Code generating
+.......................................................................................................................................
+Compile succefully. two files were generated.
+TicTacToeT.c
+TicTacToeT.install
+
+========== COMPILATION WITH wig10 FINISHED
+========== COMPILATION WITH bsdwig18 STARTED
+*** compilation terminated
+*** Input/Select not allowed in exit'ed document at line 148 of file TicTacToeT.wig
+========== COMPILATION WITH bsdwig18 ABORTED
+========== COMPILATION WITH bsdperfectwig STARTED
+*** Warning: No return found in the else part of the if-else statement at line 38 of file TicTacToeT.wig
+*** Warning: No return found in the else part of the if-else statement at line 41 of file TicTacToeT.wig
+*** Warning: No return found in the else part of the if-else statement at line 44 of file TicTacToeT.wig
+*** Warning: No return found in the else part of the if-else statement at line 47 of file TicTacToeT.wig
+*** Warning: No return found in the else part of the if-else statement at line 50 of file TicTacToeT.wig
+*** Warning: No return found in the else part of the if-else statement at line 53 of file TicTacToeT.wig
+*** Warning: No return found in the else part of the if-else statement at line 56 of file TicTacToeT.wig
+*** Warning: No return found in the else part of the if-else statement at line 59 of file TicTacToeT.wig
+*** Warning: No return found in the else part of the if-else statement at line 62 of file TicTacToeT.wig
+*** Error: Number of arguments in function checkWin differs from its declaration: it should be -1 argument(s) at line 63 of file TicTacToeT.wig
+========== COMPILATION WITH bsdperfectwig ABORTED
+
+BENCHMARK puzzle ./group03 puzzle
+========== COMPILATION WITH bsdwig4 STARTED
+>> Compiling "puzzle.wig":
+>> Parsing...
+>> Weeding...
+>> Generating symbol table...
+>> Type checking...
+>> Code generation...
+>> Compilation of "puzzle.wig" done!
+>> Creating install file "puzzle.install".
+>> Install file "puzzle.install" done!
+========== COMPILATION WITH bsdwig4 FINISHED
+========== COMPILATION WITH wig10 STARTED
+puzzle.wig
+Scanning
+Parsing
+Weeding
+Symbol collecting
+Symbol analysis
+Type checking
+Advanced weeding
+Resource allocation
+.....................
+Code generating
+.....................
+Compile succefully. two files were generated.
+puzzle.c
+puzzle.install
+
+========== COMPILATION WITH wig10 FINISHED
+========== COMPILATION WITH bsdwig18 STARTED
+
+========== COMPILATION WITH bsdwig18 FINISHED
+========== COMPILATION WITH bsdperfectwig STARTED
+========== COMPILATION WITH bsdperfectwig FINISHED
+
+BENCHMARK tictactoe ./group04 tictactoe
+========== COMPILATION WITH bsdwig4 STARTED
+>> Compiling "tictactoe.wig":
+>> Parsing...
+>> Weeding...
+>> Generating symbol table...
+>> Type checking...
+>> Code generation...
+>> Compilation of "tictactoe.wig" done!
+>> Creating install file "tictactoe.install".
+>> Install file "tictactoe.install" done!
+========== COMPILATION WITH bsdwig4 FINISHED
+========== COMPILATION WITH wig10 STARTED
+tictactoe.wig
+Scanning
+Parsing
+Weeding
+Symbol collecting
+Symbol analysis
+Type checking
+Advanced weeding
+wig10.WigException: 44": moveIsValid_1" may not be defined before.
+========== COMPILATION WITH wig10 ABORTED
+========== COMPILATION WITH bsdwig18 STARTED
+
+========== COMPILATION WITH bsdwig18 FINISHED
+========== COMPILATION WITH bsdperfectwig STARTED
+*** Error: No exit found in session Game at line 216 of file tictactoe.wig
+========== COMPILATION WITH bsdperfectwig ABORTED
+
+BENCHMARK mydate ./group05-mydate mydate
+========== COMPILATION WITH bsdwig4 STARTED
+>> Compiling "mydate.wig":
+>> Parsing...
+>> Weeding...
+>> Generating symbol table...
+>> Type checking...
+>> Code generation...
+>> Compilation of "mydate.wig" done!
+>> Creating install file "mydate.install".
+>> Install file "mydate.install" done!
+========== COMPILATION WITH bsdwig4 FINISHED
+========== COMPILATION WITH wig10 STARTED
+mydate.wig
+Scanning
+Parsing
+Weeding
+Symbol collecting
+Symbol analysis
+Type checking
+Advanced weeding
+Resource allocation
+.............................
+Code generating
+.............................
+Compile succefully. two files were generated.
+mydate.c
+mydate.install
+
+========== COMPILATION WITH wig10 FINISHED
+========== COMPILATION WITH bsdwig18 STARTED
+
+========== COMPILATION WITH bsdwig18 FINISHED
+========== COMPILATION WITH bsdperfectwig STARTED
+========== COMPILATION WITH bsdperfectwig FINISHED
+
+BENCHMARK todo ./group05-todo todo
+========== COMPILATION WITH bsdwig4 STARTED
+>> Compiling "todo.wig":
+>> Parsing...
+>> Weeding...
+>> Generating symbol table...
+>> Type checking...
+>> Code generation...
+>> Compilation of "todo.wig" done!
+>> Creating install file "todo.install".
+>> Install file "todo.install" done!
+========== COMPILATION WITH bsdwig4 FINISHED
+========== COMPILATION WITH wig10 STARTED
+todo.wig
+Scanning
+Parsing
+Weeding
+Symbol collecting
+Symbol analysis
+Type checking
+Advanced weeding
+Resource allocation
+.......................................................
+Code generating
+.......................................................
+Compile succefully. two files were generated.
+todo.c
+todo.install
+
+========== COMPILATION WITH wig10 FINISHED
+========== COMPILATION WITH bsdwig18 STARTED
+
+========== COMPILATION WITH bsdwig18 FINISHED
+========== COMPILATION WITH bsdperfectwig STARTED
+========== COMPILATION WITH bsdperfectwig FINISHED
+
+BENCHMARK wiki ./group06 wiki
+========== COMPILATION WITH bsdwig4 STARTED
+>> Compiling "wiki.wig":
+>> Parsing...
+>> Weeding...
+*** compilation terminated
+*** Schemas are not implemented at line 78 of file wiki.wig
+*** Tuples are not implemented at line 80 of file wiki.wig
+*** Tuples are not implemented at line 83 of file wiki.wig
+*** Tuples are not implemented at line 87 of file wiki.wig
+*** Tuples are not implemented at line 88 of file wiki.wig
+*** Tuples are not implemented at line 89 of file wiki.wig
+*** Tuples are not implemented at line 90 of file wiki.wig
+*** Tuples are not implemented at line 91 of file wiki.wig
+*** Illegal name 'page1.name'. Schemas are not implemented at line 103 of file wiki.wig
+*** Illegal name 'page2.name'. Schemas are not implemented at line 104 of file wiki.wig
+*** Illegal name 'page3.name'. Schemas are not implemented at line 105 of file wiki.wig
+*** Illegal name 'page4.name'. Schemas are not implemented at line 106 of file wiki.wig
+*** Illegal name 'page5.name'. Schemas are not implemented at line 107 of file wiki.wig
+*** Illegal name 'page1.name'. Schemas are not implemented at line 112 of file wiki.wig
+*** Illegal name 'page1.content'. Schemas are not implemented at line 113 of file wiki.wig
+*** Illegal name 'page2.name'. Schemas are not implemented at line 118 of file wiki.wig
+*** Illegal name 'page2.content'. Schemas are not implemented at line 119 of file wiki.wig
+*** Illegal name 'page3.name'. Schemas are not implemented at line 124 of file wiki.wig
+*** Illegal name 'page3.content'. Schemas are not implemented at line 125 of file wiki.wig
+*** Illegal name 'page4.name'. Schemas are not implemented at line 130 of file wiki.wig
+*** Illegal name 'page4.content'. Schemas are not implemented at line 131 of file wiki.wig
+*** Illegal name 'page5.name'. Schemas are not implemented at line 136 of file wiki.wig
+*** Illegal name 'page5.content'. Schemas are not implemented at line 137 of file wiki.wig
+*** Illegal name 'current.name'. Schemas are not implemented at line 141 of file wiki.wig
+*** Illegal name 'current.content'. Schemas are not implemented at line 142 of file wiki.wig
+*** Illegal name 'current.content'. Schemas are not implemented at line 145 of file wiki.wig
+*** Illegal name 'current.name'. Schemas are not implemented at line 144 of file wiki.wig
+*** Illegal name 'current.no'. Schemas are not implemented at line 146 of file wiki.wig
+*** Illegal name 'current.no'. Schemas are not implemented at line 147 of file wiki.wig
+*** Illegal name 'page1.no'. Schemas are not implemented at line 147 of file wiki.wig
+*** Illegal name 'current.no'. Schemas are not implemented at line 148 of file wiki.wig
+*** Illegal name 'page2.no'. Schemas are not implemented at line 148 of file wiki.wig
+*** Illegal name 'current.no'. Schemas are not implemented at line 149 of file wiki.wig
+*** Illegal name 'page3.no'. Schemas are not implemented at line 149 of file wiki.wig
+*** Illegal name 'current.no'. Schemas are not implemented at line 150 of file wiki.wig
+*** Illegal name 'page4.no'. Schemas are not implemented at line 150 of file wiki.wig
+*** Illegal name 'current.no'. Schemas are not implemented at line 151 of file wiki.wig
+*** Illegal name 'page5.no'. Schemas are not implemented at line 151 of file wiki.wig
+*** Illegal name 'current.next'. Schemas are not implemented at line 154 of file wiki.wig
+========== COMPILATION WITH bsdwig4 ABORTED
+========== COMPILATION WITH wig10 STARTED
+wiki.wig
+Scanning
+Parsing
+Weeding
+Symbol collecting
+Symbol analysis
+Type checking
+Advanced weeding
+Resource allocation
+..........................................................................
+Code generating
+...........................................................
+Compile succefully. two files were generated.
+wiki.c
+wiki.install
+
+========== COMPILATION WITH wig10 FINISHED
+========== COMPILATION WITH bsdwig18 STARTED
+parse error
+*** syntax error before / at line 71 of file wiki.wig
+*** compilation terminated
+========== COMPILATION WITH bsdwig18 ABORTED
+========== COMPILATION WITH bsdperfectwig STARTED
+parse error
+*** syntax error before name at line 62 of file wiki.wig
+*** compilation terminated
+========== COMPILATION WITH bsdperfectwig ABORTED
+
+BENCHMARK startrek ./group07 startrek
+========== COMPILATION WITH bsdwig4 STARTED
+>> Compiling "startrek.wig":
+>> Parsing...
+>> Weeding...
+>> Generating symbol table...
+>> Type checking...
+>> Code generation...
+>> Compilation of "startrek.wig" done!
+>> Creating install file "startrek.install".
+>> Install file "startrek.install" done!
+========== COMPILATION WITH bsdwig4 FINISHED
+========== COMPILATION WITH wig10 STARTED
+startrek.wig
+Scanning
+Parsing
+wig10.parser.ParserException: [45,31] expecting: '</html>', '<', '</', '<[', meta, whatever
+========== COMPILATION WITH wig10 ABORTED
+========== COMPILATION WITH bsdwig18 STARTED
+parse error
+*** syntax error before / at line 2 of file startrek.wig
+*** compilation terminated
+========== COMPILATION WITH bsdwig18 ABORTED
+========== COMPILATION WITH bsdperfectwig STARTED
+parse error
+*** syntax error before > at line 45 of file startrek.wig
+*** compilation terminated
+========== COMPILATION WITH bsdperfectwig ABORTED
+
+BENCHMARK mailinglist ./group08 mailinglist
+========== COMPILATION WITH bsdwig4 STARTED
+>> Compiling "mailinglist.wig":
+>> Parsing...
+>> Weeding...
+>> Generating symbol table...
+>> Type checking...
+>> Code generation...
+>> Compilation of "mailinglist.wig" done!
+>> Creating install file "mailinglist.install".
+>> Install file "mailinglist.install" done!
+========== COMPILATION WITH bsdwig4 FINISHED
+========== COMPILATION WITH wig10 STARTED
+mailinglist.wig
+Scanning
+Parsing
+Weeding
+Symbol collecting
+Symbol analysis
+Type checking
+Advanced weeding
+Resource allocation
+..............................
+Code generating
+..............................
+Compile succefully. two files were generated.
+mailinglist.c
+mailinglist.install
+
+========== COMPILATION WITH wig10 FINISHED
+========== COMPILATION WITH bsdwig18 STARTED
+
+========== COMPILATION WITH bsdwig18 FINISHED
+========== COMPILATION WITH bsdperfectwig STARTED
+parse error
+*** syntax error before name at line 82 of file mailinglist.wig
+*** compilation terminated
+========== COMPILATION WITH bsdperfectwig ABORTED
+
+BENCHMARK blackjack ./group09 blackjack
+========== COMPILATION WITH bsdwig4 STARTED
+>> Compiling "blackjack.wig":
+>> Parsing...
+>> Weeding...
+>> Generating symbol table...
+>> Type checking...
+>> Code generation...
+>> Compilation of "blackjack.wig" done!
+>> Creating install file "blackjack.install".
+>> Install file "blackjack.install" done!
+========== COMPILATION WITH bsdwig4 FINISHED
+========== COMPILATION WITH wig10 STARTED
+blackjack.wig
+Scanning
+Parsing
+Weeding
+Symbol collecting
+Symbol analysis
+Type checking
+Advanced weeding
+Resource allocation
+........................................................................................................................................................................................................................................................................
+Code generating
+........................................................................................................................................................................................................................................................................
+Compile succefully. two files were generated.
+blackjack.c
+blackjack.install
+
+========== COMPILATION WITH wig10 FINISHED
+========== COMPILATION WITH bsdwig18 STARTED
+parse error
+*** syntax error before . at line 63 of file blackjack.wig
+*** compilation terminated
+========== COMPILATION WITH bsdwig18 ABORTED
+========== COMPILATION WITH bsdperfectwig STARTED
+*** Warning: Cast from type real to int results from the / operation at line 85 of file blackjack.wig
+*** Warning: Cast from type real to int results from the / operation at line 94 of file blackjack.wig
+========== COMPILATION WITH bsdperfectwig FINISHED
+
+BENCHMARK dice ./group10 dice
+========== COMPILATION WITH bsdwig4 STARTED
+>> Compiling "dice.wig":
+>> Parsing...
+>> Weeding...
+>> Generating symbol table...
+>> Type checking...
+>> Code generation...
+>> Compilation of "dice.wig" done!
+>> Creating install file "dice.install".
+>> Install file "dice.install" done!
+========== COMPILATION WITH bsdwig4 FINISHED
+========== COMPILATION WITH wig10 STARTED
+dice.wig
+Scanning
+Parsing
+Weeding
+Symbol collecting
+Symbol analysis
+Type checking
+Advanced weeding
+Resource allocation
+...............................
+Code generating
+...............................
+Compile succefully. two files were generated.
+dice.c
+dice.install
+
+========== COMPILATION WITH wig10 FINISHED
+========== COMPILATION WITH bsdwig18 STARTED
+parse error
+*** syntax error before / at line 1 of file dice.wig
+*** compilation terminated
+========== COMPILATION WITH bsdwig18 ABORTED
+========== COMPILATION WITH bsdperfectwig STARTED
+parse error
+*** syntax error before name at line 30 of file dice.wig
+*** compilation terminated
+========== COMPILATION WITH bsdperfectwig ABORTED
+
+BENCHMARK PopularOper ./group11 PopularOper
+========== COMPILATION WITH bsdwig4 STARTED
+>> Compiling "PopularOper.wig":
+>> Parsing...
+>> Weeding...
+>> Generating symbol table...
+>> Type checking...
+>> Code generation...
+>> Compilation of "PopularOper.wig" done!
+>> Creating install file "PopularOper.install".
+>> Install file "PopularOper.install" done!
+========== COMPILATION WITH bsdwig4 FINISHED
+========== COMPILATION WITH wig10 STARTED
+PopularOper.wig
+Scanning
+Parsing
+Weeding
+Symbol collecting
+Symbol analysis
+Type checking
+Advanced weeding
+Resource allocation
+...........................
+Code generating
+...........................
+Compile succefully. two files were generated.
+PopularOper.c
+PopularOper.install
+
+========== COMPILATION WITH wig10 FINISHED
+========== COMPILATION WITH bsdwig18 STARTED
+
+========== COMPILATION WITH bsdwig18 FINISHED
+========== COMPILATION WITH bsdperfectwig STARTED
+parse error
+*** syntax error before name at line 22 of file PopularOper.wig
+*** compilation terminated
+========== COMPILATION WITH bsdperfectwig ABORTED
+

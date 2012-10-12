@@ -1,0 +1,10 @@
+#!/bin/sh
+
+PATH=$HOME/bin:$JOOSDIR/Bin:$JAVADIR/bin:$WIGDIR/Bin:$PATH
+
+for compiler in aminus-opt aplus-opt javac-opt
+  do
+  echo `totalbytes ${compiler}-classes` ${compiler}
+done
+
+

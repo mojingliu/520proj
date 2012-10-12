@@ -1,0 +1,27 @@
+Benchmark Joos - 
+McMap oF McGill EngiNeering Complex 
+
+
+Due Date: 3 Oct, 2008
+Author: Xiaoxi Dong, Toheed Aslam
+
+Project Description:
+ For this milestone, we implement an Direction for McGill Engineering complex. We have a map for mcgill engineering department, which include the buildings and roads. When user input a starting point and his/her desitination, our benchmark will give the user directions on how they reach the destination. Plus, if it is later than 6pm and earlier than 7am, you will need a valid McGill ID card to access these buildings! Time is taken from System!
+
+Features involved in benchmarks:
+Inheritance and Polymorphism,
+override constructors
+recursion
+avoid the expressions and statements which are not supported in Joos
+and etc.
+
+
+mBuildingNode.java  - Inherits Node class. Represent a building.
+mCrossNode.java  - Inherits Node class. Represent a cross of road, or a cross of road and building entrance.
+mNode.java - Superclass of mCrossNode and mBuildingNode. Has basic informaion of a location, such as name, coordinates and identify 
+
+McMap.java - main class, read from map, computes distances and shortest path and print
+
+map - map of McGill
+
+Note, the information of buildings are not preciese, we make up the numbers according to personal expierence of years of wandering.

@@ -1,0 +1,20 @@
+   /* tuple for creating new message */
+   schema New {
+      string topic;
+      string username;
+      string message;
+   }
+
+   /* a schemata telling us what actions to do (i.e. given the receives of the webpages) */
+   schema Action {
+      string choice;
+      string topic;
+      string username;
+      string message;
+   }
+
+  /* a schema for an error - for return valus of functions */
+  schema Success {
+    bool success;
+    string errorMessage;
+  }

@@ -1,0 +1,19 @@
+WIG Benchmark
+
+Create a on-line appointment reservation system. We used tuples to
+record login information, so you have to login to make an
+appointment. If you fail three times when login, you are rejected by
+the system. In addition, we use tuple to record the appointment
+information and echo back to user.
+
+Wig does not accept password type input box, so I have to use
+javascript to create one on-the-fly; however, if I do not have a input
+box named "password", I can not receive "password", so I have to
+create a input text and use javascript to hide and rename it so that
+my password type input can have the name "password".
+
+We have a password type input box, which echo '*' when you input your
+password.
+
+url:
+http://www.cs.mcgill.ca/~dzhang25/cgi-bin/Appointment18.cgi?Reserve

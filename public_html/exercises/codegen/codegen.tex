@@ -1,0 +1,124 @@
+\input{input/boilerplate.tex}
+
+\aarhus{
+\newpagestyle{dOvsstyle}{dOvs'98 Week 45 \hfil Code generation}{\hfil \thepage}
+}
+
+\mcgill{
+\newpagestyle{dOvsstyle}{COMP 520 \courseterm  \hfil Code generation (\thepage)}{}
+}
+\slidepagestyle{dOvsstyle}
+
+\newcommand{\mm}[1]{$#1$}
+
+\begin{slide*}
+The statement:
+ 
+\begin{scriptsize}
+\begin{alltt}
+     do \mm{S} while (\mm{E})
+\end{alltt}
+\end{scriptsize}
+ 
+has code template:
+ 
+\begin{scriptsize}
+\begin{alltt}
+    start:
+    \mm{S}
+    \mm{E}
+    ifeq stop
+    goto start
+    stop:
+\end{alltt}
+\end{scriptsize}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+The statement:
+ 
+\begin{scriptsize}
+\begin{alltt}
+     for(\mm{I};\mm{E};\mm{N}) \mm{S}
+\end{alltt}
+\end{scriptsize}
+ 
+has code template:
+ 
+\begin{scriptsize}
+\begin{alltt}
+    \mm{I}
+    start:
+    \mm{E}
+    ifeq stop
+    \mm{S}
+    \mm{N}
+    goto start
+    stop:
+\end{alltt}
+\end{scriptsize}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+Regular code for \verb$x==y || x==z$:
+
+\begin{scriptsize}
+\begin{verbatim}
+  iload 0
+  iload 1
+  if_icmeq true
+  ldc_int 0
+  goto stop
+true:
+  ldc_int 1
+stop:
+  dup
+  ifne true1
+  pop
+  iload 0
+  iload 2
+  if_icmpeq true2
+true2:
+  ldc_int 1
+true1:
+stop:  
+\end{verbatim}
+\end{scriptsize}
+If \verb$x==y$ holds, 6 instructions get executed.
+
+\vfil
+\end{slide*}
+
+\begin{slide*}
+Jumping code for \verb$x==y || x==z$:
+
+\begin{scriptsize}
+\begin{verbatim}
+  iload 0
+  iload 1
+  if_icmeq true
+  ldc_int 0
+  goto l'
+true:
+  ldc_int 1
+  goto t
+l':
+  iload 0
+  iload 2
+  if_icmpeq true1
+  ldc_int 0
+  goto f
+true1:
+  ldc_int 1
+  goto t
+\end{verbatim}
+\end{scriptsize}
+If \verb$x==y$ holds, 5 instructions get executed.
+
+\vfil
+\end{slide*}
+ 
+\end{document}
+

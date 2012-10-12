@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Introductory exercises</title>
+</head>
+<body>
+<table border="5" cellpadding="5" cellspacing="5" width="100%">
+  <tbody>
+    <tr>
+      <td><!-- <h1>Week 36</h1> -->
+      <h1>Week 5<br>
+      </h1>
+      <h1>WIG and CGI<br>
+      </h1>
+      <ol>
+        <br>
+        <ol>
+          <li>
+		Every time a CGI script is invoked to produce a dynamic HTML page, the script is executed in
+              a new process. What impact does this have on the way in which state can be persisted over multiple
+              queries or sessions? Can a CGI script persist such state on the stack or heap? If not, why not and
+              what are possible solutions?
+          </li>
+          <li>
+		Educate yourself about programming languages that support the use of <a href="http://en.wikipedia.org/wiki/Continuation">
+              Continuations</a> (or <a href="http://www.intertwingly.net/blog/2005/04/13/Continuations-for-Curmudgeons">here</a>) 
+              and <a href="http://en.wikipedia.org/wiki/Continuation-passing_style">Continuation-passing style</a>.
+              <ul>
+              <li>Which problem do continuations try to solve?
+              <li>What are examples of programming languages supporting continuations?
+              <li>Why may the support for continuations in such languages not be &quot;good enough&quot; in the case where
+                  the conintuation-using code is invoked via CGI? (the answer lies in Question 1)
+              </ul>
+              <b>Note:</b> This question is meant give you some meaningful background knowledge. It is not the kind of
+                 question we would ask in an exam.
+          </li>
+          <li>
+              There are several programming-language features missing from WIG. For example, there are no objects
+              or pointers, only structs of primitive types. Functions can be recursive but sessions cannot. Only
+              sessions can &quot;Show&quot; HTML code (i.e. send HTML to the client and yield), functions cannot.
+              These limitations are by design. In the light of question 1, why do these limitations make the implementation
+              of the WIG language easier than it would have been, had the respective feature been supported?
+          </li>
+        </ol>
+      </ol>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>
+<table border="5" cellpadding="5" cellspacing="5" width="100%">
+  <tbody>
+    <tr>
+      <td>Maintained by Eric Bodden. <a href="index.html">[HOME]</a> </td>
+    </tr>
+  </tbody>
+</table>
+</p>
+</body>
+</html>

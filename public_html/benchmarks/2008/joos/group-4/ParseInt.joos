@@ -1,0 +1,6 @@
+extern public class ParseInt
+{
+    public ParseInt();
+    public int parse(String str);
+
+}

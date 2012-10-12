@@ -1,0 +1,46 @@
+   /* the session that is the forum */
+   session Show(){
+      bool isShowTopic; //false for show topiclist, true for show topic
+      string currentTopic; //the topic to be displayed
+      tuple Action action; //return from topic list
+      tuple Success ok; //return for values
+      arraySize = array_size();
+      isShowTopic = false;
+      currentTopic = "";
+      ok.success = true;
+
+      while(true){
+         //error condition
+         if (ok.success == false){
+           show plug Error[errorMessage = ok.errorMessage];
+           isShowTopic = false;
+           ok.success = true;
+	  } else {
+           //show a topic
+           if (isShowTopic){
+             show plug Topic[messages = getTopic(currentTopic),topic = currentTopic,topic2 = currentTopic] 
+                 receive [action.choice = choice, action.message = message, action.username = uname];
+             if (action.choice == "create"){
+                 ok = newMessage(currentTopic,action \- (choice)); //create new message in current topic
+             }
+             if (action.choice == "topics"){
+                 isShowTopic = false;
+             }
+           //show the topic list
+           } else {
+             show plug TopicList[topics = getTopicList()] 
+                 receive[action.username = uname,action.message = message, action.topic = subject, action.choice = choice];
+             if (action.choice == "create"){
+                ok = newTopic(action \+ (username,message,topic));//create new topic
+             } else {
+                if (action.choice != ""){
+                  isShowTopic = true;
+                  currentTopic = action.choice;
+                }
+             }
+           }
+         }
+      }
+      ;;
+      exit plug Error[errorMessage = "GOOD BYE! (you should never see this)"];
+   }

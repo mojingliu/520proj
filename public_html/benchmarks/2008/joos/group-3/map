@@ -1,0 +1,13 @@
+2 10
+1 McConnell 4 7 1 6 7
+2 Trottier 4 15 1 8 9
+3 Roddick_Gates 0 0 0 5 10
+4 Milton_Gates 5 8 0 6 7 8
+5 Sherbrook_University 5 0 0 3 6
+6 Entrance_McConnell_University 5 6 1 4 5
+7 Entrance_McConnell_Milton 2 4 8 1 4 12
+8 Entrance_Trottier_University 5 14 1 4
+9 Entrance_Trottier_Campus 3 15 1 12
+10 Cross_Lowerfield 0 5 0 5 11 12
+11 Cross_Arts_Building 0 8 0 11 12
+12 Cross_Campus_Milton 3 8 0 9 10 11

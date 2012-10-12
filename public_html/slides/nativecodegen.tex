@@ -1,0 +1,995 @@
+\input{input/boilerplate.tex}
+
+\aarhus{
+\newpagestyle{dOvsstyle}{dOvs'98 Week 48 \hfil Native code generation}{\hfil \thepage}
+}
+
+\mcgill{
+\newpagestyle{dOvsstyle}{COMP 520 \courseterm  \hfil Native code generation (\thepage)}{}
+}
+\slidepagestyle{dOvsstyle}
+
+\begin{slide*}
+\begin{tabbing}
+\aarhus{{\Large\bf Week 48}\\}
+~\\
+{\Huge\bf Native code}\\ ~\\ {\Huge\bf generation}\\
+\end{tabbing}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+JOOS programs are compiled into bytecode.\\
+
+This bytecode can be executed thanks to either:
+
+\begin{itemize}
+\item an interpreter;
+\item an Ahead-Of-Time (AOT) compiler; or
+\item a Just-In-Time (JIT) compiler.
+\end{itemize}
+\vspace*{1em}
+
+Regardless, bytecode must be implicitly or explicitly translated into
+native code suitable for the host architecture before execution.
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Interpreters:
+
+\begin{itemize}
+\item are easier to implement;
+\item can be very portable; but
+\item suffer an inherent inefficiency:
+\end{itemize}
+
+\begin{tt}
+\begin{scriptsize}
+\begin{verbatim}
+
+pc = code.start;
+while(true)
+  {  npc = pc + instruction_length(code[pc]);
+     switch (opcode(code[pc]))
+       {  case ILOAD_1: push(local[1]);
+                        break;
+          case ILOAD:   push(local[code[pc+1]]);
+                        break;
+          case ISTORE:  t = pop();
+                        local[code[pc+1]] = t;
+                        break;
+          case IADD:    t1 = pop();  t2 = pop();
+                        push(t1 + t2);
+                        break;
+          case IFEQ:    t = pop();
+                        if (t == 0) npc = code[pc+1];
+                        break;
+          ...
+       }
+     pc = npc;
+  }
+\end{verbatim}
+\end{scriptsize}
+\end{tt}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Ahead-of-Time compilers:
+
+\begin{itemize}
+\item translate the low-level intermediate form into native code;
+\item create all object files, which are then linked, and finally executed.
+\end{itemize}
+\vspace*{1em}
+
+This is not so useful for Java and JOOS:
+
+\begin{itemize}
+\item method code is fetched as it is needed;
+\item from across the internet; and
+\item from multiple hosts with different native code sets.
+\end{itemize}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Just-in-Time compilers:
+
+\begin{itemize}
+\item merge interpreting with traditional compilation;
+\item have the overall structure of an interpreter; but
+\item method code is handled differently.
+\end{itemize}
+\vspace*{1em}
+
+When a method is invoked for the first time:
+\begin{itemize}
+\item the bytecode is fetched;
+\item it is translated into native code; and
+\item control is given to the newly generated native code.
+\end{itemize}
+When a method is invoked subsequently:
+\begin{itemize}
+\item control is simply given to the previously generated native code.
+\end{itemize}
+
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Features of a JIT compiler:\\
+\begin{itemize}
+\item it must be {\em fast}, because the compilation occurs
+      at run-time (Just-In-Time is really Just-Too-Late);
+\item it does not generate optimized code;
+\item it does not compile every instruction into native code, but relies on the
+runtime library for complex instructions;
+\item it need not compile every method; and
+\item it may concurrently interpret and compile a method (Better-Late-Than-Never).
+\end{itemize}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Problems in generating native code:\\
+
+\begin{itemize}
+\item {\em instruction selection}:\\ choose the correct instructions based
+                                      on the native code instruction set;
+\item {\em memory modelling}:\\ 
+                                   decide where to store variables and how to allocate registers;
+\item {\em method calling}:\\ determine calling conventions; and
+\item {\em branch handling}:\\ allocate branch targets.
+\end{itemize}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Compiling JVM bytecode into VirtualRISC:\\
+
+\begin{itemize}
+\item map the Java local stack into registers and memory;
+\item do instruction selection on the fly;
+\item allocate registers on the fly; and
+\item allocate branch targets on the fly.
+\end{itemize}
+\vspace*{2em}
+
+This is successfully done in the Kaffe system.
+\vfil
+\end{slide*}
+
+\begin{slide*}
+The general algorithm:\\
+
+\begin{itemize}
+\item determine number of slots in frame:\\
+      locals limit + stack limit + \#temps;
+\item find starts of basic blocks;
+\item find local stack height for each bytecode;
+\item emit prologue;
+\item emit native code for each bytecode; and
+\item fix up branches.
+\end{itemize}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+Na\"Ive approach:\\
+
+\begin{itemize}
+\item each local and stack location is mapped to an offset in the native frame; 
+\item each bytecode is translated into a series of native instructions, which
+\item constantly move locations between memory and registers.
+\end{itemize}
+\vspace*{2em}
+
+This is similar to the native code generated by a non-optimizing compiler.
+\vfil
+\end{slide*}
+
+\begin{slide*}
+Example:
+
+\begin{scriptsize}
+\begin{verbatim}
+public void foo() {
+  int a,b,c;
+ 
+  a = 1;
+  b = 13;
+  c = a + b;
+}
+\end{verbatim}
+\end{scriptsize}
+
+Generated bytecode:
+
+\begin{scriptsize}
+\begin{verbatim}
+.method public foo()V
+  .limit locals 4
+  .limit stack 2
+  iconst_1         ; 1
+  istore_1         ; 0
+  ldc 13           ; 1
+  istore_2         ; 0
+  iload_1          ; 1
+  iload_2          ; 2
+  iadd             ; 1
+  istore_3         ; 0
+  return           ; 0
+\end{verbatim}
+\end{scriptsize}
+
+\begin{itemize}
+\item compute frame size = 4 + 2 + 0 = 6;
+\item find stack height for each bytecode;
+\item emit prologue; and
+\item emit native code for each bytecode.
+\end{itemize}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+\renewcommand{\arraystretch}{0.9}
+Assignment of frame slots:
+\vspace*{0.5ex}
+
+\begin{center}
+\begin{scriptsize}
+\begin{tt}
+\begin{tabular}{l@{~~~}l@{~~~}l}
+name & offset & location \\ \\
+a & 1 & [fp-32] \\
+                 b    & 2  &  [fp-36]\\
+                 c    & 3  &  [fp-40]\\
+ \\
+               stack  & 0  &  [fp-44]\\
+               stack  & 1  &  [fp-48]
+\end{tabular}
+\end{tt}
+\end{scriptsize}
+\end{center}
+\vspace*{0.5ex}
+
+Native code generation:
+
+\begin{center}
+\begin{scriptsize}
+\begin{tt}
+\begin{tabular}{l@{~~~}l@{~~~}l}
+        &                    &    save sp,-136,sp\\
+a = 1;             &     iconst\_1       &    mov 1,R1\\
+                   &                    &    st  R1,[fp-44]\\
+                   &     istore\_1       &    ld [fp-44],R1\\
+                   &                    &    st R1,[fp-32]\\
+b = 13;            &     ldc 13      &    mov 13, R1\\
+                   &                    &    st R1,[fp-44]\\
+                   &     istore\_2       &    ld [fp-44], R1\\
+                   &                     &   st R1,[fp-36]\\
+c = a + b;         &     iload\_1        &    ld [fp-32],R1\\
+                   &                    &    st R1,[fp-44]\\
+                   &     iload\_2        &    ld [fp-36],R1\\
+                   &                    &    st R1,[fp-48]\\
+                   &     iadd           &    ld [fp-48],R1\\
+                   &                    &    ld [fp-44],R2\\
+                   &                    &    add R2,R1,R1\\
+                   &                    &    st R1,[fp-44]\\
+                   &     istore\_3       &    ld [fp-44],R1\\
+                   &                    &    st R1,[fp-40]\\
+                   &     return         &    restore\\
+                   &                    &    ret
+\end{tabular}
+\end{tt}
+\end{scriptsize}
+\end{center}
+\vfil
+\renewcommand{\arraystretch}{1}
+\end{slide*}
+ 
+\begin{slide*}
+\renewcommand{\arraystretch}{0.9}
+The na\"ive code is very slow:
+
+\begin{itemize}
+\item many unnecessary loads and stores, which
+\item are the {\em most\/} expensive operations.
+\end{itemize}
+\vspace*{2em}
+
+We wish to replace loads and stores:
+\begin{center}
+\begin{scriptsize}
+\begin{tt}
+\begin{tabular}{l@{~~~}l@{~~~}l}
+c = a + b;      &        iload\_1      &      ld [fp-32],R1\\
+                &                     &      st R1,[fp-44]\\
+                &        iload\_2      &      ld [fp-36],R1\\
+                &                     &      st R1,[fp-48]\\
+                &        iadd         &      ld [fp-48],R1\\
+                &                     &      ld [fp-44],R2\\
+                &                     &      add R2,R1,R1\\
+                &                     &      st R1,[fp-44]\\
+                &        istore\_3     &      ld [fp-44],R1\\
+                &                     &      st R1,[fp-40]
+\end{tabular}
+\end{tt}
+\end{scriptsize}
+\end{center}
+
+by registers operations:
+
+\begin{center}
+\begin{scriptsize}
+\begin{tt}
+\begin{tabular}{l@{~~~}l@{~~~}l}
+c = a + b;       &       iload\_1     &       ld [fp-32],R1\\
+                 &       iload\_2     &       ld [fp-36],R2\\
+                 &       iadd        &       add R1,R2,R1\\
+                 &       istore\_3    &       st R1,[fp-40]
+\end{tabular}
+\end{tt}
+\end{scriptsize}
+\end{center}
+where {\tt R1} and {\tt R2} represent the stack.
+\vfil
+\renewcommand{\arraystretch}{1}
+\end{slide*}
+ 
+\begin{slide*}
+\renewcommand{\arraystretch}{0.9}
+The {\em fixed\/} register allocation scheme:
+\begin{itemize}
+\item assign $m$ registers to the first $m$ locals;
+\item assign $n$ registers to the first $n$ stack locations;
+\item assign $k$ scratch registers; and
+\item spill remaining locals and locations into memory.
+\end{itemize}
+\vspace*{2em}
+Example for 6 registers ($m=n=k=2$):
+\begin{center}
+\begin{scriptsize}
+\begin{tt}
+\begin{tabular}{l@{~~~}l@{~~~}l@{~~~}l}
+name & offset & location & register \\
+\\
+              a    & 1  &           &  R1 \\
+              b    & 2  &           &  R2 \\
+              c    & 3  &  [fp-40]  &   \\
+  \\
+            stack  & 0  &           &  R3 \\
+            stack  & 1  &           &  R4 \\
+  \\
+            scratch& 0  &           &  R5 \\
+            scratch& 1  &           &  R6
+\end{tabular}
+\end{tt}
+\end{scriptsize}
+\end{center}
+\vfil
+\renewcommand{\arraystretch}{1}
+\end{slide*}
+ 
+\begin{slide*}
+\renewcommand{\arraystretch}{0.9}
+Improved native code generation:
+\vspace*{0.5ex}
+ 
+\begin{center}
+\begin{scriptsize}
+\begin{tt}
+\begin{tabular}{l@{~~~}l@{~~~}l}
+                 &                    &      save sp,-136,sp\\
+a = 1;           &       iconst\_1     &      mov 1,R3\\
+                 &       istore\_1     &      mov R3,R1\\
+b = 13;          &       ldc 13    &      mov 13,R3\\
+                 &       istore\_2     &      mov R3,R2\\
+c = a + b;       &       iload\_1      &      mov R1,R3\\
+                 &       iload\_2      &      mov R2,R4\\
+                 &       iadd         &      add R3,R4,R3\\
+                 &       istore\_3     &      st R3,[fp-40]\\
+                 &       return       &      restore\\
+                 &                    &      ret
+\end{tabular}
+\end{tt}
+\end{scriptsize}
+\end{center}
+\vspace*{2em}
+
+This works quite well if:
+\begin{itemize}
+\item the architecture has a large register set;
+\item the stack is small most of the time; and
+\item the first locals are used most frequently.
+\end{itemize}
+\renewcommand{\arraystretch}{1}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Summary of fixed register allocation scheme:
+
+\begin{itemize}
+\item registers are allocated once; and
+\item the allocation does not change within a method.
+\end{itemize}
+
+Advantages:
+\begin{itemize}
+\item it's simple to do the allocation; and
+\item no problems with different control flow paths.
+\end{itemize}
+
+Disadvantages:
+\begin{itemize}
+\item assumes the first locals and stack locations are most important; and
+\item may waste registers within a region of a method.
+\end{itemize}
+
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+The {\em basic block\/} register allocation scheme:
+
+\begin{itemize}
+\item assign frame slots to registers on demand within a basic block; and
+\item update {\em descriptors\/} at each bytecode.
+\end{itemize}
+\vspace*{2em}
+
+The descriptor maps a slot to an element of the set 
+\{$\bot$, {\tt mem}, {\tt R$i$}, {\tt mem\&R$i$}\}:
+\begin{scriptsize}
+\begin{tt}
+\begin{center}
+\begin{tabular}{|l|c|}
+\hline
+a & R2 \\\hline
+b & mem \\\hline
+c & mem\&R4 \\\hline
+s\_0 & R1 \\\hline
+s\_1 & $\bot$ \\\hline
+\end{tabular}
+\end{center}
+\end{tt}
+\end{scriptsize}
+
+We also maintain the inverse register map:
+\begin{scriptsize}
+\begin{tt}
+\begin{center}
+\begin{tabular}{|l|c|}
+\hline
+R1 & s\_0 \\\hline
+R2 & a\\\hline
+R3 & $\bot$\\\hline
+R4 & c\\\hline
+R5 & $\bot$\\\hline
+\end{tabular}
+\end{center}
+\end{tt}
+\end{scriptsize}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+At the beginning of a basic block, all slots are in memory.\\
+
+Basic blocks are merged by control paths:
+\begin{center}
+\hspace*{-3em}\setlength{\unitlength}{2000sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(1237,2000)(2776,-3586)
+\thinlines
+\put(3001,-2461){\line( 2,-3){600}}
+\put(3901,-3361){\line( 2, 3){600}}
+\put(2000,-2130){\makebox(0,0)[lb]{\smash{\SetFigFont{12}{14.4}{\ttdefault}{\mddefault}{\updefault}\begin{scriptsize}\begin{tabular}{|l|c|}
+\hline
+a & R1\\\hline
+b & R2 \\\hline
+\end{tabular}\end{scriptsize}
+}}}
+\put(4351,-2130){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\begin{scriptsize}\begin{tabular}{|l|c|}
+\hline
+a & R3\\\hline
+b & R4 \\\hline
+\end{tabular}\end{scriptsize}}}}
+\put(3220,-3820){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\begin{scriptsize}\begin{tabular}{|l|c|}
+\hline
+a & ?\\\hline
+b & ? \\\hline
+\end{tabular}\end{scriptsize}}}}
+\end{picture}\\
+~\\
+\end{center}
+\vspace*{2em}
+
+Registers must be spilled after basic blocks:
+\begin{center}
+~\\
+\hspace*{-3em}\setlength{\unitlength}{2000sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(1237,2000)(2776,-3586)
+\thinlines
+\put(3001,-2461){\line( 2,-3){600}}
+\put(3901,-3361){\line( 2, 3){600}}
+\put(2000,-1900){\makebox(0,0)[lb]{\smash{\SetFigFont{12}{14.4}{\ttdefault}{\mddefault}{\updefault
+}
+\begin{minipage}{20em}
+\begin{scriptsize}\begin{tabular}{|l|c|}
+\hline
+a & R1\\\hline
+b & R2 \\\hline
+\end{tabular}\\
+\hspace*{-4ex}st R1,[fp-32]\\[-3ex]
+\hspace*{-4ex}st R2,[fp-36]
+\end{scriptsize}
+\end{minipage}
+}}}
+\put(4351,-1870){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}\begin{minipage}{20em}
+\begin{scriptsize}\begin{tabular}{|l|c|}
+\hline
+a & R3\\\hline
+b & R4 \\\hline
+\end{tabular}\\
+st R3,[fp-32]\\[-3ex]
+st R4,[fp-36]
+\end{scriptsize}
+\end{minipage}
+}}}
+\put(2940,-3820){\makebox(0,0)[lb]{\smash{\SetFigFont{8}{14.4}{\ttdefault}{\mddefault}{\updefault}
+\begin{scriptsize}\begin{tabular}{|l|c|}
+\hline
+a & mem\\\hline
+b & mem \\\hline
+\end{tabular}\end{scriptsize}}}}
+\end{picture}
+\end{center}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+\begin{scriptsize}
+\begin{tt}
+\begin{tabular}{l@{~~~~~}l@{~~~}l@{~~~}l}
+ & save sp,-136,sp & {\tiny \begin{tabular}{|l|c|} 
+                     \hline
+                     R1 & $\bot$ \\\hline
+                     R2 & $\bot$ \\\hline
+                     R3 & $\bot$ \\\hline
+                     R4 & $\bot$ \\\hline
+                     R5 & $\bot$ \\\hline
+                     \end{tabular}} &
+                     {\tiny \begin{tabular}{|l|c|}
+                     \hline
+                     a & mem \\\hline
+                     b & mem \\\hline
+                     c & mem \\\hline
+                     s\_0 & $\bot$ \\\hline
+                     s\_1 & $\bot$ \\\hline
+                     \end{tabular}}\\\\
+iconst\_1  & mov 1,R1 & {\tiny \begin{tabular}{|l|c|} 
+                     \hline
+                     R1 & s\_0 \\\hline
+                     R2 & $\bot$ \\\hline
+                     R3 & $\bot$ \\\hline
+                     R4 & $\bot$ \\\hline
+                     R5 & $\bot$ \\\hline
+                     \end{tabular}} &
+                     {\tiny \begin{tabular}{|l|c|}
+                     \hline
+                     a & mem \\\hline
+                     b & mem \\\hline
+                     c & mem \\\hline
+                     s\_0 & R1 \\\hline
+                     s\_1 & $\bot$ \\\hline
+                     \end{tabular}}\\\\
+istore\_1  & mov R1,R2 & {\tiny \begin{tabular}{|l|c|} 
+                     \hline
+                     R1 & $\bot$ \\\hline
+                     R2 & a \\\hline
+                     R3 & $\bot$ \\\hline
+                     R4 & $\bot$ \\\hline
+                     R5 & $\bot$ \\\hline
+                     \end{tabular}} &
+                     {\tiny \begin{tabular}{|l|c|}
+                     \hline
+                     a & R2 \\\hline
+                     b & mem \\\hline
+                     c & mem \\\hline
+                     s\_0 & $\bot$ \\\hline
+                     s\_1 & $\bot$ \\\hline
+                     \end{tabular}}\\\\
+ldc 13  & mov 13,R1 & {\tiny \begin{tabular}{|l|c|} 
+                     \hline
+                     R1 & s\_0 \\\hline
+                     R2 & a \\\hline
+                     R3 & $\bot$ \\\hline
+                     R4 & $\bot$ \\\hline
+                     R5 & $\bot$ \\\hline
+                     \end{tabular}} &
+                     {\tiny \begin{tabular}{|l|c|}
+                     \hline
+                     a & R2 \\\hline
+                     b & mem \\\hline
+                     c & mem \\\hline
+                     s\_0 & R1 \\\hline
+                     s\_1 & $\bot$ \\\hline
+                     \end{tabular}}\\\\
+istore\_2  & mov R1,R3 & {\tiny \begin{tabular}{|l|c|} 
+                     \hline
+                     R1 & $\bot$ \\\hline
+                     R2 & a \\\hline
+                     R3 & b \\\hline
+                     R4 & $\bot$ \\\hline
+                     R5 & $\bot$ \\\hline
+                     \end{tabular}} &
+                     {\tiny \begin{tabular}{|l|l|}
+                     \hline
+                     a & R2 \\\hline
+                     b & R3 \\\hline
+                     c & mem \\\hline
+                     s\_0 & $\bot$ \\\hline
+                     s\_1 & $\bot$ \\\hline
+                     \end{tabular}}
+\end{tabular}
+\end{tt}
+\end{scriptsize}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+\begin{scriptsize}
+\begin{tt}
+\begin{tabular}{l@{~~~~~}l@{~~~}l@{~~~}l}
+iload\_1  & mov R2,R1 & {\tiny \begin{tabular}{|l|c|}
+                     \hline
+                     R1 & s\_0 \\\hline
+                     R2 & a \\\hline
+                     R3 & b \\\hline
+                     R4 & $\bot$ \\\hline
+                     R5 & $\bot$ \\\hline
+                     \end{tabular}} &
+                     {\tiny \begin{tabular}{|l|c|}
+                     \hline
+                     a & R2 \\\hline
+                     b & R3 \\\hline
+                     c & mem \\\hline
+                     s\_0 & R1 \\\hline
+                     s\_1 & $\bot$ \\\hline
+                     \end{tabular}}\\\\
+iload\_2  & mov R3,R4 & {\tiny \begin{tabular}{|l|c|}
+                     \hline
+                     R1 & s\_0 \\\hline
+                     R2 & a \\\hline
+                     R3 & b \\\hline
+                     R4 & s\_1 \\\hline
+                     R5 & $\bot$ \\\hline
+                     \end{tabular}} &
+                     {\tiny \begin{tabular}{|l|c|}
+                     \hline
+                     a & R2 \\\hline
+                     b & R3 \\\hline
+                     c & mem \\\hline
+                     s\_0 & R1 \\\hline
+                     s\_1 & R4 \\\hline
+                     \end{tabular}}\\\\
+iadd  & add R1,R4,R1 & {\tiny \begin{tabular}{|l|c|}
+                     \hline
+                     R1 & s\_0 \\\hline
+                     R2 & a \\\hline
+                     R3 & b \\\hline
+                     R4 & $\bot$ \\\hline
+                     R5 & $\bot$ \\\hline
+                     \end{tabular}} &
+                     {\tiny \begin{tabular}{|l|c|}
+                     \hline
+                     a & R2 \\\hline
+                     b & R3 \\\hline
+                     c & mem \\\hline
+                     s\_0 & R1 \\\hline
+                     s\_1 & $\bot$ \\\hline
+                     \end{tabular}}\\\\
+istore\_3  & st R1,R4 & {\tiny \begin{tabular}{|l|c|}
+                     \hline
+                     R1 & $\bot$ \\\hline
+                     R2 & a \\\hline
+                     R3 & b \\\hline
+                     R4 & c \\\hline
+                     R5 & $\bot$ \\\hline
+                     \end{tabular}} &
+                     {\tiny \begin{tabular}{|l|c|}
+                     \hline
+                     a & R2 \\\hline
+                     b & R3 \\\hline
+                     c & R4 \\\hline
+                     s\_0 & $\bot$ \\\hline
+                     s\_1 & $\bot$ \\\hline
+                     \end{tabular}}\\\\
+&\hspace*{-2ex}\begin{tabular}{l}
+st R2,[fp-32]\\
+st R3,[fp-36]\\
+st R4,[fp-40]
+\end{tabular} & {\tiny \begin{tabular}{|l|c|}
+                     \hline
+                     R1 & $\bot$ \\\hline
+                     R2 & $\bot$ \\\hline
+                     R3 & $\bot$ \\\hline
+                     R4 & $\bot$ \\\hline
+                     R5 & $\bot$ \\\hline
+                     \end{tabular}} &
+                     {\tiny \begin{tabular}{|l|c|}
+                     \hline
+                     a & mem \\\hline
+                     b & mem \\\hline
+                     c & mem \\\hline
+                     s\_0 & $\bot$ \\\hline
+                     s\_1 & $\bot$ \\\hline
+                     \end{tabular}}\vspace{3ex}\\
+ return & restore & & \\
+        & ret & &
+\end{tabular}
+\end{tt}
+\end{scriptsize}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+So far, this is actually no better than the fixed scheme.\\
+
+But if we add the statement:
+
+\begin{scriptsize}
+\begin{verbatim}
+c = c * c + c;
+\end{verbatim}
+\end{scriptsize}
+
+then the fixed scheme and basic block scheme generate:
+
+\begin{scriptsize}
+\begin{verbatim}
+              Fixed            Basic block
+
+iload_3    ld [fp-40],R3       mv R4, R1   
+dup        ld [fp-40],R4       mv R4, R5
+imul       mul R3,R4,R3        mul R1, R5, R1
+iload_3    ld [fp-40],R4       mv R4, R5
+iadd       add R3,R4,R3        add R1, R5, R1
+istore_3   st R3,[fp-40]       mv R1, R4
+\end{verbatim}
+\end{scriptsize}
+
+\vfil
+\end{slide*}
+
+\begin{slide*}
+Summary of basic block register allocation scheme:
+
+\begin{itemize}
+\item registers are allocated on demand; and
+\item slots are kept in registers within a basic block.
+\end{itemize}
+ 
+Advantages:
+\begin{itemize}
+\item registers are not wasted on unused slots; and
+\item less spill code within a basic block.
+\end{itemize}
+ 
+Disadvantages:
+\begin{itemize}
+\item much more complex than the fixed register allocation scheme;
+\item registers must be spilled at the end of a basic block; and
+\item we may spill locals that are never needed.
+\end{itemize}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+\renewcommand{\arraystretch}{0.9}
+We can optimize further:\\
+
+\begin{center}
+\begin{scriptsize}
+\begin{tt}
+\begin{tabular}{l@{~~~~~~~}l}
+     save sp,-136,sp    &    save sp,-136,sp\\
+ \\
+     mov 1,R1           &    mov 1,R2\\
+     mov R1,R2\\
+ \\
+     mov 13,R1          &    mov 13,R3\\
+     mov R1,R3\\
+ \\
+     mov R2,R1            \\
+     mov R3,R4\\
+     add R1,R4,R1       &    add R2,R3,R1\\
+     st R1,[fp-40]      &    st R1,[fp-40]\\
+ \\
+     restore            &    restore\\
+     ret                &    ret
+\end{tabular}
+\end{tt}
+\end{scriptsize}
+\end{center}
+\vspace*{2em}
+
+by not explicitly modelling the stack.
+\renewcommand{\arraystretch}{1}
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Unfortunately, this cannot be done safely on the fly by a peephole optimizer.\\
+
+The optimization:
+\newcommand{\LONG}{\mbox{$\Longrightarrow$}}
+\begin{tt}
+\begin{tabbing}
+XXXXXXXXXXXXX\=XXXXXX\=\kill
+\\
+mov 1,R3  \>   $\Longrightarrow$ \>   mov 1,R1 \\
+mov R3,R1 \\
+
+\end{tabbing}
+\end{tt}
+is unsound if {\tt R3} is used in a later instruction:
+\begin{tt}
+\begin{tabbing}
+XXXXXXXXXXXXX\=XXXXXX\=\kill
+\\
+mov 1,R3  \> $\Longrightarrow$ \>  mov 1,R1 \\
+mov R3,R1 \\
+$\vdots$   \>\>               $\vdots$\\
+mov R3,R4   \>\>        mov R3,R4\\
+ 
+\end{tabbing}
+\end{tt}
+Such optimizations require dataflow analysis.
+\vfil
+\end{slide*}
+ 
+\begin{slide*}
+Invoking methods in bytecode:
+\begin{itemize}
+\item evaluate each argument leaving results on the stack; and
+\item emit {\tt invokevirtual} instruction.
+\end{itemize}
+\vspace*{2em}
+
+Invoking methods in native code:
+\begin{itemize}
+\item call library routine {\tt soft\_get\_method\_code} to perform the method lookup;
+\item generate code to load arguments into registers; and
+\item branch to the resolved address.
+\end{itemize}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+Consider a method invocation:\\
+
+\begin{verbatim}
+c = t.foo(a,b);
+
+\end{verbatim}
+
+where the memory map is:\\
+\begin{center}
+\begin{scriptsize}
+\begin{tt}
+\begin{tabular}{l@{~~~}l@{~~~}l@{~~~}l}
+name & offset & location & register\\ \\
+a & 1 & [fp-60] & R3 \\
+b & 2 & [fp-56] & R4 \\
+c & 3 & [fp-52] & \\
+t & 4 & [fp-48] & R2\\
+stack & 0 & [fp-36] & R1 \\
+stack & 1 & [fp-40] & R5 \\
+stack & 2 & [fp-44] & R6 \\
+scratch & 0 & [fp-32] & R7\\
+scratch & 1 & [fp-28] & R8
+\end{tabular}
+\end{tt}
+\end{scriptsize}
+\end{center}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+\renewcommand{\arraystretch}{0.9}
+Generating native code:
+\begin{center}
+\begin{scriptsize}
+\begin{tt}
+\begin{tabular}{l@{~~~~~~}l}
+ aload\_4         &        mov R2,R1\\
+ iload\_1         &        mov R3,R5\\
+ iload\_2         &        mov R4,R6\\
+ invokevirtual foo & \verb"//" soft call to get address \\
+               &          ld R7,[R2+4]\\
+               &          ld R8,[R7+52]\\
+               &          \verb"//" spill all registers \\
+               &          st R3,[fp-60]\\
+               &          st R4,[fp-56]\\
+               &          st R2,[fp-48]\\
+               &          st R6,[fp-44]\\
+               &          st R5,[fp-40]\\
+               &          st R1,[fp-36]\\
+               &          st R7,[fp-32]\\
+               &          st R8,[fp-28]\\
+               &          \verb"//" make call \\
+               &          mov R8,R0\\
+               &          call soft\_get\_method\_code\\
+               &          \verb"//" result is in R0 \\
+               &          \verb"//" put args in R2, R1, and R0\\
+               &          ld R2,[fp-44]  \verb"//" R2 := stack\_2\\
+               &          ld R1,[fp-40]  \verb"//" R1 := stack\_1 \\
+               &          st R0,[fp-32]  \verb"//" spill result \\
+               &          ld R0,[fp-36]  \verb"//" R0 := stack\_0 \\
+               &          ld R4,[fp-32]  \verb"//" reload result \\
+               &          jmp [R4]  \verb"//" call method 
+\end{tabular}
+\end{tt}
+\end{scriptsize}
+\end{center}
+\begin{itemize}
+\item this is long and costly; and
+\item the lack of dataflow analysis causes massive spills within basic blocks.
+\end{itemize}
+\renewcommand{\arraystretch}{1}
+\vfil
+\end{slide*}
+
+\begin{slide*}
+Handling branches:
+\begin{itemize}
+\item the only problem is that the target
+  address is not known;
+\item assemblers normally handle this; but
+\item the JIT compiler produces binary code directly in memory.
+\end{itemize}
+\renewcommand{\arraystretch}{0.9}
+
+Generating native code:
+\begin{center}
+\begin{scriptsize}
+\begin{tt}
+\begin{tabular}{l@{~~~}l@{~~~}l}
+if (a < b)     &        iload\_1        &   ld R1,[fp-44] \\
+               &        iload\_2        &   ld R2,[fp-48] \\
+               &        if\_icmpge 17   &   sub R1,R2,R3        \\
+               &                       &   bge ??
+\end{tabular}
+\end{tt}
+\end{scriptsize}
+\end{center}
+How to compute the branch targets:
+\begin{itemize}
+\item previously encountered branch targets are already known;
+\item keep unresolved branches in a table; and
+\item patch targets when the bytecode is eventually reached.
+\end{itemize}
+\renewcommand{\arraystretch}{1}
+\vfil
+\end{slide*}
+
+\end{document}
+

@@ -1,0 +1,42 @@
+This is a quiz application which ideally should be played by the examiner!
+
+The input file provided contains all the answers and can be used to quickly run
+the quiz and have a look at the output.
+
+Locations for the database file (the first one should work fine)
+
+	http://www.cs.mcgill.ca/~vparma/520_joos_benchmark/database.txt
+	file:///home/2007/vparma/cs520/group-2/joos/benchmark/database.txt
+	file:///home/vic/cs520/group-2/joos/benchmark/database.txt
+
+To run easily
+  cat defaultURL - | java Quiz
+
+Format of the database file
+
+	type of question {1 for free answer, 2 for multiple choice}
+	{if type 1}
+	question
+	answer
+	{if type 2}
+	question
+	choice 1
+	choice 2
+	choice 3
+	choice 4
+	answer {a, b, c, or d}
+
+Misc
+	grep ';' *.java | wc
+
+What this benchmark tests 
+  This benchmark tests the following aspects of Joos :
+   - 'for' loops
+   - 'while' loops
+   - inheritance
+   - abstract class/functions
+   - Virtual call
+   - JoosIO (read/write)
+   - JoosURL (local/remote)
+   - Unary increment
+   - Comments

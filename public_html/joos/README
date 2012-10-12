@@ -1,0 +1,21 @@
+
+=1. Folders ====================================================================
+
+joos/lib/ contains the JOOS interface to Java class library.
+
+joos/extern/ contains JOOS extern declarations
+
+programs/ contains example JOOS programs.  There is some ancient
+duplication between library classes, use diff if you are not sure...
+
+a-/ contains the a- compiler
+
+jjoos-scc-2/ contains the sablecc 2 joos compiler
+
+jjoos-scc-3/ contains the sablecc 3 joos compiler
+
+      
+    
+
+ 
+    

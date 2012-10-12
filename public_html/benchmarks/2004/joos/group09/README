@@ -1,0 +1,49 @@
+CS 520, Compiler Design -- GROUP 09
+Deliverable 2, JOOS Benchmark
+Louis Kearns <louis.kearns@cs.mcgill.ca>
+Kacper Wysocki <kwysoc@cs.mcgill.ca>
+Modified: October 1st, 2004
+
+Files Included in group09.jar 
+
+09Benchark/ 
+	LinkedList.class
+	LinkedList.j
+	LinkedList.java
+	ListNode.class
+	ListNode.j
+	ListNode.java
+	Sieve.class	   : contains the main() method.
+	Sieve.j
+	Sieve.java
+	SieveThread.class
+	SieveThread.j
+	SieveThread.java
+	UsableThread.joos
+	in1		   : contains the application's sample input.
+	out1 		   : contains the applications expected output.
+	mylib/
+		UsableThread.class 	
+                   	   : contains an revised version of
+		             JoosThread.UsableThread.java
+
+This application takes an integer from standard input, and outputs all
+primes up to that given integer to standard output. It does this using
+a multithreaded rendition of the "Sieve of Eratosthenes". This is by
+no means any more efficient than Eratosthenes' original
+algorithm. However, it does provide a more rigorous benchmark for
+testing out our JOOS compilers.
+
+Our package contains our own extern JOOS file (UsableThread.joos),
+since JoosThread lacked the start() method, while the Thread lacked
+the join() method.
+
+In order for the program to be run correctly, the UsableThread.java
+file must be compiled with the command: "java mylib/UsableThread.java"
+if the class file is not already present. Once this is done, the other
+.java and .joos files can be compiled with joosc, and the -j files
+produced can be compiled with jasmin. Once this has been done, you can
+finally run the program by issuing the command: "java Sieve".
+
+All coding was done as a team in the Trottier labs. Any questions can
+be directed to Kacper or Louis via the email addresses listed above.

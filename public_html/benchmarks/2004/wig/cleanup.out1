@@ -1,0 +1,24 @@
+BENCHMARK shop ./group01 shop
+
+BENCHMARK TicTacToeT ./group02 TicTacToeT
+
+BENCHMARK puzzle ./group03 puzzle
+
+BENCHMARK tictactoe ./group04 tictactoe
+
+BENCHMARK mydate ./group05-mydate mydate
+
+BENCHMARK todo ./group05-todo todo
+
+BENCHMARK wiki ./group06 wiki
+
+BENCHMARK startrek ./group07 startrek
+
+BENCHMARK mailinglist ./group08 mailinglist
+
+BENCHMARK blackjack ./group09 blackjack
+
+BENCHMARK dice ./group10 dice
+
+BENCHMARK PopularOper ./group11 PopularOper
+

@@ -1,0 +1,14 @@
+This program just adds all the positive integers given on the command line.  
+
+Yes, that's not funny.  The code is, though.  Well, at least face-palm worthy.
+
+Compiled with the A+ JOOS compiler.
+
+Ran on socs-16: $ java -version
+java version "1.6.0_06"
+Java(TM) SE Runtime Environment (build 1.6.0_06-b02)
+Java HotSpot(TM) Client VM (build 10.0-b22, mixed mode, sharing)
+
+in1 checked with math, in2 checked with perl:
+perl -e '$a = 0; foreach (<STDIN>) { $a += $_; } print $a . "\n";'
+

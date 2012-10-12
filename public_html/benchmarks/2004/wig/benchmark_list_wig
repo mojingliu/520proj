@@ -1,0 +1,12 @@
+shop	./group01	shop
+TicTacToeT	./group02	TicTacToeT
+puzzle	./group03	puzzle
+tictactoe	./group04	tictactoe
+mydate	./group05-mydate	mydate
+todo	./group05-todo	todo
+wiki	./group06	wiki
+startrek	./group07	startrek
+mailinglist	./group08	mailinglist
+blackjack	./group09	blackjack
+dice	./group10	dice
+PopularOper	./group11	PopularOper

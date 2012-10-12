@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# wig10 - runs the WIG10 compiler
+#       - WIGDIR must be set
+#
+
+export CLASSPATH=.:$WIGDIR/10/wig10-classes.jar:${CLASSPATH}
+java wig10.Compiler $* 

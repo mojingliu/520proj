@@ -1,0 +1,12 @@
+To get the railroad diagrams in scanparse.tex to work, do:
+
+cd rail/
+make
+cd ..
+latex scanparse.tex
+rail/rail scanparse
+latex scanparse.tex
+make scanparse.pdf
+make scanparse-4.pdf
+
+If you feel adventurous, just incorporate this into the Makefile.

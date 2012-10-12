@@ -1,0 +1,8 @@
+WIG Milestone
+Group 1
+
+A simple link posting/ranking service (similar to Digg or Reddit) that keeps track of 5 links and their score.  When a new link is added, it replaces the current lowest ranked link.  If there are multiple links with the same score, the first link encountered will be replaced.
+
+There is no error checking of subbmitted links so please play nice.
+
+URL : http://www.cs.mcgill.ca/~twalla1/cgi-bin/wigg.pl?list

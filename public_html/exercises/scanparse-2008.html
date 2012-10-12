@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Introductory exercises</title>
+</head>
+<body>
+<table border="5" cellpadding="5" cellspacing="5" width="100%">
+  <tbody>
+    <tr>
+      <td><!-- <h1>Week 36</h1> -->
+      <h1>Week 2<br>
+      </h1>
+      <h1>Scanning and parsing and the need for look-ahead<br>
+      </h1>
+      <ol>
+        <li>An LR(<span style="font-style: italic;">k</span>) parser
+has a fixed look-ahead of length <span style="font-style: italic;">k</span>.
+As discussed in class, a scanner uses a stack to perform a look-ahead
+of arbitrary length, yet a scanner is weaker than an LR(<span
+ style="font-style: italic;">k</span>)<span style="font-style: italic;">
+          </span>parser in the sense that it cannot keep track of a
+stack of <span style="font-style: italic;">states</span> and therefore
+cannot accept expressions that have a recursive structure (like all
+expressions with balanced parantheses).<br>
+          <br>
+Some parser generators are scanner-less, i.e. they attempt to do the
+scanner's job of breaking text up into tokens directly within the
+grammar, so that only one single grammar specification needs to be
+built (and no definition of a scanner). Most parser generators for
+scanner-less parsers use a generalized version of LR, called GLR, which
+is very involved and uses back-tracking to make use of a larger
+lookahead. Give an example of why it may be problematic to produce a
+scanner-less LR(1) parser or even a scanner-less LR(<span
+ style="font-style: italic;">k</span>) parser for <span
+ style="font-style: italic;">any</span> konstant k.</li>
+        <li>Construct LR(1) parse table for the following LR(1)
+grammar, where the letters <tt>= * a $</tt> (shown in red) are tokens
+(i.e.
+terminals):<br>
+          <pre>S' -&gt; S<span style="color: rgb(255, 0, 0);">$</span><br>S  -&gt; L<span
+ style="color: rgb(255, 0, 0);">=</span>R | R<br>L  -&gt; <span
+ style="color: rgb(255, 0, 0);">*</span>R | <span
+ style="color: rgb(255, 0, 0);">a</span><br>R  -&gt; L</pre>
+        </li>
+        <li>Why is the grammar shown in (2.) not an LR(0) grammar?<br>
+        </li>
+      </ol>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>
+<table border="5" cellpadding="5" cellspacing="5" width="100%">
+  <tbody>
+    <tr>
+      <td>Maintained by Eric Bodden. <a href="index.html">[HOME]</a> </td>
+    </tr>
+  </tbody>
+</table>
+</p>
+</body>
+</html>

@@ -1,0 +1,31 @@
+============
+BENCHMARK 02
+------------
+==== joosing --verbose f:\cygnus-dirs\cs400\JOOS-J/Testing/Benchmarks/Fall99-dev/02Benchmark/*.j[oa]*[sa]
+Building syntax tree:
+ - Parsing f:\cygnus-dirs\cs400\JOOS-J/Extern/appletlib.joos... done
+ - Parsing f:\cygnus-dirs\cs400\JOOS-J/Extern/awtlib.joos... done
+ - Parsing f:\cygnus-dirs\cs400\JOOS-J/Extern/javalib.joos... done
+ - Parsing f:\cygnus-dirs\cs400\JOOS-J/Extern/jooslib.joos... done
+ - Parsing f:\cygnus-dirs\cs400\JOOS-J/Extern/netlib.joos... done
+ - Parsing f:\cygnus-dirs\cs400\JOOS-J/Testing/Benchmarks/Fall99-dev/02Benchmark/*.j[oa]*[sa]...============
+BENCHMARK 03
+------------
+==== joosing --verbose f:\cygnus-dirs\cs400\JOOS-J/Testing/Benchmarks/Fall99-dev/03Benchmark/*.j[oa]*[sa]
+Building syntax tree:
+ - Parsing f:\cygnus-dirs\cs400\JOOS-J/Extern/appletlib.joos... done
+ - Parsing f:\cygnus-dirs\cs400\JOOS-J/Extern/awtlib.joos... done
+ - Parsing f:\cygnus-dirs\cs400\JOOS-J/Extern/javalib.joos... done
+ - Parsing f:\cygnus-dirs\cs400\JOOS-J/Extern/jooslib.joos... done
+ - Parsing f:\cygnus-dirs\cs400\JOOS-J/Extern/netlib.joos... done
+ - Parsing f:\cygnus-dirs\cs400\JOOS-J/Testing/Benchmarks/Fall99-dev/03Benchmark/*.j[oa]*[sa]...============
+BENCHMARK 04
+------------
+==== joosing --verbose f:\cygnus-dirs\cs400\JOOS-J/Testing/Benchmarks/Fall99-dev/04Benchmark/*.j[oa]*[sa]
+Building syntax tree:
+ - Parsing f:\cygnus-dirs\cs400\JOOS-J/Extern/appletlib.joos... done
+ - Parsing f:\cygnus-dirs\cs400\JOOS-J/Extern/awtlib.joos... done
+ - Parsing f:\cygnus-dirs\cs400\JOOS-J/Extern/javalib.joos... done
+ - Parsing f:\cygnus-dirs\cs400\JOOS-J/Extern/jooslib.joos...============
+BENCHMARK 05
+------------

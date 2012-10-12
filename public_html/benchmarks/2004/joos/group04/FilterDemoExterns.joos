@@ -1,0 +1,33 @@
+// -----------------------------------------------------------------
+// The following external classes have been written in Java and
+//   compiled to make a directory of class files that can be
+//   accessed from JOOS programs.
+// -----------------------------------------------------------------
+
+extern public class JoosSystem2 in "imagelib" {
+  public JoosSystem2();
+  public InputStream getIn();  
+}
+
+extern public class InputStream in "java.io" {
+  public InputStream();
+}
+
+extern public class BufferedImage in "java.awt.image" {
+  public BufferedImage(int width, int height, int imagetype);
+  public int getWidth();
+  public int getHeight();
+  public int getRGB(int x, int y);
+  public void setRGB(int x, int y, int rgb);
+}
+
+extern public class BufferedImageConsts in "imagelib" {
+  public BufferedImageConsts();
+  public int getINT_RGB();
+}
+
+extern public class JoosImageIO in "imagelib" {
+  public JoosImageIO();
+  public BufferedImage read(InputStream input);
+  public boolean writePNGToStandardOut(BufferedImage im);
+}                                                        

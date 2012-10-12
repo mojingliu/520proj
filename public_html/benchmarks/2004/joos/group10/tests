@@ -1,0 +1,5 @@
+./run
+rm out1
+rm out2
+java Main <in1 >out1
+java Main <out1 >out2

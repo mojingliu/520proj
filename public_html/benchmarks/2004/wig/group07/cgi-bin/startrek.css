@@ -1,0 +1,22 @@
+body {
+	font-size: 10pt;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	text-align: justify;
+	background-color: Black;
+	color: White;
+	background: url(../img/back.gif);
+}
+
+a, a.hover, a.visited {
+	text-decoration: none;
+	color: #1E90FF;
+}
+
+h2 {
+	font-size: 14pt;
+	color: Red;
+}
+
+h3 {
+	font-size: 12pt;
+}

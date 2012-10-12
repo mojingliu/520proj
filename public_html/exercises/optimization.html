@@ -1,0 +1,75 @@
+<title>Exercises on optimization</title>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+<h1>Week 10</h1>
+<h1>Exercises on optimization</h1>
+<ol>
+
+<li>Consider the following two proposals for new peephole patterns.
+Are they sound? How would those that are sound look as C-code?
+Would they ever be relevant?
+<p>
+<ul>
+<li>
+Replace
+
+<pre>
+ldc_string "..."
+dup
+ifnull L
+</pre>
+by
+<pre>
+ldc_string "..."
+</pre>
+<p>
+<li>Replace
+<pre>
+return
+&lt;&lt;anything&gt;&gt;
+</pre>
+by
+<pre>
+return
+</pre>
+</ul>
+<p>
+<i>Motivation</i>: get you thinking about the upcoming peephole
+contest deliverable.
+<p>
+
+<li>Study the contents of the WIG run-time libraries in
+<a href="../wig/lib/"><code>wig/lib</code></a>.  How could you adapt
+or port them for use by your own generated code?
+<p>
+<i>Motivation</i>: you may well want to implement such a library for
+programs compiled by your own WIG compiler.
+<p>
+
+<li>Outline a strategy for WIG code generation.  What parts are
+tricky?
+<p>
+<i>Motivation</i>: codegen is the final phase left for you to
+implement in your WIG compiler.
+<p>
+
+<li>What kinds of optimizations might be relevant for WIG programs?  Why?
+<p>
+<i>Motivation</i>: domain-specific programming languages generally
+present novel and interesting optimization opportunities.
+
+<li>(Optional.) Study the code for optimizing JOOS programs.  What
+parts are unclear?
+<p>
+<i>Motivation</i>: help prepare you for the upcoming peephole contest deliverable.
+<p>
+</ol>
+<p>
+</td></tr></table>
+<p>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+Maintained by Christopher J. F. Pickett.
+<a href="../index.html">[HOME]</a>
+</td></tr>
+</table>

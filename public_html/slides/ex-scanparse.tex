@@ -1,0 +1,105 @@
+\input{input/boilerplate.tex}
+
+\aarhus{
+\newpagestyle{dOvsstyle}{dOvs'98 Week 39 \hfil Abstract syntax trees}{\hfil \thepage}
+}
+
+\mcgill{
+\newpagestyle{dOvsstyle}{COMP 520 \courseterm  \hfil Solution to Exercises for
+week 2 (\thepage)}{} }
+\slidepagestyle{dOvsstyle}
+
+\newcommand{\lrinfo}[2]{
+\hspace*{-0.36cm}
+[ \begin{minipage}[b]{1.2cm}#1\end{minipage}
+\begin{minipage}[b]{4mm}\begin{tabular}{r}#2\end{tabular}\end{minipage} ]
+}
+
+\begin{slide*}
+\footnotesize
+\begin{tabular}{p{7mm}lll}
+$S_0$ & \lrinfo{S'\RA.S}{\$} & \lrinfo{S\RA.L=R}{\$} & \lrinfo{S\RA.R}{\$}\\ 
+      & \lrinfo{L\RA.*R}{=} & \lrinfo{L\RA.a}{=} & \lrinfo{R\RA.L}{\$}\\ 
+      & \lrinfo{L\RA.*R}{\$} & \lrinfo{L\RA.a}{\$}\\
+\hline
+$S_1$ & \lrinfo{S'\RA S.}{\$}\\
+\hline
+$S_2$ & \lrinfo{S\RA L.=R}{\$} & \lrinfo{R\RA L.}{\$} &
+\hspace*{-5mm}
+
+{\scriptsize
+$
+\begin{cases} 
+\text{shift} & \text{for}=\\
+\text{reduce} & \text{for}~\$
+\end{cases}
+$
+}
+
+\\
+\hline
+$S_3$ & \lrinfo{S\RA R.}{\$}\\
+\hline
+$S_4$ & \lrinfo{L\RA*.R}{=} & \lrinfo{R\RA.L}{=} & \lrinfo{L\RA.*R}{=}\\ 
+      & \lrinfo{L\RA.a}{=} & \lrinfo{L\RA*.R}{\$} & \lrinfo{R\RA.L}{\$}\\ 
+      & \lrinfo{L\RA.*R}{\$} & \lrinfo{L\RA.a}{\$}\\
+\hline
+$S_5$ & \lrinfo{L\RA a.}{=} & \lrinfo{L\RA a.}{\$}\\
+\hline
+$S_6$ & \lrinfo{S\RA L=.R}{\$} & \lrinfo{R\RA.L}{\$} & \lrinfo{L\RA.*R}{\$}\\
+      & \lrinfo{L\RA.a}{\$}\\
+\hline
+$S_7$ & \lrinfo{L\RA*R.}{=} & \lrinfo{L\RA*R.}{\$}\\
+\hline
+$S_8$ & \lrinfo{R\RA L.}{=} & \lrinfo{R\RA L.}{\$}\\
+\hline
+$S_9$ & \lrinfo{S\RA L=R.}{\$}\\
+\hline
+$S_{10}$ & \lrinfo{R\RA L.}{\$}\\
+\hline
+$S_{11}$ & \lrinfo{L\RA*.R}{\$} & \lrinfo{R\RA.L}{\$} & \lrinfo{L\RA.*R}{\$}\\ 
+         & \lrinfo{L\RA.a}{\$}\\
+\hline
+$S_{12}$ & \lrinfo{L\RA a.}{\$}\\
+\hline
+$S_{13}$ & \lrinfo{L\RA *R.}{\$}\\
+\end{tabular}
+ 
+\end{slide*} 
+
+\begin{slide*}
+\footnotesize
+LR(1) table for:
+
+\begin{tabular}{lcll}
+S' &\RA& S &(0)\\
+S &\RA& L\texttt{=}R $\mid$ R &(1,2)\\
+L &\RA& \texttt{*}R $\mid$ \texttt{a} &(3,4)\\
+R &\RA& L &(5)\\ 
+\end{tabular}
+
+\begin{tabular}{l|cccc|ccc}
+      & * & = & a & \$ & S & L & R\\
+\hline
+$S_0$ & s4 && s5 && g1 & g2 & g3\\          
+$S_1$ &&&&a\\
+$S_2$ &&s6&&r5\\
+$S_3$ &&&&r2\\
+$S_4$ &s4&&s5&&&g8&g7\\
+$S_5$ &&r4&&r4\\
+$S_6$ &s11&&s12&&&g10&g9\\
+$S_7$ &&r3&&r3\\
+$S_8$ &&r5&&r5\\
+$S_9$ &&&&r1\\
+$S_{10}$ &&&&r5\\
+$S_{11}$ &s11&&s12&&&g10&g13\\
+$S_{12}$ &&&&r4\\
+$S_{13}$ &&&&r3\\
+\end{tabular}
+
+\end{slide*} 
+
+
+
+\end{document}
+

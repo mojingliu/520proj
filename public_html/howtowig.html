@@ -1,0 +1,301 @@
+<title>How to compile and run WIG services</title>
+<table border="5" cellpadding="5" cellspacing="5" width="100%">
+  <tbody>
+  <tr>
+    <td>
+      <h1>How to compile and run <img src="images/wig32.gif"> services</h1>
+
+      There are five sample WIG compilers available:
+      <p>      
+
+      <ul>
+      <li> <code>wig4</code> and <code>wig18</code>, written in C by
+      groups at the University of Aarhus in fall 1998;
+
+      <li> <code>wig10</code>, written in Java using SableCC at McGill
+      in fall 1999;
+      
+      <li> <code>pwig</code> (perfectwig), written in C at McGill in
+      fall 2001; and
+ 
+      <li> <code>lkwig</code> (Louis & Kacper's WIG), written in C at
+      McGill in fall 2004.
+      </ul>
+      <p>
+
+      You will probably find that <code>wig10</code>,
+      <code>wig18</code>, and <code>pwig</code> are most stable, but
+      <code>lkwig</code> also looks fairly promising.
+      <code>wig18</code> is interesting because it generates stack
+      code, and <code>lkwig</code> is interesting because it generates
+      Perl.
+      <p>
+
+      Currently there are binary versions for FreeBSD, Linux, and
+      Solaris available, with wrapper scripts that attempt to select
+      the right one automatically for you.  We have the source code
+      and can possibly compile a version for a different system if it
+      would help you.  The <code>wig10</code> compiler, being written
+      in Java, will run anywhere that Java runs.
+      <p>
+
+      In order to actually compile CGI scripts from the generated
+      C-based WIG services, required for all compilers except
+      <code>lkwig</code>, you will need to log in to
+      <code>freebsd.cs.mcgill.ca</code>, the webserver that hosts
+      <code>www.cs.mcgill.ca</code>.  Compiled C binaries must target
+      that machine, and while you may have some luck on other FreeBSD
+      lab machines, there have been reports of incompatibilities.
+      
+      <h2>1. Making sure prerequisites are installed</h2>
+
+      Before you can use these instructions, you should first follow
+      the instructions on <a href="howtosvn.html">using Subversion in
+      this class</a> and <a href="howtojoosjava.html">setting up your
+      environment for JOOS programs</a>.  This will ensure that Java
+      1.5 is on your PATH and that you have a local copy of the
+      example WIG binaries.
+      <p>
+
+      <h2>2. Setting up your environment</h2>
+
+      As usual, we need to set up some additional environment variables:
+      <p>
+
+      <h3>WIGDIR</h3>
+
+      Assuming you have checked out the public_html directory from the
+      class SVN repository to <code>$HOME/cs520/public_html</code>,
+      add the following:
+      <p>
+
+      <pre>
+      setenv WIGDIR $HOME/cs520/public_html/wig
+      </pre>
+      <p>
+
+      or
+      <p>
+
+      <pre>
+      export WIGDIR=$HOME/cs520/public_html/wig  
+      </pre>
+      <p>
+
+      to your <code>.cshrc</code> or <code>.bash_profile</code> for
+      <code>tcsh</code> or <code>bash</code> respectively.
+      
+      <h3>PATH</h3>
+
+      We want to be able to execute the WIG compiler binaries from
+      anywhere.  Add the following:
+      <p>
+
+      <pre>
+      setenv PATH $WIGDIR/bin:$PATH
+      </pre>
+      <p>
+
+      or
+      <p>      
+
+      <pre>
+      export PATH=$WIGDIR/bin:$PATH
+      </pre>
+      <p>
+
+      to your <code>.cshrc</code> or <code>.bash_profile</code> if you
+      are using <code>tcsh</code> or <code>bash</code> respectively.
+      <p>
+
+      Note that we can possibly make binaries for other platforms
+      available, just send your request to your instructor or TA.
+
+      <h3>cgi-bin directory</h3>
+
+      Finally, in order for WIG services to execute within a browser
+      they need to be placed in a sub-directory of
+      <code>$HOME/public_html/</code> on the SOCS machines.  The WIG
+      installation scripts assume that this directory has the
+      conventional name <code>cgi-bin</code>.
+
+      <pre>
+      $ cd $HOME
+      $ mkdir -p public_html/cgi-bin
+      $ chmod 711 public_html/
+      $ chmod 711 public_html/cgi-bin
+      </pre>
+
+      You can access this directory by pointing your web browser at the URL
+      <code>http://www.cs.mcgill.ca/~`whoami`/cgi-bin/</code>.
+
+      <h2>3. Compiling your WIG service </h2>
+
+      <ul>
+
+      <li> Create or find a WIG service, making sure it has a
+      <code>.wig</code> extension.  Assume your service is called <code>foo.wig</code>.
+      <p>
+
+      <li>Compile <code>foo.wig</code> with some WIG compiler using
+      one of the following commands:
+      <p>
+
+      <pre>
+      $ wig4 foo.wig
+      $ wig10 foo.wig 
+      $ wig18 foo.wig
+      $ pwig foo.wig
+      $ lkwig foo.wig
+      </pre>
+
+      For the first four compilers, the compilation will produce two
+      files, <code>foo.c</code> and <code>foo.install</code>.  For the
+      <code>lkwig</code> compiler it will produce <code>foo.pl</code>.
+      <p>
+
+      <li>Check that <code>foo.install</code> has its execute permission
+      bit set using <code>ls -l foo.install</code>, and if not change
+      it using <code>chmod +x foo.install</code>.  The same applies
+      for <code>foo.pl</code>.
+      <p>
+
+      <li>For the compilers that target C, execute the file
+      <code>foo.install</code> on <code>freebsd.cs.mcgill.ca</code>;
+      other FreeBSD machines may or not work.  For <code>lkwig</code>
+      simply copy foo.pl to <code>~/public_html/cgi-bin</code>, or
+      compile with <code>-o ~/public_html/cgi-bin/foo.pl</code>.
+      <p>
+
+      The install scripts perform the following 3 actions:
+      <p>
+      <ol>
+      <li>Call <code>gcc</code> to produce a binary:
+      <p>
+      <ul> 
+      <li><code>foo4.cgi</code>, when using wig4;
+      <li><code>foo10.cgi</code>, when using wig10;
+      <li><code>foo18.cgi</code>, when using wig18; or
+      <li><code>foo.cgi</code>, when using pwig.
+      </ul>
+      <p>
+      
+      This binary is made by compiling <code>foo.c</code> and including the appropriate
+      runtime support files in <code>$WIGDIR/lib</code>:
+      <p>
+      <ul>
+      <li><code>runwig4.c</code> and <code>runwig4.h</code>, when using wig4;
+      <li><code>runwig10.c</code>, when using wig10;
+      <li><code>runwig18.c</code> and <code>runwig18.h</code>, when using wig18; or
+      <li><code>perfectwig_run.h</code>, when using pwig.
+      </ul>
+      <p>
+      <li>Set the executable permission bit of the binary <code>foo(4|10|18|).cgi</code>.
+      <p>
+      <li>Move target binary <code>foo(4|10|18|).cgi</code> to <code>~/public_html/cgi_bin</code>.
+      <p>
+      </ol>
+
+      Remember that if you are ever unsure of the type of a file, you
+      can use the <code>file</code> command:
+
+      <pre>
+      $ file foo.install 
+      foo.install: Bourne shell script text executable
+      </pre>
+
+      and that this is often enough knowledge to know whether you can
+      meaningfully use the <code>cat</code> command to examine it:
+
+      <pre>
+      $ cat foo.install 
+      #!/bin/sh
+      gcc -I$WIGDIR/lib foo.c -o foo10.cgi
+      chmod a+rx foo10.cgi
+      mv -f foo10.cgi ~/public_html/cgi-bin
+      </pre>
+
+      (You should now understand everything that the script does.)
+      </ul>
+
+      <h2>4. Running your WIG service</h2>
+ 
+      You can now run your service by using one of the following URLs:
+      <pre>
+      http://www.cs.mcgill.ca/~`whoami`/cgi-bin/foo4.cgi?SessionName
+      http://www.cs.mcgill.ca/~`whoami`/cgi-bin/foo10.cgi?SessionName
+      http://www.cs.mcgill.ca/~`whoami`/cgi-bin/foo18.cgi?SessionName
+      http://www.cs.mcgill.ca/~`whoami`/cgi-bin/foo.cgi?SessionName
+      http://www.cs.mcgill.ca/~`whoami`/cgi-bin/foo.pl?SessionName
+      </pre>
+      where <code>`whoami`</code> expands to your CS user ID, and  
+      <code>SessionName</code> is one of the sessions defined in
+      <code>foo.wig</code>.
+      <p>
+      For example, consider the following service
+      that might be in <code>foo.wig</code>:
+      <pre>
+      service {
+        const html ...
+        const html ...
+        ...
+        session Init() { ... }
+        session Doit() { ... }
+        session Report() { ... }
+      }
+      </pre>
+      
+      Here there are three different sessions, <code>Init</code>,
+      <code>Doit</code>, and <code>Report</code> that can substitute
+      for <code>SessionName</code> in the above links.  Note that the
+      better WIG compilers provide links to all available sessions.
+      (It may be an interesting language extension to have public and
+      private sessions.)
+
+      <h2>5. Batch compilation and installation of WIG examples</h2>
+
+       <p> WIG compilers come with their examples. You may want to compile and run them to check how they manage to parse files and generate codes.</p>
+       <p>The examples have been already listed in benchmark lists:</p>
+           <ul>
+             <li>classic_benchmark_list</li>
+             <li>perfectewig_benchmark_list</li>
+             <li>wig04_benchmark_list</li>
+             <li>wig10_benchmark_list</li>
+             <li>wig18_benchmark_list</li>
+           </ul>
+       <h3>5.1 Compiling</h3>
+       <p>In the $WIGDIR, just run:</p> 
+       <p><i>./compile &lt;a_benchmark_list&gt;</i> </p> 
+       <p>This will try to compile all examples listed in the benchmark list file using all possible compilers.
+       </p><p>Note that some of the examples may fail because these compilers are not completely compatible. </p> 
+       <h3>5.2 Installing</h3>
+       <p>After compiling, run:</p>
+       <p><i>./install &lt;a_benchmark_list&gt;</i></p> 
+       <p>This will try to install all compiled codes listed in the benchmark list file into your public_html/cgi-bin and generate an index.html in that folder. If you've already put your own index.html in cgi-bin, please backup first.
+       </p><h3>5.3 Running </h3> 
+       <p>After installing,  just go to this URL:</p>
+       <p>http://cs.mcgill.ca/~`whoami`/cgi-bin/index.html<br>
+       </p> 
+       <p>If you've got some error message saying "permission denied", please try to change the permission of the index.html generated in setp 2:</p> 
+       <p><i>chmod a+r $HOME/public_html/cgi-bin/index.html </i></p> 
+       <h3>5.4 Benchmark list file format</h3> 
+       <p>You may want to write your own benchmark list file so that it will save a lot of your time when debugging your wig compiler. Actually it is quite easy, the format of benchimark_list is just a plain text file in which one line defines a wig program: </p> 
+       <p><i>wig_program_id &lt;tab&gt; path &lt;tab&gt; wig_file_name&lt;line break&gt; </i></p> 
+       <p>the wig_program id is used in script only;</p> 
+       <p>path should tell the script where your .wig located</p> 
+       <p>wig_file_name is the wig file you want to compile, DO NOT annex the file extension(.wig). For example, you want to compile wig programs in $HOME/yourwig/foo.wig and bar.wig, you should write a "my_benchmark_list" like this:</p> 
+       <p><i>foo $HOME/yourwig foo <br> 
+         bar $HOME/yourwig bar </i></p> 
+       <p>and then you can compile and install codes using:</p> 
+       <p><i>./compile my_benchmark_list<br> 
+       ./install my_benchmark_list<br></i></p>
+    </td>
+  </tr>
+</table>
+<p>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+Maintained by Chris Pickett.
+<a href="index.html">[HOME]</a>
+</td></tr>
+</table>

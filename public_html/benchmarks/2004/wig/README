@@ -1,0 +1,61 @@
+These are the Fall 2004 WIG benchmarks for Compiler Design.
+
+There are three scripts in this directory.
+
+$ ./cleanup benchmark_list_wig
+
+will remove all generated files and directories.
+
+$ ./compile benchmark_list_wig 2>&1 | tee compile.out
+
+will compile all benchmarks, putting a copy of the output in
+compile.out.
+
+$ ./install benchmark_list_wig 2>&1 | tee install.out
+
+will install cgi scripts for all benchmarks, and put a copy of the
+output in install.out.  In addition, an index.html file will be placed
+in ~/public_html/cgi-bin/ ... this is useful for testing.
+
+Note that you must run the compile script from one of the lab4-x
+machines, and the install script from freebsd.cs.mcgill.ca
+
+The wig10 script is identical to Laurie's except with !/bin/sh at the
+top instead of !/bin/csh and exists so that I can call it from within
+my scripts.
+
+The scripts work in much the same way as described for the JOOS
+benchmarks.  You should really read them to make sure you know what
+they delete and overwrite.  Outside of this directory,
+~/public_html/cgi-bin/ and ~/public_html/img/ are going to be written
+to, so back up anything important.
+
+I would also encourage you to modify the scripts for your own testing
+purposes as well; even if you aren't familiar with (ba)sh, this isn't
+hard (just follow the examples for the other compilers), and will save
+you lots of time.
+
+Only those benchmarks that compiled AND installed successfully will
+end up in the index.html file.  You should read the compilation AND
+installation logs to see what went wrong with existing compilers to
+get ideas about the problems involved, and about how you could do
+better (we are asking you to compile and install all eleven
+benchmarks, something none of these compilers could deal with).
+Sometimes they refused to handle certain things (e.g. tuples), other
+times they spat out an error message for something that wasn't fatal
+but then choked, and in a couple of cases the generated code was not
+understandable by gcc.  In general, warnings are much better than
+terminal errors, and you should continue as far as possible.
+
+Of course if you want to test other examples than those given, set up
+the appropriate directory structure and create a line in a benchmark
+list file, following the benchmark_list_wig example.
+
+Let me know about bugs, feel free to send patches, etc.
+
+Cheers,
+Chris
+
+P.S.  I couldn't get the style sheet for Group07's benchmark to work
+properly, which is sad.  I tried Firefox and Safari.  Expect this to
+be updated.

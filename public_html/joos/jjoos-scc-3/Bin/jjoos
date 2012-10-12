@@ -1,0 +1,11 @@
+#!/bin/csh
+#
+# jjoos - runs the stand-alone JOOS compiler
+#      - JAVADIR, JOOSDIR, SABLECCDIR must be set
+#
+# usage:  jjoos [OPTIONS] [file1.java file2.java file3.joos ...]
+#
+
+
+setenv CLASSPATH .:$JJOOSDIR/classes:
+$JAVADIR/bin/java joosc.Main $* 

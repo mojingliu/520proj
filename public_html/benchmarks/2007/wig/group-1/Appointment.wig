@@ -1,0 +1,101 @@
+service {
+	const html Login = <html><body>
+		Username:
+		<input name="username" type="text" size=10>
+		<p>
+		Password: <span id="passspan"></span>
+		<script language="javascript">passspan = document.getElementById('passspan'); var pass = document.createElement('input');pass.type='password';pass.name='password';pass.size=10;passspan.appendChild(pass);</script>
+		<input name="password" type="text" id="textpass" size=10>
+		<script language="javascript">textpass = document.getElementById('textpass'); textpass.style.visibility = 'hidden';textpass.name='textpass';</script>
+		</p>
+		</body></html>;
+		
+	const html Welcome = <html><body>
+		Name:
+		<input name="name" type="text" size=20>
+		<p>
+		Time:
+		<select name="weekday">
+		<option value="Monday">Monday</option>
+		<option value="Tuesday">Tuesday</option>
+		<option value="Wednesday">Wednesday</option>
+		<option value="Thursday">Thursday</option>
+		<option value="Friday">Friday</option>
+		</select>
+		<select name="timeofday">
+		<option value="8am-9am">8am-9am</option>
+		<option value="9am-10am">9am-10am</option>
+		<option value="10am-11am">10am-11am</option>
+		<option value="11am-12pm">11am-12pm</option>
+		<option value="12pm-1pm">12pm-1pm</option>
+		<option value="1pm-2pm">1pm-2pm</option>
+		<option value="2pm-3pm">2pm-3pm</option>
+		<option value="3pm-4pm">3pm-4pm</option>
+		<option value="4pm-5pm">4pm-5pm</option>
+		</select>
+		<input name="seed" type="text" id="seed" size=10>
+		<p>
+		</body></html>;
+	
+	const html Result = <html><body>
+		<p>
+		The appointment for <[name]> on <[weekday]> <[timeofday]> is reserved.
+		</p>
+		</body></html>;
+	
+	const html FailLogin = <html><body>
+		Illegal user!
+		</body></html>;
+	
+	const html Error = <html><body>
+		Internal Error.
+		</body></html>;
+		
+	schema Appointment {
+		string name;
+		string weekday;
+		string timeofday;
+	}
+	
+	schema User {
+		string username;
+		string password;
+	}
+	
+	tuple User guest, admin;
+	int seed;
+	
+	bool login(string user, string pass) {
+		bool result;
+		result = ( (user == guest.username && pass == guest.password)
+			|| (user == admin.username && pass == admin.password)
+			);
+		return (result);
+	}
+	
+	session Reserve() {
+		string weekday, timeofday; 
+		int i, failLogin;
+		string username, password, aa;
+		
+		tuple Appointment app;
+		
+		guest = tuple {username="guest", password="guest"};
+		admin = tuple {username="admin", password="admin"};
+
+		show Login receive[username = username, password = password];
+		
+		failLogin = 1;
+		while (!login(username, password) && failLogin < 3) {
+			show Login receive [username = username, password = password];
+			failLogin = failLogin + 1;
+		}
+		
+		if (failLogin >= 3) {
+			exit FailLogin;
+		} else {
+			show Welcome receive [app.name = name, app.weekday = weekday, app.timeofday = timeofday];
+			exit plug Result [name = app.name, weekday = app.weekday, timeofday = app.timeofday];
+		}
+	}
+}

@@ -1,0 +1,11 @@
+Group 05
+James Li and Denis Dube
+
+This group did two WIG benchmarks.
+
+2) a calender-like WIG-service as well.  By using it, one can
+arrange at most three matters for a day. If it reached
+three things, the service will ask user to reset the
+arrangement or quit. It was compiled at WIG10. 
+
+

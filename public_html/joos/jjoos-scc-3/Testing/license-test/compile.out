@@ -1,0 +1,280 @@
+============
+BENCHMARK 02
+------------
+==== joosing --verbose /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/02Benchmark/IntegerBox.java /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/02Benchmark/Reader.java /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/02Benchmark/ReaderWriter.java /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/02Benchmark/Writer.java
+Building syntax tree:
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/appletlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/awtlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/javalib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/jooslib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/netlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/02Benchmark/IntegerBox.java... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/02Benchmark/Reader.java... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/02Benchmark/ReaderWriter.java... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/02Benchmark/Writer.java... done
+Fixing tree... done
+Abstracting program... done
+Performing weeding... done
+Building symbol table... done
+Type checking... done
+Generating resources... done
+Generating code... done
+Emitting code... done
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/02Benchmark/IntegerBox.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/02Benchmark/IntegerBox.class
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/02Benchmark/Reader.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/02Benchmark/Reader.class
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/02Benchmark/ReaderWriter.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/02Benchmark/ReaderWriter.class
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/02Benchmark/Writer.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/02Benchmark/Writer.class
+======= verify of IntegerBox.class
+Class IntegerBox succeeds
+======= verify of Reader.class
+Class Reader succeeds
+======= verify of ReaderWriter.class
+Class ReaderWriter succeeds
+======= verify of Writer.class
+Class Writer succeeds
+============
+BENCHMARK 03
+------------
+==== joosing --verbose /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/Benchmark.java /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/Field.java /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/ID_Field.java /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/NameField.java /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/Record.java /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/RecordList.java /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/RecordListNode.java /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/ThreeFieldRecord.java
+Building syntax tree:
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/appletlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/awtlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/javalib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/jooslib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/netlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/Benchmark.java... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/Field.java... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/ID_Field.java... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/NameField.java... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/Record.java... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/RecordList.java... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/RecordListNode.java... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/ThreeFieldRecord.java... done
+Fixing tree... done
+Abstracting program... done
+Performing weeding... done
+Building symbol table... done
+Type checking... done
+Generating resources... done
+Generating code... done
+Emitting code... done
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/Benchmark.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/Benchmark.class
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/Field.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/Field.class
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/ID_Field.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/ID_Field.class
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/NameField.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/NameField.class
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/Record.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/Record.class
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/RecordList.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/RecordList.class
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/RecordListNode.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/RecordListNode.class
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/ThreeFieldRecord.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/03Benchmark/ThreeFieldRecord.class
+======= verify of Benchmark.class
+Class Benchmark succeeds
+======= verify of Field.class
+Class Field succeeds
+======= verify of ID_Field.class
+Class ID_Field succeeds
+======= verify of NameField.class
+Class NameField succeeds
+======= verify of Record.class
+Class Record succeeds
+======= verify of RecordList.class
+Class RecordList succeeds
+======= verify of RecordListNode.class
+Class RecordListNode succeeds
+======= verify of ThreeFieldRecord.class
+Class ThreeFieldRecord succeeds
+============
+BENCHMARK 04
+------------
+==== joosing --verbose /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/04Benchmark/jrep.java
+Building syntax tree:
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/appletlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/awtlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/javalib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/jooslib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/netlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/04Benchmark/jrep.java... done
+Fixing tree... done
+Abstracting program... done
+Performing weeding... done
+Building symbol table... done
+Type checking... done
+Generating resources... done
+Generating code... done
+Emitting code... done
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/04Benchmark/jrep.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/04Benchmark/jrep.class
+======= verify of jrep.class
+Class jrep succeeds
+============
+BENCHMARK 05
+------------
+==== joosing --verbose /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/05Benchmark/Element.java /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/05Benchmark/Index.java /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/05Benchmark/Main.java /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/05Benchmark/Node.java
+Building syntax tree:
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/appletlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/awtlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/javalib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/jooslib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/netlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/05Benchmark/Element.java... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/05Benchmark/Index.java... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/05Benchmark/Main.java... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/05Benchmark/Node.java... done
+Fixing tree... done
+Abstracting program... done
+Performing weeding... done
+Building symbol table... done
+Type checking... done
+Generating resources... done
+Generating code... done
+Emitting code... done
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/05Benchmark/Element.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/05Benchmark/Element.class
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/05Benchmark/Index.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/05Benchmark/Index.class
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/05Benchmark/Main.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/05Benchmark/Main.class
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/05Benchmark/Node.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/05Benchmark/Node.class
+======= verify of Element.class
+Class Element succeeds
+======= verify of Index.class
+Class Index succeeds
+======= verify of Main.class
+Class Main succeeds
+======= verify of Node.class
+Class Node succeeds
+============
+BENCHMARK 06
+------------
+==== joosing --verbose /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/06Benchmark/Article.java /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/06Benchmark/Customer.java /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/06Benchmark/Depanneur.java
+Building syntax tree:
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/appletlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/awtlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/javalib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/jooslib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/netlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/06Benchmark/Article.java... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/06Benchmark/Customer.java... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/06Benchmark/Depanneur.java... done
+Fixing tree... done
+Abstracting program... done
+Performing weeding... done
+Building symbol table... done
+Type checking... done
+Generating resources... done
+Generating code... done
+Emitting code... done
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/06Benchmark/Article.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/06Benchmark/Article.class
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/06Benchmark/Customer.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/06Benchmark/Customer.class
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/06Benchmark/Depanneur.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/06Benchmark/Depanneur.class
+======= verify of Article.class
+Class Article succeeds
+======= verify of Customer.class
+Class Customer succeeds
+======= verify of Depanneur.class
+Class Depanneur succeeds
+============
+BENCHMARK 07
+------------
+==== joosing --verbose /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/07Benchmark/BinaryArray.java /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/07Benchmark/TestBoth.java /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/07Benchmark/group07lib.joos
+Building syntax tree:
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/appletlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/awtlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/javalib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/jooslib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/netlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/07Benchmark/BinaryArray.java... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/07Benchmark/TestBoth.java... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/07Benchmark/group07lib.joos... done
+Fixing tree... done
+Abstracting program... done
+Performing weeding... done
+Building symbol table... done
+Type checking... done
+Generating resources... done
+Generating code... done
+Emitting code... done
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/07Benchmark/BinaryArray.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/07Benchmark/BinaryArray.class
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/07Benchmark/TestBoth.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/07Benchmark/TestBoth.class
+======= verify of BinaryArray.class
+Class BinaryArray succeeds
+======= verify of TestBoth.class
+Class TestBoth succeeds
+============
+BENCHMARK 09
+------------
+==== joosing --verbose /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/09Benchmark/Matrix.java /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/09Benchmark/MatrixMultOptimizer.java
+Building syntax tree:
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/appletlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/awtlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/javalib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/jooslib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/netlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/09Benchmark/Matrix.java... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/09Benchmark/MatrixMultOptimizer.java... done
+Fixing tree... done
+Abstracting program... done
+Performing weeding... done
+Building symbol table... done
+Type checking... done
+Generating resources... done
+Generating code... done
+Emitting code... done
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/09Benchmark/Matrix.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/09Benchmark/Matrix.class
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/09Benchmark/MatrixMultOptimizer.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/09Benchmark/MatrixMultOptimizer.class
+======= verify of Matrix.class
+Class Matrix succeeds
+======= verify of MatrixMultOptimizer.class
+Class MatrixMultOptimizer succeeds
+============
+BENCHMARK 10
+------------
+==== joosing --verbose /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/10Benchmark/RSA.java /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/10Benchmark/decry.java /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/10Benchmark/encry.java
+Building syntax tree:
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/appletlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/awtlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/javalib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/jooslib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Extern/netlib.joos... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/10Benchmark/RSA.java... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/10Benchmark/decry.java... done
+ - Parsing /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/10Benchmark/encry.java... done
+Fixing tree... done
+Abstracting program... done
+Performing weeding... done
+Building symbol table... done
+Type checking... done
+Generating resources... done
+Generating code... done
+Emitting code... done
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/10Benchmark/RSA.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/10Benchmark/RSA.class
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/10Benchmark/decry.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/10Benchmark/decry.class
+======= jasmin of /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/10Benchmark/encry.j
+Generated: /u8/ugrad/oalaou/cs400/JOOSJ/Testing/Benchmarks/Fall99-dev/10Benchmark/encry.class
+======= verify of RSA.class
+Class RSA succeeds
+======= verify of decry.class
+Class decry succeeds
+======= verify of encry.class
+Class encry succeeds

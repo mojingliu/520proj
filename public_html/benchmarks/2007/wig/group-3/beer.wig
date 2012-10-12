@@ -1,0 +1,71 @@
+
+service {
+	
+	const html WallView = <html><body>
+						<h2><[wallNum]> bottles of beer on the wall, <[wallNumCopy]> bottles of beer...</h2>
+						<select name="choice">
+							<option value="pass">take one down and pass it around.</option>
+							<option value="drink">take one down and drink it.</option>
+							<option value="put">be subversive: put one back up!</option>
+						</select>
+						
+						<p>
+						The wall currently says: <[wallMsg]>
+						
+						<p>
+						Your inebriated contribution:
+						<input type="text" name="write" value="" size="10">
+					</body></html>;
+	
+	const html EmptyWall = <html><body>
+		<h2>The wall is empty...ask the beer gods to run the restock session.</h2>
+	
+		</body></html>;			
+	
+	const html Restocked = <html><body>Drive safely.</body></html>;
+	
+	schema Wall {
+		int num;
+		string msg;
+	}
+	
+	tuple Wall w;
+	
+	
+	int inc(int x) {
+		return x+1;
+	}
+	
+	int dec(int x) {
+		return x-1;
+	}
+	
+	
+	
+	session Restock() {
+		
+		w.num = 99;
+		w.msg = "Kilroy is on vacation...he'll be here later. ";
+		
+		exit Restocked;
+	}
+	
+	
+	session BeerWall() {
+		
+		string choice, write;
+		
+		while(w.num > 0) {
+			show plug WallView [wallNum=w.num, wallNumCopy=w.num, wallMsg=w.msg] receive [choice=choice,write=write];
+			if( (choice=="pass") || (choice=="drink") ) {
+				w.num = dec(w.num);
+			}
+			else if(choice=="put") {
+				w.num = inc(w.num);
+			}
+			w.msg = w.msg + " -- " + write;
+		}
+		
+		exit EmptyWall;
+	}
+}

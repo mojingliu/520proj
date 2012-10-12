@@ -1,0 +1,36 @@
+Group 01
+Dmytro Prykhodko and Leonid Gaiazov
+
+For this milestone we wrote a little bit of online pets store as CGI and WIG.
+
+For CGI part we implemented three plain html pages,
+one perl script (checkinv.pl) and one c program (verify.c)
+
+The start page is catalogue.html that will ask user about pets he wants to buy.
+After pets are selected, user clicks "Add to Basket" button that sends
+a request to cgi-bin/checkinv.pl
+
+This script will open text file in data/inventory.txt and verify that items
+selected are in stock, update inventory.txt, and generate an invoice.
+
+The page login.html prompts user for a login name and password and sends them
+to cgi-bin/verify.cgi (compiled verify.c)
+verify.cgi checks data/users.txt for valid login/password pair and if found
+redirects user to management.html, otherwise displays an error message.
+
+Notes:
+1. To execute perl script you have do chmod 711 checkinv.pl
+2. At login.html try login: sparky; password: test
+3. Running version at: http://www.cs.mcgill.ca/~dprykh/cs520/CGI/
+4. If you ask for more pets then there are in stock, the program
+   will sell you all it has.
+
+
+For WIG part we implemented something similar. We have three sessions:
+1) Init - initializes the stock with pets
+2) Shop - lets you buy the pets
+3) Add - allows you to add pets into stock
+
+Notes:
+1. We used wig4 to compile our service
+2. Running version at: http://www.cs.mcgill.ca/~dprykh/cgi-bin/shop4.cgi?Shop

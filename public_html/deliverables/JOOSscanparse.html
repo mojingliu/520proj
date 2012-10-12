@@ -1,0 +1,99 @@
+<title>JOOS deliverable: comments and desugaring</title>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+<h1><img src="../images/joos32.gif"> deliverable: comments and desugaring</h1>
+
+Note that this is one of two deliverables due by the end of week 5!
+<p>
+
+The following modifications should be made to the flex+bison/C
+version of the <img
+src="../images/a-small.gif"> JOOS compiler.  You
+must document the lines that need to be changed; source code comments
+are preferred.
+<p>
+
+<hr>
+<h3>C-style comments</h3>
+The A- implementation only allows one-line comments such as:<p>
+
+<font face=courier><pre>
+// this is a comment
+</pre></font>
+<p>
+
+It would be nice to additionally allow multi-line comments, such as:<p>
+
+<font face=courier><pre>
+/* this is a
+   somewhat
+   longer comment */
+</pre></font>
+<p>
+
+You must allow for any text to appear between an opening /* and the
+first */ that follows it.  This improvement can be implemented by only
+making changes to the
+file <a href="joos/a-/joos.l"><font face=courier><code>joos.l</code></font></a>.
+Hint: if you get stuck, it's a good idea
+to <a href="http://dinosaur.compilertools.net/flex/index.html">RTFM</a>.
+(Where F stands for Flex, naturally.)  You will probably get stuck.
+<p>
+
+<hr>
+<h3>Increments and for-loops</h3>
+
+It would be very nice to include standard increments and for-loops
+such as:<p>
+
+<font face=courier><pre>
+for (i=0; i<10; i++) k=k*i;
+</pre></font><p>
+
+These constructs may be introduced as mere syntactic sugar, since they
+can readily be expressed in the JOOS language itself.  This
+improvement can be implemented by only making changes to the files
+<a href="joos/a-/joos.l"><font face=courier><code>joos.l</code></font></a> and
+<a href="joos/a-/joos.y"><font face=courier><code>joos.y</code></font></a>.
+<p>
+
+You should not reject increments or for-loops where the A+ compiler
+would accept them.  To get an A, you should strive to match what the
+A+ compiler accepts.  (You might think you deserve an A+ for this, but
+an A+ has become harder to earn over the years.)  To get more than an
+A, you should handle some things that javac accepts that the A+
+compiler does not accept.  You should only attempt this once you have
+secured an A.  How many different javac-only cases can you find?
+<p>
+
+Use Subversion to copy the A- JOOS source to your group directory:<p>
+
+<code>$ svn cp public_html/joos/a- group-X/joos/scanparse</code><p>
+
+and commit that before beginning work.  Then, make your modifications,
+include some tiny test programs that compile and run correctly with
+your improved compiler---but also test your benchmark program for this
+week if it uses these constructs---and add a README file describing
+your work and the changes you needed to make.  It is fine to leave
+precise details to comments in the source code.  Format your text in
+80 column blocks for readability, and stick to the current JOOS
+programming style.
+<p>
+
+Your TA will use Subversion to look at your changes and run your test
+programs in order to evaluate you.  Remember, multiple small test
+inputs are more useful than one big test input that attempts to cover
+all features; a combination of both is even better.<p>
+
+This deliverable is due by midnight on Friday of Week 5.  It will
+count for 3.33% of your grade.  Marks will be generously deducted for
+late submissions.
+</td></tr></table>
+<p>
+<p>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+Maintained by Ismail Badawi. 
+<a href="../index.html">[HOME]</a>
+</td></tr>
+</table>

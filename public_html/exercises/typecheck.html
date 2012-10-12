@@ -1,0 +1,84 @@
+<title>Exercises on type checking</title>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+<h1>Week 7</h1>
+<h1>Exercises on type checking</h1>
+<ol>
+
+<li>Give the type rules for:
+    <ul>
+    <li><code>for</code> statements; and
+    <li>array expressions.
+    </ul>
+<p>
+<i>Motivation</i>: this questions tests that you are able to formalize
+type rules.  This will allow you to write type checker implementations
+in a more straightforward fashion.
+<p>
+
+
+<li>Construct the type proof for the following statement sequence:
+<pre>
+Cons x,y; int z; x = new Cons(z+1,y);
+</pre>
+<p>
+
+<i>Motivation</i>: this question tests that you can read existing type
+rules and apply them.
+<p>
+
+
+<li>Consider a scenario, where we extend JOOS with a type
+<code>float</code> that also has a <code>+</code> operator.
+Furthermore, we want <code>int</code> values to be implicitly coerced
+into <code>float</code> values as needed.  Explain the implications
+for the type checker.
+<p>
+<i>Motivation</i>: it is useful to be able to extend grammars with new
+types.
+<p>
+
+
+
+<li>(Optional.)  A radical extension of the JOOS type system allows a
+variable to be typed as:
+<p>
+
+<pre>
+A,B,C x;
+</pre>
+<p>
+
+which means that <code>x</code> may contain objects of either of the
+classes <code>A</code>, <code>B</code>, or <code>C</code>.  Types are
+thus finite sets of classes, rather than just single classes.  With
+the appropriate type rules, this will allow more programs to be
+accepted as statically type correct.  Show examples of such type rules
+for the JOOS syntax.  Show that these new rules make the type system
+strictly more powerful than the standard type system.  Do you like
+this new language?  Why or why not?
+<p>
+
+<i>Motivation</i>: this question should help you to think about some
+of the advantages and disadvantages of introducing extra complexity
+into a language via the type system.
+<p>
+
+
+<li>(Optional.)  Study the code for type checking JOOS programs.
+Report on anything that is unclear.
+<p>
+
+<i>Motivation</i>: as before, the JOOS compilers are an excellent
+reference for your own WIG compiler.
+<p>
+</ol>
+<p>
+</td></tr></table>
+<p>
+<table border=5 cellspacing=5 cellpadding=5 width=100%>
+<tr><td>
+Maintained by Christopher J. F. Pickett.
+<a href="index.html">[HOME]</a>
+</td></tr>
+</table>
