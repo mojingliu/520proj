@@ -1,0 +1,538 @@
+service {
+    const html output = <html><head><style>
+            #game tr td
+            {
+                background-color:brown;
+                text-align:center;
+                cursor:default;
+            }
+            #game tr:nth-child(odd) td:nth-child(even):not(.to):not(.from), #game tr:nth-child(even) td:nth-child(odd):not(.to):not(.from)
+            {
+                background-color:tan;
+            }
+            #game tr td.from
+            {
+                background-color:lightblue;
+            }
+            #game tr td.to
+            {
+                background-color:yellow;
+            }
+        </style>
+        <script>
+            var to = [0, 0];
+            var from = [0, 0];
+
+            function set_one(lst, color)
+            {
+                return function (x, y)
+                {
+                    if(lst[0] != 0 && lst[1] != 0)
+                        document.getElementById("r" + lst[1] + "f" + lst[0]).style.backgroundColor = (((lst[0] + lst[1]) % 2) ? "tan" : "brown");
+                    lst[0] = x || lst[0];
+                    lst[1] = y || lst[1];
+                    if(lst[0] != 0 && lst[1] != 0)
+                        document.getElementById("r" + lst[1] + "f" + lst[0]).style.backgroundColor = color;
+                }
+            }
+
+            set_to = set_one(to, "yellow");
+            set_from = set_one(from, "lightblue");
+        </script></head><body><[board]>
+        <span><[whose]>'s turn</span><br/>
+        <span style="color:red;"><[error]></span>
+        <span style="display:none">
+            <input type=radio name=file_from value=1>
+            <input type=radio name=rank_from value=1>
+            <input type=radio name=file_to value=1>
+            <input type=radio name=rank_to value=1>
+            Make WIG stop being whiny baby</span>
+    </html>;
+
+    const html upgrade = <html><head><style>
+            #game tr td
+            {
+                background-color:brown;
+                text-align:center;
+                cursor:default;
+            }
+            #game tr:nth-child(odd) td:nth-child(even):not(.to):not(.from), #game tr:nth-child(even) td:nth-child(odd):not(.to):not(.from)
+            {
+                background-color:tan;
+            }
+            #game tr td.from
+            {
+                background-color:lightblue;
+            }
+            #game tr td.to
+            {
+                background-color:yellow;
+            }
+        </style></head><body><[board]>
+        <h3>Please select an upgrade for your pawn</h3>
+        <input type="radio" name="upg" value="4" checked> Queen<br/>
+        <input type="radio" name="upg" value="3"> Bishop<br/>
+        <input type="radio" name="upg" value="2"> Knight<br/>
+        <input type="radio" name="upg" value="1"> Rook<br/>
+    </html>;
+
+    const html hexit = <html><body>But now it's dead.</body></html>;
+
+    schema row {
+          int a; int b; int c; int d; int e; int f; int g; int h;
+    }
+    tuple row row1, row2, row3, row4, row5, row6, row7, row8;
+    bool turn;
+
+    tuple row getRow(int rank)
+    {
+        tuple row lookup;
+        if(rank==1)
+            lookup = row1;
+        else if(rank==2)
+            lookup = row2;
+        else if(rank==3)
+            lookup = row3;
+        else if(rank==4)
+            lookup = row4;
+        else if(rank==5)
+            lookup = row5;
+        else if(rank==6)
+            lookup = row6;
+        else if(rank==7)
+            lookup = row7;
+        else if(rank==8)
+            lookup = row8;
+        return lookup;
+    }
+
+    int getPiece(tuple row rank, int file)
+    {
+        if(file==1)
+            return(rank.a);
+        if(file==2)
+            return(rank.b);
+        if(file==3)
+            return(rank.c);
+        if(file==4)
+            return(rank.d);
+        if(file==5)
+            return(rank.e);
+        if(file==6)
+            return(rank.f);
+        if(file==7)
+            return(rank.g);
+        if(file==8)
+            return(rank.h);
+        return 0;
+    }
+
+    void setPiece(int rank, int file, int piece)
+    {
+        if(rank == 1)
+        {
+            if(file == 1)
+                row1.a = piece;
+            else if(file == 2)
+                row1.b = piece;
+            else if(file == 3)
+                row1.c = piece;
+            else if(file == 4)
+                row1.d = piece;
+            else if(file == 5)
+                row1.e = piece;
+            else if(file == 6)
+                row1.f = piece;
+            else if(file == 7)
+                row1.g = piece;
+            else if(file == 8)
+                row1.h = piece;
+        }
+        else if(rank == 2)
+        {
+            if(file == 1)
+                row2.a = piece;
+            else if(file == 2)
+                row2.b = piece;
+            else if(file == 3)
+                row2.c = piece;
+            else if(file == 4)
+                row2.d = piece;
+            else if(file == 5)
+                row2.e = piece;
+            else if(file == 6)
+                row2.f = piece;
+            else if(file == 7)
+                row2.g = piece;
+            else if(file == 8)
+                row2.h = piece;
+        }
+        else if(rank == 3)
+        {
+            if(file == 1)
+                row3.a = piece;
+            else if(file == 2)
+                row3.b = piece;
+            else if(file == 3)
+                row3.c = piece;
+            else if(file == 4)
+                row3.d = piece;
+            else if(file == 5)
+                row3.e = piece;
+            else if(file == 6)
+                row3.f = piece;
+            else if(file == 7)
+                row3.g = piece;
+            else if(file == 8)
+                row3.h = piece;
+        }
+        else if(rank == 4)
+        {
+            if(file == 1)
+                row4.a = piece;
+            else if(file == 2)
+                row4.b = piece;
+            else if(file == 3)
+                row4.c = piece;
+            else if(file == 4)
+                row4.d = piece;
+            else if(file == 5)
+                row4.e = piece;
+            else if(file == 6)
+                row4.f = piece;
+            else if(file == 7)
+                row4.g = piece;
+            else if(file == 8)
+                row4.h = piece;
+        }
+        else if(rank == 5)
+        {
+            if(file == 1)
+                row5.a = piece;
+            else if(file == 2)
+                row5.b = piece;
+            else if(file == 3)
+                row5.c = piece;
+            else if(file == 4)
+                row5.d = piece;
+            else if(file == 5)
+                row5.e = piece;
+            else if(file == 6)
+                row5.f = piece;
+            else if(file == 7)
+                row5.g = piece;
+            else if(file == 8)
+                row5.h = piece;
+        }
+        else if(rank == 6)
+        {
+            if(file == 1)
+                row6.a = piece;
+            else if(file == 2)
+                row6.b = piece;
+            else if(file == 3)
+                row6.c = piece;
+            else if(file == 4)
+                row6.d = piece;
+            else if(file == 5)
+                row6.e = piece;
+            else if(file == 6)
+                row6.f = piece;
+            else if(file == 7)
+                row6.g = piece;
+            else if(file == 8)
+                row6.h = piece;
+        }
+        else if(rank == 7)
+        {
+            if(file == 1)
+                row7.a = piece;
+            else if(file == 2)
+                row7.b = piece;
+            else if(file == 3)
+                row7.c = piece;
+            else if(file == 4)
+                row7.d = piece;
+            else if(file == 5)
+                row7.e = piece;
+            else if(file == 6)
+                row7.f = piece;
+            else if(file == 7)
+                row7.g = piece;
+            else if(file == 8)
+                row7.h = piece;
+        }
+        else if(rank == 8)
+        {
+            if(file == 1)
+                row8.a = piece;
+            else if(file == 2)
+                row8.b = piece;
+            else if(file == 3)
+                row8.c = piece;
+            else if(file == 4)
+                row8.d = piece;
+            else if(file == 5)
+                row8.e = piece;
+            else if(file == 6)
+                row8.f = piece;
+            else if(file == 7)
+                row8.g = piece;
+            else if(file == 8)
+                row8.h = piece;
+        }
+    }
+
+    string movePiece(int from_rank, int from_file, int to_rank, int to_file)
+    {
+        int piece, target_piece, real_piece;
+        int dx;
+        int dy;
+        tuple row lookup;
+        int adx, ady;
+        int startx, starty;
+        
+        dx = to_file - from_file;
+        dy = to_rank - from_rank;
+        lookup = getRow(from_rank);
+        piece = getPiece(lookup, from_file);
+        real_piece = piece;
+        if(piece == 0)
+            return "There is no piece at this location.";
+        if((piece <= 6) == turn)
+            return "You may only move your own pieces.";
+        if(to_rank != from_rank)
+            lookup = getRow(to_rank);
+        target_piece = getPiece(lookup, to_file);
+        if(target_piece != 0 && (target_piece <= 6) != turn)  // also covers from == to
+            return "You may not capture your own piece!";
+
+        if(piece > 6)
+            piece = piece - 6;
+
+        if(dx < 0)
+        {
+            adx = -dx;
+            startx = to_file + 1;
+        }
+        else
+        {
+            adx = dx;
+            startx = from_file + 1;
+        }
+        if(dy < 0)
+        {
+            ady = -dy;
+            starty = to_rank + 1;
+        }
+        else
+        {
+            ady = dy;
+            starty = from_rank + 1;
+        }
+
+
+        if(piece == 1 || (piece == 4 && dx * dy == 0))  // rook (also queen)
+        {
+            int i;
+            if((dx != 0) && (dy != 0))
+                return "Invalid Move: Rooks move along ranks or files.";
+            
+            if(dx != 0)  // moving along files
+            {
+                i = startx;
+                adx = adx + i - 1;  // don't need to check the endpoints
+                while(i < adx)
+                {
+                    if(getPiece(lookup, i) != 0)
+                        return "Invalid Move: You may not pass other pieces.";
+                    i = i + 1;
+                }
+            }
+            else
+            {
+                i = starty;
+                ady = ady + i - 1;  // don't need to check the endpoints
+                while(i < ady)
+                {
+                    if(getPiece(getRow(i), to_file) != 0)
+                        return "Invalid Move: You may not pass other pieces.";
+                    i = i + 1;
+                }
+            }
+        }
+        else if(piece == 2)  // knight
+        {
+            if(adx * ady != 2)
+                return "Invalid Move: Knights may only move in an L shape.";
+        }
+        else if(piece == 3 || piece == 4)
+        {   // if the queen made it here that means she failed the rook-test
+            int i;
+            i = 0;
+            if(dx == dy)  // <^  v>
+            {
+                while(i < adx - 1)
+                {
+                    if(getPiece(getRow(starty + i), startx + i) != 0)
+                        return "Invalid Move: You may not pass other pieces.";
+                    i = i + 1;
+                }
+            }
+            else if(adx == ady)  // <v  ^>
+            {
+                while(i < adx - 1)
+                {
+                    if(getPiece(getRow(starty + i), startx + (ady - 2) - i) != 0)
+                        return "Invalid Move: You may not pass other pieces.";
+                    i = i + 1;
+                }
+            }
+            else
+            {
+                if(piece == 4)
+                    return "Invalid Move: Queens may only move along ranks, files, or diagonally.";
+                return "Invalid Move: Bishops may only move diagonally.";
+            }
+        }
+        else if(piece == 5)    // king
+        {
+            if(!((adx == 1 || ady == 1) && adx + ady <= 2))
+                return "Invalid Move: Kings may only move one square.";
+            /* Ideally we would also prevent check here, but it already takes
+            upwards of 5 seconds to move a friggin knight. */
+        }
+        else if(piece == 6)    // pawn
+        {
+            if(dy == 0)
+                return "Invalid Move: Pawns don't move sideways ever.";
+            if((dy < 0) != turn)  // not even headed the right direction
+                return "Invalid Move: Pawns may not retreat.";
+            if(adx == 1)
+            {
+                if(ady == 1)
+                {
+                    if(target_piece == 0)
+                        return "Invalid Move: Pawns may only capture diagonally.";
+                }
+                else
+                    return "Invalid Move: Pawns don't move that quickly.";
+            }
+            else if(adx == 0)
+            {
+                if(target_piece != 0)
+                    return "Invalid Move: Pawns may only capture diagonally.";
+                else if(ady == 2 && (from_rank == 2 || from_rank == 7))
+                {
+                    if(getPiece(getRow(from_rank + dy / 2), from_file) != 0)
+                        return "Invalid Move: You may not pass other pieces.";
+                }
+                else if(ady != 1)
+                    return "Invalid Move: Pawns don't move that quickly.";
+            }
+            else
+                return "Invalid Move: Pawns don't move that quickly.";
+        }
+        else
+            return "Error: how did you even get this piece???";
+
+        setPiece(from_rank, from_file, 0);
+        setPiece(to_rank, to_file, real_piece);
+        turn = !turn;
+        if(piece == 6 && (to_rank == 8 || to_rank == 1))  // promotions!
+            return "!";
+        return "";
+    }
+
+    string getBoard(bool pickable)
+    {
+        string s;
+        int i, j;
+        int piece;
+        tuple row lookup;
+        s = "<table id='game' border=0 cellspacing=0 cellpadding=0>";
+        if(pickable)
+        {
+            s = s + "<tr><td class=from>from</td>";
+            i = 1;
+            while(i <= 8)
+            {
+                s = s + "<td class=from><input onClick='set_from(" + i + ", 0);' type='radio' name='file_from' value='" + i + "'></td>";
+                i = i + 1;
+            }
+            s = s + "<td> </td></tr>";
+        }
+        i = 1;
+        while(i <= 8)
+        {
+            lookup = getRow(i);
+            j = 1;
+            s = s + "<tr align=center><td class=from><input onClick='set_from(0, " + i + ");'  type='radio' name='rank_from' value='" + i + "'></td>";
+            while(j <= 8)
+            {
+                piece = getPiece(lookup, j);
+                s = s + "<td id='r" + i + "f" + j + "'>";
+                if(piece != 0)
+                    s = s + "<img src=chess_ts/p" + piece + ".png>";
+                s = s + "</td>";
+                j = j + 1;
+            }
+            if(pickable)
+                s = s + "<td class=to><input onClick='set_to(0, " + i + ");' type='radio' name='rank_to' value='" + i + "'></td>";
+            s = s + "</tr>";
+            i = i + 1;
+        }
+        if(pickable)
+        {
+            i = 1;
+            s = s + "<tr><td> </td>";
+            while(i <= 8)
+            {
+                s = s + "<td class=to><input onClick='set_to(" + i + ", 0);' type='radio' name='file_to' value='" + i + "'></td>";
+                i = i + 1;
+            }
+            s = s + "<td class=to>to</td></tr>";
+        }
+        return s + "</table>";
+    }
+
+    session Game()
+    {
+        string board;
+        string turn_words;
+        string error;
+        int upgr;
+        int from_rank, from_file, to_rank, to_file;
+        error = "";
+        turn = true;
+        row1 = tuple{a=1, b=2, c=3, d=4, e=5, f=3, g=2, h=1};
+        row2 = tuple{a=6, b=6, c=6, d=6, e=6, f=6, g=6, h=6};
+        row3 = tuple{a=0, b=0, c=0, d=0, e=0, f=0, g=0, h=0};
+        row4 = tuple{a=0, b=0, c=0, d=0, e=0, f=0, g=0, h=0};
+        row5 = tuple{a=0, b=0, c=0, d=0, e=0, f=0, g=0, h=0};
+        row6 = tuple{a=0, b=0, c=0, d=0, e=0, f=0, g=0, h=0};
+        row7 = tuple{a=12,b=12,c=12,d=12,e=12,f=12,g=12,h=12};
+        row8 = tuple{a=7, b=8, c=9,d=10,e=11, f=9, g=8, h=7};
+        while(true)
+        {
+            board = getBoard(true);
+            if(turn)
+                turn_words = "White";
+            else
+                turn_words = "Black";
+            show plug output[board=board, whose=turn_words, error=error]
+            receive [from_rank=rank_from, from_file=file_from, to_rank=rank_to, to_file=file_to];
+            error = movePiece(from_rank, from_file, to_rank, to_file);
+            if(error == "!")
+            {   // upgrade time!
+                board = getBoard(false);
+                show plug upgrade[board=board]
+                receive [upgr=upg];
+                if(!turn)
+                    upgr = upgr + 6;
+                setPiece(to_rank, to_file, upgr);
+            }
+        }
+        exit hexit;
+    }
+}

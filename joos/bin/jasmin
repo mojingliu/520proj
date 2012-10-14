@@ -6,4 +6,4 @@
 #     jasmin [-d <directory>] <filename> [<filename> ...]
 #
 
-"$JAVADIRU/bin/java" -classpath "`cygpath -w -p $JOOSDIR/jasmin/classes:`$CLASSPATH" jasmin.Main $*
+$JAVADIR/bin/java -classpath $JOOSDIR/jasmin/classes:$CLASSPATH jasmin.Main $*

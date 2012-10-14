@@ -5,4 +5,4 @@
 # assumes JOOSDIR is set properly
 # assumes a binary called `joos' is on PATH
 
-joos.exe $* $JOOSDIR/joos/extern/*.joos
+joos $* $JOOSDIR/joos/extern/*.joos

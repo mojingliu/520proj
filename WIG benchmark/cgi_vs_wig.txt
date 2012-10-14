@@ -1,0 +1,27 @@
+We wrote a chess game using WIG and a simple calculator
+(based on the example wig calculator) using cgi (in python).
+
+Benchmark WIG: http://cs.mcgill.ca/~bshagi/cgi-bin/chess.pl?Game
+Example WIG: http://cs.mcgill.ca/~bperry2/cgi-bin/calc.pl?Calculate
+Python CGI version: http://cs.mcgill.ca/~bperry2/cgi-bin/pythoncalc.py
+
+To create this Python file from a WIG compiler, we'd have to break
+the WIG code down into sections that correspond with the python
+sections.  The html const setup would need to be turned into
+simple print "html" statments, which wouldn't be hard.
+
+The session would just be filled in with the appropriate prints
+from the Setup, and the wig code for calculations would just need
+to be translated into the appropriate python.
+
+The one difficulty would be displaying it all on one page as opposed to
+across multiple pages, like in WIG.  
+
+For part 5:
+    WIG doesn't have any indexing (for strings) or even arrays, which 
+makes things much more difficult than using other languages. We can't
+seem to figure out a way to replicate the functionality of arrays
+based on the WIG documentation.     
+
+
+
