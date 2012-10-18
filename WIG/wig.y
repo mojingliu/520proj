@@ -3,15 +3,86 @@
 #include "tree.h"
 
 extern char *yytext;
-extern EXP *theexpression;
+extern SERVICE* theservice;
 
 void yyerror() {
    printf ("syntax error before %s\n", yytext); 
 }
 %}
 
+%start service
+
+%union
+{
+  struct SERVICE* service;
+  struct HTML* html;
+  struct HTMLBODY* htmlbody;
+  struct INPUTATTR* inputattr;
+  struct ATTRIBUTE* attribute;
+  struct ATTR* attr;
+  struct SCHEMA* schema;
+  struct FIELD* field;
+  struct SIMPLETYPE* simpletype;
+  struct VARIABLE* variable;
+  struct TYPE* type;
+  struct FUNCTION* function;
+  struct ARGUMENT* argument;
+  struct STM* statement;
+  struct EXP* exp;
+  struct ID* id;
+  struct FIELDVALUE* fieldvalue;
+  struct DOCUMENT* document;
+  struct PLUG* plug;
+  struct RECEIVE* receive;
+  struct INPUT* input;
+  struct SESSION* session;
+  int intconst;
+  char* stringconst;
+};
+
+%token tSERVICE tCONST
+       tHTML tHTMLTAGOPEN tHTMLTAGCLOSE
+       tINPUT tSELECT 
+       tNAME tTYPE tTEXT tRADIO
+       tSCHEMA 
+       tINT tBOOL tSTRING tVOID
+       tSESSION tSHOW tEXIT tRETURN 
+       tIF tELSE tWHILE tPLUG
+       tRECEIVE tTRUE tFALSE
+       tTUPLE
+
+%token <intconst> tINTCONST
+%token <stringconst> tIDENTIFIER tSTRINGCONST tWHATEVER
+
+
+
+%type <service> service
+%type <html> htmls html
+%type <htmlbody> htmlbodies nehtmlbodies htmlbody 
+%type <attribute> attributes neattributes attribute
+%type <attr> attr
+%type <schema> schemas neschemas schema
+%type <field> fields nefields field
+%type <simpletype> simpletype
+%type <type> type
+%type <variable> nevariables variable
+%type <function> functions nefunctions function
+%type <parameter> parameters neparameters parameter
+%type <session> sessions session
+%type <argument> arguments nearguments
+%type <statement> stms nestms stm
+%type <document> document
+%type <plug> plugs plug
+%type <receive> receive
+%type <input> inputs neinputs input
+%type <exp> exps neexps exp
+%type <fieldvalue> fieldvalues nefieldvalues fieldvalue
+
+
+
 
 %%
+
 service : tSERVICE '{' htmls schemas variables functions sessions '}'
   {$$ = makeSERVICE($3, $4, $5, $6)};
 

@@ -1,13 +1,13 @@
-SERVICE* makeSERVICE(HTMLS* htmls, SCHEMAS* schemas, VARIABLES* variables, FUNCTIONS* functions, SESSIONS* sessions)
+SERVICE* makeSERVICE(HTML* html, SCHEMA* schema, VARIABLE* variable, FUNCTION* function, SESSION* session)
 {
 	SERVICE* s;
 	s = NEW(SERVICE);
 	s->lineno = lineno;
-	s->htmls = htmls;
-	s->schemas = schemas;
-	s->variables = variables;
-	s->functions = functions;
-	s->sessions = sessions;
+	s->html = html;
+	s->schema = schema;
+	s->variable = variable;
+	s->function = function;
+	s->session = session;
 	return s;
 }
 // html : "const" "html" identifier "=" "<html>" htmlbodies "</html>" ";"
@@ -23,129 +23,130 @@ HTML* makeHTML(char* identifier, HTMLBODY* body, HTML* nextbody)
 	return h;
 }
 
-HTMLBODY* makeHTMLBODYTAG(TAG* tag, HTMLBODY* nextbody)
+HTMLBODY* makeHTMLBODYtag(ID* id, ATTRIBUTE* attribute)
 {
 	HTMLBODY* h;
 	h = NEW(HTMLBODY);
 	h->lineno = lineno;
-	h->val.tag = tag;
+	h->val.tagE.id = id;
+	h->val.tagE.attribute = attribute;
 	h->kind = tagK;
-	h->nextbody = nextbody;
+	h->next = NULL;
 	return h;
 }
 
-HTMLBODY* makeHTMLBODYGAP(GAP* gap, HTMLBODY* nextbody)
+HTMLBODY* makeHTMLBODYgap(ID* id)
 {
 	HTMLBODY* h;
 	h = NEW(HTMLBODY);
 	h->lineno = lineno;
 	h->val.gap = gap;
 	h->kind = gapK;
-	h->nextbody = nextbody;
+	h->next = NULL;
 	return h;
 }
 
-HTMLBODY* makeHTMLBODYWHATEVER(char* whatever, HTMLBODY* nextbody)
+HTMLBODY* makeHTMLBODYwhatever(char* whatever)
 {
 	HTMLBODY* h;
 	h = NEW(HTMLBODY);
 	h->lineno = lineno;
 	h->val.whatever = whatever;
 	h->kind = whateverK;
-	h->nextbody = nextbody;
+	h->next = NULL;
 	return h;
 }
 
-HTMLBODY* makeHTMLBODYMETA(HTMLMETA* meta, HTMLBODY* nextbody)
+HTMLBODY* makeHTMLBODYmeta(HTMLMETA* meta)
 {
 	HTMLBODY* h;
 	h = NEW(HTMLBODY);
 	h->lineno = lineno;
 	h->val.meta = meta;
 	h->kind = metaK;
-	h->nextbody = nextbody;
+	hh->next = NULL;
 	return h;
 }
 
-HTMLBODY* makeHTMLINPUT(INPUTATTR* inputattr, HTMLBODY* nextbody)
+HTMLBODY* makeHTMLBODYinput(INPUTATTR* inputattr)
 {
 	HTMLBODY* h;
 	h = NEW(HTMLBODY);
 	h->lineno = lineno;
 	h->inputattr = inputattr;
-	h->nextbody = nextbody;
+	h->next = NULL;
 	return h;
 }
 
-HTMLBODY* makeHTMLSELECT(INPUTATTR* inputattr, HTMLBODY* insidebody, HTMLBODY* nextbody)
+HTMLBODY* makeHTMLBODYselect(INPUTATTR* inputattr, HTMLBODY* body)
 {
 	HTMLBODY* h;
 	h = NEW(HTMLBODY);
 	h->lineno = lineno;
-	h->inputattr = inputattr;
-	h->insidebody = insidebody;
-	h->nextbody = nextbody;
+	h->val.selectE.inputattr = inputattr;
+	h->val.selectE.body = body;
+	h->kind = selectK;
+	h->next = NULL;
 	return h;
 }
 
 // ========================== ATTRs ==========================================
-INPUTATTR* makeINPUTATTRname(ATTR* attr, INPUTATTR* nextattr)
+INPUTATTR* makeINPUTATTRname(ATTR* attr)
 {
 	INPUTATTR* i;
 	i = NEW(INPUTATTR);
 	i->lineno = lineno;
 	i->kind = nameK;
 	i->attr = attr;
-	i->nextattr = nextattr;
+	i->next = NULL;
 
 	return i;
 }
 
-INPUTATTR* makeINPUTATTRtype(char* type, INPUTATTR* nextattr)
+INPUTATTR* makeINPUTATTRtype(char* type)
 {
 	INPUTATTR* i;
 	i = NEW(INPUTATTR);
 	i->lineno = lineno;
 	i->kind = typeK;
 	i->val.type = inputtype;
-	i->nextattr = nextattr;
+	i->next = NULL;
 
 	return i;
 }
 
-INPUTATTR* makeINPUTATTRattribute(ATTRIBUTE* attribute, INPUTATTR* nextattr)
+INPUTATTR* makeINPUTATTRattribute(ATTRIBUTE* attribute)
 {
 	INPUTATTR* i;
 	i = NEW(INPUTATTR);
 	i->lineno = lineno;
 	i->kind = otherK;
 	i->attribute = attribute;
-	i->nextattr = nextattr;
+	i->next = NULL;
 
 	return i;
 }
 
-ATTRIBUTE* makeATTRIBUTEattr(ATTR* attr, ATTRIBUTE* next)
+// ATTRIBUTE* makeATTRIBUTEattr(ATTR* attr)
+// {
+// 	ATTRIBUTE* a;
+// 	a = NEW(ATTRIBUTE);
+// 	a->lineno = lineno;
+// 	a->kind = attributeK;
+// 	a->attr = attr;
+// 	a->next = NULL;
+
+// 	return a;
+// }
+
+ATTRIBUTE* makeATTRIBUTEattr(ATTR* left, ATTR* right)
 {
 	ATTRIBUTE* a;
 	a = NEW(ATTRIBUTE);
 	a->lineno = lineno;
-	a->kind = attributeK;
-	a->attr = attr;
-	a->nextattr = nextattr;
-
-	return a;
-}
-
-ATTRIBUTE* makeATTRIBUTEattreqattr(ATTR* attr1, ATTR* attr2, ATTRIBUTE* next)
-{
-	ATTRIBUTE* a;
-	a = NEW(ATTRIBUTE);
-	a->lineno = lineno;
-	a->kind = attributeK;
-	a->attr1 = attr1;
-	a->attr2 = attr2;
-	a->nextattr = nextattr;
+	a->left = left;
+	a->right= right;
+	a->next = NULL;
 	return a;
 }
 
@@ -171,7 +172,7 @@ ATTR* makeATTRstringconst(char* stringconst)
 
 // ================================== SCHEMAS =============================
 
-SCHEMA* makeSCHEMA(ID* id, FIELD* field, SCHEMA* next)
+SCHEMA* makeSCHEMA(ID* id, FIELD* field)
 {
 	SCHEMA* s;
 	s = NEW(SCHEMA);
@@ -179,11 +180,11 @@ SCHEMA* makeSCHEMA(ID* id, FIELD* field, SCHEMA* next)
 	s->kind= schemaK;
 	s->id = id;
 	s->field = field;
-	s->next = next;
+	s->next = NULL;
 	return s;
 }
 
-FIELD* makeFIELD(SIMPLETYPE* simpletype, ID* id, FIELD* next)
+FIELD* makeFIELD(SIMPLETYPE* simpletype, ID* id)
 {
 	FIELD* f;
 	f = NEW(FIELD);
@@ -191,28 +192,28 @@ FIELD* makeFIELD(SIMPLETYPE* simpletype, ID* id, FIELD* next)
 	f->kind= fieldK;
 	f->id = id;
 	f->simpletype = simpletype;
-	f->next = next;
+	f->next = NULL;
 	return f;
 }
 
-VARIABLE* makeVARIABLE(TYPE* type, ID* id, VARIABLE* next)
+VARIABLE* makeVARIABLE(TYPE* type, ID* id)
 {
 	VARIABLE* v;
 	v = NEW(VARIABLE);
 	v->lineno = lineno;
 	v->id = id;
 	v->type = type;
-	v->next = next;
+	v->next = NULL;
 	return v;
 }
 
-ID* makeID(char* identifier, ID* next)
+ID* makeID(char* identifier)
 {
 	ID* i;
 	i = NEW(ID);
 	i->lineno = lineno;
 	i->identifier = identifier;
-	i->next = next;
+	i->next = NULL;
 	return i;
 }
 
@@ -430,4 +431,362 @@ COMPOUNDSTM* makeCOMPOUNDSTM(VARIABLE* variable, STM* stm)
 	c->variable = variable;
 	c->stm = stm;
 	return c;
+}
+
+DOCUMENT* makeDOCUMENTid(ID* id)
+{
+	DOCUMENT* d;
+	d = NEW(DOCUMENT);
+	d->lineno = lineno;
+	d->val.id = id;
+	d->kind = idK;
+	return d;
+}
+
+DOCUMENT* makeDOCUMENTplug(ID* id, PLUG* plug)
+{
+	DOCUMENT* d;
+	d = NEW(DOCUMENT);
+	d->lineno = lineno;
+	d->val.docPlug.id = id;
+	d->val.docPlug.plug = plug;
+	d->kind = docPlugK;
+	return d;
+}
+
+RECEIVE* makeRECEIVE(INPUT* input)
+{
+	RECEIVE* r;
+	r = NEW(RECEIVE);
+	r->lineno = lineno;
+	r->input = input;
+	return r;
+}
+
+PLUG* makePLUG(ID* id, EXP* expr)
+{
+	PLUG* p;
+	p = NEW(PLUG);
+	p->lineno = lineno;
+	p->id = id;
+	p->expr = expr;
+	p->next = NULL;
+	return p;
+}
+
+INPUT* makeINPUT(LVALUE* lvalue, ID* id)
+{
+	INPUT* i;
+	i = NEW(INPUT);
+	i->lineno = lineno;
+	i->id = id;
+	i->lvalue = lvalue;
+	i->next = NULL;
+	return i;
+}
+
+// LVALUE* makeLVALUEsingle(ID* id)
+// {
+// 	LVALUE* l;
+// 	l = NEW(LVALUE);
+// 	l->lineno = lineno;
+// 	l->id = id;
+// 	return l;
+// }
+
+LVALUE* makeLVALUE(ID* id1, ID* id2)
+{
+	LVALUE* l;
+	l = NEW(LVALUE);
+	l->lineno = lineno;
+	l->id1 = id1;
+	l->id2 = id2;
+	return l;
+}
+
+FIELDVALUE* makeFIELDVALUE(ID* id, EXP* expr)
+{
+	FIELDVALUE* f;
+	f = NEW(FIELDVALUE);
+	f->lineno = lineno;
+	f->id = id;
+	f->expr = expr;
+	f->next = NULL;
+	return f;
+}
+
+EXP* makeEXPlvalue(LVALUE* lvalue)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.lvalueE = lvalue;
+	e->kind = lvalueK;
+	return e;
+}
+
+EXP* makeEXPassign(LVALUE* lvalue, EXP* expr)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.assignE.lvalue = lvalue;
+	e->val.assignE.expr = expr;
+	e->kind = assignK;
+	return e;
+}
+
+EXP* makeEXPequals(EXP* left, EXP* right)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.equalsE.left = left;
+	e->val.equalsE.right = right;
+	e->kind = equalsK;
+	return e;
+}
+
+EXP* makeEXPnotequals(EXP* left, EXP* right)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.notequalsE.left = left;
+	e->val.notequalsE.right = right;
+	e->kind = notequalsK;
+	return e;
+}
+
+EXP* makeEXPlt(EXP* left, EXP* right)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.ltE.left = left;
+	e->val.ltE.right = right;
+	e->kind = ltK;
+	return e;
+}
+
+EXP* makeEXPgt(EXP* left, EXP* right)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.gtE.left = left;
+	e->val.gtE.right = right;
+	e->kind = gtK;
+	return e;
+}
+
+EXP* makeEXPlte(EXP* left, EXP* right)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.lteE.left = left;
+	e->val.lteE.right = right;
+	e->kind = lteK;
+	return e;
+}
+
+EXP* makeEXPgte(EXP* left, EXP* right)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.gteE.left = left;
+	e->val.gteE.right = right;
+	e->kind = gteK;
+	return e;
+}
+
+EXP* makeEXPnot(EXP* right)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.notE = right
+	e->kind = notK;
+	return e;
+}
+
+// EXP* makeEXPneg()
+// {
+// 	EXP* e;
+// 	e = NEW(EXP);
+// 	e->lineno = lineno;
+// 	e->val.negE = right
+// 	e->kind = negK;
+// 	return e;
+// }
+
+EXP* makeEXPplus(EXP* left, EXP* right)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.plusE.left = left;
+	e->val.plusE.right = right;
+	e->kind = plusK;
+	return e;
+}
+
+EXP* makeEXPminus(EXP* left, EXP* right)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.minusE.left = left;
+	e->val.minusE.right = right;
+	e->kind = minusK;
+	return e;
+}	
+
+EXP* makeEXPmult(EXP* left, EXP* right)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.multE.left = left;
+	e->val.multE.right = right;
+	e->kind = multK;
+	return e;
+}
+
+EXP* makeEXPdiv(EXP* left, EXP* right)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.divE.left = left;
+	e->val.divE.right = right;
+	e->kind = divK;
+	return e;
+}
+
+EXP* makeEXPmod(EXP* left, EXP* right)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.modE.left = left;
+	e->val.modE.right = right;
+	e->kind = modK;
+	return e;
+}
+
+EXP* makeEXPand(EXP* left, EXP* right)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.andE.left = left;
+	e->val.andE.right = right;
+	e->kind = andK;
+	return e;
+}
+
+EXP* makeEXPor(EXP* left, EXP* right)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.orE.left = left;
+	e->val.orE.right = right;
+	e->kind = orK;
+	return e;
+}
+
+EXP* makeEXPjoin(EXP* left, EXP* right)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.joinE.left = left;
+	e->val.joinE.right = right;
+	e->kind = joinK;
+	return e;
+}
+
+EXP* makeEXPkeep(EXP* left, ID* right)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.keepE.left = left;
+	e->val.keepE.right = right;
+	e->kind = keepK;
+	return e;
+}
+
+EXP* makeEXPremove(EXP* left, ID* right)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.removeE.left = left;
+	e->val.removeE.right = right;
+	e->kind = removeK;
+	return e;
+}
+
+EXP* makeEXPcall(ID* left, EXP* right)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.callE.left = left;
+	e->val.callE.right = right;
+	e->kind = callK;
+	return e;
+}
+
+EXP* makeEXPintconst(int intconst)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.intconstE = intconst;
+	e->kind = intconstK;
+	return e;
+}
+
+EXP* makeEXPtrue()
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->kind = trueK;
+	return e;
+}
+
+EXP* makeEXPfalse()
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->kind = falseK;
+	return e;
+}
+
+EXP* makeEXPstringconst(char* stringconst)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.stringconstE = stringconst;
+	e->kind = stringconstK;
+	return e;
+}
+
+EXP* makeEXPtuple(FIELDVALUE* fieldvalue)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.tupleE = fieldvalue;
+	e->kind = tupleK;
+	return e;
 }
