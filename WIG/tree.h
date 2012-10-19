@@ -2,12 +2,12 @@
 #define TREE_H
 
 typedef struct SERVICE {
-	int lineno;
-	struct HTML* html;
-	struct SCHEMA* schema;
-	struct VARIABLE* variable;
-	struct FUNCTION* function;
-	struct SESSION* session;
+    int lineno;
+    struct HTML* html;
+    struct SCHEMA* schema;
+    struct VARIABLE* variable;
+    struct FUNCTION* function;
+    struct SESSION* session;
 } SERVICE;
 
 typedef struct HTML{
@@ -133,7 +133,8 @@ type struct SESSION{
 
 type struct STM{
 	int lineno;
-	enum{semicolonK, showK, exitK, returnexprK, ifK, ifelseK, whileK, compoundK, exprK} kind;
+	enum{semicolonK, showK, exitK, returnexprK, ifK, 
+		ifelseK, whileK, compoundK, exprK} kind;
 	union{
 		struct{
 			struct DOCUMENT* doc;
@@ -328,12 +329,76 @@ type struct EXP{
 	struct EXP* next;
 } EXP;
 
-
-
-
-
-
-
-
+SERVICE* makeSERVICE(HTML* html, SCHEMA* schema, VARIABLE* variable, 
+	FUNCTION functions, SESSION session);
+HTML* makeHTML(char* identifier, HTMLBODY* body);
+HTMLBODY* makeHTMLBODYtag(ID* id, ATTRIBUTE* attribute);
+HTMLBODY* makeHTMLBODYgap(ID* id);
+HTMLBODY* makeHTMLBODYwhatever(char* whatever);
+HTMLBODY* makeHTMLBODYinput(INPUTATTR* inputattr);
+HTMLBODY* makeHTMLBODYselect(INPUTATTR* inputattr, HTMLBODY* body);
+INPUTATTR* makeINPUTATTRname(ATTR* attr);
+INPUTATTR* makeINPUTATTRtype(char* type);
+INPUTATTR* makeINPUTATTRattribute(ATTRIBUTE* attribute);
+ATTRIBUTE* makeATTRIBUTEattr(ATTR* left, ATTR* right);
+ATTR* makeATTRid(ID* id);
+ATTR* makeATTRstringconst(char* stringconst);
+SCHEMA* makeSCHEMA(ID* id, FIELD* field);
+FIELD* makeFIELD(SIMPLETYPE* simpletype, ID* id);
+VARIABLE* makeVARIABLE(TYPE* type, ID* id);
+ID* makeID(char* identifier);
+TYPE* makeTYPEsimpletype(SIMPLETYPE* simpletype);
+TYPE* makeTYPEtupleid(ID* id);
+SIMPLETYPE* makeSIMPLETYPEint();
+SIMPLETYPE* makeSIMPLETYPEbool();
+SIMPLETYPE* makeSIMPLETYPEstring();
+SIMPLETYPE* makeSIMPLETYPEvoid();
+FUNCTION* makeFUNCTION(TYPE* type, ID* id, ARGUMENT* argument, 
+	COMPOUNDSTM* compoundstm, FUNCTION* next);
+ARGUMENT* makeARGUMENT(TYPE* type, ID* id);
+SESSION* makeSESSION(ID* id, COMPOUNDSTM* compoundstm, SESSION* next);
+STM* makeSTMsemicolon();
+STM* makeSTMshow(DOCUMENT* doc, RECEIVE* rec);
+STM* makeSTMexit(DOCUMENT* doc);
+STM* makeSTMreturn();
+STM* makeSTMreturnexpr(EXP* expr);
+STM* makeSTMif(EXP* expr, STM* stm);
+STM* makeSTMifelse(EXP* expr, STM* stm1, STM* stm2);
+STM* makeSTMwhile(EXP* expr, STM* stm);
+STM* makeSTMcompound(COMPOUNDSTM* compoundstm);
+STM* makeSTMexp(EXP* expr);
+COMPOUNDSTM* makeCOMPOUNDSTM(VARIABLE* variable, STM* stm);
+DOCUMENT* makeDOCUMENTid(ID* id);
+DOCUMENT* makeDOCUMENTplug(ID* id, PLUG* plug);
+RECEIVE* makeRECEIVE(INPUT* input);
+PLUG* makePLUG(ID* id, EXP* expr);
+INPUT* makeINPUT(LVALUE* lvalue, ID* id);
+LVALUE* makeLVALUE(ID* id1, ID* id2);
+FIELDVALUE* makeFIELDVALUE(ID* id, EXP* expr);
+EXP* makeEXPlvalue(LVALUE* lvalue);
+EXP* makeEXPassign(LVALUE* lvalue, EXP* expr);
+EXP* makeEXPequals(EXP* left, EXP* right);
+EXP* makeEXPnotequals(EXP* left, EXP* right);
+EXP* makeEXPlt(EXP* left, EXP* right);
+EXP* makeEXPgt(EXP* left, EXP* right);
+EXP* makeEXPlte(EXP* left, EXP* right);
+EXP* makeEXPgte(EXP* left, EXP* right);
+EXP* makeEXPnot(EXP* right);
+EXP* makeEXPplus(EXP* left, EXP* right);
+EXP* makeEXPminus(EXP* left, EXP* right);    
+EXP* makeEXPmult(EXP* left, EXP* right);
+EXP* makeEXPdiv(EXP* left, EXP* right);
+EXP* makeEXPmod(EXP* left, EXP* right);
+EXP* makeEXPand(EXP* left, EXP* right);
+EXP* makeEXPor(EXP* left, EXP* right);
+EXP* makeEXPjoin(EXP* left, EXP* right);
+EXP* makeEXPkeep(EXP* left, ID* right);
+EXP* makeEXPremove(EXP* left, ID* right);
+EXP* makeEXPcall(ID* left, EXP* right);
+EXP* makeEXPintconst(int intconst);
+EXP* makeEXPtrue();
+EXP* makeEXPfalse();
+EXP* makeEXPstringconst(char* stringconst);
+EXP* makeEXPtuple(FIELDVALUE* fieldvalue);
 
 #endif /* !TREE_H */
