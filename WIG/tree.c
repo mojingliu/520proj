@@ -1,3 +1,12 @@
+#ifndef TREE_C
+#define TREE_C
+
+#include "tree.h"
+#include "memory.h"
+#include <stdlib.h>
+
+extern int lineno;
+
 SERVICE* makeSERVICE(HTML* html, SCHEMA* schema, VARIABLE* variable, FUNCTION* function, SESSION* session)
 {
 	SERVICE* s;
@@ -10,9 +19,8 @@ SERVICE* makeSERVICE(HTML* html, SCHEMA* schema, VARIABLE* variable, FUNCTION* f
 	s->session = session;
 	return s;
 }
-// html : "const" "html" identifier "=" "<html>" htmlbodies "</html>" ";"
-// nextbody can be null, or it can be "nehtmlbodies" which is 1 or more htmlbody
-HTML* makeHTML(char* identifier, HTMLBODY* body)
+
+HTML* makeHTML(ID* identifier, HTMLBODY* body)
 {
 	HTML* h;
 	h = NEW(HTML);
@@ -57,14 +65,14 @@ HTMLBODY* makeHTMLBODYwhatever(char* whatever)
 	return h;
 }
 
-HTMLBODY* makeHTMLBODYmeta(HTMLMETA* meta)
+HTMLBODY* makeHTMLBODYmeta(char* meta)
 {
 	HTMLBODY* h;
 	h = NEW(HTMLBODY);
 	h->lineno = lineno;
 	h->val.meta = meta;
 	h->kind = metaK;
-	hh->next = NULL;
+	h->next = NULL;
 	return h;
 }
 
@@ -91,7 +99,7 @@ HTMLBODY* makeHTMLBODYselect(INPUTATTR* inputattr, HTMLBODY* body)
 	return h;
 }
 
-// ========================== ATTRs ==========================================
+/* ========================== ATTRs ========================================== */
 INPUTATTR* makeINPUTATTRname(ATTR* attr)
 {
 	INPUTATTR* i;
@@ -139,18 +147,6 @@ INPUTATTR* makeINPUTATTRattribute(ATTRIBUTE* attribute)
 	return i;
 }
 
-// ATTRIBUTE* makeATTRIBUTEattr(ATTR* attr)
-// {
-// 	ATTRIBUTE* a;
-// 	a = NEW(ATTRIBUTE);
-// 	a->lineno = lineno;
-// 	a->kind = attributeK;
-// 	a->attr = attr;
-// 	a->next = NULL;
-
-// 	return a;
-// }
-
 ATTRIBUTE* makeATTRIBUTEattr(ATTR* left, ATTR* right)
 {
 	ATTRIBUTE* a;
@@ -168,7 +164,7 @@ ATTR* makeATTRid(ID* id)
 	a = NEW(ATTR);
 	a->lineno = lineno;
 	a->kind = attridK;
-	a->val.id = id
+	a->val.id = id;
 	return a;
 }
 
@@ -178,11 +174,21 @@ ATTR* makeATTRstringconst(char* stringconst)
 	a = NEW(ATTR);
 	a->lineno = lineno;
 	a->kind = attrstringconstK;
-	a->val.stringconst = stringconst
+	a->val.stringconst = stringconst;
 	return a;
 }
 
-// ================================== SCHEMAS =============================
+ATTR* makeATTRintconst(int intconst)
+{
+	ATTR* a;
+	a = NEW(ATTR);
+	a->lineno = lineno;
+	a->kind = attrintconstK;
+	a->val.intconst = intconst;
+	return a;
+}
+
+/* ================================== SCHEMAS ============================= */
 
 SCHEMA* makeSCHEMA(ID* id, FIELD* field)
 {
@@ -315,7 +321,7 @@ SESSION* makeSESSION(ID* id, COMPOUNDSTM* compoundstm)
 	s = NEW(SESSION);
 	s->lineno = lineno;
 	s->id = id;
-	s->compoundstm = compoundstm
+	s->compoundstm = compoundstm;
 	s->next = NULL;
 	return s;
 }
@@ -326,7 +332,7 @@ STM* makeSTMsemicolon()
 	s = NEW(STM);
 	s->lineno = lineno;
 	s->kind = semicolonK;
-	a->next = NULL;
+	s->next = NULL;
 	return s;
 }
 
@@ -338,7 +344,7 @@ STM* makeSTMshow(DOCUMENT* doc, RECEIVE* rec)
 	s->kind = showK;
 	s->val.showE.doc = doc;
 	s->val.showE.rec = rec;
-	a->next = NULL;
+	s->next = NULL;
 	return s;
 }
 
@@ -349,7 +355,7 @@ STM* makeSTMexit(DOCUMENT* doc)
 	s->lineno = lineno;
 	s->kind = exitK;
 	s->val.doc = doc;
-	a->next = NULL;
+	s->next = NULL;
 	return s;
 }
 
@@ -359,7 +365,7 @@ STM* makeSTMreturn()
 	s = NEW(STM);
 	s->lineno = lineno;
 	s->kind = returnK;
-	a->next = NULL;
+	s->next = NULL;
 	return s;
 }
 
@@ -369,8 +375,8 @@ STM* makeSTMreturnexpr(EXP* expr)
 	s = NEW(STM);
 	s->lineno = lineno;
 	s->kind = returnexprK;
-	s->expr = expr;
-	a->next = NULL;
+	s->val.expr = expr;
+	s->next = NULL;
 	return s;
 }
 
@@ -382,7 +388,7 @@ STM* makeSTMif(EXP* expr, STM* stm)
 	s->kind = ifK;
 	s->val.ifE.expr = expr;
 	s->val.ifE.stm = stm;
-	a->next = NULL;
+	s->next = NULL;
 	return s;
 }
 
@@ -395,7 +401,7 @@ STM* makeSTMifelse(EXP* expr, STM* stm1, STM* stm2)
 	s->val.ifelseE.expr = expr;
 	s->val.ifelseE.stm1 = stm1;
 	s->val.ifelseE.stm2 = stm2;
-	a->next = NULL;
+	s->next = NULL;
 	return s;
 }
 
@@ -407,7 +413,7 @@ STM* makeSTMwhile(EXP* expr, STM* stm)
 	s->kind = whileK;
 	s->val.whileE.expr = expr;
 	s->val.whileE.stm = stm;
-	a->next = NULL;
+	s->next = NULL;
 	return s;
 }
 
@@ -429,7 +435,7 @@ STM* makeSTMexp(EXP* expr)
 	s->lineno = lineno;
 	s->kind = exprK;
 	s->val.expr = expr;
-	a->next = NULL;
+	s->next = NULL;
 	return s;
 }
 
@@ -495,14 +501,15 @@ INPUT* makeINPUT(LVALUE* lvalue, ID* id)
 	return i;
 }
 
-// LVALUE* makeLVALUEsingle(ID* id)
+/* LVALUE* makeLVALUEsingle(ID* id)
 // {
 // 	LVALUE* l;
 // 	l = NEW(LVALUE);
 // 	l->lineno = lineno;
 // 	l->id = id;
 // 	return l;
-// }
+// } 
+*/
 
 LVALUE* makeLVALUE(ID* id1, ID* id2)
 {
@@ -630,16 +637,6 @@ EXP* makeEXPnot(EXP* notexpr)
 	e->next = NULL;
 	return e;
 }
-
-// EXP* makeEXPneg()
-// {
-// 	EXP* e;
-// 	e = NEW(EXP);
-// 	e->lineno = lineno;
-// 	e->val.negE = right
-// 	e->kind = negK;
-// 	return e;
-// }
 
 EXP* makeEXPplus(EXP* left, EXP* right)
 {
@@ -825,3 +822,5 @@ EXP* makeEXPtuple(FIELDVALUE* fieldvalue)
 	e->next = NULL;
 	return e;
 }
+
+#endif /* TREE_C */

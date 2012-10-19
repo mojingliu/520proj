@@ -52,6 +52,7 @@ void yyerror() {
        tIF tELSE tWHILE tPLUG
        tRECEIVE tTRUE tFALSE
        tTUPLE
+       tGAPOPEN tGAPCLOSE
 
 %token <intconst> tINTCONST
 %token <stringconst> tIDENTIFIER tSTRINGCONST tWHATEVER tMETA 
@@ -89,7 +90,7 @@ void yyerror() {
 %%
 
 service : tSERVICE '{' htmls schemas variables functions sessions '}'
-  {$$ = makeSERVICE($3, $4, $5, $6, $7);};
+  {theservice = makeSERVICE($3, $4, $5, $6, $7);};
 
 htmls : html
     {$$ = $1;}
@@ -113,12 +114,12 @@ htmlbody : '<' identifier attributes '>'
     {$$ = makeHTMLBODYtag($2, $3);}
   | '<' '/' identifier '>'
     {$$ = makeHTMLBODYtag($3, NULL);}
-  | '<' '[' identifier ']' '>'
-    {$$ = makeHTMLBODYgap($3);}
+  | tGAPOPEN identifier tGAPCLOSE
+    {$$ = makeHTMLBODYgap($2);}
   | tWHATEVER
-    {$$ = $1;}
+    {$$ = makeHTMLBODYwhatever($1);}
   | tMETA
-    {$$ = $1;}
+    {$$ = makeHTMLBODYmeta($1);}
   | '<' tINPUT inputattrs '>'
     {$$ = makeHTMLBODYinput($3);}
   | '<' tSELECT inputattrs '>' htmlbodies '<' '/' tSELECT '>'
@@ -133,7 +134,11 @@ inputattr : tNAME '=' attr
     {$$ = makeINPUTATTRname($3);}
   | tTYPE '=' tTEXT
     {$$ = makeINPUTATTRtext();}
+  | tTYPE '=' '"' tTEXT '"'
+    {$$ = makeINPUTATTRtext();}
   | tTYPE '=' tRADIO
+    {$$ = makeINPUTATTRradio();}
+  | tTYPE '=' '"' tRADIO '"'
     {$$ = makeINPUTATTRradio();}
   | attribute
     {$$ = makeINPUTATTRattribute($1);};
@@ -152,12 +157,14 @@ neattributes : attribute
 attribute : attr
     {$$ = makeATTRIBUTEattr($1, NULL);}
   | attr '=' attr
-    {$$ = makeATTRIBUTE($1, $3);};
+    {$$ = makeATTRIBUTEattr($1, $3);};
 
 attr : identifier
     {$$ = makeATTRid($1);}
-  | tSTRINGCONST
-    {$$ = makeATTRstringconst($1);};
+  | '"' tSTRINGCONST '"'
+    {$$ = makeATTRstringconst($2);}
+  | tINTCONST
+    {$$ = makeATTRintconst($1);};
 
 schemas: /* empty */
     {$$ = NULL;}
@@ -180,7 +187,7 @@ fields :  /* empty */
 nefields : field
     {$$ = $1;}
   | nefields field
-    {$$ = 2; $$->next = $1;};
+    {$$ = $2; $$->next = $1;};
 
 field : simpletype identifier ';'
     {$$ = makeFIELD($1, $2);};
@@ -226,7 +233,7 @@ functions :  /* empty */
     {$$ = $1;};
 
 nefunctions : function
-    {$$ = 1;}
+    {$$ = $1;}
   | nefunctions function
     {$$ = $2; $$->next = $1;};
 
@@ -273,7 +280,7 @@ stm : ';'
   | tRETURN ';'
     {$$ = makeSTMreturn();}
   | tRETURN exp ';'
-    {$$ = makeSTMreturnexp($2);}
+    {$$ = makeSTMreturnexpr($2);}
   | tIF '(' exp ')' stm
     {$$ = makeSTMif($3, $5);}
   | tIF '(' exp ')' stm tELSE stm

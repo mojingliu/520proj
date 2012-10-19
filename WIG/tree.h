@@ -12,7 +12,7 @@ typedef struct SERVICE {
 
 typedef struct HTML{
 	int lineno;
-	char* identifier;
+	struct ID* identifier;
 	struct HTMLBODY* body;
 	struct HTML* next;
 } HTML;
@@ -28,7 +28,7 @@ typedef struct HTMLBODY {
 
 		struct ID* id;
 		char* whatever;
-		struct HTMLMETA* meta;
+		char* meta;
 		struct INPUTATTR* inputattr;
 		struct {
 			struct INPUTATTR* inputattr;
@@ -40,7 +40,7 @@ typedef struct HTMLBODY {
 
 typedef struct INPUTATTR{
 	int lineno;
-	enum{nameK, radioK, textK, otheK} kind;
+	enum{nameK, radioK, textK, otherK} kind;
 	union{
 		struct ATTR* attr;
 		struct ATTRIBUTE* attribute;
@@ -59,10 +59,11 @@ typedef struct ATTRIBUTE{
 
 typedef struct ATTR{
 	int lineno;
-	enum{attridK, attrstringconstK} kind;
+	enum{attridK, attrstringconstK, attrintconstK} kind;
 	union{
 		struct ID* id;
 		char* stringconst;
+		int intconst;
 	} val;
 } ATTR;
 
@@ -89,7 +90,7 @@ typedef struct VARIABLE{
 
 typedef struct ID{
 	int lineno;
-	struct ID* identifier;
+	char* identifier;
 	struct ID* next;
 } ID;
 
@@ -132,7 +133,7 @@ typedef struct SESSION{
 
 typedef struct STM{
 	int lineno;
-	enum{semicolonK, showK, exitK, returnexprK, ifK, 
+	enum{semicolonK, showK, exitK, returnexprK, returnK, ifK, 
 		ifelseK, whileK, compoundK, exprK} kind;
 	union{
 		struct{
@@ -224,7 +225,7 @@ typedef struct EXP{
 		tupleK }kind;
 
 	union{
-		struct LVALUE* lvalue;
+		struct LVALUE* lvalueE;
 		struct{
 			struct LVALUE* lvalue;
 			struct EXP* expr;
@@ -317,9 +318,9 @@ typedef struct EXP{
 			struct ID* left;
 		}callE;
 
-		int intconst;
-		char* stringconst;
-		struct FIELDVALUE* fieldvalue;
+		int intconstE;
+		char* stringconstE;
+		struct FIELDVALUE* tupleE;
 
 
 	}val;
@@ -329,10 +330,11 @@ typedef struct EXP{
 
 SERVICE* makeSERVICE(HTML* html, SCHEMA* schema, VARIABLE* variable, 
 	FUNCTION* functions, SESSION* session);
-HTML* makeHTML(char* identifier, HTMLBODY* body);
+HTML* makeHTML(ID* identifier, HTMLBODY* body);
 HTMLBODY* makeHTMLBODYtag(ID* id, ATTRIBUTE* attribute);
 HTMLBODY* makeHTMLBODYgap(ID* id);
 HTMLBODY* makeHTMLBODYwhatever(char* whatever);
+HTMLBODY* makeHTMLBODYmeta(char* meta);
 HTMLBODY* makeHTMLBODYinput(INPUTATTR* inputattr);
 HTMLBODY* makeHTMLBODYselect(INPUTATTR* inputattr, HTMLBODY* body);
 INPUTATTR* makeINPUTATTRname(ATTR* attr);
@@ -342,6 +344,7 @@ INPUTATTR* makeINPUTATTRattribute(ATTRIBUTE* attribute);
 ATTRIBUTE* makeATTRIBUTEattr(ATTR* left, ATTR* right);
 ATTR* makeATTRid(ID* id);
 ATTR* makeATTRstringconst(char* stringconst);
+ATTR* makeATTRintconst(int intconst);
 SCHEMA* makeSCHEMA(ID* id, FIELD* field);
 FIELD* makeFIELD(SIMPLETYPE* simpletype, ID* id);
 VARIABLE* makeVARIABLE(TYPE* type, ID* id);
