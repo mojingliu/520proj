@@ -28,6 +28,7 @@ void yyerror() {
   struct FUNCTION* function;
   struct ARGUMENT* argument;
   struct STM* statement;
+  struct COMPOUNDSTM* compoundstm;
   struct EXP* exp;
   struct ID* id;
   struct FIELDVALUE* fieldvalue;
@@ -36,6 +37,7 @@ void yyerror() {
   struct RECEIVE* receive;
   struct INPUT* input;
   struct SESSION* session;
+  struct LVALUE* lvalue;
   int intconst;
   char* stringconst;
 };
@@ -52,7 +54,7 @@ void yyerror() {
        tTUPLE
 
 %token <intconst> tINTCONST
-%token <stringconst> tIDENTIFIER tSTRINGCONST tWHATEVER
+%token <stringconst> tIDENTIFIER tSTRINGCONST tWHATEVER tMETA 
 
 
 
@@ -61,15 +63,16 @@ void yyerror() {
 %type <htmlbody> htmlbodies nehtmlbodies htmlbody 
 %type <attribute> attributes neattributes attribute
 %type <attr> attr
+%type <inputattr> inputattr inputattrs 
 %type <schema> schemas neschemas schema
 %type <field> fields nefields field
 %type <simpletype> simpletype
 %type <type> type
-%type <variable> nevariables variable
+%type <id> identifier identifiers
+%type <variable> nevariables variable variables
 %type <function> functions nefunctions function
-%type <parameter> parameters neparameters parameter
 %type <session> sessions session
-%type <argument> arguments nearguments
+%type <argument> arguments nearguments argument
 %type <statement> stms nestms stm
 %type <document> document
 %type <plug> plugs plug
@@ -77,6 +80,8 @@ void yyerror() {
 %type <input> inputs neinputs input
 %type <exp> exps neexps exp
 %type <fieldvalue> fieldvalues nefieldvalues fieldvalue
+%type <compoundstm> compoundstm
+%type <lvalue> lvalue
 
 
 
@@ -84,7 +89,7 @@ void yyerror() {
 %%
 
 service : tSERVICE '{' htmls schemas variables functions sessions '}'
-  {$$ = makeSERVICE($3, $4, $5, $6)};
+  {$$ = makeSERVICE($3, $4, $5, $6, $7);};
 
 htmls : html
     {$$ = $1;}
@@ -110,10 +115,10 @@ htmlbody : '<' identifier attributes '>'
     {$$ = makeHTMLBODYtag($3, NULL);}
   | '<' '[' identifier ']' '>'
     {$$ = makeHTMLBODYgap($3);}
-  | whatever
-    {}
-  | meta
-    {$$ = makeHTMLBODYmeta($1);}  /* FIXME: ???? */
+  | tWHATEVER
+    {$$ = $1;}
+  | tMETA
+    {$$ = $1;}
   | '<' tINPUT inputattrs '>'
     {$$ = makeHTMLBODYinput($3);}
   | '<' tSELECT inputattrs '>' htmlbodies '<' '/' tSELECT '>'
@@ -126,15 +131,13 @@ inputattrs : inputattr
 
 inputattr : tNAME '=' attr
     {$$ = makeINPUTATTRname($3);}
-  | tTYPE '=' inputtype
-    {$$ = makeINPUTATTRtype($3);}
+  | tTYPE '=' tTEXT
+    {$$ = makeINPUTATTRtext();}
+  | tTYPE '=' tRADIO
+    {$$ = makeINPUTATTRradio();}
   | attribute
     {$$ = makeINPUTATTRattribute($1);};
 
-inputtype : tTEXT 
-    {}
-  | tRADIO
-    {};
 
 attributes : /* empty */
     {$$ = NULL;} 
@@ -153,8 +156,8 @@ attribute : attr
 
 attr : identifier
     {$$ = makeATTRid($1);}
-  | stringconst
-    {$$ = makeATTRstringconst($2)};  /* TODO: this wont work */
+  | tSTRINGCONST
+    {$$ = makeATTRstringconst($1);};
 
 schemas: /* empty */
     {$$ = NULL;}
@@ -200,6 +203,9 @@ identifiers : identifier
   | identifiers ',' identifier
     {$$ = $3; $$->next = $1;};
 
+identifier : tIDENTIFIER
+    {$$ = makeID($1);};
+
 simpletype : tINT
     {$$ = makeSIMPLETYPEint();}
   | tBOOL
@@ -212,7 +218,7 @@ simpletype : tINT
 type : simpletype
     {$$ = makeTYPEsimpletype($1);}
   | "tuple" identifier
-    {$$ makeTYPEtupleid(identifier)};
+    {$$ = makeTYPEtupleid($2);};
 
 functions :  /* empty */
     {$$ = NULL;}
@@ -230,7 +236,7 @@ function : type identifier '(' arguments ')' compoundstm
 arguments : /* empty */
     {$$ = NULL;}
  | nearguments
-    {$$ = $1};
+    {$$ = $1;};
 
 nearguments : argument
     {$$ = $1;}
@@ -243,7 +249,7 @@ argument : type identifier
 sessions : session
     {$$ = $1;}
   | sessions session
-    {$$ = $2; $$->next = $1};
+    {$$ = $2; $$->next = $1;};
 
 session : tSESSION identifier '(' ')' compoundstm
     {$$ = makeSESSION($2, $5);};
@@ -265,7 +271,7 @@ stm : ';'
   | tEXIT document ';'
     {$$ = makeSTMexit($2);}
   | tRETURN ';'
-    {$$ = makeSTMreturn()}
+    {$$ = makeSTMreturn();}
   | tRETURN exp ';'
     {$$ = makeSTMreturnexp($2);}
   | tIF '(' exp ')' stm
@@ -287,7 +293,7 @@ document : identifier
 receive : /* empty */
     {$$ = makeRECEIVE(NULL);}
   | tRECEIVE '[' inputs ']'
-    {$$ = makeRECEIVE($1);};
+    {$$ = makeRECEIVE($3);};
 
 compoundstm : '{' variables stms '}'
     {$$ = makeCOMPOUNDSTM($2, $3);};
@@ -326,9 +332,9 @@ exp : lvalue
   | exp '>' exp
     {$$ = makeEXPgt($1, $3);}
   | exp '<' '=' exp
-    {$$ = makeEXPlte($1, $3);}
+    {$$ = makeEXPlte($1, $4);}
   | exp '>' '=' exp
-    {$$ = makeEXPgte($1, $3);}
+    {$$ = makeEXPgte($1, $4);}
   | '!' exp
     {$$ = makeEXPnot($2);}
   | '-' exp
@@ -349,22 +355,23 @@ exp : lvalue
     {$$ = makeEXPor($1, $4);}
   | exp '<' '<' exp
     {$$ = makeEXPjoin($1, $4);}
-  | exp '\' '+' identifiers
+  | exp '\\' '+' identifiers
     {$$ = makeEXPkeep($1, $4);}
-  | exp '\' '-' identifiers
+  | exp '\\' '-' identifiers
     {$$ = makeEXPremove($1, $4);}
   | identifier '(' exps ')'
     {$$ = makeEXPcall($1, $3);}
-  | intconst
+  | tINTCONST
     {$$ = makeEXPintconst($1);}
   | tTRUE
     {$$ = makeEXPtrue();}
   | tFALSE
     {$$ = makeEXPfalse();}
-  | stringconst
+  | tSTRINGCONST
     {$$ = makeEXPstringconst($1);}
   | tTUPLE '{' fieldvalues '}'
     {$$ = makeEXPtuple($3);};
+
 
 exps : /* empty */
     {$$ = NULL;}
@@ -395,19 +402,3 @@ fieldvalue : identifier '=' exp
     {$$ = makeFIELDVALUE($1, $3);};
 
 %%
-
-
-
-
-TOKENS:
-
-identifier : usual identifiers
-;
-intconst : usual integer constants
-;
-stringconst : usual string constants
-;
-meta : any string of the form <!-- ... -->
-;
-whatever : any string not containing < or >
-;

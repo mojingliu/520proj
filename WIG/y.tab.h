@@ -37,17 +37,75 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     tINTCONST = 258,
-     tIDENTIFIER = 259,
-     tABS = 260,
-     tEXPONENT = 261
+     tSERVICE = 258,
+     tCONST = 259,
+     tHTML = 260,
+     tHTMLTAGOPEN = 261,
+     tHTMLTAGCLOSE = 262,
+     tINPUT = 263,
+     tSELECT = 264,
+     tNAME = 265,
+     tTYPE = 266,
+     tTEXT = 267,
+     tRADIO = 268,
+     tSCHEMA = 269,
+     tINT = 270,
+     tBOOL = 271,
+     tSTRING = 272,
+     tVOID = 273,
+     tSESSION = 274,
+     tSHOW = 275,
+     tEXIT = 276,
+     tRETURN = 277,
+     tIF = 278,
+     tELSE = 279,
+     tWHILE = 280,
+     tPLUG = 281,
+     tRECEIVE = 282,
+     tTRUE = 283,
+     tFALSE = 284,
+     tTUPLE = 285,
+     tINTCONST = 286,
+     tIDENTIFIER = 287,
+     tSTRINGCONST = 288,
+     tWHATEVER = 289,
+     tMETA = 290
    };
 #endif
 /* Tokens.  */
-#define tINTCONST 258
-#define tIDENTIFIER 259
-#define tABS 260
-#define tEXPONENT 261
+#define tSERVICE 258
+#define tCONST 259
+#define tHTML 260
+#define tHTMLTAGOPEN 261
+#define tHTMLTAGCLOSE 262
+#define tINPUT 263
+#define tSELECT 264
+#define tNAME 265
+#define tTYPE 266
+#define tTEXT 267
+#define tRADIO 268
+#define tSCHEMA 269
+#define tINT 270
+#define tBOOL 271
+#define tSTRING 272
+#define tVOID 273
+#define tSESSION 274
+#define tSHOW 275
+#define tEXIT 276
+#define tRETURN 277
+#define tIF 278
+#define tELSE 279
+#define tWHILE 280
+#define tPLUG 281
+#define tRECEIVE 282
+#define tTRUE 283
+#define tFALSE 284
+#define tTUPLE 285
+#define tINTCONST 286
+#define tIDENTIFIER 287
+#define tSTRINGCONST 288
+#define tWHATEVER 289
+#define tMETA 290
 
 
 
@@ -57,16 +115,39 @@ typedef union YYSTYPE
 {
 
 /* Line 2068 of yacc.c  */
-#line 13 "tiny.y"
+#line 16 "wig.y"
 
-   int intconst;
-   char *stringconst;
-   struct EXP *exp;
+  struct SERVICE* service;
+  struct HTML* html;
+  struct HTMLBODY* htmlbody;
+  struct INPUTATTR* inputattr;
+  struct ATTRIBUTE* attribute;
+  struct ATTR* attr;
+  struct SCHEMA* schema;
+  struct FIELD* field;
+  struct SIMPLETYPE* simpletype;
+  struct VARIABLE* variable;
+  struct TYPE* type;
+  struct FUNCTION* function;
+  struct ARGUMENT* argument;
+  struct STM* statement;
+  struct COMPOUNDSTM* compoundstm;
+  struct EXP* exp;
+  struct ID* id;
+  struct FIELDVALUE* fieldvalue;
+  struct DOCUMENT* document;
+  struct PLUG* plug;
+  struct RECEIVE* receive;
+  struct INPUT* input;
+  struct SESSION* session;
+  struct LVALUE* lvalue;
+  int intconst;
+  char* stringconst;
 
 
 
 /* Line 2068 of yacc.c  */
-#line 70 "y.tab.h"
+#line 151 "y.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

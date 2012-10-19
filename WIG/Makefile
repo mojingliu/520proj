@@ -8,7 +8,7 @@ main: y.tab.o lex.yy.o main.o tree.h tree.o pretty.h pretty.o eval.h eval.o memo
 y.tab.c y.tab.h: wig.y
 	bison --yacc --defines wig.y
 
-lex.yy.c: tiny.l y.tab.h
+lex.yy.c: wig.l y.tab.h
 	flex wig.l
 check:
 	./check

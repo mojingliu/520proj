@@ -10,15 +10,58 @@ extern int lineno;
 [ \t]+    /* ignore */;
 \n        lineno++;
 
-"**"      return tEXPONENT;
 "*"       return '*';
 "/"       return '/';
 "%"       return '%';
-"abs"     return tABS;
 "+"       return '+';
 "-"       return '-';
 "("       return '(';
 ")"       return ')';
+"\\"	  return '\\';
+"="		  return '=';
+"!"       return '!';
+"<"       return '<';
+">"       return '>';
+"&"       return '&';
+"|"		  return '|';
+","       return ',';
+";"       return ';';
+"["       return '[';
+"]"       return ']';
+"{"	      return '{';
+"}"       return '}';
+"."		  return '.';
+
+
+"service" return tSERVICE;
+"const"	  return tCONST;
+"html"	  return tHTML;
+"<html>"  return tHTMLTAGOPEN;
+"</html>" return tHTMLTAGCLOSE;
+"input"   return tINPUT;
+"select"  return tSELECT;
+"name"    return tNAME;
+"type"    return tTYPE;
+"text"    return tTEXT;
+"radio"   return tRADIO;
+"schema"  return tSCHEMA;
+"int"     return tINT;
+"bool"    return tBOOL;
+"string"  return tSTRING;
+"void"	  return tVOID;
+"session" return tSESSION;
+"show"	  return tSHOW;
+"exit"	  return tEXIT;
+"return"  return tRETURN;
+"if"      return tIF;
+"else"	  return tELSE;
+"while"   return tWHILE;
+"plug"    return tPLUG;
+"receive" return tRECEIVE;
+"true"    return tTRUE;
+"false"   return tFALSE;
+"tuple"   return tTUPLE;
+
 
 
 0|([1-9][0-9]*) {
@@ -33,5 +76,11 @@ extern int lineno;
   return tIDENTIFIER; 
 }
 
-.         /* ignore */;
+\<!--.*?--> {
+	yylval.stringconst = 
+    	(char *) malloc (strlen (yytext) + 1);
+  	sprintf (yylval.stringconst, "%s", yytext); 
+  	return tMETA;
+}
+
 %%

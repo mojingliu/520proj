@@ -40,10 +40,9 @@ typedef struct HTMLBODY {
 
 typedef struct INPUTATTR{
 	int lineno;
-	enum{nameK, typeK, otheK}
+	enum{nameK, radioK, textK, otheK} kind;
 	union{
 		struct ATTR* attr;
-		char* type;
 		struct ATTRIBUTE* attribute;
 	} val;
 
@@ -88,13 +87,13 @@ typedef struct VARIABLE{
 	struct VARIABLE* next;
 } VARIABLE;
 
-type struct ID{
+typedef struct ID{
 	int lineno;
 	struct ID* identifier;
 	struct ID* next;
 } ID;
 
-type struct TYPE{
+typedef struct TYPE{
 	int lineno;
 	enum{tupleidK, simpletypeK} kind;
 	union{
@@ -103,12 +102,12 @@ type struct TYPE{
 	} val;
 } TYPE;
 
-type struct SIMPLETYPE{
+typedef struct SIMPLETYPE{
 	int lineno;
 	enum{intK, boolK, stringK, voidK} kind;
 } SIMPLETYPE;
 
-type struct FUNCTION{
+typedef struct FUNCTION{
 	int lineno;
 	struct TYPE* type;
 	struct ID* id;
@@ -117,21 +116,21 @@ type struct FUNCTION{
 	struct FUNCTION* next;
 } FUNCTION;
 
-type struct ARGUMENT{
+typedef struct ARGUMENT{
 	int lineno;
 	struct TYPE* type;
 	struct ID* id;
 	struct ARGUMENT* next;
 } ARGUMENT;
 
-type struct SESSION{
+typedef struct SESSION{
 	int lineno;
 	struct ID* id;
 	struct COMPOUNDSTM* compoundstm;
 	struct SESSION* next;
 } SESSION;
 
-type struct STM{
+typedef struct STM{
 	int lineno;
 	enum{semicolonK, showK, exitK, returnexprK, ifK, 
 		ifelseK, whileK, compoundK, exprK} kind;
@@ -142,7 +141,6 @@ type struct STM{
 		} showE;
 
 		struct DOCUMENT* doc;
-		struct EXP* expr;
 		struct{
 			struct EXP* expr;
 			struct STM* stm;
@@ -167,15 +165,15 @@ type struct STM{
 
 } STM;
 
-type struct COMPOUNDSTM{
+typedef struct COMPOUNDSTM{
 	int lineno;
 	struct VARIABLE* variable;
 	struct STM* stm;
 } COMPOUNDSTM;
 
-type struct DOCUMENT{
+typedef struct DOCUMENT{
 	int lineno;
-	enum{idK, plugK}
+	enum{idK, plugK}kind;
 	union{
 		struct ID* id;
 		struct {
@@ -185,39 +183,39 @@ type struct DOCUMENT{
 	} val;
 } DOCUMENT;
 
-type struct RECEIVE{
+typedef struct RECEIVE{
 	int lineno;
 	struct INPUT* input;
 } RECEIVE;
 
-type struct PLUG{
+typedef struct PLUG{
 	int lineno;
 	struct ID* id;
 	struct EXP* expr;
 	struct PLUG* next;
 } PLUG;
 
-type struct INPUT{
+typedef struct INPUT{
 	int lineno;
 	struct LVALUE* lvalue;
 	struct ID* id;
 	struct INPUT* next;
 } INPUT;
 
-type struct LVALUE{
+typedef struct LVALUE{
 	int lineno;
 	struct ID* id1;
 	struct ID* id2;
 } LVALUE;
 
-type struct FIELDVALUE{
+typedef struct FIELDVALUE{
 	int lineno;
 	struct ID* id;
 	struct EXP* expr;
-	struct FIELDVALUE next;
+	struct FIELDVALUE* next;
 } FIELDVALUE;
 
-type struct EXP{
+typedef struct EXP{
 	int lineno;
 	enum{lvalueK, assignK, equalsK, notequalsK, ltK, 
 		gtK, lteK, gteK, notK, plusK, minusK, multK, 
@@ -315,7 +313,7 @@ type struct EXP{
 		}removeE;
 
 		struct{
-			struct EXP* right
+			struct EXP* right;
 			struct ID* left;
 		}callE;
 
@@ -330,7 +328,7 @@ type struct EXP{
 } EXP;
 
 SERVICE* makeSERVICE(HTML* html, SCHEMA* schema, VARIABLE* variable, 
-	FUNCTION functions, SESSION session);
+	FUNCTION* functions, SESSION* session);
 HTML* makeHTML(char* identifier, HTMLBODY* body);
 HTMLBODY* makeHTMLBODYtag(ID* id, ATTRIBUTE* attribute);
 HTMLBODY* makeHTMLBODYgap(ID* id);
@@ -338,7 +336,8 @@ HTMLBODY* makeHTMLBODYwhatever(char* whatever);
 HTMLBODY* makeHTMLBODYinput(INPUTATTR* inputattr);
 HTMLBODY* makeHTMLBODYselect(INPUTATTR* inputattr, HTMLBODY* body);
 INPUTATTR* makeINPUTATTRname(ATTR* attr);
-INPUTATTR* makeINPUTATTRtype(char* type);
+INPUTATTR* makeINPUTATTRradio();
+INPUTATTR* makeINPUTATTRtext();
 INPUTATTR* makeINPUTATTRattribute(ATTRIBUTE* attribute);
 ATTRIBUTE* makeATTRIBUTEattr(ATTR* left, ATTR* right);
 ATTR* makeATTRid(ID* id);
@@ -354,9 +353,9 @@ SIMPLETYPE* makeSIMPLETYPEbool();
 SIMPLETYPE* makeSIMPLETYPEstring();
 SIMPLETYPE* makeSIMPLETYPEvoid();
 FUNCTION* makeFUNCTION(TYPE* type, ID* id, ARGUMENT* argument, 
-	COMPOUNDSTM* compoundstm, FUNCTION* next);
+	COMPOUNDSTM* compoundstm);
 ARGUMENT* makeARGUMENT(TYPE* type, ID* id);
-SESSION* makeSESSION(ID* id, COMPOUNDSTM* compoundstm, SESSION* next);
+SESSION* makeSESSION(ID* id, COMPOUNDSTM* compoundstm);
 STM* makeSTMsemicolon();
 STM* makeSTMshow(DOCUMENT* doc, RECEIVE* rec);
 STM* makeSTMexit(DOCUMENT* doc);

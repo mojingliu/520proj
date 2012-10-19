@@ -104,17 +104,28 @@ INPUTATTR* makeINPUTATTRname(ATTR* attr)
 	return i;
 }
 
-INPUTATTR* makeINPUTATTRtype(char* type)
+INPUTATTR* makeINPUTATTRtext()
 {
 	INPUTATTR* i;
 	i = NEW(INPUTATTR);
 	i->lineno = lineno;
-	i->kind = typeK;
-	i->val.type = inputtype;
+	i->kind = textK;
 	i->next = NULL;
 
 	return i;
 }
+
+INPUTATTR* makeINPUTATTRradio()
+{
+	INPUTATTR* i;
+	i = NEW(INPUTATTR);
+	i->lineno = lineno;
+	i->kind = radioK;
+	i->next = NULL;
+
+	return i;
+}
+
 
 INPUTATTR* makeINPUTATTRattribute(ATTRIBUTE* attribute)
 {
