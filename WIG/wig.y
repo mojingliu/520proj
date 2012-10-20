@@ -224,7 +224,7 @@ simpletype : tINT
 
 type : simpletype
     {$$ = makeTYPEsimpletype($1);}
-  | "tuple" identifier
+  | tTUPLE identifier
     {$$ = makeTYPEtupleid($2);};
 
 functions :  /* empty */
@@ -330,10 +330,10 @@ exp : lvalue
     {$$ = makeEXPlvalue($1);}
   | lvalue '=' exp
     {$$ = makeEXPassign($1, $3);}
-  | exp "==" exp
-    {$$ = makeEXPequals($1, $3);}
-  | exp "!=" exp
-    {$$ = makeEXPnotequals($1, $3);}
+  | exp '=' '=' exp
+    {$$ = makeEXPequals($1, $4);}
+  | exp '!' '=' exp
+    {$$ = makeEXPnotequals($1, $4);}
   | exp '<' exp
     {$$ = makeEXPlt($1, $3);}
   | exp '>' exp

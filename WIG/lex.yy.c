@@ -921,30 +921,33 @@ lineno++;
 case 5:
 YY_RULE_SETUP
 #line 18 "wig.l"
-{            
+{
+            printf("\n matching <html>");
             BEGIN(WHATEVER);
             return tHTMLTAGOPEN;
           }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 24 "wig.l"
-{                  
+#line 25 "wig.l"
+{
+                  printf("\n matching </html>");
                   BEGIN(INITIAL);
                   return tHTMLTAGCLOSE;
                 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 30 "wig.l"
-{             
+#line 32 "wig.l"
+{ 
+            printf("\n matching < in whatever");
             BEGIN(HTMLTAG);
             return '<';
           }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 34 "wig.l"
+#line 37 "wig.l"
 {
               BEGIN(HTMLGAP);
               return tGAPOPEN;
@@ -952,8 +955,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 39 "wig.l"
-{                                     
+#line 42 "wig.l"
+{ 
+                                    printf("\n matching '%s' in htmltag", yytext);
                                     yylval.stringconst = (char *)malloc(strlen(yytext)+1);
                                     sprintf(yylval.stringconst,"%s",yytext); 
                                     return tIDENTIFIER; 
@@ -961,7 +965,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 44 "wig.l"
+#line 48 "wig.l"
 {
                 BEGIN(WHATEVER);
                 return tGAPCLOSE;
@@ -969,55 +973,68 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 48 "wig.l"
-return '=';
+#line 52 "wig.l"
+{
+                      printf("\n matching = in htmltag");
+                      return '=';
+                  }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 49 "wig.l"
+#line 56 "wig.l"
 {
+                    printf("\n matching > in htmltag");
                     BEGIN(WHATEVER);
                     return '>';
                   }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 53 "wig.l"
-return tINPUT;
+#line 61 "wig.l"
+{
+                    printf("\n matching input in htmltag");
+                    return tINPUT;
+                  }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 54 "wig.l"
+#line 65 "wig.l"
 return tSELECT;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 55 "wig.l"
-return tNAME;
+#line 66 "wig.l"
+{
+                      printf("\n matching name in htmltag");
+                      return tNAME;
+                    }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 56 "wig.l"
-return tTYPE;
+#line 70 "wig.l"
+{
+                      printf("\n matching type in htmltag");
+                      return tTYPE;
+                    }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 57 "wig.l"
+#line 74 "wig.l"
 return tTEXT;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 58 "wig.l"
+#line 75 "wig.l"
 return tRADIO;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 59 "wig.l"
+#line 76 "wig.l"
 return tRADIO;
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 60 "wig.l"
+#line 77 "wig.l"
 {
                             yylval.intconst = atoi (yytext);
                             return tINTCONST;
@@ -1025,8 +1042,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 65 "wig.l"
-{                                     
+#line 82 "wig.l"
+{ 
+                                    printf("\n matching '%s' in htmltag", yytext);
                                     yylval.stringconst = (char *)malloc(strlen(yytext)+1);
                                     sprintf(yylval.stringconst,"%s",yytext); 
                                     return tIDENTIFIER; 
@@ -1034,17 +1052,20 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 70 "wig.l"
-{                 
-                  BEGIN(HTMLQUOTE);                  
+#line 88 "wig.l"
+{
+                  printf("\n matching opening quote in htmltag");
+                  BEGIN(HTMLQUOTE);
+                  printf("\n switching to htmlquote");
                   return '"';
                 }
 	YY_BREAK
 case 23:
 /* rule 23 can match eol */
 YY_RULE_SETUP
-#line 75 "wig.l"
-{                            
+#line 95 "wig.l"
+{
+                            printf("\n matched '%s' in htmlquote", yytext);
                             yylval.stringconst = (char *)malloc(strlen(yytext)+1);
                             sprintf(yylval.stringconst,"%s",yytext); 
                             return tSTRINGCONST; 
@@ -1052,229 +1073,256 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 81 "wig.l"
-{                            
+#line 102 "wig.l"
+{
+                            printf("\n matched end quote of htmlquote");
                             BEGIN(HTMLTAG);
                             return '"';
                           }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 87 "wig.l"
+#line 109 "wig.l"
 return '*';
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 88 "wig.l"
+#line 110 "wig.l"
 return '/';
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 89 "wig.l"
+#line 111 "wig.l"
 return '%';
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 90 "wig.l"
+#line 112 "wig.l"
 return '+';
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 91 "wig.l"
+#line 113 "wig.l"
 return '-';
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 92 "wig.l"
-return '(';
+#line 114 "wig.l"
+{
+            printf("\n matching (");
+            return '(';
+          }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 93 "wig.l"
-return ')';
+#line 118 "wig.l"
+{
+            printf("\n matching )");
+            return ')';
+          }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 94 "wig.l"
+#line 122 "wig.l"
 return '\\';
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 95 "wig.l"
+#line 123 "wig.l"
 return '=';
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 96 "wig.l"
+#line 124 "wig.l"
 return '!';
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 97 "wig.l"
+#line 125 "wig.l"
 return '<';
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 98 "wig.l"
+#line 126 "wig.l"
 return '>';
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 99 "wig.l"
+#line 127 "wig.l"
 return '&';
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 100 "wig.l"
+#line 128 "wig.l"
 return '|';
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 101 "wig.l"
+#line 129 "wig.l"
 return ',';
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 102 "wig.l"
+#line 130 "wig.l"
 return ';';
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 103 "wig.l"
+#line 131 "wig.l"
 return '[';
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 104 "wig.l"
+#line 132 "wig.l"
 return ']';
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 105 "wig.l"
+#line 133 "wig.l"
 return '{';
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 106 "wig.l"
+#line 134 "wig.l"
 return '}';
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 107 "wig.l"
+#line 135 "wig.l"
 return '.';
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 110 "wig.l"
-return tSERVICE;
+#line 138 "wig.l"
+{
+          printf("\n matching service"); 
+          return tSERVICE;
+          }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 111 "wig.l"
-return tCONST;
+#line 142 "wig.l"
+{
+          printf("\n matching const");
+          return tCONST;
+          }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 112 "wig.l"
-return tHTML;
+#line 146 "wig.l"
+{
+          printf("\n matching html");
+          return tHTML;
+          }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 114 "wig.l"
-return tSCHEMA;
+#line 151 "wig.l"
+{
+          printf("\n matching schema");
+          return tSCHEMA;
+          }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 115 "wig.l"
-return tINT;
+#line 155 "wig.l"
+{
+          printf("\n matching int");
+          return tINT;
+          }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 116 "wig.l"
+#line 159 "wig.l"
 return tBOOL;
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 117 "wig.l"
+#line 160 "wig.l"
 return tSTRING;
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 118 "wig.l"
+#line 161 "wig.l"
 return tVOID;
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 119 "wig.l"
-return tSESSION;
+#line 162 "wig.l"
+{
+          printf("\n matching session");
+          return tSESSION;
+          }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 120 "wig.l"
+#line 166 "wig.l"
 return tSHOW;
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 121 "wig.l"
+#line 167 "wig.l"
 return tEXIT;
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 122 "wig.l"
+#line 168 "wig.l"
 return tRETURN;
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 123 "wig.l"
+#line 169 "wig.l"
 return tIF;
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 124 "wig.l"
+#line 170 "wig.l"
 return tELSE;
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 125 "wig.l"
+#line 171 "wig.l"
 return tWHILE;
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 126 "wig.l"
+#line 172 "wig.l"
 return tPLUG;
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 127 "wig.l"
+#line 173 "wig.l"
 return tRECEIVE;
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 128 "wig.l"
+#line 174 "wig.l"
 return tTRUE;
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 129 "wig.l"
+#line 175 "wig.l"
 return tFALSE;
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 130 "wig.l"
+#line 176 "wig.l"
 return tTUPLE;
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 134 "wig.l"
-{  
+#line 180 "wig.l"
+{
+  printf("\n matching intconst '%s'", yytext);
   yylval.intconst = atoi (yytext);
   return tINTCONST;
 }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 139 "wig.l"
-{   
+#line 186 "wig.l"
+{ 
+  printf("\n matching identifier '%s'", yytext);
   yylval.stringconst = 
     (char *) malloc (strlen (yytext) + 1);
   sprintf (yylval.stringconst, "%s", yytext); 
@@ -1284,8 +1332,9 @@ YY_RULE_SETUP
 case 68:
 /* rule 68 can match eol */
 YY_RULE_SETUP
-#line 146 "wig.l"
-{  
+#line 194 "wig.l"
+{
+  printf("\n matching '%s' in whatever", yytext);
   yylval.stringconst =
       (char *) malloc (strlen (yytext) + 1);
     sprintf (yylval.stringconst, "%s", yytext); 
@@ -1294,8 +1343,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 153 "wig.l"
-{  
+#line 202 "wig.l"
+{
+  printf("in meta");
 	yylval.stringconst = 
     	(char *) malloc (strlen (yytext) + 1);
   	sprintf (yylval.stringconst, "%s", yytext); 
@@ -1304,10 +1354,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 160 "wig.l"
+#line 210 "wig.l"
 ECHO;
 	YY_BREAK
-#line 1311 "lex.yy.c"
+#line 1361 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(WHATEVER):
 case YY_STATE_EOF(HTML):
@@ -2310,7 +2360,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 160 "wig.l"
+#line 210 "wig.l"
 
 
 
