@@ -1,25 +1,49 @@
 #include <stdio.h>
 #include "pretty.h"
 
+int indent = 0;
+const int TAB_WIDTH = 2;
 
-/*int printf(const char* format, ...)
+void newline()
 {
-    return 5;
-}*/
+    int i=0;
+    printf("\n");
+    for(; i<indent * TAB_WIDTH; i++)
+        printf(" ");
+}
 
 void prettySERVICE(SERVICE* s)
 {
     if(s == NULL) return;
-    printf("service {\n");
-    prettyHTML(s->html);
-    printf("\n");
-    prettySCHEMA(s->schema);
-    printf("\n");
-    prettyVARIABLE(s->variable);
-    printf("\n");
-    prettyFUNCTION(s->function);
-    printf("\n");
-    prettySESSION(s->session);
+    printf("service {");
+    indent++;
+    if(s->html != NULL)
+    {
+        newline();
+        prettyHTML(s->html);
+    }
+    if(s->schema != NULL)
+    {
+        newline();
+        prettySCHEMA(s->schema);
+    }
+    if(s->variable != NULL)
+    {
+        newline();
+        prettyVARIABLE(s->variable);
+    }
+    if(s->function != NULL)
+    {
+        newline();
+        prettyFUNCTION(s->function);
+    }
+    if(s->session != NULL)
+    {
+        newline();
+        prettySESSION(s->session);
+    }
+    indent--;
+    newline();
     printf("}");
 }
 
@@ -31,9 +55,10 @@ void prettyHTML(HTML* h)
     printf(" = <html>");
     prettyHTMLBODY(h->body);
     printf("</html>;");
+    newline();
     if(h->next != NULL)
     {
-        printf("\n\n");
+        newline();
         prettyHTML(h->next);
     }
 }
@@ -137,7 +162,8 @@ void prettySCHEMA(SCHEMA* s)
     prettyFIELD(s->field);
     if(s->next != NULL)
     {
-        printf("\n\n");
+        newline();
+        newline();
         prettySCHEMA(s->next);
     }
 }
@@ -160,7 +186,8 @@ void prettyVARIABLE(VARIABLE* v)
     if(v == NULL) return;
     prettyTYPE(v->type);
     prettyID(v->id);
-    printf(";\n");
+    printf(";");
+    newline();
     if(v->next != NULL)
     {
         /*printf("");*/
@@ -223,7 +250,8 @@ void prettyFUNCTION(FUNCTION* f)
     prettyCOMPOUNDSTM(f->compoundstm);
     if(f->next != NULL)
     {
-        printf("\n\n");
+        newline();
+        newline();
         prettyFUNCTION(f->next);
     }
 }
@@ -249,7 +277,8 @@ void prettySESSION(SESSION* s)
     prettyCOMPOUNDSTM(s->compoundstm);
     if(s->next != NULL)
     {
-        printf("\n\n");
+        newline();
+        newline();
         prettySESSION(s->next);
     }
 }
@@ -259,7 +288,8 @@ void prettySTM(STM* s)
     if(s == NULL) return;
     switch(s->kind) {
         case semicolonK:
-            printf(";\n");
+            printf(";");
+            /* newline(); */
             break;
         case showK:
             printf("show ");
@@ -268,39 +298,47 @@ void prettySTM(STM* s)
             {
                 prettyRECEIVE(s->val.showE.rec);
             }
-            printf(";\n");
+            printf(";");
+            /* newline(); */
             break;
         case exitK:
             printf("exit ");
             prettyDOCUMENT(s->val.doc);
-            printf(";\n");
+            printf(";");
+            /* newline(); */
             break;
         case returnK:
-            printf("return;\n");
+            printf("return;");
+            /* newline(); */
             break;
         case returnexprK:
             printf("return ");
             prettyEXP(s->val.expr);
-            printf(";\n");
+            printf(";");
+            /* newline(); */
             break;
         case ifK:
             printf("if(");
             prettyEXP(s->val.ifE.expr);
-            printf(")\n");
+            printf(")");
+            newline();
             prettySTM(s->val.ifE.stm);
             break;
         case ifelseK:
             printf("if(");
             prettyEXP(s->val.ifelseE.expr);
-            printf(")\n");
+            printf(")");
+            newline();
             prettySTM(s->val.ifelseE.stm1);
-            printf("\nelse");
+            newline();
+            printf("else");
             prettySTM(s->val.ifelseE.stm2);
             break;
         case whileK:
             printf("while(");
             prettyEXP(s->val.whileE.expr);
-            printf(")\n");
+            printf(")");
+            /* newline(); */
             prettySTM(s->val.whileE.stm);
             break;
         case compoundK:
@@ -308,11 +346,13 @@ void prettySTM(STM* s)
             break;
         case exprK:
             prettyEXP(s->val.expr);
-            printf(";\n");
+            printf(";");
+            /* newline(); */
             break;
     }
     if(s->next != NULL)
     {
+        newline();
         prettySTM(s->next);
     }
 }
@@ -320,10 +360,15 @@ void prettySTM(STM* s)
 void prettyCOMPOUNDSTM(COMPOUNDSTM* c)
 {
     if(c == NULL) return;
-    printf("\n{\n");
+    newline();
+    printf("{");
+    indent++;
+    newline();
     prettyVARIABLE(c->variable);
     prettySTM(c->stm);
-    printf("}\n");
+    indent--;
+    newline();
+    printf("}");
 }
 
 void prettyDOCUMENT(DOCUMENT* d)
@@ -527,3 +572,4 @@ void prettyEXP(EXP* e)
         prettyEXP(e->next);
     }
 }
+

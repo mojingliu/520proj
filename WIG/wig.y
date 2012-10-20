@@ -379,7 +379,6 @@ exp : lvalue
   | tTUPLE '{' fieldvalues '}'
     {$$ = makeEXPtuple($3);};
 
-
 exps : /* empty */
     {$$ = NULL;}
  | neexps

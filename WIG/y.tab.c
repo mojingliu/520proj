@@ -590,8 +590,8 @@ static const yytype_uint16 yyrline[] =
      308,   310,   313,   317,   318,   321,   323,   326,   329,   331,
      333,   335,   337,   339,   341,   343,   345,   347,   349,   351,
      353,   355,   357,   359,   361,   363,   365,   367,   369,   371,
-     373,   375,   377,   379,   384,   385,   388,   390,   393,   395,
-     399,   400,   403,   405,   408
+     373,   375,   377,   379,   383,   384,   387,   389,   392,   394,
+     398,   399,   402,   404,   407
 };
 #endif
 
@@ -2572,77 +2572,77 @@ yyreduce:
   case 124:
 
 /* Line 1806 of yacc.c  */
-#line 384 "wig.y"
+#line 383 "wig.y"
     {(yyval.exp) = NULL;}
     break;
 
   case 125:
 
 /* Line 1806 of yacc.c  */
-#line 386 "wig.y"
+#line 385 "wig.y"
     {(yyval.exp) = (yyvsp[(1) - (1)].exp);}
     break;
 
   case 126:
 
 /* Line 1806 of yacc.c  */
-#line 389 "wig.y"
+#line 388 "wig.y"
     {(yyval.exp) = (yyvsp[(1) - (1)].exp);}
     break;
 
   case 127:
 
 /* Line 1806 of yacc.c  */
-#line 391 "wig.y"
+#line 390 "wig.y"
     {(yyval.exp) = (yyvsp[(1) - (3)].exp); (yyval.exp)->next = (yyvsp[(3) - (3)].exp);}
     break;
 
   case 128:
 
 /* Line 1806 of yacc.c  */
-#line 394 "wig.y"
+#line 393 "wig.y"
     {(yyval.lvalue) = makeLVALUE((yyvsp[(1) - (1)].id), NULL);}
     break;
 
   case 129:
 
 /* Line 1806 of yacc.c  */
-#line 396 "wig.y"
+#line 395 "wig.y"
     {(yyval.lvalue) = makeLVALUE((yyvsp[(1) - (3)].id), (yyvsp[(3) - (3)].id));}
     break;
 
   case 130:
 
 /* Line 1806 of yacc.c  */
-#line 399 "wig.y"
+#line 398 "wig.y"
     {(yyval.fieldvalue) = NULL;}
     break;
 
   case 131:
 
 /* Line 1806 of yacc.c  */
-#line 401 "wig.y"
+#line 400 "wig.y"
     {(yyval.fieldvalue) = (yyvsp[(1) - (1)].fieldvalue);}
     break;
 
   case 132:
 
 /* Line 1806 of yacc.c  */
-#line 404 "wig.y"
+#line 403 "wig.y"
     {(yyval.fieldvalue) = (yyvsp[(1) - (1)].fieldvalue);}
     break;
 
   case 133:
 
 /* Line 1806 of yacc.c  */
-#line 406 "wig.y"
+#line 405 "wig.y"
     {(yyval.fieldvalue) = (yyvsp[(1) - (3)].fieldvalue); (yyval.fieldvalue)->next = (yyvsp[(3) - (3)].fieldvalue);}
     break;
 
   case 134:
 
 /* Line 1806 of yacc.c  */
-#line 409 "wig.y"
+#line 408 "wig.y"
     {(yyval.fieldvalue) = makeFIELDVALUE((yyvsp[(1) - (3)].id), (yyvsp[(3) - (3)].exp));}
     break;
 
@@ -2880,6 +2880,6 @@ yyreturn:
 
 
 /* Line 2067 of yacc.c  */
-#line 411 "wig.y"
+#line 410 "wig.y"
 
 
