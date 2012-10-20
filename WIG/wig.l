@@ -7,7 +7,7 @@
 extern int lineno;
 %}
 
-%x WHATEVER HTML HTMLTAG HTMLGAP HTMLQUOTE
+%x WHATEVER HTML HTMLTAG HTMLGAP HTMLQUOTE STRCONST
 
 %%
 [ \t]+    /* ignore */;
@@ -15,19 +15,22 @@ extern int lineno;
 <HTMLTAG>[ \t]+   /* ignore */
 <HTMLTAG>\n     lineno++;
 
-"<html>"  {            
+"<html>"  {
+            printf("\n matching <html>");
             BEGIN(WHATEVER);
             return tHTMLTAGOPEN;
           }
 
 
-<WHATEVER>"</html>" {                  
+<WHATEVER>"</html>" {
+                  printf("\n matching </html>");
                   BEGIN(INITIAL);
                   return tHTMLTAGCLOSE;
                 }
 
 
-<WHATEVER>"<" {             
+<WHATEVER>"<" { 
+            printf("\n matching < in whatever");
             BEGIN(HTMLTAG);
             return '<';
           }
@@ -36,7 +39,8 @@ extern int lineno;
               return tGAPOPEN;
             }
 
-<HTMLGAP>\/?[a-zA-Z_][a-zA-Z0-9_]*  {                                     
+<HTMLGAP>\/?[a-zA-Z_][a-zA-Z0-9_]*  { 
+                                    printf("\n matching '%s' in htmltag", yytext);
                                     yylval.stringconst = (char *)malloc(strlen(yytext)+1);
                                     sprintf(yylval.stringconst,"%s",yytext); 
                                     return tIDENTIFIER; 
@@ -45,15 +49,28 @@ extern int lineno;
                 BEGIN(WHATEVER);
                 return tGAPCLOSE;
               }
-<HTMLTAG>"="     return '=';
+<HTMLTAG>"="       {
+                      printf("\n matching = in htmltag");
+                      return '=';
+                  }
 <HTMLTAG>">"      {
+                    printf("\n matching > in htmltag");
                     BEGIN(WHATEVER);
                     return '>';
                   }
-<HTMLTAG>"input"   return tINPUT;
+<HTMLTAG>"input"   {
+                    printf("\n matching input in htmltag");
+                    return tINPUT;
+                  }
 <HTMLTAG>"select"  return tSELECT;
-<HTMLTAG>"name"    return tNAME;
-<HTMLTAG>"type"    return tTYPE;
+<HTMLTAG>"name"     {
+                      printf("\n matching name in htmltag");
+                      return tNAME;
+                    }
+<HTMLTAG>"type"    {
+                      printf("\n matching type in htmltag");
+                      return tTYPE;
+                    }
 <HTMLTAG>"\"text\""    return tTEXT;
 <HTMLTAG>"radio"   return tRADIO;
 <HTMLTAG>"\"radio\""   return tRADIO;
@@ -62,23 +79,28 @@ extern int lineno;
                             return tINTCONST;
                           }
 
-<HTMLTAG>\/?[a-zA-Z_][a-zA-Z0-9_]*  {                                     
+<HTMLTAG>\/?[a-zA-Z_][a-zA-Z0-9_]*  { 
+                                    printf("\n matching '%s' in htmltag", yytext);
                                     yylval.stringconst = (char *)malloc(strlen(yytext)+1);
                                     sprintf(yylval.stringconst,"%s",yytext); 
                                     return tIDENTIFIER; 
                                   }
-<HTMLTAG>\"     {                 
-                  BEGIN(HTMLQUOTE);                  
+<HTMLTAG>\"     {
+                  printf("\n matching opening quote in htmltag");
+                  BEGIN(HTMLQUOTE);
+                  printf("\n switching to htmlquote");
                   return '"';
                 }
 
-<HTMLQUOTE>("(\\\\)*\\\""|[^\\\"]|"\\\\")* {                            
+<HTMLQUOTE>("(\\\\)*\\\""|[^\\\"]|"\\\\")* {
+                            printf("\n matched '%s' in htmlquote", yytext);
                             yylval.stringconst = (char *)malloc(strlen(yytext)+1);
                             sprintf(yylval.stringconst,"%s",yytext); 
                             return tSTRINGCONST; 
                           }
 
-<HTMLQUOTE>\"             {                            
+<HTMLQUOTE>\"             {
+                            printf("\n matched end quote of htmlquote");
                             BEGIN(HTMLTAG);
                             return '"';
                           }
@@ -89,8 +111,14 @@ extern int lineno;
 "%"       return '%';
 "+"       return '+';
 "-"       return '-';
-"("       return '(';
-")"       return ')';
+"("       {
+            printf("\n matching (");
+            return '(';
+          }
+")"       {
+            printf("\n matching )");
+            return ')';
+          }
 "\\"	  return '\\';
 "="		  return '=';
 "!"       return '!';
@@ -105,18 +133,44 @@ extern int lineno;
 "{"	      return '{';
 "}"       return '}';
 "."		  return '.';
+<INITIAL>\" {
+                BEGIN(STRCONST);
+                return '"';
+            }
+<STRCONST>\" {
+                BEGIN(INITIAL);
+                return '"';
+            }
 
 
-"service"  return tSERVICE;
-"const"	  return tCONST;
-"html"	  return tHTML;
+"service" {
+          printf("\n matching service"); 
+          return tSERVICE;
+          }
+"const"	  {
+          printf("\n matching const");
+          return tCONST;
+          }
+"html"	  {
+          printf("\n matching html");
+          return tHTML;
+          }
 
-"schema"  return tSCHEMA;
-"int"     return tINT;
+"schema"  {
+          printf("\n matching schema");
+          return tSCHEMA;
+          }
+"int"     {
+          printf("\n matching int");
+          return tINT;
+          }
 "bool"    return tBOOL;
 "string"  return tSTRING;
 "void"	  return tVOID;
-"session" return tSESSION;
+"session" {
+          printf("\n matching session");
+          return tSESSION;
+          }
 "show"	  return tSHOW;
 "exit"	  return tEXIT;
 "return"  return tRETURN;
@@ -131,30 +185,41 @@ extern int lineno;
 
 
 
-0|([1-9][0-9]*) {  
+0|([1-9][0-9]*) {
+  printf("\n matching intconst '%s'", yytext);
   yylval.intconst = atoi (yytext);
   return tINTCONST;
 }
 
-[a-zA-Z_][a-zA-Z0-9_]* {   
+[a-zA-Z_][a-zA-Z0-9_]* { 
+  printf("\n matching identifier '%s'", yytext);
   yylval.stringconst = 
     (char *) malloc (strlen (yytext) + 1);
   sprintf (yylval.stringconst, "%s", yytext); 
   return tIDENTIFIER; 
 }
 
-<WHATEVER>[^<]* {  
+<WHATEVER>[^<]* {
+  printf("\n matching '%s' in whatever", yytext);
   yylval.stringconst =
       (char *) malloc (strlen (yytext) + 1);
     sprintf (yylval.stringconst, "%s", yytext); 
     return tWHATEVER;
 }
 
-\<!--.*?--> {  
+\<!--.*?--> {
+  printf("in meta");
 	yylval.stringconst = 
     	(char *) malloc (strlen (yytext) + 1);
   	sprintf (yylval.stringconst, "%s", yytext); 
   	return tMETA;
 }
+
+<STRCONST>("(\\\\)*\\\""|[^\\\"]|"\\\\")* {
+                            printf("\n matched '%s' in htmlquote", yytext);
+                            yylval.stringconst = (char *)malloc(strlen(yytext)+1);
+                            sprintf(yylval.stringconst,"%s",yytext); 
+                            return tSTRINGCONST;
+                          }
 
 %%

@@ -274,6 +274,7 @@ void prettySESSION(SESSION* s)
     printf("session ");
     prettyID(s->id);
     printf("()");
+    newline();
     prettyCOMPOUNDSTM(s->compoundstm);
     if(s->next != NULL)
     {
@@ -333,12 +334,13 @@ void prettySTM(STM* s)
             newline();
             printf("else");
             prettySTM(s->val.ifelseE.stm2);
+            newline();
             break;
         case whileK:
             printf("while(");
             prettyEXP(s->val.whileE.expr);
             printf(")");
-            /* newline(); */
+            newline();
             prettySTM(s->val.whileE.stm);
             break;
         case compoundK:
@@ -360,7 +362,7 @@ void prettySTM(STM* s)
 void prettyCOMPOUNDSTM(COMPOUNDSTM* c)
 {
     if(c == NULL) return;
-    newline();
+    /* newline(); */
     printf("{");
     indent++;
     newline();
@@ -558,7 +560,7 @@ void prettyEXP(EXP* e)
             printf("false");
             break;
         case stringconstK:
-            printf("%s", e->val.stringconstE);
+            printf("\"%s\"", e->val.stringconstE);
             break;
         case tupleK:
             printf("tuple {");

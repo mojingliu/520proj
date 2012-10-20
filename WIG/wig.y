@@ -57,8 +57,6 @@ void yyerror() {
 %token <intconst> tINTCONST
 %token <stringconst> tIDENTIFIER tSTRINGCONST tWHATEVER tMETA 
 
-
-
 %type <service> service
 %type <html> htmls html
 %type <htmlbody> htmlbodies nehtmlbodies htmlbody 
@@ -83,9 +81,6 @@ void yyerror() {
 %type <fieldvalue> fieldvalues nefieldvalues fieldvalue
 %type <compoundstm> compoundstm
 %type <lvalue> lvalue
-
-
-
 
 %%
 
@@ -163,6 +158,8 @@ attr : identifier
     {$$ = makeATTRid($1);}
   | '"' tSTRINGCONST '"'
     {$$ = makeATTRstringconst($2);}
+  | '"' '"'
+    {$$ = makeATTRstringconst("");}
   | tINTCONST
     {$$ = makeATTRintconst($1);};
 
@@ -374,8 +371,10 @@ exp : lvalue
     {$$ = makeEXPtrue();}
   | tFALSE
     {$$ = makeEXPfalse();}
-  | tSTRINGCONST
-    {$$ = makeEXPstringconst($1);}
+  | '"' tSTRINGCONST '"'
+    {$$ = makeEXPstringconst($2);}
+  | '"' '"'
+    {$$ = makeEXPstringconst("");}
   | tTUPLE '{' fieldvalues '}'
     {$$ = makeEXPtuple($3);};
 
