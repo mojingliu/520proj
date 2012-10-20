@@ -94,8 +94,8 @@ service : tSERVICE '{' htmls schemas variables functions sessions '}'
 
 htmls : html
     {$$ = $1;}
-  | htmls html
-    {$$ = $2; $$->next = $1;};
+  | html htmls
+    {$$ = $1; $$->next = $2;};
 
 html: tCONST tHTML identifier '=' tHTMLTAGOPEN htmlbodies tHTMLTAGCLOSE ';'
   {$$ = makeHTML($3, $6);};
@@ -107,8 +107,8 @@ htmlbodies : /* empty */
 
 nehtmlbodies : htmlbody
     {$$ = $1;}
-  | nehtmlbodies htmlbody
-    {$$ = $2; $$->next = $1;};
+  | htmlbody nehtmlbodies
+    {$$ = $1; $$->next = $2;};
 
 htmlbody : '<' identifier attributes '>'
     {$$ = makeHTMLBODYtag($2, $3);}
@@ -127,8 +127,8 @@ htmlbody : '<' identifier attributes '>'
 
 inputattrs : inputattr
     {$$ = $1;}
-  | inputattrs inputattr
-    {$$ = $2; $$->next = $1;};
+  | inputattr inputattrs
+    {$$ = $1; $$->next = $2;};
 
 inputattr : tNAME '=' attr
     {$$ = makeINPUTATTRname($3);}
@@ -151,8 +151,8 @@ attributes : /* empty */
 
 neattributes : attribute
     {$$ = $1;}
-  | neattributes attribute
-    {$$ = $2; $$->next = $1;};
+  | attribute neattributes
+    {$$ = $1; $$->next = $2;};
 
 attribute : attr
     {$$ = makeATTRIBUTEattr($1, NULL);}
@@ -173,8 +173,8 @@ schemas: /* empty */
 
 neschemas: schema
     {$$ = $1;}
-  | neschemas schema
-    {$$ = $2; $$->next = $1;};
+  | schema neschemas
+    {$$ = $1; $$->next = $2;};
 
 schema : tSCHEMA identifier '{' fields '}'
     {$$ = makeSCHEMA($2, $4);};
@@ -186,8 +186,8 @@ fields :  /* empty */
 
 nefields : field
     {$$ = $1;}
-  | nefields field
-    {$$ = $2; $$->next = $1;};
+  | field nefields
+    {$$ = $1; $$->next = $2;};
 
 field : simpletype identifier ';'
     {$$ = makeFIELD($1, $2);};
@@ -199,16 +199,16 @@ variables : /* empty */
 
 nevariables : variable
     {$$ = $1;}
-  | nevariables variable
-    {$$ = $2; $$->next = $1;};
+  | variable nevariables
+    {$$ = $1; $$->next = $2;};
 
 variable : type identifiers ';'
     {$$ = makeVARIABLE($1, $2);};
 
 identifiers : identifier
     {$$ = $1;}
-  | identifiers ',' identifier
-    {$$ = $3; $$->next = $1;};
+  | identifier ',' identifiers
+    {$$ = $1; $$->next = $3;};
 
 identifier : tIDENTIFIER
     {$$ = makeID($1);};
@@ -234,8 +234,8 @@ functions :  /* empty */
 
 nefunctions : function
     {$$ = $1;}
-  | nefunctions function
-    {$$ = $2; $$->next = $1;};
+  | function nefunctions
+    {$$ = $1; $$->next = $2;};
 
 function : type identifier '(' arguments ')' compoundstm
     {$$ = makeFUNCTION($1, $2, $4, $6);};
@@ -247,16 +247,16 @@ arguments : /* empty */
 
 nearguments : argument
     {$$ = $1;}
-  | nearguments ',' argument
-    {$$ = $3; $$->next = $1;};
+  | argument ',' nearguments 
+    {$$ = $1; $$->next = $3;};
 
 argument : type identifier
     {$$ = makeARGUMENT($1, $2);};
 
 sessions : session
     {$$ = $1;}
-  | sessions session
-    {$$ = $2; $$->next = $1;};
+  | session sessions
+    {$$ = $1; $$->next = $2;};
 
 session : tSESSION identifier '(' ')' compoundstm
     {$$ = makeSESSION($2, $5);};
@@ -268,8 +268,8 @@ stms : /* empty */
 
 nestms : stm
     {$$ = $1;}
-  | nestms stm
-    {$$ = $2; $$ -> next = $1;};
+  | stm nestms
+    {$$ = $1; $$ -> next = $2;};
 
 stm : ';'
     {$$ = makeSTMsemicolon();}
@@ -320,8 +320,8 @@ inputs : /* empty */
 
 neinputs : input
     {$$ = $1;}
-  | neinputs ',' input
-    {$$ = $3; $$->next = $1;};
+  | input ',' neinputs
+    {$$ = $1; $$->next = $3;};
 
 input : lvalue '=' identifier
     {$$ = makeINPUT($1, $3);};
@@ -387,8 +387,8 @@ exps : /* empty */
 
 neexps : exp
     {$$ = $1;}
-  | neexps ',' exp
-    {$$ = $3; $$->next = $1;};
+  | exp ',' neexps
+    {$$ = $1; $$->next = $3;};
 
 lvalue : identifier 
     {$$ = makeLVALUE($1, NULL);}
@@ -402,8 +402,8 @@ fieldvalues : /* empty */
 
 nefieldvalues : fieldvalue
     {$$ = $1;}
-  | fieldvalues ',' fieldvalue
-    {$$ = $3; $$->next = $1;};
+  | fieldvalue ',' fieldvalues
+    {$$ = $1; $$->next = $3;};
 
 fieldvalue : identifier '=' exp
     {$$ = makeFIELDVALUE($1, $3);};
