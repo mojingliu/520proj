@@ -7,13 +7,27 @@
 extern int lineno;
 %}
 
-%x WHATEVER HTML HTMLTAG HTMLGAP HTMLQUOTE STRCONST
+%x WHATEVER HTML HTMLTAG HTMLGAP HTMLQUOTE STRCONST COMMENT
 
 %%
 [ \t]+    /* ignore */;
 \n        lineno++;
 <HTMLTAG>[ \t]+   /* ignore */
 <HTMLTAG>\n     lineno++;
+<WHATEVER>\<!--.*?--> {
+  yylval.stringconst = 
+      (char *) malloc (strlen (yytext) + 1);
+    sprintf (yylval.stringconst, "%s", yytext); 
+    return tMETA;
+}
+
+"service" return tSERVICE;
+"const"   return tCONST;
+
+"html"    {
+          printf("\n matching html");
+          return tHTML;
+          }
 
 "<html>"  {
             printf("\n matching <html>");
@@ -27,6 +41,89 @@ extern int lineno;
                   BEGIN(INITIAL);
                   return tHTMLTAGCLOSE;
                 }
+
+
+"/*"      {
+          printf("\n starting comment");
+          BEGIN(COMMENT);
+          }
+<COMMENT>\n   {
+                printf("\n matching newline in comment");
+                lineno++;
+              }
+<COMMENT>[^*\n]*  {
+                    printf("\n matching not * in comment");
+                    /* ignore */;
+                  }
+<COMMENT>\*[^\/]* {
+                    printf("\n matching not */ in comment");
+                    /* ignore */;
+                  }
+<COMMENT>"*/" BEGIN(INITIAL); 
+
+
+"schema"  {
+          printf("\n matching schema");
+          return tSCHEMA;
+          }
+"int"     {
+          printf("\n matching int");
+          return tINT;
+          }
+"bool"    return tBOOL;
+"string"  return tSTRING;
+"void"    return tVOID;
+"session" {
+          printf("\n matching session");
+          return tSESSION;
+          }
+"show"    return tSHOW;
+"exit"    return tEXIT;
+"return"  return tRETURN;
+"if"      return tIF;
+"else"    return tELSE;
+"while"   return tWHILE;
+"plug"    return tPLUG;
+"receive" return tRECEIVE;
+"true"    return tTRUE;
+"false"   return tFALSE;
+"tuple"   {
+          printf("\n matching tuple");
+          return tTUPLE;
+        }
+"{"       return '{';
+"}"       return '}';
+";"       return ';';
+"="     return '=';
+"=="      return tEQUALS;
+\/\/[^\n]* {printf("\n matching inline comment");}
+
+"*"       return '*';
+"/"       return '/';
+"%"       return '%';
+"+"       return '+';
+"-"       return '-';
+"("       {
+            printf("\n matching (");
+            return '(';
+          }
+")"       {
+            printf("\n matching )");
+            return ')';
+          }
+"\\"	  return '\\';
+
+"!"       return '!';
+"<"       return '<';
+">"       return '>';
+"&"       return '&';
+"|"		  return '|';
+","       return ',';
+
+"["       return '[';
+"]"       return ']';
+
+"."		  return '.';
 
 
 <WHATEVER>"<" { 
@@ -106,84 +203,15 @@ extern int lineno;
                           }
 
 
-"*"       return '*';
-"/"       return '/';
-"%"       return '%';
-"+"       return '+';
-"-"       return '-';
-"("       {
-            printf("\n matching (");
-            return '(';
-          }
-")"       {
-            printf("\n matching )");
-            return ')';
-          }
-"\\"	  return '\\';
-"="		  return '=';
-"!"       return '!';
-"<"       return '<';
-">"       return '>';
-"&"       return '&';
-"|"		  return '|';
-","       return ',';
-";"       return ';';
-"["       return '[';
-"]"       return ']';
-"{"	      return '{';
-"}"       return '}';
-"."		  return '.';
 <INITIAL>\" {
                 BEGIN(STRCONST);
                 return '"';
             }
 <STRCONST>\" {
+                printf("\n ending strconst, back in initial");
                 BEGIN(INITIAL);
                 return '"';
             }
-
-
-"service" {
-          printf("\n matching service"); 
-          return tSERVICE;
-          }
-"const"	  {
-          printf("\n matching const");
-          return tCONST;
-          }
-"html"	  {
-          printf("\n matching html");
-          return tHTML;
-          }
-
-"schema"  {
-          printf("\n matching schema");
-          return tSCHEMA;
-          }
-"int"     {
-          printf("\n matching int");
-          return tINT;
-          }
-"bool"    return tBOOL;
-"string"  return tSTRING;
-"void"	  return tVOID;
-"session" {
-          printf("\n matching session");
-          return tSESSION;
-          }
-"show"	  return tSHOW;
-"exit"	  return tEXIT;
-"return"  return tRETURN;
-"if"      return tIF;
-"else"	  return tELSE;
-"while"   return tWHILE;
-"plug"    return tPLUG;
-"receive" return tRECEIVE;
-"true"    return tTRUE;
-"false"   return tFALSE;
-"tuple"   return tTUPLE;
-
-
 
 0|([1-9][0-9]*) {
   printf("\n matching intconst '%s'", yytext);
@@ -207,16 +235,10 @@ extern int lineno;
     return tWHATEVER;
 }
 
-\<!--.*?--> {
-  printf("in meta");
-	yylval.stringconst = 
-    	(char *) malloc (strlen (yytext) + 1);
-  	sprintf (yylval.stringconst, "%s", yytext); 
-  	return tMETA;
-}
+
 
 <STRCONST>("(\\\\)*\\\""|[^\\\"]|"\\\\")* {
-                            printf("\n matched '%s' in htmlquote", yytext);
+                            printf("\n matched '%s' in strconst", yytext);
                             yylval.stringconst = (char *)malloc(strlen(yytext)+1);
                             sprintf(yylval.stringconst,"%s",yytext); 
                             return tSTRINGCONST;

@@ -222,7 +222,7 @@ typedef struct EXP{
 		gtK, lteK, gteK, notK, plusK, minusK, multK, 
 		divK, modK, andK, orK, joinK, keepK, removeK, 
 		callK, intconstK, trueK, falseK, stringconstK, 
-		tupleK }kind;
+		tupleK, parenK }kind;
 
 	union{
 		struct LVALUE* lvalueE;
@@ -260,8 +260,6 @@ typedef struct EXP{
 			struct EXP* left;
 			struct EXP* right;
 		}gteE;
-
-		struct EXP* expr;
 
 		struct{
 			struct EXP* left;
@@ -318,6 +316,7 @@ typedef struct EXP{
 			struct ID* left;
 		}callE;
 
+		struct EXP* exprE;
 		int intconstE;
 		char* stringconstE;
 		struct FIELDVALUE* tupleE;
@@ -402,5 +401,6 @@ EXP* makeEXPtrue();
 EXP* makeEXPfalse();
 EXP* makeEXPstringconst(char* stringconst);
 EXP* makeEXPtuple(FIELDVALUE* fieldvalue);
+EXP* makeEXPparen(EXP* expr);
 
 #endif /* !TREE_H */

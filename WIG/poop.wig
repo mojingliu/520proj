@@ -6,6 +6,7 @@ service {
   const html Pledge = <html> <body>
     How much do you want to contribute?
     <input name="contribution" type="text" size=4>
+    <!-- lol butts -->
   </body> </html>;
 
   const html Total = <html> <body>
@@ -20,6 +21,7 @@ service {
      show Welcome;
      show Pledge receive[i = contribution];
      amount = amount + i;
+     i = i/0;
      exit plug Total[total = amount];
   }
 }

@@ -78,11 +78,15 @@ service {
 
     const html hexit = <html><body>But now it's dead.</body></html>;
 
+    
+
     schema row {
           int a; int b; int c; int d; int e; int f; int g; int h;
     }
+
     tuple row row1, row2, row3, row4, row5, row6, row7, row8;
     bool turn;
+    
 
     tuple row getRow(int rank)
     {

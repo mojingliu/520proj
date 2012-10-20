@@ -67,11 +67,12 @@
      tTUPLE = 285,
      tGAPOPEN = 286,
      tGAPCLOSE = 287,
-     tINTCONST = 288,
-     tIDENTIFIER = 289,
-     tSTRINGCONST = 290,
-     tWHATEVER = 291,
-     tMETA = 292
+     tEQUALS = 288,
+     tINTCONST = 289,
+     tIDENTIFIER = 290,
+     tSTRINGCONST = 291,
+     tWHATEVER = 292,
+     tMETA = 293
    };
 #endif
 /* Tokens.  */
@@ -105,11 +106,12 @@
 #define tTUPLE 285
 #define tGAPOPEN 286
 #define tGAPCLOSE 287
-#define tINTCONST 288
-#define tIDENTIFIER 289
-#define tSTRINGCONST 290
-#define tWHATEVER 291
-#define tMETA 292
+#define tEQUALS 288
+#define tINTCONST 289
+#define tIDENTIFIER 290
+#define tSTRINGCONST 291
+#define tWHATEVER 292
+#define tMETA 293
 
 
 
@@ -151,7 +153,7 @@ typedef union YYSTYPE
 
 
 /* Line 2068 of yacc.c  */
-#line 155 "y.tab.h"
+#line 157 "y.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

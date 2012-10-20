@@ -632,7 +632,7 @@ EXP* makeEXPnot(EXP* notexpr)
 	EXP* e;
 	e = NEW(EXP);
 	e->lineno = lineno;
-	e->val.expr = notexpr;
+	e->val.exprE = notexpr;
 	e->kind = notK;
 	e->next = NULL;
 	return e;
@@ -819,6 +819,17 @@ EXP* makeEXPtuple(FIELDVALUE* fieldvalue)
 	e->lineno = lineno;
 	e->val.tupleE = fieldvalue;
 	e->kind = tupleK;
+	e->next = NULL;
+	return e;
+}
+
+EXP* makeEXPparen(EXP* expr)
+{
+	EXP* e;
+	e = NEW(EXP);
+	e->lineno = lineno;
+	e->val.exprE = expr;
+	e->kind = parenK;
 	e->next = NULL;
 	return e;
 }
