@@ -1,0 +1,33 @@
+First, we made the scanner and the parser.
+
+We started with what we had used for tiny and built up from there.
+
+We made sure to have different states in the scanner so that 
+keywords were not stolen.
+
+The parser was easy to create after having finished the scanner.
+We did have to go back and make changes to how we handled chained
+statements, expressions, etc.
+
+Our AST was completed while working on the scanner and parser.
+
+We then made a pretty printer to make sure everything was 
+being captured correctly, and used this to verify that we could
+run the output through lkwig, wig10, etc.
+
+We then worked on the weeder, implementing a few cases that
+seemed straightforward - division by zero, not having 
+show or exit inside functions.
+
+Finally, we made the command line options and the makefile to run
+the tests.  Pretty printing is enabled by default, and writes
+to an output file.  If no output is given, it is written to
+stdout.  Weeding is also on by default, but can be disabled.
+
+We didn't write any unit tests because we assumed complete coverage
+through our test cases.  Honestly we just didn't know what kind of
+unit tests could be expected for this.
+
+This milestone seemed extremely long compared to the others, and 
+it was frustrating that it took 20+ hours and is still only worth
+the same as the previous milestones that took less than half of that.
