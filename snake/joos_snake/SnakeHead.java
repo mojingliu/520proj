@@ -1,4 +1,4 @@
-import javalib.joos;
+import joos.lib.*;
 
 public class SnakeHead extends SnakeBody
 {
