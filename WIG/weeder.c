@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "weeder.h"
 
 extern int weedError;
@@ -200,6 +201,18 @@ void weedFUNCTION(FUNCTION* f)
     weedID(f->id);
     weedARGUMENT(f->argument);
     weedCOMPOUNDSTM(f->compoundstm);
+    if(hasShowSTM(f->compoundstm->stm) == 1)
+    {
+        printf("\nLine %d: Weeder Error - show statements are only allowed in sessions\n", f->lineno);
+        weedError = 1;
+        return;
+    }
+    if(hasExitSTM(f->compoundstm->stm) == 1)
+    {
+        printf("\nLine %d: Weeder Error - exit statements are only allowed in sessions\n", f->lineno);
+        weedError = 1;
+        return;
+    }
 }
 
 void weedARGUMENT(ARGUMENT* a)
@@ -454,5 +467,87 @@ void weedEXP(EXP* e)
             weedEXP(e->val.exprE);
             break;
     }
+}
+
+int hasShowSTM(STM* s)
+{
+    int toR;
+    toR = 0;
+    if(s->next != NULL)
+    {
+        toR += hasShowSTM(s->next);
+    }
+    if(s == NULL) return 0;
+    switch(s->kind) {
+        case semicolonK:
+            break;
+        case showK:
+            toR += 1;
+            break;
+        case exitK:
+            break;
+        case returnK:
+            break;
+        case returnexprK:
+            break;
+        case ifK:
+            toR += hasShowSTM(s->val.ifE.stm);
+            break;
+        case ifelseK:
+            toR += hasShowSTM(s->val.ifelseE.stm1) || hasShowSTM(s->val.ifelseE.stm2);
+            break;
+        case whileK:
+            toR += hasShowSTM(s->val.whileE.stm);
+            break;
+        case compoundK:
+            toR += hasShowSTM(s->val.compoundstm->stm);
+            break;
+        case exprK:
+            break;
+    }
+    if(toR > 0)
+        return 1;
+    return 0;
+}
+
+int hasExitSTM(STM* s)
+{
+    int toR;
+    toR = 0;
+    if(s->next != NULL)
+    {
+        toR += hasExitSTM(s->next);
+    }
+    if(s == NULL) return 0;
+    switch(s->kind) {
+        case semicolonK:
+            break;
+        case showK:
+            break;
+        case exitK:
+            toR += 1;
+            break;
+        case returnK:
+            break;
+        case returnexprK:
+            break;
+        case ifK:
+            toR += hasExitSTM(s->val.ifE.stm);
+            break;
+        case ifelseK:
+            toR += hasExitSTM(s->val.ifelseE.stm1) || hasExitSTM(s->val.ifelseE.stm2);
+            break;
+        case whileK:
+            toR += hasExitSTM(s->val.whileE.stm);
+            break;
+        case compoundK:
+            toR += hasExitSTM(s->val.compoundstm->stm);
+            break;
+        case exprK:
+            break;
+    }
+    if(toR > 0)
+        return 1;
+    return 0;
 }
 

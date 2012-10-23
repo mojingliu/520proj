@@ -1,21 +1,26 @@
 #include <stdio.h>
 #include "pretty.h"
 
+FILE* ofile;
 int indent = 0;
 const int TAB_WIDTH = 2;
+
+void setofile(FILE *f){
+    ofile = f;
+}
 
 void newline()
 {
     int i=0;
-    printf("\n");
+    fprintf(ofile, "\n");
     for(; i<indent * TAB_WIDTH; i++)
-        printf(" ");
+        fprintf(ofile, " ");
 }
 
 void prettySERVICE(SERVICE* s)
 {
     if(s == NULL) return;
-    printf("service {");
+    fprintf(ofile, "service {");
     indent++;
     if(s->html != NULL)
     {
@@ -44,7 +49,7 @@ void prettySERVICE(SERVICE* s)
     }
     indent--;
     newline();
-    printf("}");
+    fprintf(ofile, "}");
 }
 
 void prettyHTML(HTML* h)
@@ -55,11 +60,11 @@ void prettyHTML(HTML* h)
         prettyHTML(h->next);
         newline();
     }
-    printf("const html ");
+    fprintf(ofile, "const html ");
     prettyID(h->identifier);
-    printf(" = <html>");
+    fprintf(ofile, " = <html>");
     prettyHTMLBODY(h->body);
-    printf("</html>;");
+    fprintf(ofile, "</html>;");
     newline();
 }
 
@@ -69,37 +74,37 @@ void prettyHTMLBODY(HTMLBODY* h)
     prettyHTMLBODY(h->next);
     switch (h->kind) {
         case tagK:
-            printf("<");
+            fprintf(ofile, "<");
             prettyID(h->val.tagE.id);
             if(h->val.tagE.attribute != NULL)
             {
-                printf(" ");
+                fprintf(ofile, " ");
                 prettyATTRIBUTE(h->val.tagE.attribute);
             }
-            printf(">");
+            fprintf(ofile, ">");
             break;
         case gapK:
-            printf("<[");
+            fprintf(ofile, "<[");
             prettyID(h->val.id);
-            printf("]>");
+            fprintf(ofile, "]>");
             break;
         case whateverK:
-            printf("%s", h->val.whatever);
+            fprintf(ofile, "%s", h->val.whatever);
             break;
         case metaK:
-            printf("%s", h->val.meta);
+            fprintf(ofile, "%s", h->val.meta);
             break;
         case inputK:
-            printf("<input ");
+            fprintf(ofile, "<input ");
             prettyINPUTATTR(h->val.inputattr);
-            printf(">");
+            fprintf(ofile, ">");
             break;
         case selectK:
-            printf("<select ");
+            fprintf(ofile, "<select ");
             prettyINPUTATTR(h->val.selectE.inputattr);
-            printf(">");
+            fprintf(ofile, ">");
             prettyHTMLBODY(h->val.selectE.body);
-            printf("</select>");
+            fprintf(ofile, "</select>");
             break;
     }
 }
@@ -110,18 +115,18 @@ void prettyINPUTATTR(INPUTATTR* i)
     if(i->next != NULL)
     {
         prettyINPUTATTR(i->next);
-        printf(" ");
+        fprintf(ofile, " ");
     }
     switch(i->kind) {
         case nameK:
-            printf("name=");
+            fprintf(ofile, "name=");
             prettyATTR(i->val.attr);
             break;
         case textK:
-            printf("type=\"text\"");
+            fprintf(ofile, "type=\"text\"");
             break;
         case radioK:
-            printf("type=\"radio\"");
+            fprintf(ofile, "type=\"radio\"");
             break;
         case otherK:
             prettyATTRIBUTE(i->val.attribute);
@@ -135,12 +140,12 @@ void prettyATTRIBUTE(ATTRIBUTE* a)
     if(a->next != NULL)
     {
         prettyATTRIBUTE(a->next);
-        printf(" ");
+        fprintf(ofile, " ");
     }
     prettyATTR(a->left);
     if(a->right != NULL)
     {
-        printf("=");
+        fprintf(ofile, "=");
         prettyATTR(a->right);
     }
 }
@@ -153,10 +158,10 @@ void prettyATTR(ATTR* a)
             prettyID(a->val.id);
             break;
         case attrstringconstK:
-            printf("\"%s\"", a->val.stringconst);
+            fprintf(ofile, "\"%s\"", a->val.stringconst);
             break;
         case attrintconstK:
-            printf("%d", a->val.intconst);
+            fprintf(ofile, "%d", a->val.intconst);
             break;
     }
 }
@@ -171,11 +176,11 @@ void prettySCHEMA(SCHEMA* s)
         newline();
         newline();
     }
-    printf("schema ");
+    fprintf(ofile, "schema ");
     prettyID(s->id);
-    printf(" {");
+    fprintf(ofile, " {");
     prettyFIELD(s->field);
-    printf("}");
+    fprintf(ofile, "}");
 }
 
 void prettyFIELD(FIELD* f)
@@ -184,11 +189,11 @@ void prettyFIELD(FIELD* f)
     if(f->next != NULL)
     {
         prettyFIELD(f->next);
-        printf(" ");
+        fprintf(ofile, " ");
     }
     prettySIMPLETYPE(f->simpletype);
     prettyID(f->id);
-    printf(";");
+    fprintf(ofile, ";");
 }
 
 void prettyVARIABLE(VARIABLE* v)
@@ -197,11 +202,11 @@ void prettyVARIABLE(VARIABLE* v)
     if(v->next != NULL)
     {
         prettyVARIABLE(v->next);
-        /*printf("");*/
+        /*fprintf(ofile, "");*/
     }
     prettyTYPE(v->type);
     prettyID(v->id);
-    printf(";");
+    fprintf(ofile, ";");
     newline();
 }
 
@@ -211,9 +216,9 @@ void prettyID(ID* i)
     if(i->next != NULL)
     {
         prettyID(i->next);
-        printf(", ");
+        fprintf(ofile, ", ");
     }
-    printf("%s", i->identifier);
+    fprintf(ofile, "%s", i->identifier);
 }
 
 void prettyTYPE(TYPE* t)
@@ -224,9 +229,9 @@ void prettyTYPE(TYPE* t)
             prettySIMPLETYPE(t->val.simpletype);
             break;
         case tupleidK:
-            printf("tuple ");
+            fprintf(ofile, "tuple ");
             prettyID(t->val.id);
-            printf(" ");
+            fprintf(ofile, " ");
             break;
     }
 }
@@ -236,16 +241,16 @@ void prettySIMPLETYPE(SIMPLETYPE* s)
     if(s == NULL) return;
     switch (s->kind) {
         case intK:
-            printf("int ");
+            fprintf(ofile, "int ");
             break;
         case boolK:
-            printf("bool ");
+            fprintf(ofile, "bool ");
             break;
         case stringK:
-            printf("string ");
+            fprintf(ofile, "string ");
             break;
         case voidK:
-            printf("void ");
+            fprintf(ofile, "void ");
             break;
     }
 }
@@ -260,9 +265,9 @@ void prettyFUNCTION(FUNCTION* f)
     }
     prettyTYPE(f->type);
     prettyID(f->id);
-    printf("(");
+    fprintf(ofile, "(");
     prettyARGUMENT(f->argument);
-    printf(")");
+    fprintf(ofile, ")");
     newline();
     prettyCOMPOUNDSTM(f->compoundstm);
     newline();
@@ -274,7 +279,7 @@ void prettyARGUMENT(ARGUMENT* a)
     if(a->next != NULL)
     {
         prettyARGUMENT(a->next);
-        printf(", ");
+        fprintf(ofile, ", ");
     }
     prettyTYPE(a->type);
     prettyID(a->id);
@@ -289,9 +294,9 @@ void prettySESSION(SESSION* s)
         newline();
         newline();
     }
-    printf("session ");
+    fprintf(ofile, "session ");
     prettyID(s->id);
-    printf("()");
+    fprintf(ofile, "()");
     newline();
     prettyCOMPOUNDSTM(s->compoundstm);
 }
@@ -308,59 +313,59 @@ void prettySTM(STM* s)
     if(s == NULL) return;
     switch(s->kind) {
         case semicolonK:
-            printf(";");
+            fprintf(ofile, ";");
             /* newline(); */
             break;
         case showK:
-            printf("show ");
+            fprintf(ofile, "show ");
             prettyDOCUMENT(s->val.showE.doc);
             if(s->val.showE.rec != NULL)
             {
                 prettyRECEIVE(s->val.showE.rec);
             }
-            printf(";");
+            fprintf(ofile, ";");
             /* newline(); */
             break;
         case exitK:
-            printf("exit ");
+            fprintf(ofile, "exit ");
             prettyDOCUMENT(s->val.doc);
-            printf(";");
+            fprintf(ofile, ";");
             /* newline(); */
             break;
         case returnK:
-            printf("return;");
+            fprintf(ofile, "return;");
             /* newline(); */
             break;
         case returnexprK:
-            printf("return ");
+            fprintf(ofile, "return ");
             prettyEXP(s->val.expr);
-            printf(";");
+            fprintf(ofile, ";");
             /* newline(); */
             break;
         case ifK:
-            printf("if(");
+            fprintf(ofile, "if(");
             prettyEXP(s->val.ifE.expr);
-            printf(")");
+            fprintf(ofile, ")");
             if(s->val.ifE.stm != NULL && s->val.ifE.stm->kind != compoundK)
                 indent++;
             newline();
             prettySTM(s->val.ifE.stm);
             break;
         case ifelseK:
-            printf("if(");
+            fprintf(ofile, "if(");
             prettyEXP(s->val.ifelseE.expr);
-            printf(")");
+            fprintf(ofile, ")");
             if(s->val.ifelseE.stm1 != NULL && s->val.ifelseE.stm1->kind != compoundK)
                 indent++;
             newline();
             prettySTM(s->val.ifelseE.stm1);
             indent = myindent;
             newline();
-            printf("else");
+            fprintf(ofile, "else");
             if(s->val.ifelseE.stm2 != NULL)
             {
                 if(s->val.ifelseE.stm2->kind == ifK || s->val.ifelseE.stm2->kind == ifelseK)
-                    printf(" ");
+                    fprintf(ofile, " ");
                 else if(s->val.ifelseE.stm2->kind != compoundK)
                 {
                     indent++;
@@ -370,9 +375,9 @@ void prettySTM(STM* s)
             prettySTM(s->val.ifelseE.stm2);
             break;
         case whileK:
-            printf("while(");
+            fprintf(ofile, "while(");
             prettyEXP(s->val.whileE.expr);
-            printf(")");
+            fprintf(ofile, ")");
             if(s->val.whileE.stm != NULL && s->val.whileE.stm->kind != compoundK)
                 indent++;
             newline();
@@ -383,7 +388,7 @@ void prettySTM(STM* s)
             break;
         case exprK:
             prettyEXP(s->val.expr);
-            printf(";");
+            fprintf(ofile, ";");
             /* newline(); */
             break;
     }
@@ -394,14 +399,14 @@ void prettyCOMPOUNDSTM(COMPOUNDSTM* c)
 {
     if(c == NULL) return;
     /* newline(); */
-    printf("{");
+    fprintf(ofile, "{");
     indent++;
     newline();
     prettyVARIABLE(c->variable);
     prettySTM(c->stm);
     indent--;
     newline();
-    printf("}");
+    fprintf(ofile, "}");
 }
 
 void prettyDOCUMENT(DOCUMENT* d)
@@ -412,11 +417,11 @@ void prettyDOCUMENT(DOCUMENT* d)
             prettyID(d->val.id);
             break;
         case plugK:
-            printf("plug ");
+            fprintf(ofile, "plug ");
             prettyID(d->val.plugE.id);
-            printf("[");
+            fprintf(ofile, "[");
             prettyPLUG(d->val.plugE.plug);
-            printf("]");
+            fprintf(ofile, "]");
             break;
     }
 }
@@ -426,9 +431,9 @@ void prettyRECEIVE(RECEIVE* r)
     if(r == NULL) return;
     if(r->input != NULL)
     {
-        printf(" receive [");
+        fprintf(ofile, " receive [");
         prettyINPUT(r->input);
-        printf("]");
+        fprintf(ofile, "]");
     }
 }
 
@@ -439,10 +444,10 @@ void prettyPLUG(PLUG* p)
     if(p->next != NULL)
     {
         prettyPLUG(p->next);
-        printf(", ");
+        fprintf(ofile, ", ");
     }
     prettyID(p->id);
-    printf(" = ");
+    fprintf(ofile, " = ");
     prettyEXP(p->expr);
 }
 
@@ -452,10 +457,10 @@ void prettyINPUT(INPUT* i)
     if(i->next)
     {
         prettyINPUT(i->next);
-        printf(", ");
+        fprintf(ofile, ", ");
     }
     prettyLVALUE(i->lvalue);
-    printf(" = ");
+    fprintf(ofile, " = ");
     prettyID(i->id);
 }
 
@@ -465,7 +470,7 @@ void prettyLVALUE(LVALUE* l)
     prettyID(l->id1);
     if(l->id2 != NULL)
     {
-        printf(".");
+        fprintf(ofile, ".");
         prettyID(l->id2);
     }
 }
@@ -476,10 +481,10 @@ void prettyFIELDVALUE(FIELDVALUE* f)
     if(f->next != NULL)
     {
         prettyFIELDVALUE(f->next);
-        printf(", ");
+        fprintf(ofile, ", ");
     }
     prettyID(f->id);
-    printf(" = ");
+    fprintf(ofile, " = ");
     prettyEXP(f->expr);
 }
 
@@ -489,7 +494,7 @@ void prettyEXP(EXP* e)
     if(e->next != NULL)
     {
         prettyEXP(e->next);
-        printf(", ");
+        fprintf(ofile, ", ");
     }
     switch(e->kind)
     {
@@ -498,120 +503,120 @@ void prettyEXP(EXP* e)
             break;
         case assignK:
             prettyLVALUE(e->val.assignE.lvalue);
-            printf(" = ");
+            fprintf(ofile, " = ");
             prettyEXP(e->val.assignE.expr);
             break;
         case equalsK:
             prettyEXP(e->val.equalsE.left);
-            printf(" == ");
+            fprintf(ofile, " == ");
             prettyEXP(e->val.equalsE.right);
             break;
         case notequalsK:
             prettyEXP(e->val.notequalsE.left);
-            printf(" != ");
+            fprintf(ofile, " != ");
             prettyEXP(e->val.notequalsE.right);
             break;
         case ltK:
             prettyEXP(e->val.ltE.left);
-            printf(" < ");
+            fprintf(ofile, " < ");
             prettyEXP(e->val.ltE.right);
             break;
         case gtK:
             prettyEXP(e->val.gtE.left);
-            printf(" > ");
+            fprintf(ofile, " > ");
             prettyEXP(e->val.gtE.right);
             break;
         case lteK:
             prettyEXP(e->val.lteE.left);
-            printf(" <= ");
+            fprintf(ofile, " <= ");
             prettyEXP(e->val.lteE.right);
             break;
         case gteK:
             prettyEXP(e->val.gteE.left);
-            printf(" >= ");
+            fprintf(ofile, " >= ");
             prettyEXP(e->val.gteE.right);
             break;
         case notK:
-            printf("!");
+            fprintf(ofile, "!");
             prettyEXP(e->val.exprE);
             break;
         case plusK:
             prettyEXP(e->val.plusE.left);
-            printf(" + ");
+            fprintf(ofile, " + ");
             prettyEXP(e->val.plusE.right);
             break;
         case minusK:
             prettyEXP(e->val.minusE.left);
-            printf(" - ");
+            fprintf(ofile, " - ");
             prettyEXP(e->val.minusE.right);
             break;
         case multK:
             prettyEXP(e->val.multE.left);
-            printf(" * ");
+            fprintf(ofile, " * ");
             prettyEXP(e->val.multE.right);
             break;
         case divK:
             prettyEXP(e->val.divE.left);
-            printf(" / ");
+            fprintf(ofile, " / ");
             prettyEXP(e->val.divE.right);
             break;
         case modK:
             prettyEXP(e->val.modE.left);
-            printf(" %% ");
+            fprintf(ofile, " %% ");
             prettyEXP(e->val.modE.right);
             break;
         case andK:
             prettyEXP(e->val.andE.left);
-            printf(" && ");
+            fprintf(ofile, " && ");
             prettyEXP(e->val.andE.right);
             break;
         case orK:
             prettyEXP(e->val.orE.left);
-            printf(" || ");
+            fprintf(ofile, " || ");
             prettyEXP(e->val.orE.right);
             break;
         case joinK:
             prettyEXP(e->val.joinE.left);
-            printf(" << ");
+            fprintf(ofile, " << ");
             prettyEXP(e->val.joinE.right);
             break;
         case keepK:
             prettyEXP(e->val.keepE.left);
-            printf(" \\+ ");
+            fprintf(ofile, " \\+ ");
             prettyID(e->val.keepE.right);
             break;
         case removeK:
             prettyEXP(e->val.removeE.left);
-            printf(" \\- ");
+            fprintf(ofile, " \\- ");
             prettyID(e->val.removeE.right);
             break;
         case callK:
             prettyID(e->val.removeE.right);
-            printf("(");
+            fprintf(ofile, "(");
             prettyEXP(e->val.removeE.left);
-            printf(")");
+            fprintf(ofile, ")");
             break;
         case intconstK:
-            printf("%d", e->val.intconstE);
+            fprintf(ofile, "%d", e->val.intconstE);
             break;
         case trueK:
-            printf("true");
+            fprintf(ofile, "true");
             break;
         case falseK:
-            printf("false");
+            fprintf(ofile, "false");
             break;
         case stringconstK:
-            printf("\"%s\"", e->val.stringconstE);
+            fprintf(ofile, "\"%s\"", e->val.stringconstE);
             break;
         case tupleK:
-            printf("tuple {");
+            fprintf(ofile, "tuple {");
             prettyFIELDVALUE(e->val.tupleE);
-            printf("}");
+            fprintf(ofile, "}");
             break;
         case parenK:
-            printf("(");
+            fprintf(ofile, "(");
             prettyEXP(e->val.exprE);
-            printf(")");
+            fprintf(ofile, ")");
             break;
     }
 }

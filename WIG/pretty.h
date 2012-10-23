@@ -2,6 +2,7 @@
 #define PRETTY_H
 
 #include "tree.h"
+#include <stdio.h>
 
 void prettySERVICE(SERVICE *s);
 void prettyHTML(HTML* h);
@@ -27,5 +28,7 @@ void prettyINPUT(INPUT* i);
 void prettyLVALUE(LVALUE* l);
 void prettyFIELDVALUE(FIELDVALUE* f);
 void prettyEXP(EXP* e);
+
+void setofile(FILE* f);
 
 #endif /* !PRETTY_H */
