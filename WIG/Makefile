@@ -6,8 +6,8 @@ all:
 	make code --no-print-directory
 	make check --no-print-directory
 
-code: y.tab.o lex.yy.o main.o tree.h tree.o pretty.h pretty.o memory.h memory.o weeder.h weeder.o symbol.h symbol.o
-	$(CC) lex.yy.o y.tab.o tree.o pretty.o memory.o main.o weeder.o symbol.o -o wig -lfl -lm
+code: y.tab.o lex.yy.o main.o tree.h tree.o pretty.h pretty.o memory.h memory.o weeder.h weeder.o symbol.h symbol.o prettysymbol.h prettysymbol.o
+	$(CC) lex.yy.o y.tab.o tree.o pretty.o memory.o main.o weeder.o symbol.o prettysymbol.o -o wig -lfl -lm
 
 check:
 	make weed --no-print-directory
@@ -22,6 +22,9 @@ weed:
 pretty:
 	./wig smalltest.wig prettysmalltest.wig --noweeder
 
+symbol:
+	./wig smalltest.wig --symbol --noweeder
+
 y.tab.c y.tab.h: wig.y
 	bison --yacc --defines wig.y
 
@@ -30,4 +33,4 @@ lex.yy.c: wig.l y.tab.h
 
 clean:
 	rm y.tab.* lex.yy.*; rm *.o
-	rm wig result
+	rm wig

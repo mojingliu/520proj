@@ -12,12 +12,29 @@ service {
     The total is now <[total]>.
   </body> </html>;
 
+
+  schema row{ int a; int b;}
+
+  tuple row row1, row2;
+  int d;
   int amount;
+  bool test;
 
+  void thisSucks(int x)
+  {
+    x = x + 2;
+  }
 
+  int poopInt(int x)
+  {
+    return x;
+  }
   session Contribute() {
      int i;
+     row1 = tuple{a=1, b=2};
      i= 87;
+     i = poopInt(6);
+     {{{{ int x; x = 5; }}}}
      show Welcome;
      show Pledge receive[i = contribution];
      amount = amount + i;

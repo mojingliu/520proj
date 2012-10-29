@@ -4,6 +4,7 @@
 #include "stdio.h"
 #include "weeder.h"
 #include "symbol.h"
+#include "prettysymbol.h"
 #include <string.h>
 
 void yyparse();
@@ -24,6 +25,7 @@ void help()
   printf("commands: \n");
   printf("--help: displays this message\n");
   printf("--noweeder: turns off the weeder\n");
+  printf("--symbol: prints the symbol table\n");
   printf("format: \n");
   printf("    ./wig inputFile [outputFile] [--noweeder]\n");
   printf("if you don't include an output file, output will be written to stdout.");
@@ -34,6 +36,7 @@ int main(int argc, char *argv[])
   
   int i;
   int weeder = 1;
+  int symbol = 0;
   int onSTDOUT = 0;
   lineno = 1;
   if(argc == 1)
@@ -50,6 +53,8 @@ int main(int argc, char *argv[])
     }
     else if(!strcmp(argv[i], "--noweeder"))
       weeder = 0;
+    else if(!strcmp(argv[i], "--symbol"))
+      symbol = 1;
   }
 
   yyin = fopen(argv[1], "r");
@@ -81,6 +86,12 @@ int main(int argc, char *argv[])
   {
     setofile(ofile);
     prettySERVICE(theservice);
+  }
+  if(symbol == 1)
+  {
+    setsymbolofile(stdout);
+    symbolSERVICE(theservice);
+    prettySYMBOL(globalTable);
   }
   fclose(yyin);
   if(onSTDOUT == 0)

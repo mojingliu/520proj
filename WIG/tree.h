@@ -6,7 +6,7 @@
 typedef struct SymbolType {
 	int function;
 	char* tupleName;
-	enum{htmlK, schemaK} kind; /* intK, boolK, stringK, voidK, tupleK,  */
+	enum{failSK, intSK, boolSK, stringSK, voidSK, tupleSK, htmlSK, schemaSK, gapSK, sessionSK} kind;	
 } SymbolType;
 
 typedef struct SYMBOL {
@@ -25,11 +25,16 @@ typedef struct SYMBOL {
 		struct VARIABLE *variableS;
     } val;
     struct SYMBOL *up;
+    struct SYMBOL *next;
+
 } SYMBOL;
 
 typedef struct SymbolTable {
     SYMBOL *table[HashSize];
     struct SymbolTable *up;
+    struct SymbolTable *next;
+    struct SYMBOL *first;
+    int indent;
 } SymbolTable;
 
 typedef struct SERVICE {
