@@ -10,6 +10,7 @@ service {
 
   const html Total = <html> <body>
     The total is now <[total]>.
+    <[total]>.
   </body> </html>;
 
 

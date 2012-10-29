@@ -14,6 +14,7 @@ service {
 
 
   schema row{ int a; int b;}
+  schema row{ int x; int y;}
 
   tuple row row1, row2;
   int d;

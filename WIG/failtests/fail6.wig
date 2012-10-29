@@ -20,6 +20,10 @@ service {
   int amount;
   bool test;
 
+  int test1(int x, int x)
+  {
+    return x;
+  }
   session Contribute() {
      int i;
      row1 = tuple{a=1, b=2};
@@ -29,4 +33,5 @@ service {
      amount = amount + i;
      exit plug Total[total = amount];
   }
+  
 }

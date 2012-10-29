@@ -1,0 +1,5 @@
+For this milestone, we used the JOOS source code as reference
+and then built on top of what we had for a weeder.  It's the
+same style of just reducing down until the lowest levels create
+a symbol and store it in the tree.
+

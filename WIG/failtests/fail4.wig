@@ -13,7 +13,7 @@ service {
   </body> </html>;
 
 
-  schema row{ int a; int b;}
+  schema row{ int a; int a;}
 
   tuple row row1, row2;
   int d;

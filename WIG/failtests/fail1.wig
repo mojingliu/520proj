@@ -7,6 +7,10 @@ service {
     How much do you want to contribute?
     <input name="contribution" type="text" size=4>
   </body> </html>;
+  const html Pledge = <html> <body>
+    How much do you want to contribute?
+    <input name="contribution" type="text" size=4>
+  </body> </html>;
 
   const html Total = <html> <body>
     The total is now <[total]>.

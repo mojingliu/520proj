@@ -20,6 +20,14 @@ service {
   int amount;
   bool test;
 
+  int test1(int x)
+  {
+    return x;
+  }
+  int test1(int y)
+  {
+    return y;
+  }
   session Contribute() {
      int i;
      row1 = tuple{a=1, b=2};

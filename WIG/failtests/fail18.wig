@@ -13,20 +13,26 @@ service {
   </body> </html>;
 
 
-  schema row{ int a; int b;}
+  schema row{ int a; int b; int c; int d;}
 
   tuple row row1, row2;
   int d;
   int amount;
   bool test;
 
-  session Contribute() {
-     int i;
-     row1 = tuple{a=1, b=2};
-     i= 87;
-     show Welcome;
-     show Pledge receive[i = contribution];
-     amount = amount + i;
-     exit plug Total[total = amount];
+  int test1(int x, int y)
+  {
+    return x;
   }
+  session Contribute() {
+    int i;
+    row1 = tuple{a=1, b=2, c=3, d=4};
+    row1 \+ (a, b, c) \+ (a, c, d);
+    show Welcome;
+    show Pledge receive[i = contribution];
+    amount = amount + i;
+    exit plug Total[total = amount];
+  }
+
+  
 }

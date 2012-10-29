@@ -26,6 +26,7 @@ void help()
   printf("--help: displays this message\n");
   printf("--noweeder: turns off the weeder\n");
   printf("--symbol: prints the symbol table\n");
+  printf("--nopretty: turns off pretty printer\n");
   printf("format: \n");
   printf("    ./wig inputFile [outputFile] [--noweeder]\n");
   printf("if you don't include an output file, output will be written to stdout.");
@@ -37,6 +38,7 @@ int main(int argc, char *argv[])
   int i;
   int weeder = 1;
   int symbol = 0;
+  int pretty = 1;
   int onSTDOUT = 0;
   lineno = 1;
   if(argc == 1)
@@ -55,6 +57,8 @@ int main(int argc, char *argv[])
       weeder = 0;
     else if(!strcmp(argv[i], "--symbol"))
       symbol = 1;
+    else if(!strcmp(argv[i], "--nopretty"))
+      pretty = 0;
   }
 
   yyin = fopen(argv[1], "r");
@@ -85,13 +89,15 @@ int main(int argc, char *argv[])
   if(weedError != 1)
   {
     setofile(ofile);
-    prettySERVICE(theservice);
+    if(pretty == 1)
+      prettySERVICE(theservice);
   }
   if(symbol == 1)
   {
     setsymbolofile(stdout);
     symbolSERVICE(theservice);
-    prettySYMBOL(globalTable);
+    if(symbolError != 1)
+      prettySYMBOL(globalTable);
   }
   fclose(yyin);
   if(onSTDOUT == 0)

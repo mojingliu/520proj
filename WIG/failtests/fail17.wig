@@ -20,13 +20,19 @@ service {
   int amount;
   bool test;
 
-  session Contribute() {
-     int i;
-     row1 = tuple{a=1, b=2};
-     i= 87;
-     show Welcome;
-     show Pledge receive[i = contribution];
-     amount = amount + i;
-     exit plug Total[total = amount];
+  int test1(int x, int y)
+  {
+    return x;
   }
+  session Contribute() {
+    int d;
+    int i, d, c;
+    row1 = tuple{a=1, b=2};
+    show Welcome;
+    show Pledge receive[i = contribution];
+    amount = amount + i;
+    exit plug Total[total = amount];
+  }
+
+  
 }

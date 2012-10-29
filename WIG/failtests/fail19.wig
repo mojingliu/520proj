@@ -20,8 +20,22 @@ service {
   int amount;
   bool test;
 
+  int recurse(int x)
+  {
+    if(x < 5)
+      return recurse(x+1);
+    x = return5();
+    return x;
+  }
+
+  int return5()
+  {
+    return 5;
+  }
+
   session Contribute() {
      int i;
+     i = recurse(1);
      row1 = tuple{a=1, b=2};
      i= 87;
      show Welcome;

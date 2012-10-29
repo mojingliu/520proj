@@ -23,7 +23,7 @@ pretty:
 	./wig smalltest.wig prettysmalltest.wig --noweeder
 
 symbol:
-	./wig smalltest.wig --symbol --noweeder
+	./wig smalltest.wig --symbol --noweeder --nopretty
 
 y.tab.c y.tab.h: wig.y
 	bison --yacc --defines wig.y
