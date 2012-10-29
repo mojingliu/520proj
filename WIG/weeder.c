@@ -449,8 +449,8 @@ void weedEXP(EXP* e)
             weedID(e->val.removeE.right);
             break;
         case callK:
-            weedID(e->val.removeE.right);
-            weedEXP(e->val.removeE.left);
+            weedID(e->val.callE.left);
+            weedEXP(e->val.callE.right);
             break;
         case intconstK:
             break;

@@ -591,9 +591,9 @@ void prettyEXP(EXP* e)
             prettyID(e->val.removeE.right);
             break;
         case callK:
-            prettyID(e->val.removeE.right);
+            prettyID(e->val.callE.left);
             fprintf(ofile, "(");
-            prettyEXP(e->val.removeE.left);
+            prettyEXP(e->val.callE.right);
             fprintf(ofile, ")");
             break;
         case intconstK:

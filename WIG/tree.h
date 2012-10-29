@@ -1,6 +1,35 @@
 #ifndef TREE_H
 #define TREE_H
 
+typedef struct SymbolType {
+	int function;
+	char* tupleName;
+	enum{htmlK, schemaK} kind; /* intK, boolK, stringK, voidK, tupleK,  */
+} SymbolType;
+
+typedef struct SYMBOL {
+    char *id;
+    SymbolType *type;
+    union {
+		struct HTML *htmlS;
+		struct HTMLBODY* gapS;
+		struct HTMLATTRVALUE* inputNameS;
+		struct ATTR* attrnameS;
+		struct SCHEMA *schemaS;
+		struct FIELD *schemaFieldS;
+		struct FUNCTION *functionS;
+		struct PARAMETER *parameterS;
+		struct SESSION *sessionS;
+		struct VARIABLE *variableS;
+    } val;
+    struct SYMBOL *up;
+} SYMBOL;
+
+typedef struct SymbolTable {
+    SYMBOL *table[HashSize];
+    struct SymbolTable *up;
+} SymbolTable;
+
 typedef struct SERVICE {
     int lineno;
     struct HTML* html;
@@ -15,6 +44,8 @@ typedef struct HTML{
 	struct ID* identifier;
 	struct HTMLBODY* body;
 	struct HTML* next;
+	struct SymbolTable* gapTable;
+	struct SymbolTable* inputTable;
 } HTML;
 
 typedef struct HTMLBODY {
