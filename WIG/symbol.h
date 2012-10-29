@@ -17,28 +17,43 @@ SYMBOL *addSymbol(char *id, SymbolTable *t);
 SymbolTable *initSymbolTable();
 SymbolTable *addTable(SymbolTable* up);
 void symbolSERVICE(SERVICE* s);
-void symbolHTML(HTML* h, SymbolTable* table);
-void symbolHTMLBODY(HTMLBODY* h, SymbolTable* gapTable, SymbolTable* inputTable);
-void symbolINPUTATTR(INPUTATTR* i, SymbolTable* table);
-void symbolATTRname(ATTR* a, SymbolTable* table);
-void symbolSCHEMA(SCHEMA* s, SymbolTable* table);
-void symbolFIELD(FIELD* f, SymbolTable* table);
-void symbolVARIABLE(VARIABLE* v, SymbolTable* table);
-void symbolTYPEset(TYPE* t, SYMBOL* symbol);
-void symbolSIMPLETYPEset(SIMPLETYPE* s, SYMBOL* symbol);
-void symbolFUNCTION(FUNCTION* f, SymbolTable* table);
-void symbolARGUMENT(ARGUMENT* a, SymbolTable* table);
-void symbolSESSION(SESSION* s, SymbolTable* table);
-void symbolSTM(STM* s, SymbolTable* table);
-void symbolCOMPOUNDSTM(COMPOUNDSTM* c, SymbolTable* table);
-void symbolDOCUMENT(DOCUMENT* d, RECEIVE* r, SymbolTable* table);
-void symbolRECEIVE(RECEIVE* r, SymbolTable* table, SymbolTable* inputTable);
-void symbolPLUG(PLUG* p, SymbolTable* table, SymbolTable* gapTable);
-void symbolINPUT(INPUT* i, SymbolTable* table, SymbolTable* inputTable);
-void symbolLVALUE(LVALUE* l, SymbolTable* table);
-void symbolFIELDVALUE(FIELDVALUE* f, SymbolTable* table);
-void symbolEXP(EXP* e, SymbolTable* table);
-void symbolIDchainget(ID* i, SymbolTable* table);
-void symbolIDchainadd(ID* i, SymbolTable* table, TYPE* type);
+/* void symbolGetHTML(HTML* h, SymbolTable* table); */
+/* void symbolGetHTMLBODY(HTMLBODY* h, SymbolTable* gapTable, SymbolTable* inputTable); */
+/* void symbolGetINPUTATTR(INPUTATTR* i, SymbolTable* table); */
+/* void symbolGetATTRname(ATTR* a, SymbolTable* table); */
+void symbolGetSCHEMA(SCHEMA* s, SymbolTable* table);
+/* void symbolGetFIELD(FIELD* f, SymbolTable* table); */
+/* void symbolGetVARIABLE(VARIABLE* v, SymbolTable* table); */
+/* void symbolGetTYPEset(TYPE* t, SYMBOL* symbol); */
+/* void symbolGetSIMPLETYPEset(SIMPLETYPE* s, SYMBOL* symbol); */
+void symbolGetFUNCTION(FUNCTION* f, SymbolTable* table);
+/* void symbolGetARGUMENT(ARGUMENT* a, SymbolTable* table); */
+void symbolGetSESSION(SESSION* s, SymbolTable* table);
+void symbolGetSTM(STM* s, SymbolTable* table);
+void symbolGetCOMPOUNDSTM(COMPOUNDSTM* c, SymbolTable* table);
+void symbolGetDOCUMENT(DOCUMENT* d, RECEIVE* r, SymbolTable* table);
+void symbolGetRECEIVE(RECEIVE* r, SymbolTable* table, SymbolTable* inputTable);
+void symbolGetFIELDVALUE(FIELDVALUE* f, SymbolTable* table);
+void symbolGetPLUG(PLUG* p, SymbolTable* table, SymbolTable* gapTable);
+void symbolGetINPUT(INPUT* i, SymbolTable* table, SymbolTable* inputTable);
+void symbolGetLVALUE(LVALUE* l, SymbolTable* table);
+void symbolGetEXP(EXP* e, SymbolTable* table);
+void symbolGetIDchain(ID* i, SymbolTable* table);
+
+void symbolAddHTML(HTML* h, SymbolTable* table);
+void symbolAddHTMLBODY(HTMLBODY* h, SymbolTable* gapTable, SymbolTable* inputTable);
+void symbolAddINPUTATTR(INPUTATTR* i, SymbolTable* table);
+void symbolAddATTRname(ATTR* a, SymbolTable* table);
+void symbolAddSCHEMA(SCHEMA* s, SymbolTable* table);
+void symbolAddFIELD(FIELD* f, SymbolTable* table);
+void symbolAddVARIABLE(VARIABLE* v, SymbolTable* table);
+void symbolAddTYPEset(TYPE* t, SYMBOL* symbol);
+void symbolAddSIMPLETYPEset(SIMPLETYPE* s, SYMBOL* symbol);
+void symbolAddFUNCTION(FUNCTION* f, SymbolTable* table);
+void symbolAddARGUMENT(ARGUMENT* a, SymbolTable* table);
+void symbolAddSESSION(SESSION* s, SymbolTable* table);
+void symbolAddSTM(STM* s, SymbolTable* table);
+void symbolAddCOMPOUNDSTM(COMPOUNDSTM* c, SymbolTable* table);
+void symbolAddIDchain(ID* i, SymbolTable* table, TYPE* type);
 
 #endif /* !SYMBOL_H */

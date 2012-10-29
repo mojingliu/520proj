@@ -23,6 +23,7 @@ typedef struct SYMBOL {
 		struct ARGUMENT *argumentS;
 		struct SESSION *sessionS;
 		struct VARIABLE *variableS;
+		struct STM *statementS;
     } val;
     struct SYMBOL *up;
     struct SYMBOL *next;
