@@ -27,5 +27,8 @@ void weedINPUT(INPUT* i);
 void weedLVALUE(LVALUE* l);
 void weedFIELDVALUE(FIELDVALUE* f);
 void weedEXP(EXP* e);
+int hasShowSTM(STM* s);
+int hasExitSTM(STM* s);
+
 
 #endif /* !WEEDER_H */

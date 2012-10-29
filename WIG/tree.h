@@ -1,6 +1,8 @@
 #ifndef TREE_H
 #define TREE_H
 
+#define HashSize 250
+
 typedef struct SymbolType {
 	int function;
 	char* tupleName;

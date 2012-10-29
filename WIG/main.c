@@ -3,15 +3,18 @@
 #include "eval.h"
 #include "stdio.h"
 #include "weeder.h"
+#include "symbol.h"
 #include <string.h>
 
 void yyparse();
 
 SERVICE *theservice;
 int weedError;
+int symbolError;
 int lineno;
 FILE* yyin;
 FILE* ofile;
+SymbolTable* globalTable;
 
 
 void help()
@@ -57,7 +60,7 @@ int main(int argc, char *argv[])
     return 0;
   }
   if(argc < 3 || (strlen(argv[2]) > 1 && argv[2][0] == '-' && argv[2][1] == '-'))
-    ofile == NULL;
+    ofile = NULL;
   else
     ofile = fopen(argv[2], "w");
   

@@ -1,8 +1,6 @@
 #ifndef SYMBOL_H
 #define SYMBOL_H
 
-#define HashSize 250
-
 #include "tree.h"
 #include <stdio.h>
 #include <string.h>
@@ -12,9 +10,6 @@
 
 extern SymbolTable* globalTable;
 extern int symbolError;
-
-
-
 
 int Hash(char *str);
 SYMBOL *getSymbol(char *id, SymbolTable *t);
