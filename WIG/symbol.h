@@ -30,7 +30,7 @@ void symbolGetFUNCTION(FUNCTION* f, SymbolTable* table);
 /* void symbolGetARGUMENT(ARGUMENT* a, SymbolTable* table); */
 void symbolGetSESSION(SESSION* s, SymbolTable* table);
 void symbolGetSTM(STM* s, SymbolTable* table);
-void symbolGetCOMPOUNDSTM(COMPOUNDSTM* c, SymbolTable* table);
+void symbolGetCOMPOUNDSTM(COMPOUNDSTM* c);
 void symbolGetDOCUMENT(DOCUMENT* d, RECEIVE* r, SymbolTable* table);
 void symbolGetRECEIVE(RECEIVE* r, SymbolTable* table, SymbolTable* inputTable);
 void symbolGetFIELDVALUE(FIELDVALUE* f, SymbolTable* table);

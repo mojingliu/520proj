@@ -1,5 +1,27 @@
 For this milestone, we used the JOOS source code as reference
 and then built on top of what we had for a weeder.  It's the
 same style of just reducing down until the lowest levels create
-a symbol and store it in the tree.
+a symbol and store it in the symbol table.
+
+After finishing everything we realized we didn't handle recursion
+and that we would need to go back and do multiple passes to handle
+this.  
+
+We wrote out a suite of test programs to catch every single 
+possible error message.  We also compared the printed symbol
+tables to a manual construction.
+
+We made the necessary changes to our makefile and main.c to allow
+for turning the printing of symbols on or off.
+
+We did run into one snag - for something like 
+	schema row{ int a; int b; int c;}
+
+  	tuple row row1;
+
+ and then later on:
+
+ 	row \+ (a) \+ (a, b)
+
+We assumed this was something for the typechecker to handle.
 

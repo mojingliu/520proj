@@ -18,46 +18,70 @@ void newlineS(int indent)
 void prettySYMBOL(SymbolTable* globalTable)
 {
 	
-	SYMBOL *current;
-	if(globalTable == NULL)
-		return;
-	current = globalTable->first;
-	while(current != NULL)
+	SYMBOL *current; 
+	SYMBOL *temp;
+	SymbolTable *table;
+	table = globalTable; 
+	while(table != NULL)
 	{
-		newlineS(globalTable->indent);
-		fprintf(symbolofile, "Symbol: %s, Type: ", current->id);
-		writeType(current->type); 
-		current = current->next;
+		newlineS(table->indent);
+		newlineS(table->indent);
+		fprintf(symbolofile, "New Scope");
+		current = table->first;
+		while(current != NULL)
+		{
+			newlineS(table->indent);
+			fprintf(symbolofile, "Symbol: %s, Type: ", current->id);
+			if(current->type->function)
+			{
+				 temp = (current->val.functionS->fTable->first);
+				 fprintf(symbolofile, "(");
+				 while(temp != NULL)
+				 {
+				 	writeType(temp->type);
+				 	if(temp->next != NULL)
+				 		fprintf(symbolofile, ", ");
+				 	temp = temp->next;
+				 }
+				 fprintf(symbolofile, ")->");
+			}
+			writeType(current->type); 
+			current = current->next;
+		}
+		table = table->next;
 	}
-	fprintf(symbolofile, "\n\n New Scope \n");
-	prettySYMBOL(globalTable->next);
 }	
+
+void printArgs(ARGUMENT* arg)
+{
+	if(arg == NULL)
+		return;
+	if(arg->next != NULL)
+		printArgs(arg->next);
+	writeType(arg->type);
+}
 
 void writeType(SymbolType* type)
 {
-	/* printf("\n\nin writeType\n\n"); */
-	char* fun = "function ";
-	if(!type->function)
-		fun = "";
 	switch(type->kind)
 	{
 		case failSK:
 			fprintf(symbolofile, "someting broke here");
 			break;
 		case intSK:
-			fprintf(symbolofile, "%sint", fun);
+			fprintf(symbolofile, "int");
 			break;
 		case stringSK:
-			fprintf(symbolofile, "%sstring", fun);
+			fprintf(symbolofile, "string");
 			break;
 		case boolSK:
-			fprintf(symbolofile, "%sbool", fun);
+			fprintf(symbolofile, "bool");
 			break;
 		case voidSK:
-			fprintf(symbolofile, "%svoid", fun);
+			fprintf(symbolofile, "void");
 			break;
 		case tupleSK:
-			fprintf(symbolofile, "%stuple %s", fun, type->tupleName);
+			fprintf(symbolofile, "tuple %s", type->tupleName);
 			break;
 		case schemaSK:
 			fprintf(symbolofile, "schema");

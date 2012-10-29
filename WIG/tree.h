@@ -170,7 +170,6 @@ typedef struct SESSION{
 	struct ID* id;
 	struct COMPOUNDSTM* compoundstm;
 	struct SESSION* next;
-	struct SymbolTable* sTable;
 } SESSION;
 
 typedef struct STM{
@@ -203,7 +202,6 @@ typedef struct STM{
 		struct COMPOUNDSTM* compoundstm;
 		struct EXP* expr;
 	} val;
-	struct SymbolTable* cTable;
 	struct STM* next;
 
 } STM;
@@ -212,6 +210,7 @@ typedef struct COMPOUNDSTM{
 	int lineno;
 	struct VARIABLE* variable;
 	struct STM* stm;
+	struct SymbolTable* cTable;
 } COMPOUNDSTM;
 
 typedef struct DOCUMENT{

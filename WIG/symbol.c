@@ -114,9 +114,10 @@ void symbolSERVICE(SERVICE* s)
 	symbolError = 0;
 	symbolAddHTML(s->html, globalTable);
 	symbolAddSCHEMA(s->schema, globalTable);
-	symbolAddVARIABLE(s->variable, globalTable);
+	symbolAddVARIABLE(s->variable, globalTable);	
 	symbolAddFUNCTION(s->function, globalTable);
 	symbolAddSESSION(s->session, globalTable);
+
 	if(!symbolError)
 	{
 		/* symbolGetHTML(s->html, globalTable); */
@@ -134,7 +135,6 @@ void symbolSERVICE(SERVICE* s)
 void symbolGetFUNCTION(FUNCTION* f, SymbolTable* table)
 {
 	SYMBOL *symbol;
-	SymbolTable *fTable;
 	if(f == NULL) return;
 	if(f->next != NULL)
 		symbolGetFUNCTION(f->next, table);
@@ -152,17 +152,16 @@ void symbolGetFUNCTION(FUNCTION* f, SymbolTable* table)
 	fTable = addTable(table);*/
 	/* TODO: Miracles */
 	/* symbolGetARGUMENT(f->argument, fTable); */
-	symbolGetCOMPOUNDSTM(f->compoundstm, f->fTable);
+	symbolGetCOMPOUNDSTM(f->compoundstm);
 }
 
 void symbolGetSESSION(SESSION* s, SymbolTable* table)
 {
 	SYMBOL *symbol;
-	SymbolTable *cTable;
 	if(s == NULL) return;
 	if(s->next != NULL)
 		symbolGetSESSION(s->next, table);
-	symbolGetCOMPOUNDSTM(s->compoundstm, s->sTable);
+	symbolGetCOMPOUNDSTM(s->compoundstm);
 }
 
 void symbolGetSTM(STM* s, SymbolTable* table)
@@ -200,7 +199,7 @@ void symbolGetSTM(STM* s, SymbolTable* table)
 			symbolGetSTM(s->val.whileE.stm, table);
 			break;
 		case compoundK:
-			symbolGetCOMPOUNDSTM(s->val.compoundstm, s->cTable);
+			symbolGetCOMPOUNDSTM(s->val.compoundstm);
 			break;
 		case exprK:
 			symbolGetEXP(s->val.expr, table);
@@ -211,11 +210,11 @@ void symbolGetSTM(STM* s, SymbolTable* table)
 /* Usually we open a new scope before doing this.
    Usually.
    So we can't do it in here, so do it when you call it. */
-void symbolGetCOMPOUNDSTM(COMPOUNDSTM* c, SymbolTable* table)
+void symbolGetCOMPOUNDSTM(COMPOUNDSTM* c)
 {
 	if(c == NULL) return;
 	/* Don't need to do variables: no gets */
-	symbolGetSTM(c->stm, table);
+	symbolGetSTM(c->stm, c->cTable);
 }
 
 void symbolGetDOCUMENT(DOCUMENT* d, RECEIVE* r, SymbolTable* table)
@@ -471,6 +470,7 @@ void symbolGetIDchain(ID* i, SymbolTable* table)
 
 void symbolAddHTML(HTML* h, SymbolTable* table)
 {
+
 	SYMBOL *symbol;
 	SymbolTable *gapTable;
 	SymbolTable *inputTable;
@@ -478,6 +478,7 @@ void symbolAddHTML(HTML* h, SymbolTable* table)
 	if (h->next != NULL)
 		symbolAddHTML(h->next, table);
 	symbol = addSymbol(h->identifier->identifier, table);
+
 	if(symbol == NULL)
 	{
 		printf("%d: Symbol '%s' already defined\n", h->identifier->lineno, h->identifier->identifier);
@@ -564,8 +565,11 @@ void symbolAddATTRname(ATTR* a, SymbolTable* table)
 			break;
 	}
 	symbol = addSymbol(id, table);
-	symbol->type->kind = stringSK;
-	symbol->val.attrnameS = a;
+	if(symbol != NULL)
+	{
+		symbol->type->kind = stringSK;
+		symbol->val.attrnameS = a;
+	}
 	/* allowed to have duplicates */
 }
 
@@ -694,7 +698,6 @@ void symbolAddARGUMENT(ARGUMENT* a, SymbolTable* table)
 void symbolAddSESSION(SESSION* s, SymbolTable* table)
 {
 	SYMBOL *symbol;
-	SymbolTable *cTable;
 	if(s == NULL) return;
 	if(s->next != NULL)
 		symbolAddSESSION(s->next, table);
@@ -707,14 +710,13 @@ void symbolAddSESSION(SESSION* s, SymbolTable* table)
 	}
 	symbol->val.sessionS = s;
 	symbol->type->kind = sessionSK;
-	cTable = addTable(table);
-	s->sTable = cTable;
-	symbolAddCOMPOUNDSTM(s->compoundstm, cTable);
+	/*cTable = addTable(table);
+	s->sTable = cTable;*/
+	symbolAddCOMPOUNDSTM(s->compoundstm, table);
 }
 
 void symbolAddSTM(STM* s, SymbolTable* table)
 {
-	SymbolTable* cTable;
 	if(s == NULL) return;
 	if(s->next != NULL)
 		symbolAddSTM(s->next, table);
@@ -747,9 +749,7 @@ void symbolAddSTM(STM* s, SymbolTable* table)
 			symbolAddSTM(s->val.whileE.stm, table);
 			break;
 		case compoundK:
-			cTable = addTable(table);
-			s->cTable = cTable;
-			symbolAddCOMPOUNDSTM(s->val.compoundstm, cTable);
+			symbolAddCOMPOUNDSTM(s->val.compoundstm, table);
 			break;
 		case exprK:
 			/* Don't need exp */
@@ -762,9 +762,12 @@ void symbolAddSTM(STM* s, SymbolTable* table)
    So we can't do it in here, so do it when you call it. */
 void symbolAddCOMPOUNDSTM(COMPOUNDSTM* c, SymbolTable* table)
 {
+	SymbolTable* cTable;
 	if(c == NULL) return;
-	symbolAddVARIABLE(c->variable, table);
-	symbolAddSTM(c->stm, table);
+	cTable = addTable(table);
+	c->cTable = cTable;
+	symbolAddVARIABLE(c->variable, cTable);
+	symbolAddSTM(c->stm, cTable);
 }
 
 void symbolAddIDchain(ID* i, SymbolTable* table, TYPE* type)
