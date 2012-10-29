@@ -117,219 +117,19 @@ void symbolSERVICE(SERVICE* s)
 	symbolAddVARIABLE(s->variable, globalTable);
 	symbolAddFUNCTION(s->function, globalTable);
 	symbolAddSESSION(s->session, globalTable);
-	/* if(!symbolError)
+	if(!symbolError)
 	{
-		/*symbolGetHTML(s->html, globalTable);*//*
-		/* symbolGetSCHEMA(s->schema, globalTable); *//*
-		/* symbolGetVARIABLE(s->variable, globalTable); *//*
+		/* symbolGetHTML(s->html, globalTable); */
+		/* symbolGetSCHEMA(s->schema, globalTable); */
+		/* symbolGetVARIABLE(s->variable, globalTable); */
 		symbolGetFUNCTION(s->function, globalTable);
 		symbolGetSESSION(s->session, globalTable);
-	} */
+	}
 }
 
 /* ==============================================
                      GETS
    ============================================== */
-
-/*
-void symbolGetHTML(HTML* h, SymbolTable* table)
-{
-	SYMBOL *symbol;
-	SymbolTable *gapTable;
-	SymbolTable *inputTable;
-	if (h == NULL) return;
-	if (h->next != NULL)
-		symbolGetHTML(h->next, table);*/
-	/* symbol = addSymbol(h->identifier->identifier, table);
-	if(symbol == NULL)
-	{
-		printf("%d: Symbol '%s' already defined\n", h->identifier->lineno, h->identifier->identifier);
-		symbolError = 1;
-		return;
-	} */
-	/* could be error here */
-
-	/*
-	symbol->type->kind = htmlSK;
-	symbol->val.htmlS = h;
-	gapTable = addTable(table);
-	inputTable = addTable(table);
-	h->gapTable = gapTable;
-	h->inputTable = inputTable; */
-	/* TODO: miracles *//*
-	symbolGetHTMLBODY(h->body, gapTable, inputTable);
-} */
-
-/* Pruned */
-/*void symbolGetHTMLBODY(HTMLBODY* h, SymbolTable* gapTable, SymbolTable* inputTable)
-{
-	SYMBOL* symbol; 
-	if (h == NULL) return;
-	if (h->next != NULL)
-		symbolGetHTMLBODY(h->next, gapTable, inputTable);
-	switch (h->kind) {
-		case tagK:
-		case whateverK:
-		case metaK:
-			break;
-		case gapK:
-			/*symbol = addSymbol(h->val.id->identifier, gapTable);
-			if(symbol == NULL)
-			{
-				printf("%d: Gap symbol '%s' already defined\n", h->val.id->lineno, h->val.id->identifier);
-				symbolError = 1;
-				return;
-			}
-			symbol->type->kind = gapSK;
-			symbol->val.gapS = h; *//*
-			break;
-		case inputK:
-			symbolGetINPUTATTR(h->val.inputattr, inputTable);
-			break;
-		case selectK:
-			symbolGetINPUTATTR(h->val.selectE.inputattr, inputTable);
-			symbolGetHTMLBODY(h->val.selectE.body, gapTable, inputTable);
-			break;
-	}
-}*/
-
-/* Pruned */
-/* void symbolGetINPUTATTR(INPUTATTR* i, SymbolTable* table)
-{
-	if(i == NULL) return;
-	if(i->next != NULL)
-		symbolGetINPUTATTR(i->next, table);
-	switch(i->kind) {
-		case nameK:
-			symbolGetATTRname(i->val.attr, table);
-			break;
-		case textK:
-			break;
-		case radioK:
-			break;
-		case otherK:
-			break;
-	}
-} */
-
-/* TERMINAL: MAY LEAVE OFF */
-/*void symbolGetATTRname(ATTR* a, SymbolTable* table)
-{
-	char* id;
-	int len;
-	SYMBOL *symbol;
-	if(a == NULL) return;
-	switch(a->kind) {
-		case attridK:
-			id = a->val.id->identifier;
-			break;
-		case attrstringconstK:
-			id = a->val.stringconst;
-			break;
-		case attrintconstK:
-			/*
-			len = snprintf(NULL, 0, "%d", a->val.intconst) + 1;
-  			id = malloc(len * sizeof(char));
-  			snprintf(id, len, "%d", a->val.intconst);  /* itoa - c sucks */
-/*			break;
-	}*/
-	/*
-	symbol = addSymbol(id, table);
-	symbol->type->kind = stringSK;
-	symbol->val.attrnameS = a; */
-	/* allowed to have duplicates */
-/*}*/
-
-
-/*
-void symbolGetSCHEMA(SCHEMA* s, SymbolTable* table)
-{
-	SYMBOL *symbol;
-	SymbolTable *sTable;
-	if(s == NULL) return;
-	if(s->next != NULL)
-		symbolGetSCHEMA(s->next, table);
-*/
-	/*
-	symbol = addSymbol(s->id->identifier, table);
-	if(symbol == NULL)
-	{
-		printf("%d: Schema Symbol '%s' already defined\n", s->id->lineno, s->id->identifier);
-		symbolError = 1;
-		return;
-	}
-	symbol->type->kind = schemaSK;
-	symbol->val.schemaS = s;
-	sTable = addTable(table);
-	s->tupleTable = sTable; */
-	/* TODO: miracles */ /*
-	symbolGetFIELD(s->field, sTable);
-} */
-
-/* TERMINAL - may prune *//*
-void symbolGetFIELD(FIELD* f, SymbolTable* table)
-{
-	SYMBOL *symbol;
-	if(f == NULL) return;
-	if(f->next != NULL)
-		symbolGetFIELD(f->next, table);
-	/* symbol = addSymbol(f->id->identifier, table);
-	if(symbol == NULL)
-	{
-		printf("%d: Field symbol '%s' already defined\n", f->id->lineno, f->id->identifier);
-		symbolError = 1;
-		return;
-	}
-	symbol->val.fieldS = f; 
-	symbolAddSIMPLETYPEset(f->simpletype, symbol); */
-/*}*/
-
-/* Pruned */
-/*
-void symbolGetVARIABLE(VARIABLE* v, SymbolTable* table)
-{
-	if(v == NULL) return;
-	if(v->next != NULL)
-		symbolGetVARIABLE(v->next, table);	
-	symbolAddIDchain(v->id, table, v->type);
-} */
-
-/* Pruned */
-/*
-void symbolGetTYPEset(TYPE* t, SYMBOL* symbol)
-{
-	if(t == NULL) return;
-	switch (t->kind) {
-		case simpletypeK:
-			symbolAddSIMPLETYPEset(t->val.simpletype, symbol);
-			break;
-		case tupleidK:
-			symbol->type->tupleName = t->val.id->identifier;
-			symbol->type->kind = tupleSK;
-			break;
-	}
-} */
-
-/* Pruned */
-/* 
-void symbolGetSIMPLETYPEset(SIMPLETYPE* s, SYMBOL* symbol)
-{
-	if(s == NULL) return;
-	switch (s->kind) {
-		case intK:
-			symbol->type->kind = intSK;
-			break;
-		case boolK:
-			symbol->type->kind = boolSK;
-			break;
-		case stringK:
-			symbol->type->kind = stringSK;
-			break;
-		case voidK:
-			symbol->type->kind = voidSK;
-			break;
-	}
-} */
 
 void symbolGetFUNCTION(FUNCTION* f, SymbolTable* table)
 {
@@ -352,28 +152,8 @@ void symbolGetFUNCTION(FUNCTION* f, SymbolTable* table)
 	fTable = addTable(table);*/
 	/* TODO: Miracles */
 	/* symbolGetARGUMENT(f->argument, fTable); */
-	symbolGetCOMPOUNDSTM(f->compoundstm, fTable);
+	symbolGetCOMPOUNDSTM(f->compoundstm, f->fTable);
 }
-
-/* Pruned */
-/*
-void symbolGetARGUMENT(ARGUMENT* a, SymbolTable* table)
-{
-	SYMBOL *symbol;
-	if(a == NULL) return;
-	if(a->next != NULL)
-		symbolGetARGUMENT(a->next, table);
-	/*
-	symbol = addSymbol(a->id->identifier, table);
-	if(symbol == NULL)
-	{
-		printf("%d: Argument symbol '%s' already defined\n", a->id->lineno, a->id->identifier);
-		symbolError = 1;
-		return;
-	}
-	symbol->val.argumentS = a;
-	symbolAddTYPEset(a->type, symbol); */
-/*} */
 
 void symbolGetSESSION(SESSION* s, SymbolTable* table)
 {
@@ -382,19 +162,7 @@ void symbolGetSESSION(SESSION* s, SymbolTable* table)
 	if(s == NULL) return;
 	if(s->next != NULL)
 		symbolGetSESSION(s->next, table);
-	/*
-	symbol = addSymbol(s->id->identifier, table);
-	if(symbol == NULL)
-	{
-		printf("%d: Session symbol '%s' already defined\n", s->id->lineno, s->id->identifier);
-		symbolError = 1;
-		return;
-	}
-	symbol->val.sessionS = s;
-	symbol->type->kind = sessionSK;
-	cTable = addTable(table);*/
-	/* TODO: miracle */
-	symbolGetCOMPOUNDSTM(s->compoundstm, cTable);
+	symbolGetCOMPOUNDSTM(s->compoundstm, s->sTable);
 }
 
 void symbolGetSTM(STM* s, SymbolTable* table)
@@ -432,10 +200,7 @@ void symbolGetSTM(STM* s, SymbolTable* table)
 			symbolGetSTM(s->val.whileE.stm, table);
 			break;
 		case compoundK:
-			/*cTable = addTable(table);
-			symbol->val.statementS = s->val.compoundstm;  /* not sure if right */
-			/* TODO: miracles */
-			symbolGetCOMPOUNDSTM(s->val.compoundstm, cTable);
+			symbolGetCOMPOUNDSTM(s->val.compoundstm, s->cTable);
 			break;
 		case exprK:
 			symbolGetEXP(s->val.expr, table);
@@ -449,7 +214,7 @@ void symbolGetSTM(STM* s, SymbolTable* table)
 void symbolGetCOMPOUNDSTM(COMPOUNDSTM* c, SymbolTable* table)
 {
 	if(c == NULL) return;
-	/* symbolGetVARIABLE(c->variable, table); */
+	/* Don't need to do variables: no gets */
 	symbolGetSTM(c->stm, table);
 }
 
@@ -496,14 +261,6 @@ void symbolGetFIELDVALUE(FIELDVALUE* f, SymbolTable* table)
 	if(f == NULL) return;
 	if(f->next != NULL)
 		symbolGetFIELDVALUE(f->next, table);
-	/* look this up in schema table */
-	/*SYMBOL* symbol = getSymbol(f->id->identifier, table);
-	if(symbol == NULL)
-	{
-		printf("%d: Field Value Symbol '%s' not defined in schema\n", f->id->lineno, f->id->identifier);
-		symbolError = 1;
-		return;
-	}*/
 	/* TODO: Get the right scope */
 	symbolGetEXP(f->expr, table);
 }
@@ -585,8 +342,6 @@ void symbolGetLVALUE(LVALUE* l, SymbolTable* table)
 		}
 	}
 }
-
-
 
 void symbolGetEXP(EXP* e, SymbolTable* table)
 {
@@ -729,7 +484,6 @@ void symbolAddHTML(HTML* h, SymbolTable* table)
 		symbolError = 1;
 		return;
 	}
-	/* could be error here */
 	symbol->type->kind = htmlSK;
 	symbol->val.htmlS = h;
 	gapTable = addTable(table);
@@ -915,6 +669,7 @@ void symbolAddFUNCTION(FUNCTION* f, SymbolTable* table)
 	symbolAddTYPEset(f->type, symbol);
 	symbol->type->function = 1;
 	fTable = addTable(table);
+	f->fTable = fTable;  /* A miracle occurs */
 	symbolAddARGUMENT(f->argument, fTable);
 	symbolAddCOMPOUNDSTM(f->compoundstm, fTable);
 }
@@ -953,6 +708,7 @@ void symbolAddSESSION(SESSION* s, SymbolTable* table)
 	symbol->val.sessionS = s;
 	symbol->type->kind = sessionSK;
 	cTable = addTable(table);
+	s->sTable = cTable;
 	symbolAddCOMPOUNDSTM(s->compoundstm, cTable);
 }
 
@@ -966,37 +722,37 @@ void symbolAddSTM(STM* s, SymbolTable* table)
 		case semicolonK:
 			break;
 		case showK:
-			/* symbolAddDOCUMENT(s->val.showE.doc, s->val.showE.rec, table); */
+			/* Don't need documents */
 			break;
 		case exitK:
-			/* symbolAddDOCUMENT(s->val.doc, NULL, table); */
+			/* Don't need documents */
 			break;
 		case returnK:
 			break;
 		case returnexprK:
-			/* symbolAddEXP(s->val.expr, table); /* Don't need */ 
+			/* Don't need exp */ 
 			break;
 		case ifK:
-			/* symbolAddEXP(s->val.ifE.expr, table);  /* Don't need */
+			/* Don't need exp */
 			symbolAddSTM(s->val.ifE.stm, table);
 			break;
 		case ifelseK:
-			/* symbolAddEXP(s->val.ifelseE.expr, table); /* Don't need */
+			/* Don't need exp */
 			symbolAddSTM(s->val.ifelseE.stm1, table);
 
 			symbolAddSTM(s->val.ifelseE.stm2,table);
 			break;
 		case whileK:
-			/* symbolAddEXP(s->val.whileE.expr, table); /* don't need */
+			/* Don't need exp */
 			symbolAddSTM(s->val.whileE.stm, table);
 			break;
 		case compoundK:
 			cTable = addTable(table);
-			/* symbol->val.statementS = s->val.compoundstm; */  /* not sure if right */
+			s->cTable = cTable;
 			symbolAddCOMPOUNDSTM(s->val.compoundstm, cTable);
 			break;
 		case exprK:
-			/* symbolAddEXP(s->val.expr, table); /* Don't need */
+			/* Don't need exp */
 			break;
 	}
 }
@@ -1023,6 +779,6 @@ void symbolAddIDchain(ID* i, SymbolTable* table, TYPE* type)
 		printf("%d: Symbol '%s' already defined.\n", i->lineno, i->identifier);
 		symbolError = 1;
 		return;
-	}	
+	}
 	symbolAddTYPEset(type, symbol);
 }

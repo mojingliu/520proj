@@ -155,6 +155,7 @@ typedef struct FUNCTION{
 	struct ARGUMENT* argument;
 	struct COMPOUNDSTM* compoundstm;
 	struct FUNCTION* next;
+	struct SymbolTable* fTable;
 } FUNCTION;
 
 typedef struct ARGUMENT{
@@ -169,6 +170,7 @@ typedef struct SESSION{
 	struct ID* id;
 	struct COMPOUNDSTM* compoundstm;
 	struct SESSION* next;
+	struct SymbolTable* sTable;
 } SESSION;
 
 typedef struct STM{
@@ -201,7 +203,7 @@ typedef struct STM{
 		struct COMPOUNDSTM* compoundstm;
 		struct EXP* expr;
 	} val;
-
+	struct SymbolTable* cTable;
 	struct STM* next;
 
 } STM;

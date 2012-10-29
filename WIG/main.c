@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
   if(ofile == NULL)
   {
     printf("No output file - printing to stdout\n");
-    printf("\n =================================\n");
+    printf("=================================\n");
     onSTDOUT = 1;
     ofile = stdout;
   }
@@ -102,6 +102,6 @@ int main(int argc, char *argv[])
   fclose(yyin);
   if(onSTDOUT == 0)
     fclose(ofile);
-
+  printf("\n\n");
   return(0);
 }
