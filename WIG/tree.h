@@ -16,9 +16,9 @@ typedef struct SYMBOL {
 		struct HTMLATTRVALUE* inputNameS;
 		struct ATTR* attrnameS;
 		struct SCHEMA *schemaS;
-		struct FIELD *schemaFieldS;
+		struct FIELD *fieldS;
 		struct FUNCTION *functionS;
-		struct PARAMETER *parameterS;
+		struct ARGUMENT *argumentS;
 		struct SESSION *sessionS;
 		struct VARIABLE *variableS;
     } val;
@@ -103,6 +103,7 @@ typedef struct SCHEMA{
 	struct SCHEMA* next;
 	struct ID* id;
 	struct FIELD* field;
+	struct SymbolTable* tupleTable;
 } SCHEMA;
 
 typedef struct FIELD{

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "memory.h"
 #include "error.h"
@@ -154,6 +155,7 @@ void symbolINPUTATTR(INPUTATTR* i, SymbolTable* table)
 void symbolATTRname(ATTR* a, SymbolTable* table)
 {
 	char* id;
+	int len;
 	if(a == NULL) return;
 	switch(a->kind) {
 		case attridK:
@@ -163,7 +165,9 @@ void symbolATTRname(ATTR* a, SymbolTable* table)
 			id = a->val.stringconst;
 			break;
 		case attrintconstK:
-			id = itoa(a->val.intconst);
+			len = snprintf(NULL, 0, "%d", a->val.intconst) + 1;
+  			id = malloc(len * sizeof(char));
+  			snprintf(id, len, "%d", a->val.intconst);  /* itoa - c sucks */
 			break;
 	}
 	SYMBOL *symbol = addSymbol(id, table);
@@ -182,7 +186,7 @@ void symbolSCHEMA(SCHEMA* s, SymbolTable* table)
 	SYMBOL *symbol = addSymbol(s->id->identifier, table);
 	if(symbol == NULL)
 	{
-		printf("%d: Symbol '%s' already defined", s->lineno, s->id);
+		printf("%d: Symbol '%s' already defined", s->id->lineno, s->id->identifier);
 		symbolError = 1;
 		return;
 	}
@@ -198,14 +202,13 @@ void symbolFIELD(FIELD* f, SymbolTable* table)
 	if(f == NULL) return;
 	if(f->next != NULL)
 		symbolFIELD(f->next, table);
-	SYMBOL *symbol = addSymbol(f->id, table);
+	SYMBOL *symbol = addSymbol(f->id->identifier, table);
 	if(symbol == NULL)
 	{
-		printf("%d: Symbol '%s' already defined", f->lineno, f->id);
+		printf("%d: Symbol '%s' already defined", f->id->lineno, f->id->identifier);
 		symbolError = 1;
 		return;
 	}
-	symbol->kind = fieldK;
 	symbol->val.fieldS = f;
 	symbolSIMPLETYPEset(f->simpletype, symbol);
 }
@@ -226,7 +229,7 @@ void symbolTYPEset(TYPE* t, SYMBOL* symbol)
 			symbolSIMPLETYPEset(t->val.simpletype, symbol);
 			break;
 		case tupleidK:
-			weedID(t->val.id);
+			symbol->type->tupleName = t->val.id->identifier;
 			break;
 	}
 }
@@ -256,15 +259,14 @@ void symbolFUNCTION(FUNCTION* f, SymbolTable* table)
 	if(f->next != NULL)
 		symbolFUNCTION(f->next, table);
 
-	Symbol *symbol = addSymbol(f->id, table);
+	SYMBOL *symbol = addSymbol(f->id->identifier, table);
 	if(symbol == NULL)
 	{
-		printf("%d: Symbol '%s' already defined", f->lineno, f->id);
+		printf("%d: Symbol '%s' already defined", f->id->lineno, f->id->identifier);
 		symbolError = 1;
 		return;
 	}
-	symbol->kind = functionK;
-	symbol->val.function = f;
+	symbol->val.functionS = f;
 	symbolTYPEset(f->type, symbol);
 	symbol->type->function = 1;
 	SymbolTable *fTable = addTable(table);
@@ -276,16 +278,15 @@ void symbolARGUMENT(ARGUMENT* a, SymbolTable* table)
 {
 	if(a == NULL) return;
 	if(a->next != NULL)
-		symbolARGUMENT(a->next);
-	Symbol *symbol = addSymbol(a->id, table);
+		symbolARGUMENT(a->next, table);
+	SYMBOL *symbol = addSymbol(a->id->identifier, table);
 	if(symbol == NULL)
 	{
-		printf("%d: Symbol '%s' already defined", a->lineno, a->id);
+		printf("%d: Symbol '%s' already defined", a->id->lineno, a->id->identifier);
 		symbolError = 1;
 		return;
 	}
-	symbol->kind = argumentK;
-	symbol->val.argument = a;
+	symbol->val.argumentS = a;
 	symbolTYPEset(a->type, symbol);
 }
 
@@ -293,33 +294,33 @@ void symbolSESSION(SESSION* s, SymbolTable* table)
 {
 	if(s == NULL) return;
 	if(s->next != NULL)
-		symbolSESSION(s->next);
-	Symbol *symbol = addSymbol(s->id, table);
+		symbolSESSION(s->next, table);
+	SYMBOL *symbol = addSymbol(s->id->identifier, table);
 	if(symbol == NULL)
 	{
-		printf("%d: Symbol '%s' already defined", s->lineno, s->id);
+		printf("%d: Symbol '%s' already defined", s->id->lineno, s->id->identifier);
 		symbolError = 1;
 		return;
 	}
-	symbol->kind = sessionK;
-	symbol->val.session = s;
+	symbol->val.sessionS = s;
 	SymbolTable *cTable = addTable(table);
 	symbolCOMPOUNDSTM(s->compoundstm, cTable);
 }
 
 void symbolSTM(STM* s, SymbolTable* table)
 {
+	SymbolTable* cTable;
 	if(s == NULL) return;
 	if(s->next != NULL)
-		symbolSTM(s->next);
+		symbolSTM(s->next, table);
 	switch(s->kind) {
 		case semicolonK:
 			break;
 		case showK:
-			symbolDOCUMENT(s->val.showE.doc, table);
+			symbolDOCUMENT(s->val.showE.doc, s->val.showE.rec, table);
 			break;
 		case exitK:
-			symbolDOCUMENT(s->val.doc, table);
+			symbolDOCUMENT(s->val.doc, NULL, table);
 			break;
 		case returnK:
 			break;
@@ -341,7 +342,7 @@ void symbolSTM(STM* s, SymbolTable* table)
 			symbolSTM(s->val.whileE.stm, table);
 			break;
 		case compoundK:
-			SymbolTable* cTable = addTable(table);
+			cTable = addTable(table);
 			symbolCOMPOUNDSTM(s->val.compoundstm, cTable);
 			break;
 		case exprK:
@@ -360,13 +361,14 @@ void symbolCOMPOUNDSTM(COMPOUNDSTM* c, SymbolTable* table)
 	symbolSTM(c->stm, table);
 }
 
-void symbolDOCUMENT(DOCUMENT* d, SymbolTable* table)
+void symbolDOCUMENT(DOCUMENT* d, RECEIVE* r, SymbolTable* table)
 {
 	HTML* html;
+	SYMBOL* symbol;
 	if(d == NULL) return;
 	switch(d->kind) {
 		case idK:
-			Symbol* symbol = getSymbol(d->val.id->identifier, globalTable);
+			symbol = getSymbol(d->val.id->identifier, globalTable);
 			if(symbol == NULL)
 			{
 				printf("%d: Symbol '%s' not defined.\n", d->lineno, d->val.id->identifier);
@@ -376,7 +378,7 @@ void symbolDOCUMENT(DOCUMENT* d, SymbolTable* table)
 			html = symbol->val.htmlS;
 			break;
 		case plugK:
-			Symbol* symbol = getSymbol(d->val.plugE.id->identifier, globalTable);
+			symbol = getSymbol(d->val.plugE.id->identifier, globalTable);
 			if(symbol == NULL)
 			{
 				printf("%d: Symbol '%s' not defined.\n", d->lineno, d->val.plugE.id->identifier);
@@ -387,7 +389,7 @@ void symbolDOCUMENT(DOCUMENT* d, SymbolTable* table)
 			symbolPLUG(d->val.plugE.plug, table, html->gapTable);
 			break;
 	}
-	symbolRECEIVE(d.rec, table, html->inputTable);
+	symbolRECEIVE(r, table, html->inputTable);
 }
 
 void symbolRECEIVE(RECEIVE* r, SymbolTable* table, SymbolTable* inputTable)
@@ -404,7 +406,7 @@ void symbolPLUG(PLUG* p, SymbolTable* table, SymbolTable* gapTable)
 	if(p->next != NULL)
 		symbolPLUG(p->next, table, gapTable);
 	/* left gaps, right local */
-	Symbol* symbol = getSymbol(p->id->identifier, gapTable);
+	SYMBOL* symbol = getSymbol(p->id->identifier, gapTable);
 	if(symbol == NULL)
 	{
 		printf("%d: Gap symbol '%s' not defined in html.\n", p->id->lineno, p->id->identifier);
@@ -420,7 +422,7 @@ void symbolINPUT(INPUT* i, SymbolTable* table, SymbolTable* inputTable)
 	if(i->next)
 		symbolINPUT(i->next, table, inputTable);
 	symbolLVALUE(i->lvalue, table);
-	Symbol* symbol = getSymbol(i->id->identifier, inputTable);
+	SYMBOL* symbol = getSymbol(i->id->identifier, inputTable);
 	if(symbol == NULL)
 	{
 		printf("%d: Input symbol '%s' not defined in html.\n", i->id->lineno, i->id->identifier);
@@ -434,7 +436,7 @@ void symbolLVALUE(LVALUE* l, SymbolTable* table)
 	if(l == NULL) return;
 	if(l->id2 == NULL)  /* identifier */
 	{
-		Symbol* symbol = getSymbol(l->id1->identifier, inputTable);
+		SYMBOL* symbol = getSymbol(l->id1->identifier, table);
 		if(symbol == NULL)
 		{
 			printf("%d: Symbol '%s' not defined.\n", l->id1->lineno, l->id1->identifier);
@@ -444,7 +446,7 @@ void symbolLVALUE(LVALUE* l, SymbolTable* table)
 	}
 	else  /* identifier.identifier */
 	{
-		Symbol* symbol = getSymbol(l->id1->identifier, inputTable);
+		SYMBOL* symbol = getSymbol(l->id1->identifier, table);
 		if(symbol == NULL)
 		{
 			printf("%d: Tuple symbol '%s' not defined.\n", l->id1->lineno, l->id1->identifier);
@@ -467,7 +469,7 @@ void symbolFIELDVALUE(FIELDVALUE* f, SymbolTable* table)
 	if(f == NULL) return;
 	if(f->next != NULL)
 		symbolFIELDVALUE(f->next, table);
-	/* Symbol* symbol = getSymbol(f->id->identifier, table);
+	/* SYMBOL* symbol = getSymbol(f->id->identifier, table);
 	if(symbol == NULL)
 	{
 		printf("%d: Symbol '%s' not defined.\n", f->id->lineno, f->id->identifier);
@@ -480,9 +482,10 @@ void symbolFIELDVALUE(FIELDVALUE* f, SymbolTable* table)
 
 void symbolEXP(EXP* e, SymbolTable* table)
 {
+	SYMBOL* symbol;
 	if(e == NULL) return;
 	if(e->next != NULL)
-		symbolEXP(e->next);
+		symbolEXP(e->next, table);
 	switch(e->kind)
 	{
 		case lvalueK:
@@ -560,7 +563,7 @@ void symbolEXP(EXP* e, SymbolTable* table)
 			symbolIDchainget(e->val.removeE.right, table);
 			break;
 		case callK:
-			Symbol* symbol = getSymbol(e->val.callE.left->identifier, table);
+			symbol = getSymbol(e->val.callE.left->identifier, table);
 			if(symbol == NULL)
 			{
 				printf("%d: Symbol '%s' not defined.\n", e->val.callE.left->lineno, e->val.callE.left->identifier);
@@ -588,8 +591,8 @@ void symbolIDchainget(ID* i, SymbolTable* table)
 {
 	if(i == NULL) return;
 	if(i->next != NULL)
-		symbolIDchain(i->next, table);
-	Symbol* symbol = getSymbol(i->identifier, table);
+		symbolIDchainget(i->next, table);
+	SYMBOL* symbol = getSymbol(i->identifier, table);
 	if(symbol == NULL)
 	{
 		printf("%d: Symbol '%s' not defined.\n", i->lineno, i->identifier);
@@ -603,8 +606,8 @@ void symbolIDchainadd(ID* i, SymbolTable* table, TYPE* type)
 {
 	if(i == NULL) return;
 	if(i->next != NULL)
-		symbolIDchain(i->next, table);
-	Symbol* symbol = addSymbol(i->identifier, table);
+		symbolIDchainadd(i->next, table, type);
+	SYMBOL* symbol = addSymbol(i->identifier, table);
 	if(symbol == NULL)
 	{
 		printf("%d: Symbol '%s' already defined.\n", i->lineno, i->identifier);

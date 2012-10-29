@@ -36,7 +36,7 @@ void symbolARGUMENT(ARGUMENT* a, SymbolTable* table);
 void symbolSESSION(SESSION* s, SymbolTable* table);
 void symbolSTM(STM* s, SymbolTable* table);
 void symbolCOMPOUNDSTM(COMPOUNDSTM* c, SymbolTable* table);
-void symbolDOCUMENT(DOCUMENT* d, SymbolTable* table);
+void symbolDOCUMENT(DOCUMENT* d, RECEIVE* r, SymbolTable* table);
 void symbolRECEIVE(RECEIVE* r, SymbolTable* table, SymbolTable* inputTable);
 void symbolPLUG(PLUG* p, SymbolTable* table, SymbolTable* gapTable);
 void symbolINPUT(INPUT* i, SymbolTable* table, SymbolTable* inputTable);
