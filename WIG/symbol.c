@@ -134,7 +134,6 @@ void symbolSERVICE(SERVICE* s)
 
 void symbolGetFUNCTION(FUNCTION* f, SymbolTable* table)
 {
-	SYMBOL *symbol;
 	if(f == NULL) return;
 	if(f->next != NULL)
 		symbolGetFUNCTION(f->next, table);
@@ -157,7 +156,6 @@ void symbolGetFUNCTION(FUNCTION* f, SymbolTable* table)
 
 void symbolGetSESSION(SESSION* s, SymbolTable* table)
 {
-	SYMBOL *symbol;
 	if(s == NULL) return;
 	if(s->next != NULL)
 		symbolGetSESSION(s->next, table);
@@ -166,7 +164,6 @@ void symbolGetSESSION(SESSION* s, SymbolTable* table)
 
 void symbolGetSTM(STM* s, SymbolTable* table)
 {
-	SymbolTable* cTable;
 	if(s == NULL) return;
 	if(s->next != NULL)
 		symbolGetSTM(s->next, table);
@@ -232,6 +229,7 @@ void symbolGetDOCUMENT(DOCUMENT* d, RECEIVE* r, SymbolTable* table)
 				return;
 			}
 			html = symbol->val.htmlS;
+			d->val.id->symbol = symbol;
 			break;
 		case plugK:
 			symbol = getSymbol(d->val.plugE.id->identifier, globalTable);
@@ -242,6 +240,7 @@ void symbolGetDOCUMENT(DOCUMENT* d, RECEIVE* r, SymbolTable* table)
 				return;
 			}
 			html = symbol->val.htmlS;
+			d->val.plugE.id->symbol = symbol;
 			symbolGetPLUG(d->val.plugE.plug, table, html->gapTable);
 			break;
 	}
@@ -314,6 +313,19 @@ void symbolGetLVALUE(LVALUE* l, SymbolTable* table)
 			symbolError = 1;
 			return;
 		}
+		l->id1->symbol = symbol;	/* for type checking */ 
+		if(symbol->type->kind == tupleSK)
+		{
+			printf("I found a tuple: %s\n", symbol->id);
+			symbol3 = getSymbol(symbol->type->tupleName, table);
+			if(symbol3 != NULL)
+			{
+				printf("It had a schema: %s\n", symbol3->id);
+				l->id1->symbol->type->schema = symbol3->val.schemaS;
+			}
+			else
+				printf("It didn't have a schema :(\n");
+		}
 	}
 	else  /* identifier.identifier */
 	{
@@ -339,6 +351,7 @@ void symbolGetLVALUE(LVALUE* l, SymbolTable* table)
 			symbolError = 1;
 			return;
 		}
+		l->id2->symbol = symbol2;	/* for type checking */
 	}
 }
 
@@ -432,6 +445,7 @@ void symbolGetEXP(EXP* e, SymbolTable* table)
 				symbolError = 1;
 				return;
 			}
+			e->val.callE.left->symbol = symbol;
 			symbolGetEXP(e->val.callE.right, table);
 			break;
 		case tupleK:

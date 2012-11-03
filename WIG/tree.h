@@ -6,6 +6,7 @@
 typedef struct SymbolType {
 	int function;
 	char* tupleName;
+	struct SCHEMA* schema;
 	enum{failSK, intSK, boolSK, stringSK, voidSK, tupleSK, htmlSK, schemaSK, gapSK, sessionSK} kind;	
 } SymbolType;
 
@@ -132,6 +133,7 @@ typedef struct ID{
 	int lineno;
 	char* identifier;
 	struct ID* next;
+	struct SYMBOL* symbol;
 } ID;
 
 typedef struct TYPE{
@@ -141,6 +143,7 @@ typedef struct TYPE{
 		struct SIMPLETYPE* simpletype;
 		struct ID* id;
 	} val;
+	struct SCHEMA* schema;
 } TYPE;
 
 typedef struct SIMPLETYPE{
@@ -248,6 +251,7 @@ typedef struct LVALUE{
 	int lineno;
 	struct ID* id1;
 	struct ID* id2;
+	struct TYPE* type;
 } LVALUE;
 
 typedef struct FIELDVALUE{
@@ -365,6 +369,7 @@ typedef struct EXP{
 
 	}val;
 
+	struct TYPE* type;
 	struct EXP* next;
 } EXP;
 

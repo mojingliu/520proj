@@ -13,6 +13,7 @@ SERVICE *theservice;
 int weedError;
 int symbolError;
 int lineno;
+int typeErrors;
 FILE* yyin;
 FILE* ofile;
 SymbolTable* globalTable;
@@ -25,10 +26,12 @@ void help()
   printf("commands: \n");
   printf("--help: displays this message\n");
   printf("--noweeder: turns off the weeder\n");
-  printf("--symbol: prints the symbol table\n");
+  printf("--nosymbol: turns off the symbol table\n");
   printf("--nopretty: turns off pretty printer\n");
+  printf("--notypecheck: turns off the typechecker\n");
+  printf("  Note: typechecker cannot be run with the symbol table turned off.\n");
   printf("format: \n");
-  printf("    ./wig inputFile [outputFile] [--noweeder]\n");
+  printf("    ./wig inputFile [outputFile] [--noweeder] [--symbol] [--nopretty] [--notypecheck]\n");
   printf("if you don't include an output file, output will be written to stdout.");
 }
 
@@ -37,8 +40,9 @@ int main(int argc, char *argv[])
   
   int i;
   int weeder = 1;
-  int symbol = 0;
+  int symbol = 1;
   int pretty = 1;
+  int typecheck = 1;
   int onSTDOUT = 0;
   lineno = 1;
   if(argc == 1)
@@ -55,10 +59,12 @@ int main(int argc, char *argv[])
     }
     else if(!strcmp(argv[i], "--noweeder"))
       weeder = 0;
-    else if(!strcmp(argv[i], "--symbol"))
-      symbol = 1;
+    else if(!strcmp(argv[i], "--nosymbol"))
+      symbol = 0;
     else if(!strcmp(argv[i], "--nopretty"))
       pretty = 0;
+    else if(!strcmp(argv[i], "--notypecheck"))
+      typecheck = 0;
   }
 
   yyin = fopen(argv[1], "r");
@@ -98,6 +104,12 @@ int main(int argc, char *argv[])
     symbolSERVICE(theservice);
     if(symbolError != 1)
       prettySYMBOL(globalTable);
+  }
+  if(typecheck == 1)
+  {
+    typeSERVICE(theservice);
+    if(typeErrors)
+      printf("%d type errors found.\n", typeErrors);
   }
   fclose(yyin);
   if(onSTDOUT == 0)

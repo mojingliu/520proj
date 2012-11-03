@@ -54,12 +54,35 @@ void prettySYMBOL(SymbolTable* globalTable)
 
 void printArgs(ARGUMENT* arg)
 {
+	printf("in printargs\n");
 	if(arg == NULL)
 		return;
 	if(arg->next != NULL)
 		printArgs(arg->next);
-	writeType(arg->type);
+	if(arg->type->kind == tupleidK)
+	{
+		fprintf(symbolofile, "%s", arg->type->val.id->identifier);
+	}
+	else
+	{
+		switch(arg->type->val.simpletype->kind)
+		{
+			case intK:
+				fprintf(symbolofile, "int");
+				break;
+			case boolK:
+				fprintf(symbolofile, "bool");
+				break;
+			case stringK:
+				fprintf(symbolofile, "string");
+				break;
+			case voidK:
+				fprintf(symbolofile, "void");
+				break;
+		}
+	}
 }
+
 
 void writeType(SymbolType* type)
 {
