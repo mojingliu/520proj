@@ -22,7 +22,7 @@
 
 	TODO FOR TOMORROW
 
-	receive
+	+receive
 	+tuple ops
 	all returns in function must have type of function
 		- all returns must be of correct type
@@ -191,6 +191,11 @@ void typeINPUT(INPUT* i)
 	if(i->next)
 		typeINPUT(i->next);
 	typeLVALUE(i->lvalue);
+	if(i->lvalue->type->kind != simpletypeK)
+	{
+		typeErrors++;
+		printf("%d: Type Error: Receive inputs must be simpletypes (int, bool, void, string).\n", i->lineno);
+	}
 
 }
 

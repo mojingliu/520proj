@@ -316,15 +316,11 @@ void symbolGetLVALUE(LVALUE* l, SymbolTable* table)
 		l->id1->symbol = symbol;	/* for type checking */ 
 		if(symbol->type->kind == tupleSK)
 		{
-			printf("I found a tuple: %s\n", symbol->id);
 			symbol3 = getSymbol(symbol->type->tupleName, table);
 			if(symbol3 != NULL)
 			{
-				printf("It had a schema: %s\n", symbol3->id);
 				l->id1->symbol->type->schema = symbol3->val.schemaS;
 			}
-			else
-				printf("It didn't have a schema :(\n");
 		}
 	}
 	else  /* identifier.identifier */

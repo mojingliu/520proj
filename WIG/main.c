@@ -1,6 +1,5 @@
 #include "tree.h"
 #include "pretty.h"
-#include "eval.h"
 #include "stdio.h"
 #include "weeder.h"
 #include "symbol.h"
@@ -105,6 +104,14 @@ int main(int argc, char *argv[])
     symbolSERVICE(theservice);
     if(symbolError != 1)
       prettySYMBOL(globalTable);
+    else
+    {
+      fclose(yyin);
+      if(onSTDOUT == 0)
+        fclose(ofile);
+      printf("\n\n");
+      return(0);
+    }
   }
   if(typecheck == 1)
   {
