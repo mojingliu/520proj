@@ -4,6 +4,7 @@
 #include "stdio.h"
 #include "weeder.h"
 #include "symbol.h"
+#include "type.h"
 #include "prettysymbol.h"
 #include <string.h>
 

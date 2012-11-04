@@ -23,7 +23,10 @@
 	TODO FOR TOMORROW
 
 	receive
-	tuple ops
+	+tuple ops
+	all returns in function must have type of function
+		- all returns must be of correct type
+		- must be a return in every case
 	pretty printing
 */
 extern int typeErrors;
@@ -82,12 +85,12 @@ void typeSTM(STM* s)
 		case showK:
 			printf("  before document\n");
 			typeDOCUMENT(s->val.showE.doc);
-			typeRECEIVE(s->val.showE.rec
+			typeRECEIVE(s->val.showE.rec);
 			printf("  after document\n");
 			break;
 		case exitK:
 			printf("  before document\n");
-			typeDOCUMENT(s->val.doc, NULL);
+			typeDOCUMENT(s->val.doc);
 			printf("  after document\n");
 			break;
 		case returnK:
@@ -140,14 +143,14 @@ void typeDOCUMENT(DOCUMENT* d)
 			if(d->val.id->symbol->type->kind != htmlSK)	
 			{
 				typeErrors++;
-				printf("%d: Type Error: Document type needs to be const html.\n", e->lineno);
+				printf("%d: Type Error: Document type needs to be const html.\n", d->lineno);
 			}
 			break;
 		case plugK:
 			if(d->val.plugE.id->symbol->type->kind != htmlSK)	
 			{
 				typeErrors++;
-				printf("%d: Type Error: Document type needs to be const html.\n", e->lineno);
+				printf("%d: Type Error: Document type needs to be const html.\n", d->lineno);
 			}
 			typePLUG(d->val.plugE.plug);
 			break;
@@ -469,16 +472,38 @@ void typeEXP(EXP* e)
 			printf("  top of joinK\n");
 			typeEXP(e->val.joinE.left);
 			typeEXP(e->val.joinE.right);
+			if(e->val.joinE.left->type->schema == NULL || e->val.joinE.right->type->schema == NULL)
+			{
+				printf("  error in joinK\n");
+				return;
+			}			
+			e->type = NEW(TYPE);
+			e->type->kind = tupleidK;
+			e->type->schema = joinTuples(e->val.joinE.left->type->schema, e->val.joinE.right->type->schema);
 			break;
 		case keepK:
 			printf("  top of keepK\n");
 			typeEXP(e->val.keepE.left);
-			typeIDchain(e->val.keepE.right);
+			e->type = NEW(TYPE);
+			e->type->kind = tupleidK;
+			e->type->schema = keepIDs(e->val.keepE.left->type->schema, e->val.keepE.right);
+			if(e->type->schema == NULL)
+			{
+				printf("%d: Type Error: Identifiers are not a subset of schema fields.\n", e->lineno);
+				typeErrors++;
+			}
 			break;
 		case removeK:
 			printf("  top of removeK\n");
 			typeEXP(e->val.removeE.left);
-			typeIDchain(e->val.removeE.right);
+			e->type = NEW(TYPE);
+			e->type->kind = tupleidK;
+			e->type->schema = removeIDs(e->val.keepE.left->type->schema, e->val.keepE.right);
+			if(e->type->schema == NULL)
+			{
+				printf("%d: Type Error: Identifiers are not a subset of schema fields.\n", e->lineno);
+				typeErrors++;
+			}
 			break;
 		case callK:
 			printf("  top of callK\n");
@@ -494,7 +519,7 @@ void typeEXP(EXP* e)
 			e->type->schema = NEW(SCHEMA);
 			printf("  after setting type shit\n");
 			makeAnonymousTuple(e->type->schema, e->val.tupleE);
-			printf("  after fUFUFUCKFUCKF FUCK\n");
+			printf("  after make anonymous tuple\n");
 			break;
 		case parenK:
 			printf("  top of parenK\n");
@@ -515,6 +540,180 @@ void typeEXP(EXP* e)
 			e->type = makeString();
 			break;
 	}
+}
+
+FIELD* dupField(FIELD* f)
+{
+	FIELD* toR;
+	if(f == NULL)
+		return NULL;
+	
+	toR = NEW(FIELD);
+	toR->id = f->id;
+	toR->simpletype = f->simpletype;
+	toR->next = dupField(f->next);
+	return toR;
+}
+
+SCHEMA* joinTuples(SCHEMA* s1, SCHEMA* s2)
+{
+	printf("  top of joinTuples\n");
+	FIELD* s1Loop;
+	FIELD* s2Loop;
+	FIELD* s2Start;
+	SCHEMA* toR;
+	int matches;
+	FIELD* toRfield;
+	toRfield = NULL;
+	toR = NEW(SCHEMA);
+	
+	s1Loop = dupField(s1->field);
+	/* s1Loop has same fields as s1 */
+	s2Start = dupField(s2->field);
+	/* s2Loop has same fields as s2 */
+	printf("  above first while loop\n");
+	while(s1Loop != NULL)
+	{
+		matches = 0;
+		s2Loop = s2Start;
+		printf("  above second while\n");
+		while(s2Loop != NULL)
+		{
+			if(!strcmp(s2Loop->id->identifier, s1Loop->id->identifier))
+			{	/* don't add s1 */
+				printf("  after strcmp\n");
+				matches++;
+				break;
+			}
+			s2Loop = s2Loop->next;
+		}
+		printf("  above matches == 0\n");
+		if(matches == 0)
+		{	/* in s1, not s2: keep */
+			if(toRfield == NULL)
+			{
+				printf("  toRfield == NULL\n");
+				toRfield = s1Loop;
+				toR->field = toRfield;
+				printf("  after setting\n");
+			}
+			else
+			{
+				printf("  toRfield == NULL\n");	
+				toRfield->next = s1Loop;
+				toRfield = toRfield->next;
+			}
+		}
+		printf("  after matches == 0\n");
+		s1Loop = s1Loop->next;
+	}
+	toRfield->next = s2Start;
+	/* appending all of s2 onto toR */
+	return toR;
+}
+
+SCHEMA* keepIDs(SCHEMA* schema, ID* id)
+{
+	printf("  top of keep ids\n");
+	int matched;
+	SCHEMA* toR;
+	toR = NEW(SCHEMA);
+	FIELD* temp;
+	FIELD* toAdd;
+	while(id != NULL)
+	{	/* iterate over each id in the right side list */
+		matched = 0;
+		temp = schema->field;
+		while(temp != NULL)
+		{	/* iterate over all values in the tuple to see if the ID is in the tuple */
+			if(!strcmp(id->identifier, temp->id->identifier))
+			{	/* id is in the tuple, keep this one in toAdd */
+				matched++;
+				if(toAdd == NULL)
+				{	/* if this is the first match, set it to toAdd */
+					toAdd = temp;
+					toR->field = toAdd;
+				}
+				else
+				{	/* otherwise, make it toAdd's next, and make toAdd = toAdd->next */
+					toAdd->next = temp;
+					toAdd = temp;
+				}
+				break;
+			}
+			temp = temp->next;	
+		}
+		if(!matched)
+		{	/* this ID isn't in the tuple, so return */
+			return NULL;
+		}
+		id = id->next;
+	}
+	return toR;
+}
+
+SCHEMA* removeIDs(SCHEMA* schema, ID* id)
+{
+	printf("  top of remove ids\n");
+	int matched;
+	SCHEMA* toR;
+	toR = NEW(SCHEMA);
+	FIELD* tempField;
+	FIELD* toAdd;
+	ID* tempID;
+	tempID = id;
+	
+	/* Make sure all ids are in the tuple */
+	while(tempID != NULL)
+	{
+		matched = 0;
+		tempField = schema->field;
+		while(tempField != NULL)
+		{	
+			if(!strcmp(tempID->identifier, tempField->id->identifier))
+			{ 	/* id is in the tuple */
+				matched++;
+				break;
+			}
+			tempField = tempField->next;	
+		}
+		if(!matched)
+		{	/* id is not in the tuple, return */
+			return NULL;
+		}
+		tempID = tempID->next;
+	}
+	/* all ids in the tuple, now do removes */
+	tempID = id;
+	while(tempField != NULL)
+	{
+		matched = 0;
+		tempField = schema->field;
+		while(tempID != NULL)
+		{	
+			if(!strcmp(id->identifier, tempField->id->identifier))
+			{ 	/* id is in the tuple, don't add this one  */
+				matched++;
+				break;
+			}
+			tempID = tempID->next;	
+		}
+		if(!matched)
+		{	/* id is not in the tuple, add the tuple value to the schema */
+			if(toAdd == NULL)
+			{
+				toAdd = tempField;
+				toR->field = toAdd;
+			}
+			else
+			{
+				toAdd->next = tempField;
+				toAdd = tempField;
+			}
+		}
+		tempField = tempField->next;
+	}
+	return toR;
 }
 
 
