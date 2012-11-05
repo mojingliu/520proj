@@ -13,29 +13,30 @@ service {
   </body> </html>;
 
 
-  schema row{ int a; int b;}
+  schema row{ string name; int b; }
 
-  tuple row row1, row2;
-  int d;
+  tuple row row1;
   int amount;
   bool test;
 
-  int add(int x, int y) 
+  int add(string name, int y) 
   {
-    return 5;
+    row1.name = name;
+    return 1;
   }
+
+
 
   tuple row lookup()
   {
-    return tuple{a=1, b=1};
+    return tuple{name="test", b=1};
   }
 
 
   session Contribute() {
      int i;
      i= 87;
-     
-     row1.a;
+     add("butt",2);
      show Welcome;
      show Pledge receive[i = contribution];
      amount = amount + i;

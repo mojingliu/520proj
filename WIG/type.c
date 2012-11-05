@@ -47,11 +47,8 @@ void initTypes()
 void typeSERVICE(SERVICE* s)
 {
 	initTypes();
-	printf("  before function\n");
 	typeFUNCTION(s->function);
-	printf("  after function\n");
 	typeSESSION(s->session);
-	printf("  after session\n");
 }
 
 
@@ -68,14 +65,11 @@ void typeSESSION(SESSION* s)
 	if(s == NULL) return;
 	if(s->next != NULL)
 		typeSESSION(s->next);
-	printf("  before compound\n");
 	typeCOMPOUNDSTM(s->compoundstm, NULL);
-	printf("  after compoundstm\n");
 }
 
 void typeSTM(STM* s, TYPE* t)
 {
-	printf("  top of stm\n");
 	if(s == NULL) return;
 	if(s->next != NULL)
 		typeSTM(s->next, t);
@@ -83,15 +77,11 @@ void typeSTM(STM* s, TYPE* t)
 		case semicolonK:
 			break;
 		case showK:
-			printf("  before document\n");
 			typeDOCUMENT(s->val.showE.doc);
 			typeRECEIVE(s->val.showE.rec);
-			printf("  after document\n");
 			break;
 		case exitK:
-			printf("  before document\n");
 			typeDOCUMENT(s->val.doc);
-			printf("  after document\n");
 			break;
 		case returnK:
 			if(t == NULL)
@@ -114,8 +104,8 @@ void typeSTM(STM* s, TYPE* t)
 				printf("%d: Type Error: Sessions may not return.\n", s->lineno);
 				return;
 			}
-			printf("  top of exprk\n");
 			typeEXP(s->val.expr);
+			if(s->val.expr->type == NULL) return;
 			if(!compareTypes(s->val.expr->type, t))
 			{
 				typeErrors++;
@@ -141,9 +131,7 @@ void typeSTM(STM* s, TYPE* t)
 			typeCOMPOUNDSTM(s->val.compoundstm, t);
 			break;
 		case exprK:
-			printf("  before exp\n");
 			typeEXP(s->val.expr);
-			printf("  after exp\n");
 			break;
 	}
 }
@@ -153,7 +141,6 @@ void typeSTM(STM* s, TYPE* t)
    So we can't do it in here, so do it when you call it. */
 void typeCOMPOUNDSTM(COMPOUNDSTM* c, TYPE* t)
 {
-	printf("  top of compoundstm\n");
 	if(c == NULL) return;
 	/* Don't need to do variables: no gets */
 	typeSTM(c->stm, t);
@@ -190,7 +177,6 @@ void typeRECEIVE(RECEIVE* r)
 
 void typeFIELDVALUE(FIELDVALUE* f)
 {
-	printf("  top of fieldvalue\n");
 	if(f == NULL) return;
 	if(f->next != NULL)
 		typeFIELDVALUE(f->next);
@@ -225,7 +211,6 @@ void typeINPUT(INPUT* i)
 
 void typeLVALUE(LVALUE* l)
 {
-	printf("  top of lvalue\n");
 	if(l == NULL) return;
 	if(l->id2 == NULL)  /* identifier */
 	{
@@ -246,22 +231,15 @@ void typeEXP(EXP* e)
 	switch(e->kind)
 	{
 		case lvalueK:
-			printf("  before lvalue\n");
 			typeLVALUE(e->val.lvalueE);
-			printf("  after lvalue\n");
 			e->type = e->val.lvalueE->type;
-			printf("  after setting type of expr in lvalue\n");
 			break;
 		case assignK:
-			printf("  top of assignk\n");
 			typeLVALUE(e->val.assignE.lvalue);
 			typeEXP(e->val.assignE.expr);
-			printf("  after exp in assign\n");
 			if(compareTypes(e->val.assignE.lvalue->type, e->val.assignE.expr->type))
 			{
-				printf("  after if in assignK\n");
 				e->type = e->val.assignE.lvalue->type;
-				printf("  after setting type in assignk if statement\n");
 			}
 			else
 			{
@@ -270,7 +248,6 @@ void typeEXP(EXP* e)
 			}
 			break;
 		case equalsK:
-			printf("  top of equalsK\n");
 			typeEXP(e->val.equalsE.left);
 			typeEXP(e->val.equalsE.right);
 			if(compareTypes(e->val.equalsE.left->type, e->val.equalsE.right->type))
@@ -284,7 +261,6 @@ void typeEXP(EXP* e)
 			}
 			break;
 		case notequalsK:
-			printf("  top of notequalsK\n");
 			typeEXP(e->val.notequalsE.left);
 			typeEXP(e->val.notequalsE.right);
 			if(compareTypes(e->val.notequalsE.left->type, e->val.notequalsE.right->type))
@@ -298,7 +274,6 @@ void typeEXP(EXP* e)
 			}
 			break;
 		case ltK:
-			printf("  top of ltk\n");
 			typeEXP(e->val.ltE.left);
 			typeEXP(e->val.ltE.right);
 			if(compareTypes(e->val.ltE.left->type, e->val.ltE.right->type))
@@ -318,7 +293,6 @@ void typeEXP(EXP* e)
 			}
 			break;
 		case gtK:
-			printf("  top of gtk\n");
 			typeEXP(e->val.gtE.left);
 			typeEXP(e->val.gtE.right);
 			if(compareTypes(e->val.gtE.left->type, e->val.gtE.right->type))
@@ -338,7 +312,6 @@ void typeEXP(EXP* e)
 			}
 			break;
 		case lteK:
-			printf("  top of lteK\n");
 			typeEXP(e->val.lteE.left);
 			typeEXP(e->val.lteE.right);
 			if(compareTypes(e->val.lteE.left->type, e->val.lteE.right->type))
@@ -359,7 +332,6 @@ void typeEXP(EXP* e)
 
 			break;
 		case gteK:
-			printf("  top of gteK\n");
 			typeEXP(e->val.gteE.left);
 			typeEXP(e->val.gteE.right);
 			if(compareTypes(e->val.gteE.left->type, e->val.gteE.right->type))
@@ -379,7 +351,6 @@ void typeEXP(EXP* e)
 			}
 			break;			
 		case notK:
-			printf("  top of notk\n");
 			typeEXP(e->val.exprE);
 			if(compareTypes(boolType, e->val.exprE->type))
 				e->type = makeBool();
@@ -390,7 +361,6 @@ void typeEXP(EXP* e)
 			}
 			break;
 		case plusK:
-			printf("  top of plusK\n");
 			typeEXP(e->val.plusE.left);
 			typeEXP(e->val.plusE.right);
 			counter = 0;
@@ -414,7 +384,6 @@ void typeEXP(EXP* e)
 				e->type = makeInt();
 			break;
 		case minusK:
-			printf("  top of minusK\n");
 			typeEXP(e->val.minusE.left);
 			typeEXP(e->val.minusE.right);
 			if(compareTypes(e->val.minusE.left->type, e->val.minusE.right->type) && compareTypes(intType, e->val.minusE.left->type))
@@ -428,7 +397,6 @@ void typeEXP(EXP* e)
 			}
 			break;
 		case multK:
-			printf("  top of multK\n");
 			typeEXP(e->val.multE.left);
 			typeEXP(e->val.multE.right);
 			if(compareTypes(e->val.multE.left->type, e->val.multE.right->type) && compareTypes(intType, e->val.multE.left->type))
@@ -442,7 +410,6 @@ void typeEXP(EXP* e)
 			}
 			break;
 		case divK:
-			printf("  top of divK\n");
 			typeEXP(e->val.divE.left);
 			typeEXP(e->val.divE.right);
 			if(compareTypes(e->val.divE.left->type, e->val.divE.right->type) && compareTypes(intType, e->val.divE.left->type))
@@ -456,7 +423,6 @@ void typeEXP(EXP* e)
 			}
 			break;
 		case modK:
-			printf("  top of modK\n");
 			typeEXP(e->val.modE.left);
 			typeEXP(e->val.modE.right);
 			if(compareTypes(e->val.modE.left->type, e->val.modE.right->type) && compareTypes(intType, e->val.modE.left->type))
@@ -470,7 +436,6 @@ void typeEXP(EXP* e)
 			}
 			break;
 		case andK:
-			printf("  top of andK\n");
 			typeEXP(e->val.andE.left);
 			typeEXP(e->val.andE.right);
 			if(compareTypes(e->val.andE.left->type, e->val.andE.right->type) && compareTypes(boolType, e->val.andE.left->type))
@@ -484,10 +449,9 @@ void typeEXP(EXP* e)
 			}
 			break;
 		case orK:
-			printf("  top of orK\n");
 			typeEXP(e->val.orE.left);
 			typeEXP(e->val.orE.right);
-			if(compareTypes(e->val.orE.left->type, e->val.orE.right->type) && compareTypes(intType, e->val.orE.left->type))
+			if(compareTypes(e->val.orE.left->type, e->val.orE.right->type) && compareTypes(boolType, e->val.orE.left->type))
 			{
 				e->type = makeBool();
 			}
@@ -498,12 +462,10 @@ void typeEXP(EXP* e)
 			}
 			break;
 		case joinK:
-			printf("  top of joinK\n");
 			typeEXP(e->val.joinE.left);
 			typeEXP(e->val.joinE.right);
 			if(e->val.joinE.left->type->schema == NULL || e->val.joinE.right->type->schema == NULL)
 			{
-				printf("  error in joinK\n");
 				return;
 			}			
 			e->type = NEW(TYPE);
@@ -511,7 +473,6 @@ void typeEXP(EXP* e)
 			e->type->schema = joinTuples(e->val.joinE.left->type->schema, e->val.joinE.right->type->schema);
 			break;
 		case keepK:
-			printf("  top of keepK\n");
 			typeEXP(e->val.keepE.left);
 			e->type = NEW(TYPE);
 			e->type->kind = tupleidK;
@@ -523,7 +484,6 @@ void typeEXP(EXP* e)
 			}
 			break;
 		case removeK:
-			printf("  top of removeK\n");
 			typeEXP(e->val.removeE.left);
 			e->type = NEW(TYPE);
 			e->type->kind = tupleidK;
@@ -535,28 +495,21 @@ void typeEXP(EXP* e)
 			}
 			break;
 		case callK:
-			printf("  top of callK\n");
 			typeARGUMENT(e->val.callE.left->symbol->val.functionS->argument, e->val.callE.right);
 			e->type = e->val.callE.left->symbol->val.functionS->type;
 			break;
 		case tupleK:
-			printf("  top of tupleK\n");
 			typeFIELDVALUE(e->val.tupleE);
-			printf("  after fieldvalue\n");
 			e->type = NEW(TYPE);
 			e->type->kind = tupleidK;	/* SEGFAULT WARNING TODO HELP */
 			e->type->schema = NEW(SCHEMA);
-			printf("  after setting type shit\n");
 			makeAnonymousTuple(e->type->schema, e->val.tupleE);
-			printf("  after make anonymous tuple\n");
 			break;
 		case parenK:
-			printf("  top of parenK\n");
 			typeEXP(e->val.exprE);
 			e->type = e->val.exprE->type;
 			break;
 		case intconstK:
-			printf("  top of intconstK\n");
 			e->type = makeInt();
 			break;
 		case trueK:
@@ -586,7 +539,6 @@ FIELD* dupField(FIELD* f)
 
 SCHEMA* joinTuples(SCHEMA* s1, SCHEMA* s2)
 {
-	printf("  top of joinTuples\n");
 	FIELD* s1Loop;
 	FIELD* s2Loop;
 	FIELD* s2Start;
@@ -600,40 +552,32 @@ SCHEMA* joinTuples(SCHEMA* s1, SCHEMA* s2)
 	/* s1Loop has same fields as s1 */
 	s2Start = dupField(s2->field);
 	/* s2Loop has same fields as s2 */
-	printf("  above first while loop\n");
 	while(s1Loop != NULL)
 	{
 		matches = 0;
 		s2Loop = s2Start;
-		printf("  above second while\n");
 		while(s2Loop != NULL)
 		{
 			if(!strcmp(s2Loop->id->identifier, s1Loop->id->identifier))
 			{	/* don't add s1 */
-				printf("  after strcmp\n");
 				matches++;
 				break;
 			}
 			s2Loop = s2Loop->next;
 		}
-		printf("  above matches == 0\n");
 		if(matches == 0)
 		{	/* in s1, not s2: keep */
 			if(toRfield == NULL)
 			{
-				printf("  toRfield == NULL\n");
 				toRfield = s1Loop;
 				toR->field = toRfield;
-				printf("  after setting\n");
 			}
 			else
 			{
-				printf("  toRfield == NULL\n");	
 				toRfield->next = s1Loop;
 				toRfield = toRfield->next;
 			}
 		}
-		printf("  after matches == 0\n");
 		s1Loop = s1Loop->next;
 	}
 	toRfield->next = s2Start;
@@ -643,7 +587,6 @@ SCHEMA* joinTuples(SCHEMA* s1, SCHEMA* s2)
 
 SCHEMA* keepIDs(SCHEMA* schema, ID* id)
 {
-	printf("  top of keep ids\n");
 	int matched;
 	SCHEMA* toR;
 	toR = NEW(SCHEMA);
@@ -683,7 +626,6 @@ SCHEMA* keepIDs(SCHEMA* schema, ID* id)
 
 SCHEMA* removeIDs(SCHEMA* schema, ID* id)
 {
-	printf("  top of remove ids\n");
 	int matched;
 	SCHEMA* toR;
 	toR = NEW(SCHEMA);
@@ -748,7 +690,6 @@ SCHEMA* removeIDs(SCHEMA* schema, ID* id)
 
 void makeAnonymousTuple(SCHEMA* schema, FIELDVALUE* fieldvalue)
 {
-	printf("  top of make anonymous tuple\n");
 	FIELD* field;
 	field = NEW(FIELD);
 	schema->field = field;
@@ -824,25 +765,20 @@ TYPE* getRealType(SymbolType* stype)
 
 int compareTypes(TYPE* t1, TYPE* t2)
 {
-	printf("  top of compare types\n");
+	if(t1 == NULL || t2 == NULL) return 0;
 	if(t1->kind == t2->kind)
 	{
-		printf("  inside first if\n");
 		if(t1->kind == simpletypeK)
 		{
-			printf("  inside second if\n");
 			if(t1->val.simpletype->kind == t2->val.simpletype->kind)
 			{
-				printf("  inside third if\n");
 				return 1;
 			}
 		}
 		else
 		{
-			printf("  inside else\n");
 			if(compareSchemas(t1->schema, t2->schema))
 			{
-				printf("  inside fourth if\n");
 				return 1;
 			}
 		}
@@ -852,14 +788,11 @@ int compareTypes(TYPE* t1, TYPE* t2)
 
 int compareSchemas(SCHEMA* s1, SCHEMA* s2)
 {
-	printf("  top of compare schemas\n");
-	printf("  %x, %x\n", s1, s2);
 	return subsetFields(s1->field, s2->field) && subsetFields(s2->field, s1->field);
 }
 
 int subsetFields(FIELD* f1, FIELD* f2) 	/* f1 is a subset of f2 */
 {
-	printf("  top of subset fields\n");
 	int matched;
 	FIELD* temp;
 	while(f1 != NULL)

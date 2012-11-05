@@ -19,13 +19,15 @@ weed:
 	./wig chess.wig --notypcheck --nopretty --nosymbol
 
 pretty:
-	./wig smalltest.wig prettysmalltest.wig --noweeder --notypecheck --nosymbol
+	./wig chat.wig prettysmalltest.wig --noweeder --notypecheck --nosymbol
 
 symbol:
-	./wig smalltest.wig --noweeder --nopretty --notypecheck --printsymbol
+	./wig chat.wig --noweeder --nopretty --notypecheck --printsymbol
 
 type:
-	./wig smalltest.wig --noweeder --nopretty --prettytype
+	./wig chat.wig --noweeder --nopretty --prettytype
+	./wig emailer.wig --noweeder --nopretty 
+	./wig fatchecker.wig --noweeder --nopretty
 
 testtype:
 	./wig typefailtests/fail1.wig --nopretty 

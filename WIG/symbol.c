@@ -344,7 +344,7 @@ void symbolGetLVALUE(LVALUE* l, SymbolTable* table)
 			symbolError = 1;
 			return;
 		}
-		symbol3 = getSymbol(symbol->type->tupleName, table);  /* the schema */
+		symbol3 = getSymbol(symbol->type->tupleName, globalTable);  /* the schema */
 		tupleTable = symbol3->val.schemaS->tupleTable;
 		symbol2 = getSymbol(l->id2->identifier, tupleTable);
 		if(symbol2 == NULL)
