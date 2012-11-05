@@ -170,10 +170,18 @@ extern int lineno;
   return tIDENTIFIER; 
 }
 
-<WHATEVER>[^<]* {
-  yylval.stringconst =
+<WHATEVER>[^<\n]* {
+    yylval.stringconst =
       (char *) malloc (strlen (yytext) + 1);
     sprintf (yylval.stringconst, "%s", yytext); 
+    return tWHATEVER;
+}
+
+<WHATEVER>\n {
+    lineno++;
+    yylval.stringconst =
+      (char *) malloc (strlen (yytext) + 1);
+    sprintf (yylval.stringconst, "%s", yytext);
     return tWHATEVER;
 }
 
