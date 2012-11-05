@@ -47,7 +47,7 @@ void symbolAddATTRname(ATTR* a, SymbolTable* table);
 void symbolAddSCHEMA(SCHEMA* s, SymbolTable* table);
 void symbolAddFIELD(FIELD* f, SymbolTable* table);
 void symbolAddVARIABLE(VARIABLE* v, SymbolTable* table);
-void symbolAddTYPEset(TYPE* t, SYMBOL* symbol);
+void symbolAddTYPEset(TYPE* t, SYMBOL* symbol, SymbolTable* table);
 void symbolAddSIMPLETYPEset(SIMPLETYPE* s, SYMBOL* symbol);
 void symbolAddFUNCTION(FUNCTION* f, SymbolTable* table);
 void symbolAddARGUMENT(ARGUMENT* a, SymbolTable* table);

@@ -10,7 +10,7 @@
 
 FILE* ofile;
 
-void setofile(FILE *f);
+void setsymbolofile(FILE *f);
 void newline();
 void prettySYMBOL(SymbolTable* globalTable);
 void writeType(SymbolType* type);

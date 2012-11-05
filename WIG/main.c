@@ -3,6 +3,7 @@
 #include "stdio.h"
 #include "weeder.h"
 #include "symbol.h"
+#include "prettytype.h"
 #include "type.h"
 #include "prettysymbol.h"
 #include <string.h>
@@ -115,9 +116,12 @@ int main(int argc, char *argv[])
   }
   if(typecheck == 1)
   {
+    settypeofile(stdout);
     typeSERVICE(theservice);
     if(typeErrors)
       printf("%d type errors found.\n", typeErrors);
+    else
+      prettyTypeSERVICE(theservice);
   }
   fclose(yyin);
   if(onSTDOUT == 0)

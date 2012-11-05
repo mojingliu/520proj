@@ -14,32 +14,22 @@ service {
 
 
   schema row{ int a; int b;}
-  schema magic { string a; int b; int c;}
 
   tuple row row1, row2;
-  tuple magic mtup;
   int d;
   int amount;
   bool test;
 
   int add(int x, int y) 
   {
-    return 5;
+    return "hello mr programmer";
   }
 
-  void butts()
-  {
-  }
 
   session Contribute() {
      int i;
-     void x;
-     x = butts();
      row1 = tuple{a=1, b=2};
-     //row1 \- (c);
-     mtup = row1 << tuple{a="what", c=5};
      i= 87;
-     row1.a;
      show Welcome;
      show Pledge receive[i = contribution];
      amount = amount + i;

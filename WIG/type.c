@@ -60,7 +60,7 @@ void typeFUNCTION(FUNCTION* f)
 	if(f == NULL) return;
 	if(f->next != NULL)
 		typeFUNCTION(f->next);
-	typeCOMPOUNDSTM(f->compoundstm);
+	typeCOMPOUNDSTM(f->compoundstm, f->type);
 }
 
 void typeSESSION(SESSION* s)
@@ -69,16 +69,16 @@ void typeSESSION(SESSION* s)
 	if(s->next != NULL)
 		typeSESSION(s->next);
 	printf("  before compound\n");
-	typeCOMPOUNDSTM(s->compoundstm);
+	typeCOMPOUNDSTM(s->compoundstm, NULL);
 	printf("  after compoundstm\n");
 }
 
-void typeSTM(STM* s)
+void typeSTM(STM* s, TYPE* t)
 {
 	printf("  top of stm\n");
 	if(s == NULL) return;
 	if(s->next != NULL)
-		typeSTM(s->next);
+		typeSTM(s->next, t);
 	switch(s->kind) {
 		case semicolonK:
 			break;
@@ -94,27 +94,51 @@ void typeSTM(STM* s)
 			printf("  after document\n");
 			break;
 		case returnK:
+			if(t == NULL)
+			{
+				typeErrors++;
+				printf("%d: Type Error: Sessions may not return.\n", s->lineno);
+				return;
+			}
+			if(!compareTypes(voidType, t))
+			{
+				typeErrors++;
+				printf("%d: Type Error: Function must return correct type.\n", s->lineno);
+				return;
+			}
 			break;
 		case returnexprK:
+			if(t == NULL)
+			{
+				typeErrors++;
+				printf("%d: Type Error: Sessions may not return.\n", s->lineno);
+				return;
+			}
 			printf("  top of exprk\n");
 			typeEXP(s->val.expr);
+			if(!compareTypes(s->val.expr->type, t))
+			{
+				typeErrors++;
+				printf("%d: Type Error: Function must return correct type.\n", s->lineno);
+				return;
+			}
 			break;
 		case ifK:
 			typeEXP(s->val.ifE.expr);
-			typeSTM(s->val.ifE.stm);
+			typeSTM(s->val.ifE.stm, t);
 			break;
 		case ifelseK:
 			typeEXP(s->val.ifelseE.expr);
-			typeSTM(s->val.ifelseE.stm1);
+			typeSTM(s->val.ifelseE.stm1, t);
 
-			typeSTM(s->val.ifelseE.stm2);
+			typeSTM(s->val.ifelseE.stm2, t);
 			break;
 		case whileK:
 			typeEXP(s->val.whileE.expr);
-			typeSTM(s->val.whileE.stm);
+			typeSTM(s->val.whileE.stm, t);
 			break;
 		case compoundK:
-			typeCOMPOUNDSTM(s->val.compoundstm);
+			typeCOMPOUNDSTM(s->val.compoundstm, t);
 			break;
 		case exprK:
 			printf("  before exp\n");
@@ -127,12 +151,12 @@ void typeSTM(STM* s)
 /* Usually we open a new scope before doing this.
    Usually.
    So we can't do it in here, so do it when you call it. */
-void typeCOMPOUNDSTM(COMPOUNDSTM* c)
+void typeCOMPOUNDSTM(COMPOUNDSTM* c, TYPE* t)
 {
 	printf("  top of compoundstm\n");
 	if(c == NULL) return;
 	/* Don't need to do variables: no gets */
-	typeSTM(c->stm);
+	typeSTM(c->stm, t);
 }
 
 void typeDOCUMENT(DOCUMENT* d)
@@ -377,9 +401,9 @@ void typeEXP(EXP* e)
 				printf("%d: Type Error: incorrect types for operator '+'.\n", e->lineno);
 				typeErrors++;
 			}
-			if(compareTypes(stringType, e->val.plusE.left->type))
+			if(compareTypes(stringType, e->val.plusE.right->type))
 				counter++;
-			else if(!compareTypes(intType, e->val.plusE.left->type))
+			else if(!compareTypes(intType, e->val.plusE.right->type))
 			{	
 				printf("%d: Type Error: incorrect types for operator '+'.\n", e->lineno);
 				typeErrors++;
@@ -865,13 +889,15 @@ void typeARGUMENT(ARGUMENT* arg, EXP* expr)
 	if((arg == NULL) != (expr == NULL)) /* one is null, so wrong number of arguments */
 	{
 		typeErrors++;
-		printf("%d: Type Error: Wrong number of arguments for function call.\n", expr->lineno);
+		if(arg == NULL)
+			printf("%d: Type Error: Wrong number of arguments for function call.\n", expr->lineno);
+		else
+			printf("%d: Type Error: Wrong number of arguments for function call.\n", arg->lineno);
+		return;
 	}
 	if(arg == NULL && expr == NULL)
 		return;
-
 	typeARGUMENT(arg->next, expr->next);
-
 	typeEXP(expr);
 
 	if(!compareTypes(arg->type, expr->type))

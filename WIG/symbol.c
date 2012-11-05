@@ -228,6 +228,12 @@ void symbolGetDOCUMENT(DOCUMENT* d, RECEIVE* r, SymbolTable* table)
 				symbolError = 1;
 				return;
 			}
+			if(symbol->type->kind != htmlSK)
+			{
+				printf("%d: Symbol '%s' must be of type HTML.\n", d->lineno, d->val.id->identifier);
+				symbolError = 1;
+				return;
+			}
 			html = symbol->val.htmlS;
 			d->val.id->symbol = symbol;
 			break;
@@ -461,17 +467,6 @@ void symbolGetEXP(EXP* e, SymbolTable* table)
 
 void symbolGetIDchain(ID* i, SymbolTable* table)
 {
-	SYMBOL* symbol;
-	if(i == NULL) return;
-	if(i->next != NULL)
-		symbolGetIDchain(i->next, table);
-	symbol = getSymbol(i->identifier, table);
-	if(symbol == NULL)
-	{
-		printf("%d: Symbol '%s' not defined.\n", i->lineno, i->identifier);
-		symbolError = 1;
-		return;
-	}
 }
 
 /* ==============================================
@@ -631,14 +626,28 @@ void symbolAddVARIABLE(VARIABLE* v, SymbolTable* table)
 	symbolAddIDchain(v->id, table, v->type);
 }
 
-void symbolAddTYPEset(TYPE* t, SYMBOL* symbol)
+void symbolAddTYPEset(TYPE* t, SYMBOL* symbol, SymbolTable* table)
 {
+	SYMBOL* schemaSymbol;
 	if(t == NULL) return;
 	switch (t->kind) {
 		case simpletypeK:
 			symbolAddSIMPLETYPEset(t->val.simpletype, symbol);
 			break;
 		case tupleidK:
+			schemaSymbol = getSymbol(t->val.id->identifier, table);  /* This is kinda bad, whatever. */
+			if(schemaSymbol == NULL)
+			{
+				printf("%d: Symbol '%s' does not exist.\n", t->val.id->lineno, t->val.id->identifier);
+				symbolError = 1;
+				return;
+			}
+			if(schemaSymbol->type->kind != schemaSK)
+			{
+				printf("%d: Symbol '%s' must be a schema.\n", t->val.id->lineno, t->val.id->identifier);
+				symbolError = 1;
+				return;
+			}
 			symbol->type->tupleName = t->val.id->identifier;
 			symbol->type->kind = tupleSK;
 			break;
@@ -680,7 +689,7 @@ void symbolAddFUNCTION(FUNCTION* f, SymbolTable* table)
 		return;
 	}
 	symbol->val.functionS = f;
-	symbolAddTYPEset(f->type, symbol);
+	symbolAddTYPEset(f->type, symbol, table);
 	symbol->type->function = 1;
 	fTable = addTable(table);
 	f->fTable = fTable;  /* A miracle occurs */
@@ -702,7 +711,7 @@ void symbolAddARGUMENT(ARGUMENT* a, SymbolTable* table)
 		return;
 	}
 	symbol->val.argumentS = a;
-	symbolAddTYPEset(a->type, symbol);
+	symbolAddTYPEset(a->type, symbol, table);
 }
 
 void symbolAddSESSION(SESSION* s, SymbolTable* table)
@@ -793,5 +802,5 @@ void symbolAddIDchain(ID* i, SymbolTable* table, TYPE* type)
 		symbolError = 1;
 		return;
 	}
-	symbolAddTYPEset(type, symbol);
+	symbolAddTYPEset(type, symbol, table);
 }

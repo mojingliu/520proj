@@ -304,13 +304,14 @@ void prettySESSION(SESSION* s)
 void prettySTM(STM* s)
 {
     int myindent;
+    if(s == NULL) return;
     if(s->next != NULL)
     {
         prettySTM(s->next);
         newline();
     }
     myindent = indent;
-    if(s == NULL) return;
+    
     switch(s->kind) {
         case semicolonK:
             fprintf(ofile, ";");
