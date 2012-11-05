@@ -1,0 +1,60 @@
+Schemas are compared by their elements, not by name.
+
+      lvalue
+Returns the type of the lvalue.
+    | lvalue "=" exp
+Types of lvalue and exp must be the same. Returns the type of the lvalue.
+    | exp "==" exp
+The types of the two expressions must be the same. Returns a boolean.
+    | exp "!=" exp
+The types of the two expressions must be the same. Returns a boolean.
+    | exp "<" exp
+The types of the two expressions must be the same, and they must be int or string. Returns a boolean.
+    | exp ">" exp
+The types of the two expressions must be the same, and they must be int or string. Returns a boolean.
+    | exp "<=" exp
+The types of the two expressions must be the same, and they must be int or string. Returns a boolean.
+    | exp ">=" exp
+The types of the two expressions must be the same, and they must be int or string. Returns a boolean.
+    | "!" exp
+The type of the expression must be boolean. Returns a boolean.
+    | "-" exp
+The type of the expression must be int. Returns an int.
+    | exp "+" exp
+The type of each expression must be string or int. If they are both int, returns an int. Else, returns a string.
+    | exp "-" exp
+The type of each expression must be int. Returns an int.
+    | exp "*" exp
+The type of each expression must be int. Returns an int.
+    | exp "/" exp
+The type of each expression must be int. Returns an int.
+    | exp "%" exp
+The type of each expression must be int. Returns an int.
+    | exp "&&" exp
+The type of each expression must be bool. Returns a bool.
+    | exp "||" exp
+The type of each expression must be bool. Returns a bool.
+    | exp "<<" exp
+The type of each expression must be tuple. Returns a tuple.
+    | exp "\+" identifier
+The type of the expression must be tuple. Returns a tuple.
+    | exp "\+" "(" identifiers ")"
+The type of the expression must be tuple. Returns a tuple.
+    | exp "\-" identifier
+The type of the expression must be tuple. Returns a tuple.
+    | exp "\-" "(" identifiers ")"
+The type of the expression must be tuple. Returns a tuple.
+    | identifier "(" exps ")"
+The function to which the identifier refers must take the same number of expressions with matching types, in order. Returns the type of the function.
+    | intconst
+Returns an int.
+    | "true"
+Returns a bool.
+    | "false"
+Returns a bool.
+    | stringconst
+Returns a string.
+    | "tuple" "{" fieldvalues "}"
+Returns a tuple.
+    | "(" exp ")"
+Returns the type of the expression.
