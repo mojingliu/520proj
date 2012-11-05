@@ -163,7 +163,13 @@ attr : identifier
   | '"' '"'
     {$$ = makeATTRstringconst("");}
   | tINTCONST
-    {$$ = makeATTRintconst($1);};
+    {$$ = makeATTRintconst($1);}
+  | tNAME
+    {$$ = makeATTRstringconst("name");}
+  | tTYPE
+    {$$ = makeATTRstringconst("type");}
+  | tRADIO
+    {$$ = makeATTRstringconst("radio");};
 
 schemas: /* empty */
     {$$ = NULL;}
