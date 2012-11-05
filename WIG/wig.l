@@ -69,6 +69,14 @@ extern int lineno;
 ";"       return ';';
 "="     return '=';
 "=="      return tEQUALS;
+">="      return tGTE;
+"<="      return tLTE;
+"!="      return tNEQ;
+"\\+"     return tKEEP;
+"\\-"     return tREMOVE;
+"<<"      return tJOIN;
+"||"      return tOR;
+"&&"      return tAND;
 \/\/[^\n]* /* ignore */;
 
 "*"       return '*';

@@ -13,22 +13,22 @@ check:
 	make pretty --no-print-directory
 
 weed:
-	./wig failExit.wig 
-	./wig failShow.wig
-	./wig failDivideByZero.wig
-	./wig chess.wig weededchess.wig
+	./wig failExit.wig --notypcheck --nopretty --nosymbol
+	./wig failShow.wig --notypcheck --nopretty --nosymbol
+	./wig failDivideByZero.wig --notypcheck --nopretty --nosymbol
+	./wig chess.wig --notypcheck --nopretty --nosymbol
 
 pretty:
-	./wig smalltest.wig prettysmalltest.wig --noweeder --notypecheck
+	./wig smalltest.wig prettysmalltest.wig --noweeder --notypecheck --nosymbol
 
 symbol:
-	./wig smalltest.wig --nosymbol --noweeder --nopretty --notypecheck
+	./wig smalltest.wig --noweeder --nopretty --notypecheck --printsymbol
 
 type:
-	./wig smalltest.wig --noweeder --nopretty 
+	./wig smalltest.wig --noweeder --nopretty --prettytype
 
 testtype:
-	./wig typefailtests/fail1.wig --nopretty
+	./wig typefailtests/fail1.wig --nopretty 
 	./wig typefailtests/fail2.wig --nopretty
 	./wig typefailtests/fail3.wig --nopretty
 	./wig typefailtests/fail4.wig --nopretty

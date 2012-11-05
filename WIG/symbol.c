@@ -648,6 +648,7 @@ void symbolAddTYPEset(TYPE* t, SYMBOL* symbol, SymbolTable* table)
 				symbolError = 1;
 				return;
 			}
+			t->schema = schemaSymbol->val.schemaS;
 			symbol->type->tupleName = t->val.id->identifier;
 			symbol->type->kind = tupleSK;
 			break;

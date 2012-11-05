@@ -49,7 +49,7 @@ void prettySERVICE(SERVICE* s)
     }
     indent--;
     newline();
-    fprintf(ofile, "}");
+    fprintf(ofile, "}\n");
 }
 
 void prettyHTML(HTML* h)

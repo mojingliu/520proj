@@ -53,7 +53,7 @@ void yyerror() {
        tRECEIVE tTRUE tFALSE
        tTUPLE
        tGAPOPEN tGAPCLOSE
-       tEQUALS
+       tEQUALS tLTE tGTE tNEQ tKEEP tREMOVE tJOIN tOR tAND
 
 %token <intconst> tINTCONST
 %token <stringconst> tIDENTIFIER tSTRINGCONST tWHATEVER tMETA 
@@ -78,7 +78,7 @@ void yyerror() {
 %type <plug> plugs plug
 %type <receive> receive
 %type <input> inputs neinputs input
-%type <exp> exps neexps exp
+%type <exp> exps neexps exp or_exp and_exp cmp_exp add_exp mult_exp join_exp tuple_exp unary_exp base_exp
 %type <fieldvalue> fieldvalues nefieldvalues fieldvalue
 %type <compoundstm> compoundstm
 %type <lvalue> lvalue
@@ -327,50 +327,77 @@ neinputs : input
 input : lvalue '=' identifier
     {$$ = makeINPUT($1, $3);};
 
-exp : lvalue
-    {$$ = makeEXPlvalue($1);}
-  | lvalue '=' exp
+exp : lvalue '=' or_exp
     {$$ = makeEXPassign($1, $3);}
-  | exp tEQUALS exp
+  | or_exp
+    {$$ = $1;};
+
+or_exp : or_exp tOR and_exp
+    {$$ = makeEXPor($1, $3);}
+  | and_exp
+    {$$ = $1;};
+
+and_exp : and_exp tAND cmp_exp
+    {$$ = makeEXPand($1, $3);}
+  | cmp_exp
+    {$$ = $1;};
+
+cmp_exp : add_exp tEQUALS add_exp
     {$$ = makeEXPequals($1, $3);}
-  | exp '!' '=' exp
-    {$$ = makeEXPnotequals($1, $4);}
-  | exp '<' exp
+  | add_exp tNEQ add_exp
+    {$$ = makeEXPnotequals($1, $3);}
+  | add_exp '<' add_exp
     {$$ = makeEXPlt($1, $3);}
-  | exp '>' exp
+  | add_exp '>' add_exp
     {$$ = makeEXPgt($1, $3);}
-  | exp '<' '=' exp
-    {$$ = makeEXPlte($1, $4);}
-  | exp '>' '=' exp
-    {$$ = makeEXPgte($1, $4);}
-  | '!' exp
-    {$$ = makeEXPnot($2);}
-  | '-' exp
-    {$$ = makeEXPminus(0, $2);}
-  | exp '+' exp
+  | add_exp tLTE add_exp
+    {$$ = makeEXPlte($1, $3);}
+  | add_exp tGTE add_exp
+    {$$ = makeEXPgte($1, $3);}
+  | add_exp
+    {$$ = $1;};
+
+add_exp : add_exp '+' mult_exp
     {$$ = makeEXPplus($1, $3);}
-  | exp '-' exp
+  | add_exp '-' mult_exp
     {$$ = makeEXPminus($1, $3);}
-  | exp '*' exp
+  | mult_exp
+    {$$ = $1;};
+
+mult_exp : mult_exp '*' join_exp
     {$$ = makeEXPmult($1, $3);}
-  | exp '/' exp
+  | mult_exp '/' join_exp
     {$$ = makeEXPdiv($1, $3);}
-  | exp '%' exp
+  | mult_exp '%' join_exp
     {$$ = makeEXPmod($1, $3);}
-  | exp '&' '&' exp
-    {$$ = makeEXPand($1, $4);}
-  | exp '|' '|' exp
-    {$$ = makeEXPor($1, $4);}
-  | exp '<' '<' exp
-    {$$ = makeEXPjoin($1, $4);}
-  | exp '\\' '+' identifier
+  | join_exp
+    {$$ = $1;};
+
+join_exp : tuple_exp tJOIN join_exp
+    {$$ = makeEXPjoin($1, $3);}
+  | tuple_exp
+    {$$ = $1;};
+
+tuple_exp : tuple_exp tKEEP identifier
+    {$$ = makeEXPkeep($1, $3);}
+  | tuple_exp tKEEP '(' identifiers ')'
     {$$ = makeEXPkeep($1, $4);}
-  | exp '\\' '+' '(' identifiers ')'
-    {$$ = makeEXPkeep($1, $5);}
-  | exp '\\' '-' identifier
+  | tuple_exp tREMOVE identifier
+    {$$ = makeEXPremove($1, $3);}
+  | tuple_exp tREMOVE '(' identifiers ')'
     {$$ = makeEXPremove($1, $4);}
-  | exp '\\' '-' '(' identifiers ')'
-    {$$ = makeEXPremove($1, $5);}
+  | unary_exp
+    {$$ = $1;};
+
+unary_exp : '!' base_exp
+    {$$ = makeEXPnot($2);}
+  | '-' base_exp
+    {$$ = makeEXPminus(makeEXPintconst(0), $2);}
+  | base_exp
+    {$$ = $1;};
+
+base_exp : lvalue
+    {$$ = makeEXPlvalue($1);}
   | identifier '(' exps ')'
     {$$ = makeEXPcall($1, $3);}
   | tINTCONST
