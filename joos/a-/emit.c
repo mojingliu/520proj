@@ -8,6 +8,37 @@
  * use of this software.
  *
  * email: hendren@cs.mcgill.ca, mis@brics.dk
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+NOTES:
+
+val = character location
+getlabelcode gets the code starting after that label:
+if(something)
+  check stack in here
+  etc
+else
+  this is what getlablecode returns
+
+invokeargsminusret - 
+  uses stuff from what looks like optimize.c stack_effect
+actually, most values are from stack_effect, this tells us most of 
+the info we need to know
+
  */
 
 #include <stdio.h>
@@ -43,8 +74,169 @@ void localmem(char *opcode, int offset)
   }
 }
 
+CODE* findLabel(CODE* start, CODE* label)
+{
+  label->visited = 1;
+  while(start != NULL)
+  {
+    if(start->kind == labelCK)
+    {
+      if(label->val.gotoC == start->val.labelC ||
+        label->val.ifeqC==start->val.labelC ||
+        label->val.ifneC==start->val.labelC ||
+        label->val.if_acmpeqC==start->val.labelC ||
+        label->val.if_acmpneC==start->val.labelC ||
+        label->val.ifnullC==start->val.labelC ||
+        label->val.ifnonnullC==start->val.labelC ||
+        label->val.if_icmpeqC==start->val.labelC ||
+        label->val.if_icmpgtC==start->val.labelC ||
+        label->val.if_icmpltC==start->val.labelC ||
+        label->val.if_icmpleC==start->val.labelC ||
+        label->val.if_icmpgeC==start->val.labelC ||
+        label->val.if_icmpneC==start->val.labelC
+      )
+      {
+        return start; /* found the location in the code of the label */
+      }
+    }
+    start = start->next;
+  }
+  return start; /* this shouldn't happen */
+}
+
 int limitCODE(CODE *c)
-{ return 25;
+{ 
+  CODE* start = c;
+  char *stringpos;
+  int stacklimit = 0;
+  int locallimit = 0;
+  int tempLimit1;
+  int tempLimit2;
+
+  while(c!= NULL && !c->visited)
+  {
+    switch(c->kind) 
+    {
+      case nopCK:
+      case iincCK:         
+      case instanceofCK:
+      case getfieldCK:  
+      case i2cCK:
+      case inegCK:
+      case checkcastCK:
+      case swapCK:
+      case labelCK:
+        break; 
+
+      case returnCK:
+        c = NULL; /* stop looping through */
+        break;
+        
+      case newCK:
+      case iloadCK:
+      case aloadCK:
+      case ldc_intCK:
+      case ldc_stringCK:
+      case aconst_nullCK:        
+      case dupCK:
+        locallimit++;
+        break;
+        
+      case popCK: 
+      case istoreCK:
+      case astoreCK:
+      case iremCK:
+      case isubCK:
+      case idivCK:
+      case iaddCK:
+      case imulCK:
+        locallimit--;
+        break;
+        
+      case putfieldCK:
+        locallimit -= 2;
+        break;
+        
+      case invokevirtualCK:
+      case invokenonvirtualCK:
+        locallimit--; /* receiver */
+        if(c->kind==invokevirtualCK)
+          stringpos = c->val.invokevirtualC;
+        else
+          stringpos = c->val.invokenonvirtualC;
+        
+        while((*stringpos) != '(') stringpos++;
+        stringpos++;
+
+        /* one for each formal */
+        while((*stringpos) != ')') {
+          locallimit--;
+          if((*stringpos)=='L')
+            while((*stringpos)!=';') stringpos++;
+          stringpos++;
+        }
+        stringpos++;
+
+
+        /* if not void, then pushes return value */
+        if((*stringpos)!='V')
+          locallimit++;
+        break;
+        
+      case gotoCK:
+        c = findLabel(start,c);
+        break;
+        
+      case ifeqCK:
+      case ifneCK:
+      case ifnullCK:
+      case ifnonnullCK:
+        locallimit--;
+        tempLimit1 = limitCODE(c->next);
+        tempLimit2 = limitCODE(findLabel(start,c));
+        if(tempLimit1 > tempLimit2)
+          locallimit += tempLimit1;
+        else
+          locallimit += tempLimit2;
+        break;
+        
+      case if_icmpeqCK:
+      case if_icmpneCK:
+      case if_icmpgtCK:
+      case if_icmpltCK:
+      case if_icmpleCK:
+      case if_icmpgeCK:
+      case if_acmpeqCK:
+      case if_acmpneCK:
+        locallimit -= 2;
+        tempLimit1 = limitCODE(c->next);
+        tempLimit2 = limitCODE(findLabel(start,c));
+        if(tempLimit1 > tempLimit2)
+          locallimit += tempLimit1;
+        else
+          locallimit += tempLimit2;
+        break;
+        
+      
+      case areturnCK:
+      case ireturnCK:
+        locallimit--;
+        c = NULL;
+        break;
+        
+      default:
+        printf("Stack_Effect: unrecognized code kind\n");
+        break;
+    }
+    if(c != NULL)
+    {
+      c->visited = 1;
+      c = c->next;
+    }
+    if(locallimit > stacklimit)
+      stacklimit = locallimit;
+  }
+  return stacklimit;
 }
 
 void emitCODE(CODE *c)

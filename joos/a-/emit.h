@@ -20,4 +20,5 @@ void emitFIELD(FIELD *f);
 void emitCONSTRUCTOR(CONSTRUCTOR *c);
 void emitMETHOD(METHOD *m);
 void emitMODIFIER(ModifierKind modifier);
-
+int limitCODE(CODE* c);
+CODE* findLabel(CODE* start, CODE* label);
