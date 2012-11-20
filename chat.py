@@ -1,4 +1,7 @@
 import sys
+import os
+import random
+import pickle
 
 class VarStack(object):
     def __init__(self, parent, variables):
@@ -17,14 +20,19 @@ class VarStack(object):
             self = self.parent
         if self is None:
             raise AttributeError
-        return self.variables[index] = val
+        self.variables[index] = val
 
 admit_one = False
 counter = 0
-v = None
+v = VarStack(None, {
+    "msg0": "",
+    "msg1": "",
+    })
+sid = 0
+receives = {}
 
-def html_Logon(p_name):
-    print "I'm logon! %s %s" % (p_name, )
+def html_Logon():
+    print "I'm logon!"
 
 def html_Update(p_msg0, p_msg1):
     print "Update %s %s" % (p_msg0, p_msg1, )
@@ -33,17 +41,29 @@ def html_ByeBye(p_conns, p_msgs):
     print "ByeBye %s %s" % (p_conns, p_msgs, )
 
 def show(html, num, **kwargs):
+    global sid
+    global counter
+    counter = num
+    if sid == 0:
+        sid = str(random.randint(1, 200000))
     save_context()
     html(**kwargs)
+    print "(session id: %s)" % sid
     sys.exit()
 
 def exit(html, **kwargs):
     # delete entry file or something
+    if sid != 0:
+        os.remove(sid + ".ws")
     html(**kwargs)
     sys.exit()
 
 def save_context():
-    pass    # save to either a random file, or the old file
+    global counter
+    global v
+    with open(sid + ".ws", "w") as f:
+        pickle.dump((counter, v), f)
+    # save to either a random file, or the old file
 
 def load_context():
     global v
@@ -51,8 +71,7 @@ def load_context():
 
 def push_context(new_context):
     global v
-    v = VarStack(v, new_context)
-    pass    # push onto the stack
+    v = VarStack(v, new_context)    # push onto the stack
 
 def pop_context():
     global v
@@ -62,9 +81,7 @@ def session_Chat():
     global admit_one
     global counter
     global v
-    if counter != 0:    # this code always at start of session
-        load_context()
-    else:  # this only happens on first run
+    if counter <= 0:
         push_context({
             "name":"",
             "msg":"",
@@ -77,7 +94,10 @@ def session_Chat():
         v["written"] = 0
         v["quit"] = "no"
 
-        show(html_Logon, 1, p_name=v["name"])
+        show(html_Logon, 1)
+    if counter == 1:  # receives
+        v["name"] = receives["name"]
+        counter = 0
     if counter <= 1:  # always if statements after shows, contains all commands
         x = 5         # up to the next show or conditional
 
@@ -91,7 +111,10 @@ def session_Chat():
                 push_context({
                 })
                 show(html_Update, 2, p_msg0=v["msg0"], p_msg1=v["msg1"])
-                pop_context()
+            if counter == 2:
+                v["msg"] = receives["msg"]
+                v["quit"] = receives["quit"]
+                counter = 0
             if counter <= 2:
                 v["connections"] = v["connections"] + 1
                 if (v["msg"] != ""):
@@ -103,3 +126,25 @@ def session_Chat():
                     pop_context()
             pop_context()
     exit(html_ByeBye, p_conns=v["connections"], p_msgs=v["written"])
+
+if __name__ == "__main__":
+    sessions = {"Chat":session_Chat}
+    if len(sys.argv) < 2 or sys.argv[1] not in sessions:
+        print "You did not enter a valid session name.\nTry one of these:"
+        for s in sessions:
+            print " -", s
+        sys.exit()
+    if len(sys.argv) >= 3:
+        try:
+            with open(sys.argv[2] + ".ws", "r") as f:
+                sid = sys.argv[2]
+                counter, v = pickle.load(f)
+        except IOError as e:
+            print "Your session key is not valid.\nTry one of the sessions below for a new key"
+            for s in sessions:
+                print " -", s
+            sys.exit()
+        for i in sys.argv[3:]:
+            key, _, val = i.partition("=")
+            receives[key] = val
+    sessions[sys.argv[1]]()
