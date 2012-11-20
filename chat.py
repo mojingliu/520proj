@@ -91,6 +91,7 @@ def session_Chat():
                 push_context({
                 })
                 show(html_Update, 2, p_msg0=v["msg0"], p_msg1=v["msg1"])
+                pop_context()
             if counter <= 2:
                 v["connections"] = v["connections"] + 1
                 if (v["msg"] != ""):
@@ -99,4 +100,6 @@ def session_Chat():
                     v["written"] = v["written"] + 1
                     v["msg0"] = v["msg1"]
                     v["msg1"] = v["name"] + ">" + v["msg"]
+                    pop_context()
+            pop_context()
     exit(html_ByeBye, p_conns=v["connections"], p_msgs=v["written"])
