@@ -9,16 +9,38 @@ class VarStack(object):
         self.variables = variables
 
     def __getitem__(self, index):
-        while self is not None and index not in self.variables:
-            self = self.parent
-        if self is None:
+        if index not in self.variables:
+            if self.parent is None:
+                raise AttributeError
+            return self.parent[index]
+        return self.variables[index]
+
+    def __setitem__(self, index, val):
+        if index not in self.variables:
+            if self.parent is None:
+                raise AttributeError
+            self.parent[index] = val
+            return
+        self.variables[index] = val
+
+class FnStack(object):
+    def __init__(self, parent, variables):
+        self.parent = parent
+        self.variables = variables
+
+    def __getitem__(self, index):
+        if index not in self.variables:
+            while self.parent is not None:
+                self = self.parent
+        if index not in self.variables:
             raise AttributeError
         return self.variables[index]
 
     def __setitem__(self, index, val):
-        while self is not None and index not in self.variables:
-            self = self.parent
-        if self is None:
+        if index not in self.variables:
+            while self.parent is not None:
+                self = self.parent
+        if index not in self.variables:
             raise AttributeError
         self.variables[index] = val
 
@@ -30,15 +52,6 @@ v = VarStack(None, {
     })
 sid = 0
 receives = {}
-
-def html_Logon():
-    print "I'm logon!"
-
-def html_Update(p_msg0, p_msg1):
-    print "Update %s %s" % (p_msg0, p_msg1, )
-
-def html_ByeBye(p_conns, p_msgs):
-    print "ByeBye %s %s" % (p_conns, p_msgs, )
 
 def show(html, num, **kwargs):
     global sid
@@ -69,6 +82,10 @@ def load_context():
     global v
     pass    # load from the given file and save to context
 
+def function_context(new_context):
+    global v
+    v = FnStack(v, new_context)
+
 def push_context(new_context):
     global v
     v = VarStack(v, new_context)    # push onto the stack
@@ -77,11 +94,22 @@ def pop_context():
     global v
     v = v.parent
 
+###############################################################################
+
+def html_Logon():
+    print "I'm logon!"
+
+def html_Update(p_msg0, p_msg1):
+    print "Update %s %s" % (p_msg0, p_msg1, )
+
+def html_ByeBye(p_conns, p_msgs):
+    print "ByeBye %s %s" % (p_conns, p_msgs, )
+
 def session_Chat():
     global admit_one
     global counter
     global v
-    if counter <= 0:
+    if counter < 1:
         push_context({
             "name":"",
             "msg":"",
