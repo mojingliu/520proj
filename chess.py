@@ -120,7 +120,7 @@ def schema_row():
 		"d":0,
 		"e":0,
 		"f":0,
-		"g":0
+		"g":0,
 		"h":0,
 	}
 
@@ -462,7 +462,7 @@ def session_Game():
 					v["turn_words"] = "White"
 				else:
 					v["turn_words"] = "Black"
-				show(html_output, 1, board=v["board"], whose=v["turn_words"], error=v["error"])
+				show(html_output, 1, p_board=v["board"], p_whose=v["turn_words"], p_error=v["error"])
 			if counter == 1:  # counter == (show_num)
 				v["from_rank"] = receives["rank_from"]
 				v["from_file"] = receives["file_from"]
@@ -477,7 +477,7 @@ def session_Game():
 				if admit_one or v["error"] == "!":
 					if counter < 2:
 						v["board"] = fn_getBoard(False)
-						show(html_upgrade, 2, board=v["board"])
+						show(html_upgrade, 2, p_board=v["board"])
 					if counter == 2:
 						v["upgr"] = receives["upg"]
 						counter = 0

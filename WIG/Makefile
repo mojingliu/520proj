@@ -5,8 +5,8 @@ CFLAGS = -Wall -ansi -pedantic
 all: 
 	make code --no-print-directory
 
-code: y.tab.o lex.yy.o main.o tree.h tree.o pretty.h pretty.o memory.h memory.o weeder.h weeder.o symbol.h symbol.o prettysymbol.h prettysymbol.o type.h type.o prettytype.h prettytype.o
-	$(CC) lex.yy.o y.tab.o tree.o pretty.o memory.o main.o weeder.o symbol.o prettysymbol.o type.o prettytype.o -o wig -lfl -lm
+code: y.tab.o lex.yy.o main.o tree.h tree.o pretty.h pretty.o memory.h memory.o weeder.h weeder.o symbol.h symbol.o prettysymbol.h prettysymbol.o type.h type.o prettytype.h prettytype.o code.h code.o
+	$(CC) lex.yy.o y.tab.o tree.o pretty.o memory.o main.o weeder.o symbol.o prettysymbol.o type.o prettytype.o code.o -o wig -lfl -lm
 
 check:
 	make weed --no-print-directory

@@ -6,6 +6,7 @@
 #include "prettytype.h"
 #include "type.h"
 #include "prettysymbol.h"
+#include "code.h"
 #include <string.h>
 
 void yyparse();
@@ -31,21 +32,22 @@ void help()
 	printf("--printsymbol: prints the symbol table\n");
 	printf("--nopretty: turns off pretty printer\n");
 	printf("--notypecheck: turns off the typechecker\n");
+	printf("--nocode: turns off the final code generation\n");
 	printf("--prettytype: prints the file with expression types\n");
 	printf("  Note: typechecker cannot be run with the symbol table turned off.\n");
 	printf("format: \n");
 	printf("    ./wig inputFile [outputFile] [--noweeder] [--symbol] [--nopretty] [--notypecheck]\n");
-	printf("if you don't include an output file, output will be written to stdout.");
+	printf("if you don't include an output file, output will be written to stdout.\n");
 }
 
 int main(int argc, char *argv[])
-{ 
-	
+{
 	int i;
 	int weeder = 1;
 	int symbol = 1;
 	int pretty = 1;
 	int typecheck = 1;
+	int codegen = 1;
 	int printsymbol = 0;
 	int prettytype = 0;
 	int onSTDOUT = 0;
@@ -74,6 +76,8 @@ int main(int argc, char *argv[])
 			printsymbol = 1;
 		else if(!strcmp(argv[i], "--prettytype"))
 			prettytype = 1;
+		else if(!strcmp(argv[i], "--nocode"))
+			codegen = 0;
 	}
 
 	yyin = fopen(argv[1], "r");
@@ -142,6 +146,11 @@ int main(int argc, char *argv[])
 		}
 		if(prettytype)
 			prettyTypeSERVICE(theservice);
+	}
+	if(codegen)
+	{
+		cSetofile(stdout);
+		codeSERVICE(theservice);
 	}
 	fclose(yyin);
 	if(onSTDOUT == 0)

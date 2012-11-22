@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "memory.h"
-#include "error.h"
+/* #include "error.h" */
 #include "symbol.h"
 
 extern SymbolTable* globalTable;
