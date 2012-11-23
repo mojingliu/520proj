@@ -3,7 +3,7 @@
 
 FILE* cOfile;
 int cIndent = 0;
-int show_num = 1;
+int show_num = 0;
 const int cTAB_WIDTH = 2;
 
 void cSetofile(FILE *f){
@@ -261,10 +261,12 @@ void codeSCHEMA(SCHEMA* s)
         cNewline();
         cNewline();
     }
-    fprintf(cOfile, "def schema_"); codeID(s->id);
+    fprintf(cOfile, "def schema_");
+    codeID(s->id);
     fprintf(cOfile, "():"); cIndent++;
     cNewline();
-    fprintf(cOfile, "return {"); codeFIELD(s->field);
+    fprintf(cOfile, "return {");
+    codeFIELD(s->field);
     fprintf(cOfile, "}"); cIndent--;
     cNewline();
 }
@@ -277,8 +279,10 @@ void codeFIELD(FIELD* f)
         codeFIELD(f->next);
         fprintf(cOfile, ", ");
     }
-    fprintf(cOfile, "\""); codeID(f->id);
-    fprintf(cOfile, "\": "); codeSIMPLETYPE(f->simpletype);
+    fprintf(cOfile, "\"");
+    codeID(f->id);
+    fprintf(cOfile, "\": ");
+    codeSIMPLETYPE(f->simpletype);
 }
 
 void codeVARIABLE(VARIABLE* v)
@@ -357,15 +361,18 @@ void codeFUNCTION(FUNCTION* f)
         cNewline();
     }
     /* codeTYPE(f->type); /* Python, you're so cool. */  
-    fprintf(cOfile, "def fn_"); codeID(f->id);
+    fprintf(cOfile, "def fn_");
+    codeID(f->id);
     fprintf(cOfile, "(**kwargs):");
     /* codeARGUMENT(f->argument); /* Python, you're so cool */
     cIndent++;
     cNewline();
-    fprintf(cOfile, "function_context(kwargs)"); cNewline();
+    fprintf(cOfile, "function_context(kwargs)");
+    cNewline();
     codeCOMPOUNDSTM(f->compoundstm);
     cNewline();
-    fprintf(cOfile, "pop_function()"); cIndent--;
+    fprintf(cOfile, "pop_function()");
+    cIndent--;
     cNewline();
 }
 
@@ -378,12 +385,16 @@ void codeSESSION(SESSION* s)
         cNewline();
         cNewline();
     }
-    fprintf(cOfile, "def session_"); codeID(s->id);
+    fprintf(cOfile, "def session_");
+    codeID(s->id);
     fprintf(cOfile, "():"); cIndent++;
     cNewline();
-    fprintf(cOfile, "global counter"); cNewline();
-    fprintf(cOfile, "global v"); cNewline();
-    fprintf(cOfile, "admit_one = False"); cNewline();
+    fprintf(cOfile, "global counter");
+    cNewline();
+    fprintf(cOfile, "global v");
+    cNewline();
+    fprintf(cOfile, "admit_one = False");
+    cNewline();
     codeCOMPOUNDSTM(s->compoundstm);
     cIndent--;
 }
@@ -520,7 +531,7 @@ void codeDOCUMENT(DOCUMENT* d)
 {
     if(d == NULL) return;
     codeID(d->val.id);
-    fprintf(cOfile, ", %d", show_num++);
+    fprintf(cOfile, ", %d", ++show_num);
     switch(d->kind) {
         case idK:
             break;
@@ -552,8 +563,10 @@ void codePLUG(PLUG* p)
     {
         codePLUG(p->next);
     }
-    fprintf(cOfile, ", p_"); codeID(p->id);
-    fprintf(cOfile, "="); codeEXP(p->expr);
+    fprintf(cOfile, ", p_");
+    codeID(p->id);
+    fprintf(cOfile, "=");
+    codeEXP(p->expr);
 }
 
 void codeINPUT(INPUT* i)
@@ -564,14 +577,17 @@ void codeINPUT(INPUT* i)
         codeINPUT(i->next);
     }
     codeLVALUE(i->lvalue);
-    fprintf(cOfile, " = receives[\""); codeID(i->id);
-    fprintf(cOfile, "\"]"); cNewline();
+    fprintf(cOfile, " = receives[\"");
+    codeID(i->id);
+    fprintf(cOfile, "\"]");
+    cNewline();
 }
 
 void codeLVALUE(LVALUE* l)
 {
     if(l == NULL) return;
-    fprintf(cOfile, "v[\""); codeID(l->id1);
+    fprintf(cOfile, "v[\"");
+    codeID(l->id1);
     fprintf(cOfile, "\"]");
     if(l->id2 != NULL)
     {
@@ -589,8 +605,10 @@ void codeFIELDVALUE(FIELDVALUE* f)
         codeFIELDVALUE(f->next);
         fprintf(cOfile, ", ");
     }
-    fprintf(cOfile, "\""); codeID(f->id);
-    fprintf(cOfile, "\": "); codeEXP(f->expr);
+    fprintf(cOfile, "\"");
+    codeID(f->id);
+    fprintf(cOfile, "\": ");
+    codeEXP(f->expr);
 }
 
 void codeEXP(EXP* e)
