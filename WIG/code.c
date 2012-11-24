@@ -107,9 +107,9 @@ void codeSERVICE(SERVICE* s)
         fprintf(cOfile, "global counter"); cNewline();
         fprintf(cOfile, "counter = num"); cNewline();
         fprintf(cOfile, "if sid == '':"); cIndent++; cNewline();
-            fprintf(cOfile, "sid = str(random.randint(1, 200000))"); cIndent--; cNewline();
+            fprintf(cOfile, "sid = str('%%030x' %% random.randrange(256**15))"); cIndent--; cNewline();
         fprintf(cOfile, "save_context()"); cNewline();
-        fprintf(cOfile, "print ('<html><form method=\"POST\" action=\"?a=' + str(session) + '$' + str(sid) + '\">')"); cNewline();
+        fprintf(cOfile, "print ('<html><form method=\"POST\" action=\"?' + str(session) + '$' + str(sid) + '\">')"); cNewline();
         fprintf(cOfile, "html(**kwargs)"); cNewline();
         fprintf(cOfile, "print ('<input type=\"submit\" value=\"go\" /></form></body></body></html>')"); cIndent--; cNewline();
     cNewline();
@@ -123,8 +123,9 @@ void codeSERVICE(SERVICE* s)
     fprintf(cOfile, "def save_context():"); cIndent++; cNewline();
         fprintf(cOfile, "global counter"); cNewline();
         fprintf(cOfile, "global v"); cNewline();
-        fprintf(cOfile, "with open(sid + \".ws\", \"w\") as f:"); cIndent++; cNewline();
-            fprintf(cOfile, "pickle.dump((counter, v), f)"); cIndent -= 2; cNewline();
+        fprintf(cOfile, "f = open(sid + \".ws\", \"w\")"); cNewline();
+        fprintf(cOfile, "pickle.dump((counter, v), f)"); cNewline();
+        fprintf(cOfile, "f.close()"); cIndent--; cNewline();
     cNewline();
     fprintf(cOfile, "def push_context(new_context):"); cIndent++; cNewline();
         fprintf(cOfile, "global v"); cNewline();
@@ -136,6 +137,12 @@ void codeSERVICE(SERVICE* s)
     cNewline();
     fprintf(cOfile, "def pop_context():"); cIndent++; cNewline();
         fprintf(cOfile, "global v"); cNewline();
+        fprintf(cOfile, "v = v.parent"); cIndent--; cNewline();
+    cNewline();
+    fprintf(cOfile, "def pop_function():"); cIndent++; cNewline();
+        fprintf(cOfile, "global v"); cNewline();
+        fprintf(cOfile, "while isinstance(v, VarStack):"); cIndent++; cNewline();
+            fprintf(cOfile, "v = v.parent"); cIndent--; cNewline();
         fprintf(cOfile, "v = v.parent"); cIndent--; cNewline();
     cNewline();
     fprintf(cOfile, "###############################################################################"); cNewline();
@@ -162,27 +169,32 @@ void codeSERVICE(SERVICE* s)
         allSessionNames(s->session);
         fprintf(cOfile, "}"); cNewline();
         fprintf(cOfile, "storage = cgi.FieldStorage()"); cNewline();
-        fprintf(cOfile, "if 'a' in storage:"); cIndent++; cNewline();
-            fprintf(cOfile, "session, sep, sid = storage.getfirst('a').partition('$')"); cIndent--; cNewline();
+            /* fprintf(cOfile, "session, sep, sid = storage.getfirst('a').partition('$')"); cIndent--; cNewline(); */
+        fprintf(cOfile, "s = os.environ['QUERY_STRING']"); cNewline();
+        fprintf(cOfile, "if '$' in s:"); cIndent++; cNewline();
+            fprintf(cOfile, "i = s.index('$')"); cNewline();
+            fprintf(cOfile, "session, sep, sid = s[0:i], s[i], s[i+1:]"); cIndent--; cNewline();
         fprintf(cOfile, "else:"); cIndent++; cNewline();
-            fprintf(cOfile, "session = None"); cIndent--; cNewline();
+            fprintf(cOfile, "session, sep, sid = s, '', ''"); cIndent--; cNewline();
         fprintf(cOfile, "if session not in sessions:"); cIndent++; cNewline();
             fprintf(cOfile, "print '<html>You did not enter a valid session name.<br>Try one of these:<br>'"); cNewline();
             fprintf(cOfile, "for s in sessions:"); cIndent++; cNewline();
-                fprintf(cOfile, "print \" -<a href='?a=\" + s + \"'>\", s, \"</a><br>\""); cIndent--; cNewline();
+                fprintf(cOfile, "print \" -<a href='?\" + s + \"'>\", s, \"</a><br>\""); cIndent--; cNewline();
             fprintf(cOfile, "print \"</html>\""); cIndent--; cNewline();
         fprintf(cOfile, "elif sep == '$':"); cIndent++; cNewline();
             fprintf(cOfile, "try:"); cIndent++; cNewline();
-                fprintf(cOfile, "with open(sid + \".ws\", \"r\") as f:"); cIndent++; cNewline();
-                    fprintf(cOfile, "counter, v = pickle.load(f)"); cIndent -= 2; cNewline();
+                fprintf(cOfile, "f = open(sid + \".ws\", \"r\")"); cNewline();
+                fprintf(cOfile, "counter, v = pickle.load(f)"); cNewline();
+                fprintf(cOfile, "f.close()"); cIndent--; cNewline();
             fprintf(cOfile, "except IOError:"); cIndent++; cNewline();
                 fprintf(cOfile, "print \"Your session key is not valid.<br>Try one of the sessions below for a new key<br>\""); cNewline();
                 fprintf(cOfile, "for s in sessions:"); cIndent++; cNewline();
-                    fprintf(cOfile, "print \" -<a href='?a=\" + s + \"'>\", s, \"</a><br>\""); cIndent--; cNewline();
+                    fprintf(cOfile, "print \" -<a href='?\" + s + \"'>\", s, \"</a><br>\""); cIndent--; cNewline();
                 fprintf(cOfile, "print \"</html>\""); cIndent--; cNewline();
             fprintf(cOfile, "else:"); cIndent++; cNewline();
                 fprintf(cOfile, "for i in storage:"); cIndent++; cNewline();
-                    fprintf(cOfile, "receives[i] = storage[i]"); cIndent -= 3; cNewline();
+                    fprintf(cOfile, "receives[i] = str(storage[i].value)"); cIndent--; cNewline();
+                fprintf(cOfile, "sessions[session]()"); cIndent -= 2; cNewline();
         fprintf(cOfile, "else:"); cIndent++; cNewline();
             fprintf(cOfile, "sessions[session]()"); cIndent -= 2; cNewline();
 }
@@ -223,9 +235,9 @@ void codeHTMLBODY(HTMLBODY* h)
             fprintf(cOfile, ">");
             break;
         case gapK:
-            fprintf(cOfile, "\" + kwargs[\"p_");
+            fprintf(cOfile, "\"\"\" + str(kwargs[\"p_");
             codeID(h->val.id);
-            fprintf(cOfile, "\"] + \"");
+            fprintf(cOfile, "\"]) + \"\"\"");
             break;
         case whateverK:
             fprintf(cOfile, "%s", h->val.whatever);
@@ -416,16 +428,46 @@ void codeFUNCTION(FUNCTION* f)
     }
     fprintf(cOfile, "def fn_");
     codeID(f->id);
-    fprintf(cOfile, "(**kwargs):");
+    fprintf(cOfile, "(");
+    codeARGUMENT(f->argument);
+    fprintf(cOfile, "):");
     cIndent++;
     cNewline();
-    fprintf(cOfile, "function_context(kwargs)");
+    fprintf(cOfile, "function_context({");
+    codeARGUMENTpush(f->argument);
+    fprintf(cOfile, "})");
     cNewline();
     codeCOMPOUNDSTM(f->compoundstm, 0);
     cNewline();
     fprintf(cOfile, "pop_function()");
     cIndent--;
     cNewline();
+}
+
+void codeARGUMENTpush(ARGUMENT* a)
+{
+    if(a == NULL) return;
+    if(a->next != NULL)
+    {
+        codeARGUMENTpush(a->next);
+        fprintf(cOfile, ", ");
+    }
+    fprintf(cOfile, "\"");
+    codeID(a->id);
+    fprintf(cOfile, "\": p_");
+    codeID(a->id);
+}
+
+void codeARGUMENT(ARGUMENT* a)
+{
+    if(a == NULL) return;
+    if(a->next != NULL)
+    {
+        codeARGUMENT(a->next);
+        fprintf(cOfile, ", ");
+    }
+    fprintf(cOfile, "p_");
+    codeID(a->id);
 }
 
 void codeSESSION(SESSION* s)
@@ -764,9 +806,23 @@ void codeINPUT(INPUT* i)
         cNewline();
     }
     codeLVALUE(i->lvalue);
-    fprintf(cOfile, " = receives[\"");
+    switch(i->lvalue->type->val.simpletype->kind)
+    {
+        case stringK:
+            fprintf(cOfile, " = str(");
+            break;
+        case intK:
+            fprintf(cOfile, " = int(");
+            break;
+        case boolK:
+            fprintf(cOfile, " = ('true' == ");
+            break;
+        default:
+            break;
+    }
+    fprintf(cOfile, "receives[\"");
     codeID(i->id);
-    fprintf(cOfile, "\"]");
+    fprintf(cOfile, "\"])");
 }
 
 void codeLVALUE(LVALUE* l)
@@ -795,6 +851,11 @@ void codeFIELDVALUE(FIELDVALUE* f)
     codeID(f->id);
     fprintf(cOfile, "\": ");
     codeEXP(f->expr);
+}
+
+int isString(TYPE* t)
+{
+    return ((t->kind == simpletypeK) && (t->val.simpletype->kind == stringK));
 }
 
 void codeEXP(EXP* e)
@@ -850,9 +911,22 @@ void codeEXP(EXP* e)
             codeEXP(e->val.exprE);
             break;
         case plusK:
-            codeEXP(e->val.plusE.left);
-            fprintf(cOfile, " + ");
-            codeEXP(e->val.plusE.right);
+            {
+                int strme = 0;
+                strme =  (isString(e->val.plusE.left->type) +
+                        isString(e->val.plusE.right->type) * 2);
+                if ((strme % 3) && (strme & 2))
+                    fprintf(cOfile, "str(");
+                codeEXP(e->val.plusE.left);
+                if ((strme % 3) && (strme & 2))
+                    fprintf(cOfile, ")");
+                fprintf(cOfile, " + ");
+                if ((strme % 3) && (strme & 1))
+                    fprintf(cOfile, "str(");
+                codeEXP(e->val.plusE.right);
+                if ((strme % 3) && (strme & 1))
+                    fprintf(cOfile, ")");
+            }
             break;
         case minusK:
             codeEXP(e->val.minusE.left);

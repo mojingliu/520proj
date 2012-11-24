@@ -101,6 +101,12 @@ def pop_context():
 	global v
 	v = v.parent
 
+def pop_function():
+	global v
+	while isinstance(v, VarStack):
+		v = v.parent
+	v = v.parent
+
 ###############################################################################
 
 def html_output(p_board, p_whose, p_error):

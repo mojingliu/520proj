@@ -20,6 +20,7 @@ void codeTYPE(TYPE* t);
 void codeSIMPLETYPE(SIMPLETYPE* s);
 void codeFUNCTION(FUNCTION* f);
 void codeARGUMENT(ARGUMENT* a);
+void codeARGUMENTpush(ARGUMENT* a);
 void codeSESSION(SESSION* s);
 void codeSTM(STM* s, int session);
 void codeCOMPOUNDSTM(COMPOUNDSTM* c, int session);
