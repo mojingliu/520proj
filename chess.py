@@ -384,7 +384,7 @@ def fn_getBoard(**kwargs):
 		"j":0,
 		"piece":0,
 		"lookup":schema_row(),
-	)}
+	})
 	v["s"] = "<table id='game' border=0 cellspacing=0 cellpadding=0>"
 	if v["pickable"]:
 		v["s"] = v["s"] + "<tr><td class=from>from</td>"
@@ -417,7 +417,6 @@ def fn_getBoard(**kwargs):
 			v["s"] = v["s"] + "<td class=to><input onClick='set_to(" + v["i"] + ", 0);' type='radio' name='file_to' value='" + v["i"] + "'></td>"
 			v["i"] = v["i"] + 1
 		v["s"] = v["s"] + "<td class=to>to</td></tr>"
-	}
 	toR = v["s"] + "</table>"
 	pop_context()
 	pop_context()
@@ -428,16 +427,7 @@ def session_Game():
 	global counter
 	global v
 	if counter < 1:
-		push_context({
-			"board": "",
-			"turn_words": "",
-			"error": "",
-			"upgr": 0,
-			"from_rank": 0,
-			"from_file": 0,
-			"to_rank": 0,
-			"to_file": 0,
-		})
+		push_context({"board": "", "turn_words": "", "error": "", "upgr": 0, "from_rank": 0, "from_file": 0, "to_rank": 0, "to_file": 0})
 		v["error"] = ""
 		v["turn"] = True
 		v["row1"] = {"a":1, "b":2, "c":3, "d":4, "e":5, "f":3, "g":2, "h":1}
@@ -448,6 +438,7 @@ def session_Game():
 		v["row6"] = {"a":0, "b":0, "c":0, "d":0, "e":0, "f":0, "g":0, "h":0}
 		v["row7"] = {"a":12,"b":12,"c":12,"d":12,"e":12,"f":12,"g":12,"h":12}
 		v["row8"] = {"a":7, "b":8, "c":9,"d":10,"e":11, "f":9, "g":8, "h":7}
+
 	if counter <= 2:
 		if 1 <= counter <= 2:
 			admit_one = True
@@ -469,7 +460,7 @@ def session_Game():
 				v["to_rank"] = receives["rank_to"]
 				v["to_file"] = receives["file_to"]
 				counter = 0
-			if counter < 2:
+			if counter <= 1:
 				v["error"] = fn_movePiece(v["from_rank"], v["from_file"], v["to_rank"], v["to_file"])
 			if counter <= 2:
 				if 2 <= counter <= 2:

@@ -4,7 +4,7 @@
 FILE* cOfile;
 int cIndent = 0;
 int show_num = 0;
-const int cTAB_WIDTH = 2;
+const int cTAB_WIDTH = 4;
 
 void cSetofile(FILE *f){
     cOfile = f;
@@ -18,13 +18,30 @@ void cNewline()
         fprintf(cOfile, " ");
 }
 
+void allSessionNames(SESSION* s)
+{
+    if(s == NULL) return;
+    if(s->next != NULL)
+    {
+        allSessionNames(s->next);
+        fprintf(cOfile, ", ");
+    }
+    fprintf(cOfile, "'");
+    codeID(s->id);
+    fprintf(cOfile, "': session_");
+    codeID(s->id);
+}
+
 void codeSERVICE(SERVICE* s)
 {
     if(s == NULL) return;
+    fprintf(cOfile, "#!/usr/bin/python"); cNewline();
+    cNewline();
     fprintf(cOfile, "import sys"); cNewline();
     fprintf(cOfile, "import os"); cNewline();
     fprintf(cOfile, "import random"); cNewline();
     fprintf(cOfile, "import pickle"); cNewline();
+    fprintf(cOfile, "import cgi"); cNewline();
     cNewline();
     fprintf(cOfile, "class VarStack(object):"); cIndent++; cNewline();
         fprintf(cOfile, "def __init__(self, parent, variables):"); cIndent++; cNewline();
@@ -67,6 +84,12 @@ void codeSERVICE(SERVICE* s)
     fprintf(cOfile, "raise AttributeError"); cIndent--; cNewline();
     fprintf(cOfile, "self.variables[index] = val"); cIndent -= 2; cNewline();
     cNewline();
+    if(s->schema != NULL)
+    {
+        cNewline();
+        codeSCHEMA(s->schema);
+        cNewline();
+    }
     fprintf(cOfile, "counter = 0"); cNewline();
     if(s->variable != NULL)
     {
@@ -75,26 +98,27 @@ void codeSERVICE(SERVICE* s)
         fprintf(cOfile, "})");
         cNewline();
     }
-
-    fprintf(cOfile, "sid = 0"); cNewline();
+    fprintf(cOfile, "session=''"); cNewline();
+    fprintf(cOfile, "sid = ''"); cNewline();
     fprintf(cOfile, "receives = {}"); cNewline();
     cNewline();
     fprintf(cOfile, "def show(html, num, **kwargs):"); cIndent++; cNewline();
         fprintf(cOfile, "global sid"); cNewline();
         fprintf(cOfile, "global counter"); cNewline();
         fprintf(cOfile, "counter = num"); cNewline();
-        fprintf(cOfile, "if sid == 0:"); cIndent++; cNewline();
+        fprintf(cOfile, "if sid == '':"); cIndent++; cNewline();
             fprintf(cOfile, "sid = str(random.randint(1, 200000))"); cIndent--; cNewline();
         fprintf(cOfile, "save_context()"); cNewline();
+        fprintf(cOfile, "print ('<html><form method=\"POST\" action=\"?a=' + str(session) + '$' + str(sid) + '\">')"); cNewline();
         fprintf(cOfile, "html(**kwargs)"); cNewline();
-        fprintf(cOfile, "print \"(session id: %%s)\"%% sid"); cNewline();
-        fprintf(cOfile, "sys.exit()"); cIndent--; cNewline();
+        fprintf(cOfile, "print ('<input type=\"submit\" value=\"go\" /></form></body></body></html>')"); cIndent--; cNewline();
     cNewline();
     fprintf(cOfile, "def exit(html, **kwargs):"); cIndent++; cNewline();
         fprintf(cOfile, "if sid != 0:"); cIndent++; cNewline();
             fprintf(cOfile, "os.remove(sid + \".ws\")"); cIndent--; cNewline();
+        fprintf(cOfile, "print ('<html><form method=\"POST\" action=\"?' + str(session) + '$' + str(sid) + '\">')"); cNewline();
         fprintf(cOfile, "html(**kwargs)"); cNewline();
-        fprintf(cOfile, "sys.exit()"); cIndent--; cNewline();
+        fprintf(cOfile, "print ('</form></body></body></html>')"); cIndent--; cNewline();
     cNewline();
     fprintf(cOfile, "def save_context():"); cIndent++; cNewline();
         fprintf(cOfile, "global counter"); cNewline();
@@ -120,11 +144,6 @@ void codeSERVICE(SERVICE* s)
         cNewline();
         codeHTML(s->html);
     }
-    if(s->schema != NULL)
-    {
-        cNewline();
-        codeSCHEMA(s->schema);
-    }
     if(s->function != NULL)
     {
         cNewline();
@@ -135,6 +154,37 @@ void codeSERVICE(SERVICE* s)
         cNewline();
         codeSESSION(s->session);
     }
+    cNewline();
+    cNewline();
+    fprintf(cOfile, "if __name__ == '__main__':"); cIndent++; cNewline();
+        fprintf(cOfile, "print \"Content-Type: text/html\\n\"");cNewline();
+        fprintf(cOfile, "sessions = {");
+        allSessionNames(s->session);
+        fprintf(cOfile, "}"); cNewline();
+        fprintf(cOfile, "storage = cgi.FieldStorage()"); cNewline();
+        fprintf(cOfile, "if 'a' in storage:"); cIndent++; cNewline();
+            fprintf(cOfile, "session, sep, sid = storage.getfirst('a').partition('$')"); cIndent--; cNewline();
+        fprintf(cOfile, "else:"); cIndent++; cNewline();
+            fprintf(cOfile, "session = None"); cIndent--; cNewline();
+        fprintf(cOfile, "if session not in sessions:"); cIndent++; cNewline();
+            fprintf(cOfile, "print '<html>You did not enter a valid session name.<br>Try one of these:<br>'"); cNewline();
+            fprintf(cOfile, "for s in sessions:"); cIndent++; cNewline();
+                fprintf(cOfile, "print \" -<a href='?a=\" + s + \"'>\", s, \"</a><br>\""); cIndent--; cNewline();
+            fprintf(cOfile, "print \"</html>\""); cIndent--; cNewline();
+        fprintf(cOfile, "elif sep == '$':"); cIndent++; cNewline();
+            fprintf(cOfile, "try:"); cIndent++; cNewline();
+                fprintf(cOfile, "with open(sid + \".ws\", \"r\") as f:"); cIndent++; cNewline();
+                    fprintf(cOfile, "counter, v = pickle.load(f)"); cIndent -= 2; cNewline();
+            fprintf(cOfile, "except IOError:"); cIndent++; cNewline();
+                fprintf(cOfile, "print \"Your session key is not valid.<br>Try one of the sessions below for a new key<br>\""); cNewline();
+                fprintf(cOfile, "for s in sessions:"); cIndent++; cNewline();
+                    fprintf(cOfile, "print \" -<a href='?a=\" + s + \"'>\", s, \"</a><br>\""); cIndent--; cNewline();
+                fprintf(cOfile, "print \"</html>\""); cIndent--; cNewline();
+            fprintf(cOfile, "else:"); cIndent++; cNewline();
+                fprintf(cOfile, "for i in storage:"); cIndent++; cNewline();
+                    fprintf(cOfile, "receives[i] = storage[i]"); cIndent -= 3; cNewline();
+        fprintf(cOfile, "else:"); cIndent++; cNewline();
+            fprintf(cOfile, "sessions[session]()"); cIndent -= 2; cNewline();
 }
 
 void codeHTML(HTML* h)
@@ -145,11 +195,15 @@ void codeHTML(HTML* h)
         codeHTML(h->next);
         cNewline();
     }
-    fprintf(cOfile, "def html_"); codeID(h->identifier);
-    fprintf(cOfile, "(**kwargs):"); cIndent++;
+    fprintf(cOfile, "def html_");
+    codeID(h->identifier);
+    fprintf(cOfile, "(**kwargs):");
+    cIndent++;
     cNewline();
-    fprintf(cOfile, "print (\"\"\"<html>"); codeHTMLBODY(h->body);
-    fprintf(cOfile, "</html>\"\"\")"); cIndent--;
+    fprintf(cOfile, "print (\"\"\"");
+    codeHTMLBODY(h->body);
+    fprintf(cOfile, "\"\"\")");
+    cIndent--;
     cNewline();
 }
 
@@ -360,16 +414,14 @@ void codeFUNCTION(FUNCTION* f)
         codeFUNCTION(f->next);
         cNewline();
     }
-    /* codeTYPE(f->type); /* Python, you're so cool. */  
     fprintf(cOfile, "def fn_");
     codeID(f->id);
     fprintf(cOfile, "(**kwargs):");
-    /* codeARGUMENT(f->argument); /* Python, you're so cool */
     cIndent++;
     cNewline();
     fprintf(cOfile, "function_context(kwargs)");
     cNewline();
-    codeCOMPOUNDSTM(f->compoundstm);
+    codeCOMPOUNDSTM(f->compoundstm, 0);
     cNewline();
     fprintf(cOfile, "pop_function()");
     cIndent--;
@@ -387,24 +439,23 @@ void codeSESSION(SESSION* s)
     }
     fprintf(cOfile, "def session_");
     codeID(s->id);
-    fprintf(cOfile, "():"); cIndent++;
+    fprintf(cOfile, "():");
+    cIndent++;
     cNewline();
     fprintf(cOfile, "global counter");
     cNewline();
     fprintf(cOfile, "global v");
     cNewline();
-    fprintf(cOfile, "admit_one = False");
-    cNewline();
-    codeCOMPOUNDSTM(s->compoundstm);
+    codeCOMPOUNDSTM(s->compoundstm, 1);
     cIndent--;
 }
 
-void codeSTM(STM* s)
+void codeSTM(STM* s, int session)
 {
     if(s == NULL) return;
     if(s->next != NULL)
     {
-        codeSTM(s->next);
+        codeSTM(s->next, session);
         cNewline();
     }
     
@@ -414,18 +465,27 @@ void codeSTM(STM* s)
             /* cNewline(); */
             break;
         case showK:
-            fprintf(cOfile, "show(html_");
+            fprintf(cOfile, "return show(html_");
             codeDOCUMENT(s->val.showE.doc);
             fprintf(cOfile, ")");
+            cIndent--;
+            cNewline();
+            fprintf(cOfile, "if counter == %d:", show_num);
+            cIndent++;
+            cNewline();
+            fprintf(cOfile, "counter = 0");
+            cNewline();
             if(s->val.showE.rec != NULL)
             {
-                cNewline();
                 codeRECEIVE(s->val.showE.rec);
             }
-            /* cNewline(); */
+            cIndent--;
+            cNewline();
+            fprintf(cOfile, "if counter <= %d:", show_num);
+            cIndent++;
             break;
         case exitK:
-            fprintf(cOfile, "exit(html_");
+            fprintf(cOfile, "return exit(html_");
             codeDOCUMENT(s->val.doc);
             fprintf(cOfile, ")");
             /* cNewline(); */
@@ -446,51 +506,145 @@ void codeSTM(STM* s)
             /* cNewline(); */
             break;
         case ifK:
-            fprintf(cOfile, "if(");
-            codeEXP(s->val.ifE.expr);
-            fprintf(cOfile, ")");
-            cIndent++;
-            cNewline();
-            codeSTM(s->val.ifE.stm);
-            cIndent--;
+            {
+                int small_show=0, big_show=0;
+                if (session)
+                {
+                    countshowSTM(s->val.ifE.stm, &small_show, &big_show);
+                    if (small_show)
+                    {
+                        cIndent--;
+                        cNewline();
+                        fprintf(cOfile, "if counter <= %d:", big_show);
+                        cIndent++;
+                        cNewline();
+                        fprintf(cOfile, "if (%d <= counter <= %d) or ", small_show, big_show);
+                    }
+                    else
+                        fprintf(cOfile, "if ");
+                }
+                else
+                {
+                    fprintf(cOfile, "if ");
+                }
+                codeEXP(s->val.ifE.expr);
+                fprintf(cOfile, ":");
+                cIndent++;
+                cNewline();
+                codeSTM(s->val.ifE.stm, session);
+                cIndent--;
+            }
             break;
         case ifelseK:
+            if (session)
+            {
+                int small_show=0, big_show=0;
+                countshowSTM(s, &small_show, &big_show);
+                if (small_show)
+                {
+                    small_show = 0;
+                    big_show = 0;
+                    countshowSTM(s->val.ifelseE.stm1, &small_show, &big_show);
+                    if (small_show)
+                    {
+                        cIndent--;
+                        cNewline();
+                        fprintf(cOfile, "if counter <= %d:", big_show);
+                        cIndent++;
+                        cNewline();
+                        fprintf(cOfile, "if (%d <= counter <= %d) or ", small_show, big_show);
+                    }
+                    else
+                    {   /* there were no shows, can skip the crazy logic */
+                        fprintf(cOfile, "if ");
+                    }
+
+                    codeEXP(s->val.ifelseE.expr);
+                    fprintf(cOfile, ":");
+                    cIndent++;
+                    cNewline();
+                    codeSTM(s->val.ifelseE.stm1, session);
+                    cIndent--;
+                    cNewline();
+                    fprintf(cOfile, "el");
+
+                    if(!(s->val.ifelseE.stm2->kind == ifK || s->val.ifelseE.stm2->kind == ifelseK))
+                    {   /* else */
+                        int small_show=0, big_show=0;
+                        countshowSTM(s->val.ifelseE.stm2, &small_show, &big_show);
+
+                        if (small_show)
+                            fprintf(cOfile, "if %d <= counter <= %d:", small_show, big_show);
+                        else
+                            fprintf(cOfile, "se:");
+                        cIndent++;
+                        cNewline();
+                        codeSTM(s->val.ifelseE.stm2, session);
+                        cIndent--;
+                    }
+                    else
+                    {   /* elif */
+                        codeSTM(s->val.ifelseE.stm2, session);
+                    }
+                    break;
+                }
+            }
             fprintf(cOfile, "if ");
             codeEXP(s->val.ifelseE.expr);
             fprintf(cOfile, ":");
             cIndent++;
             cNewline();
-            codeSTM(s->val.ifelseE.stm1);
+            codeSTM(s->val.ifelseE.stm1, session);
             cIndent--;
             cNewline();
             fprintf(cOfile, "el");
-            if(s->val.ifelseE.stm2 != NULL)
-            {
-                if(!(s->val.ifelseE.stm2->kind == ifK || s->val.ifelseE.stm2->kind == ifelseK))
-                {   /* else */
-                    fprintf(cOfile, "se:");
-                    cIndent++;
-                    cNewline();
-                    codeSTM(s->val.ifelseE.stm2);
-                    cIndent--;
-                }
-                else
-                {   /* elif */
-                    codeSTM(s->val.ifelseE.stm2);
-                }
+            if(!(s->val.ifelseE.stm2->kind == ifK || s->val.ifelseE.stm2->kind == ifelseK))
+            {   /* else */
+                fprintf(cOfile, "se:");
+                cIndent++;
+                cNewline();
+                codeSTM(s->val.ifelseE.stm2, session);
+                cIndent--;
+            }
+            else
+            {   /* elif */
+                codeSTM(s->val.ifelseE.stm2, session);
             }
             break;
         case whileK:
-            fprintf(cOfile, "while ");
-            codeEXP(s->val.whileE.expr);
-            fprintf(cOfile, ":");
-            cIndent++;
-            cNewline();
-            codeSTM(s->val.whileE.stm);
-            cIndent--;
+            {
+                int small_show=0, big_show=0;
+                if (session)
+                {
+                    countshowSTM(s->val.whileE.stm, &small_show, &big_show);
+                    if (small_show)
+                    {
+                        cIndent--;
+                        cNewline();
+                        fprintf(cOfile, "if counter <= %d:", big_show);
+                        cIndent++;
+                        cNewline();
+                        fprintf(cOfile, "while (%d <= counter <= %d) or ", small_show, big_show);
+                    }
+                    else
+                    {   /* there were no shows, can skip the crazy logic */
+                        fprintf(cOfile, "while ");
+                    }
+                }
+                else
+                {
+                    fprintf(cOfile, "while ");
+                }
+                codeEXP(s->val.whileE.expr);
+                fprintf(cOfile, ":");
+                cIndent++;
+                cNewline();
+                codeSTM(s->val.whileE.stm, session);
+                cIndent--;
+            }
             break;
         case compoundK:
-            codeCOMPOUNDSTM(s->val.compoundstm);
+            codeCOMPOUNDSTM(s->val.compoundstm, session);
             break;
         case exprK:
             codeEXP(s->val.expr);
@@ -499,32 +653,69 @@ void codeSTM(STM* s)
     }
 }
 
-void codeCOMPOUNDSTM(COMPOUNDSTM* c)
-{   /* TODO: This is the crazy one */
-    int declares_vars;
-    declares_vars = (c->variable != NULL);
-    if(c == NULL) return;
-    if(declares_vars)
+void countshowSTM(STM* s, int *small_show, int *big_show)
+{
+    if(s == NULL) return;
+    if(s->next != NULL)
     {
-        printf("push_context({");
-        codeVARIABLE(c->variable);
-        printf("})");
+        countshowSTM(s->next, small_show, big_show);
+    }
+    switch(s->kind) {
+        case whileK:
+            countshowSTM(s->val.whileE.stm, small_show, big_show);
+            break;
+        case showK:
+            if(*small_show)
+            {
+                (*big_show)++;
+            }
+            else
+            {
+                *small_show = show_num + 1;
+                *big_show = show_num + 1;
+            }
+            break;
+        case ifK:
+            countshowSTM(s->val.ifE.stm, small_show, big_show);
+            break;
+        case ifelseK:
+            countshowSTM(s->val.ifelseE.stm1, small_show, big_show);
+            countshowSTM(s->val.ifelseE.stm2, small_show, big_show);
+            break;
+        case compoundK:
+            countshowSTM(s->val.compoundstm->stm, small_show, big_show);
+            break;
+        default:
+            break;
+    }
+}
+
+void codeCOMPOUNDSTM(COMPOUNDSTM* c, int session)
+{
+    int declares_vars;
+    if(c == NULL) return;
+    declares_vars = (c->variable != NULL);
+    if (session)
+    {
+        fprintf(cOfile, "if counter <= %d:", show_num);
+        cIndent++;
         cNewline();
     }
-    codeSTM(c->stm);
+    if(declares_vars)
+    {
+        fprintf(cOfile, "push_context({");
+        codeVARIABLE(c->variable);
+        fprintf(cOfile, "})");
+        cNewline();
+    }
+    codeSTM(c->stm, session);
     if(declares_vars)
     {
         cNewline();
         fprintf(cOfile, "pop_context()");
     }
-    /* cNewline(); */
-    /* fprintf(cOfile, "{"); cIndent++;
-    cNewline();
-    codeVARIABLE(c->variable);
-    codeSTM(c->stm);
-    cIndent--;
-    cNewline();
-    fprintf(cOfile, "}");*/
+    if (session)
+        cIndent--;
 }
 
 void codeDOCUMENT(DOCUMENT* d)
@@ -546,12 +737,7 @@ void codeRECEIVE(RECEIVE* r)
     if(r == NULL) return;
     if(r->input != NULL)
     {
-        fprintf(cOfile, "if counter == %d:", show_num - 1);
-        cIndent++;
-        cNewline();
         codeINPUT(r->input);
-        fprintf(cOfile, "counter = 0");
-        cIndent--;
     }
 }
 
@@ -575,12 +761,12 @@ void codeINPUT(INPUT* i)
     if(i->next)
     {
         codeINPUT(i->next);
+        cNewline();
     }
     codeLVALUE(i->lvalue);
     fprintf(cOfile, " = receives[\"");
     codeID(i->id);
     fprintf(cOfile, "\"]");
-    cNewline();
 }
 
 void codeLVALUE(LVALUE* l)

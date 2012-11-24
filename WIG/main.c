@@ -149,7 +149,8 @@ int main(int argc, char *argv[])
 	}
 	if(codegen)
 	{
-		cSetofile(stdout);
+		ofile = fopen("chess.py", "w");
+		cSetofile(ofile);
 		codeSERVICE(theservice);
 	}
 	fclose(yyin);

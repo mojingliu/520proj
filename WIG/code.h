@@ -21,8 +21,8 @@ void codeSIMPLETYPE(SIMPLETYPE* s);
 void codeFUNCTION(FUNCTION* f);
 void codeARGUMENT(ARGUMENT* a);
 void codeSESSION(SESSION* s);
-void codeSTM(STM* s);
-void codeCOMPOUNDSTM(COMPOUNDSTM* c);
+void codeSTM(STM* s, int session);
+void codeCOMPOUNDSTM(COMPOUNDSTM* c, int session);
 void codeDOCUMENT(DOCUMENT* d);
 void codeRECEIVE(RECEIVE* r);
 void codePLUG(PLUG* p);
@@ -30,7 +30,6 @@ void codeINPUT(INPUT* i);
 void codeLVALUE(LVALUE* l);
 void codeFIELDVALUE(FIELDVALUE* f);
 void codeEXP(EXP* e);
-
-void setofile(FILE* f);
+void countshowSTM(STM* s, int *small_show, int *big_show);
 
 #endif /* !CODE_H */
