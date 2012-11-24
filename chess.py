@@ -504,3 +504,22 @@ if __name__ == "__main__":
             key, _, val = i.partition("=")
             receives[key] = val
     sessions[sys.argv[1]]()
+
+def wig_join(a, b):
+	a = a.copy()
+	a.update(b)
+	return a
+
+def wig_add(a, keys):
+	a = a.copy()
+	for k in a.keys():
+		if k not in keys:
+			del a[k]
+	return a
+
+def wig_add(a, keys):
+	a = a.copy()
+	for k in a.keys():
+		if k in keys:
+			del a[k]
+	return a

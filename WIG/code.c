@@ -42,6 +42,8 @@ void codeSERVICE(SERVICE* s)
     fprintf(cOfile, "import random"); cNewline();
     fprintf(cOfile, "import pickle"); cNewline();
     fprintf(cOfile, "import cgi"); cNewline();
+    fprintf(cOfile, "import cgitb"); cNewline();
+    fprintf(cOfile, "cgitb.enable()"); cNewline();
     cNewline();
     fprintf(cOfile, "class VarStack(object):"); cIndent++; cNewline();
         fprintf(cOfile, "def __init__(self, parent, variables):"); cIndent++; cNewline();
@@ -144,6 +146,25 @@ void codeSERVICE(SERVICE* s)
         fprintf(cOfile, "while isinstance(v, VarStack):"); cIndent++; cNewline();
             fprintf(cOfile, "v = v.parent"); cIndent--; cNewline();
         fprintf(cOfile, "v = v.parent"); cIndent--; cNewline();
+    cNewline();
+    fprintf(cOfile, "def wig_join(a, b):"); cIndent++; cNewline();
+        fprintf(cOfile, "a = a.copy()"); cNewline();
+        fprintf(cOfile, "a.update(b)"); cNewline();
+        fprintf(cOfile, "return a"); cIndent--; cNewline();
+    cNewline();
+    fprintf(cOfile, "def wig_keep(a, keys):"); cIndent++; cNewline();
+        fprintf(cOfile, "a = a.copy()"); cNewline();
+        fprintf(cOfile, "for k in a.keys():"); cIndent++; cNewline();
+            fprintf(cOfile, "if k not in keys:"); cIndent++; cNewline();
+                fprintf(cOfile, "del a[k]"); cIndent -= 2; cNewline();
+        fprintf(cOfile, "return a"); cIndent--; cNewline();
+    cNewline();
+    fprintf(cOfile, "def wig_remove(a, keys):"); cIndent++; cNewline();
+        fprintf(cOfile, "a = a.copy()"); cNewline();
+        fprintf(cOfile, "for k in a.keys():"); cIndent++; cNewline();
+            fprintf(cOfile, "if k in keys:"); cIndent++; cNewline();
+                fprintf(cOfile, "del a[k]"); cIndent -= 2; cNewline();
+        fprintf(cOfile, "return a"); cIndent--; cNewline();
     cNewline();
     fprintf(cOfile, "###############################################################################"); cNewline();
     if(s->html != NULL)
@@ -820,9 +841,9 @@ void codeINPUT(INPUT* i)
         default:
             break;
     }
-    fprintf(cOfile, "receives[\"");
+    fprintf(cOfile, "receives.get(\"");
     codeID(i->id);
-    fprintf(cOfile, "\"])");
+    fprintf(cOfile, "\", '0'))");
 }
 
 void codeLVALUE(LVALUE* l)
