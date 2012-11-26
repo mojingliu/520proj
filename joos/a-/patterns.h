@@ -331,37 +331,64 @@ int load_swap(CODE **c)
 int remove_load_store(CODE **c)
 {
   int x, y;
-  if(((is_iload(*c, &x) || is_aload(*c, &x)) && (is_istore(next(*c), &y) || is_iload(next(*c), &y))) && (x == y))
-    return replace(c, 2, next(next(*c)));
+  if(is_iload(*c, &x) || is_aload(*c, &x)) 
+    if(is_istore(next(*c), &y) || is_astore(next(*c), &y))
+      if(x == y)
+        return replace(c, 2, NULL);
   return 0; 
 }
 
 
 /* 
-
-TODO: LT GT NOT WORKING 
-
+TODO: REMOVE LOAD STORE NOT WORKING
 */
-/* 
 
-TODO: LT GT NOT WORKING 
 
+/* iload_x
+ * dup
+ * aload_y
+ * swap
+ * putfield
+ * pop
+ * ....
+ * --------------->
+ * aload_y
+ * iload_x
+ * putfield
+ * .......
 */
-/* 
+int simplify_iload_aload(CODE **c)
+{
+  int x, y;
+  char **temp;
+  CODE *nexted = next(*c);
+  if(is_iload(*c, &x))
+  {
+    if(is_dup(nexted))
+    {
+      nexted = next(nexted);
+      if(is_aload(nexted, &y))
+      {
+        nexted = next(nexted);
+        if(is_swap(nexted))
+        {
+          nexted = next(nexted);
+          if(is_putfield(nexted, temp))
+          { 
+            nexted = next(nexted);
+            if(is_pop(nexted))
+            {
+              return replace(c, 6, makeCODEaload(y, makeCODEiload(x, makeCODEputfield(*temp, NULL))));
+              /*return replace(c, 6, makeCODEpop(makeCODEiload(x, makeCODEaload(y, NULL))));*/
+            }
+          }
+        }
+      }
+    }
+  }
+  return 0;
+}
 
-TODO: LT GT NOT WORKING 
-
-*/
-/* 
-
-TODO: LT GT NOT WORKING 
-
-*/
-/* 
-
-TODO: LT GT NOT WORKING 
-
-*/
 
 /* if_icmplt l1
  * iconst_0
@@ -376,13 +403,18 @@ TODO: LT GT NOT WORKING
 int simplify_lt(CODE **c)
 { 
   int l1, l2, l3;
-  if (is_if_icmplt(*c,&l1) && 
-      is_goto(next(next(*c)),&l2) && 
-      is_ifeq(next(destination(l2)),&l3) &&
-      l1 > l2 ) {
-    droplabel(l1);
-    copylabel(l3);
-    return replace(c,1,makeCODEif_icmpge(l3,NULL));
+  CODE *nexter = next(*c);
+  if(is_if_icmplt(*c, &l1))
+  {
+    if(is_goto(next(nexter), &l2))
+    {
+      if(is_ifeq(next(destination(l2)), &l3))
+      {
+        droplabel(l1);
+        copylabel(l2);
+        return replace(c, 7, makeCODEif_icmpge(l3, NULL));
+      }
+    }
   }
   return 0;
 }
@@ -400,13 +432,18 @@ int simplify_lt(CODE **c)
 int simplify_gt(CODE **c)
 { 
   int l1, l2, l3;
-  if (is_if_icmpgt(*c,&l1) && 
-      is_goto(next(next(*c)),&l2) && 
-      is_ifeq(next(destination(l2)),&l3) &&
-      l1 > l2 ) {
-    droplabel(l1);
-    copylabel(l3);
-    return replace(c,1,makeCODEif_icmple(l3,NULL));
+  CODE *nexter = next(*c);
+  if(is_if_icmpgt(*c, &l1))
+  {
+    if(is_goto(next(nexter), &l2))
+    {
+      if(is_ifeq(next(destination(l2)), &l3))
+      {
+        droplabel(l1);
+        copylabel(l2);
+        return replace(c, 7, makeCODEif_icmple(l3, NULL));
+      }
+    }
   }
   return 0;
 }
@@ -434,11 +471,19 @@ int init_patterns()
     ADD_PATTERN(simplify_division_left);
     ADD_PATTERN(simplify_division_right);
     ADD_PATTERN(simplify_istore);
+    /* works up to here... */
     ADD_PATTERN(positive_increment_left);
     ADD_PATTERN(negative_increment_right);
     ADD_PATTERN(load_swap);
+    /* works up to here...*/
     ADD_PATTERN(load_pop);
+    /* works up to here...*/
+    ADD_PATTERN(simplify_iload_aload);
+    /*ADD_PATTERN(remove_iload_istore);*/
     ADD_PATTERN(remove_load_store);
+    /* SOMETHING WITH REMOVE LOAD STORE FUCKING BLOWS */
+    /* DOESN'T COMPILE BENCHMARK 4 */
+
     ADD_PATTERN(simplify_gt);
     ADD_PATTERN(simplify_lt);
     return 1;
