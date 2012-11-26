@@ -10,25 +10,35 @@
  * email: hendren@cs.mcgill.ca, mis@brics.dk
  */
 
-/* iload x        iload x        iload x
- * ldc 0          ldc 1          ldc 2
+/* aload/iload
+ * pop
+ * ------>
+ */
+int load_pop(CODE **c)
+{
+  int k;
+  if ((is_aload(*c, &k) || is_iload(*c, &k)) && is_pop(next(*c)))
+  {
+    return replace(c, 2, NULL);
+  }
+  return 0;
+}
+
+/* ldc 0          ldc 1          ldc 2
  * imul           imul           imul
  * ------>        ------>        ------>
- * ldc 0          iload x        iload x
- *                               dup
- *                               iadd
+ * pop                           dup
+ * ldc 0                         iadd
  */
 
 int simplify_multiplication_right(CODE **c)
-{ int x,k;
-  if (is_iload(*c,&x) && 
-      is_ldc_int(next(*c),&k) && 
-      is_imul(next(next(*c)))) {
-     if (k==0) return replace(c,3,makeCODEldc_int(0,NULL));
-     else if (k==1) return replace(c,3,makeCODEiload(x,NULL));
-     else if (k==2) return replace(c,3,makeCODEiload(x,
-                                       makeCODEdup(
-                                       makeCODEiadd(NULL))));
+{ int k;
+  if (is_ldc_int(*c,&k) && 
+      is_imul(next(*c))) {
+     if (k==0) return replace(c,2,makeCODEpop(makeCODEldc_int(0,NULL)));
+     else if (k==1) return replace(c,2,NULL);
+     else if (k==2) return replace(c,2,makeCODEdup(
+                                       makeCODEiadd(NULL)));
      return 0;
   }
   return 0;
@@ -185,7 +195,7 @@ int positive_increment_right(CODE **c)
   return 0;
 }
 
-/* ldc k   (0<=k<=127)
+/* ldc k   (-128<=k<=127)
  * iload x
  * iadd
  * istore x
@@ -206,7 +216,7 @@ int positive_increment_left(CODE **c)
 
 
 /* iload x
- * ldc k   (0<=k<=127)
+ * ldc k   (-128<=k<=127)
  * isub
  * istore x
  * --------->
@@ -224,6 +234,16 @@ int negative_increment_right(CODE **c)
   return 0;
 }
 
+/* iinc x 0
+ * -------->
+ */
+int addition_by_zero(CODE **c)
+{
+  int x, k;
+  if (is_iinc(*c, &x, &k) && !k)
+      return replace(c,1,NULL);
+  return 0;
+}
 
 /* goto L1
  * ...
@@ -408,6 +428,7 @@ int init_patterns()
     ADD_PATTERN(positive_increment_right);
     ADD_PATTERN(simplify_goto_goto);
     /* we added these */
+    ADD_PATTERN(addition_by_zero);
     ADD_PATTERN(simplify_multiplication_left);
     ADD_PATTERN(simplify_ints);
     ADD_PATTERN(simplify_division_left);
@@ -416,6 +437,7 @@ int init_patterns()
     ADD_PATTERN(positive_increment_left);
     ADD_PATTERN(negative_increment_right);
     ADD_PATTERN(load_swap);
+    ADD_PATTERN(load_pop);
     ADD_PATTERN(remove_load_store);
     ADD_PATTERN(simplify_gt);
     ADD_PATTERN(simplify_lt);
