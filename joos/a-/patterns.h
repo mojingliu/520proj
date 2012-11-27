@@ -360,7 +360,7 @@ TODO: REMOVE LOAD STORE NOT WORKING
 int simplify_iload_aload(CODE **c)
 {
   int x, y;
-  char **temp;
+  char *temp;
   CODE *nexted = next(*c);
   if(is_iload(*c, &x))
   {
@@ -373,12 +373,12 @@ int simplify_iload_aload(CODE **c)
         if(is_swap(nexted))
         {
           nexted = next(nexted);
-          if(is_putfield(nexted, temp))
+          if(is_putfield(nexted, &temp))
           { 
             nexted = next(nexted);
             if(is_pop(nexted))
             {
-              return replace(c, 6, makeCODEaload(y, makeCODEiload(x, makeCODEputfield(*temp, NULL))));
+              return replace(c, 6, makeCODEaload(y, makeCODEiload(x, makeCODEputfield(temp, NULL))));
               /*return replace(c, 6, makeCODEpop(makeCODEiload(x, makeCODEaload(y, NULL))));*/
             }
           }
@@ -448,6 +448,285 @@ int simplify_gt(CODE **c)
   return 0;
 }
 
+/*
+ * areturn
+ * ... (not a label)
+ * -------------->
+ * areturn
+ *
+*/ 
+int remove_after_return(CODE **c)
+{
+  int x, k;
+  if(is_ireturn(*c))
+  {
+    if(next(*c) != NULL && !is_label(next(*c), &x))
+      return replace(c, 2, makeCODEireturn(NULL));
+  }
+  else if(is_areturn(*c))
+  {
+    if(next(*c) != NULL && !is_label(next(*c), &x))
+      return replace(c, 2, makeCODEareturn(NULL));
+  }
+  else if(is_return(*c))
+  {
+    if(next(*c) != NULL && !is_label(next(*c), &x))
+      return replace(c, 2, makeCODEreturn(NULL));
+  }
+  else if(is_goto(*c, &k))
+  {
+    if(next(*c) != NULL && !is_label(next(*c), &x))
+      return replace(c, 2, makeCODEgoto(k, NULL));
+  }
+  return 0;
+}
+
+/* Too long to write out, but lots of  
+ * crazy conditionals for adding strings
+ *
+ * Now made much simpler
+ */
+
+int simplify_string_addition(CODE **c)
+{
+  int temp;
+  char *temp1;
+  if(is_ldc_string(*c, &temp1))
+  {
+    if(is_dup(next(*c)))
+    {
+      if(is_ifnull(nextby(*c, 2), &temp))
+      {  
+        return replace(c, 8, makeCODEldc_string(temp1, NULL));
+      }
+    }
+  }
+  return 0;
+}
+
+/* dup      iload x
+ * isub     iload x
+ *          isub 
+ * ----->   ------->
+ * pop      ldc 0
+ * ldc 0
+ */
+int self_subtraction(CODE **c)
+{
+  int x, y;
+  if (is_dup(*c) && is_isub(next(*c)))
+  {
+    return replace(c, 2, makeCODEpop(makeCODEldc_int(0, NULL)));
+  }
+  else if (is_iload(*c, &x) && is_iload(next(*c), &y) && (x == y))
+  {
+    if(is_isub(nextby(*c, 2)))
+      return replace(c, 3, makeCODEldc_int(0, NULL));
+  }
+  return 0;
+}
+
+/* iload_x
+ * iconst_1
+ * iadd
+ * dup
+ * istore_x
+ * iconst_1
+ * isub
+ * pop
+ * ....
+ * ------------->
+ * iinc x 1
+ * ....
+ */
+int simplify_increment(CODE **c)
+{
+  int x, y, k;
+  if(is_iload(*c, &x))
+  {
+    if(is_ldc_int(next(*c), &k) && (k == 1))
+    {
+      if(is_iadd(next(next(*c))))
+      {
+        if(is_dup(nextby(*c, 3)))
+        {
+          if(is_istore(nextby(*c, 4), &y) && (x == y))
+          {
+            if(is_ldc_int(nextby(*c, 5), &k) && (k == 1))
+            {
+              if(is_isub(nextby(*c, 6)))
+              {
+                if(is_pop(nextby(*c, 7)))
+                  return replace(c, 8, makeCODEiinc(x, 1, NULL));
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return 0;
+}
+
+
+/* iload_x
+ * iconst_1
+ * iadd
+ * dup
+ * istore_x
+ * iconst_1
+ * isub
+ * pop
+ * ....
+ * ------------->
+ * iinc x 1
+ * ....
+ */
+int simplify_decrement(CODE **c)
+{
+  int x, y, k;
+  if(is_iload(*c, &x))
+  {
+    if(is_ldc_int(next(*c), &k) && (k == 1))
+    {
+      if(is_isub(next(next(*c))))
+      {
+        if(is_dup(nextby(*c, 3)))
+        {
+          if(is_istore(nextby(*c, 4), &y) && (x == y))
+          {
+            if(is_ldc_int(nextby(*c, 5), &k) && (k == 1))
+            {
+              if(is_iadd(nextby(*c, 6)))
+              {
+                if(is_pop(nextby(*c, 7)))
+                  return replace(c, 8, makeCODEiinc(x, -1, NULL));
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return 0;
+}
+
+/*
+*  aload_x
+*  dup
+*  aload_y
+*  swap
+*  putfield stuff
+*  pop
+* ....
+*  -------->
+*  aload_y
+*  aload_x
+*  putfield stuff
+*/
+int simplify_aload_swap(CODE **c)
+{
+  int x, y;
+  char *z;
+  if(is_aload(*c, &x))
+  {
+    if(is_dup(next(*c)))
+    {
+      if(is_aload(nextby(*c, 2), &y))
+      {
+        if(is_swap(nextby(*c, 3)))
+        {
+          if(is_putfield(nextby(*c, 4), &z))
+          {
+            if(is_pop(nextby(*c, 5)))
+              return replace(c, 6, makeCODEaload(y, makeCODEaload(x, makeCODEputfield(z, NULL))));
+          }
+        }
+      }
+    }
+  } 
+  return 0;
+}
+
+
+/*
+*  iconst_x
+*  dup
+*  aload_y
+*  swap
+*  putfield stuff
+*  pop
+*  ....
+*  -------->
+*  aload_y
+*  iconst_x
+*  putfield stuff
+*/
+int simplify_iconst_swap(CODE **c)
+{
+  int x, y;
+  char *z;
+  if(is_ldc_int(*c, &x))
+  {
+    if(is_dup(next(*c)))
+    {
+      if(is_aload(nextby(*c, 2), &y))
+      {
+        if(is_swap(nextby(*c, 3)))
+        {
+          if(is_putfield(nextby(*c, 4), &z))
+          {
+            if(is_pop(nextby(*c, 5)))
+              return replace(c, 6, makeCODEaload(y, makeCODEldc_int(x, makeCODEputfield(z, NULL))));
+          }
+        }
+      }
+    }
+  } 
+  return 0;
+}
+
+
+/*
+*  aconst_x
+*  dup
+*  aload_y
+*  swap
+*  putfield stuff
+*  pop
+*  ....
+*  -------->
+*  aload_y
+*  iconst_x
+*  putfield stuff
+*/
+int simplify_aconst_swap(CODE **c)
+{
+  int y;
+  char *x, *z;
+  if(is_ldc_string(*c, &x))
+  {
+    if(is_dup(next(*c)))
+    {
+      if(is_aload(nextby(*c, 2), &y))
+      {
+        if(is_swap(nextby(*c, 3)))
+        {
+          if(is_putfield(nextby(*c, 4), &z))
+          {
+            if(is_pop(nextby(*c, 5)))
+              return replace(c, 6, makeCODEaload(y, makeCODEldc_string(x, makeCODEputfield(z, NULL))));
+          }
+        }
+      }
+    }
+  } 
+  return 0;
+}
+
+
+
+
 /******  Old style - still works, but better to use new style. 
 #define OPTS 4
 
@@ -479,12 +758,21 @@ int init_patterns()
     ADD_PATTERN(load_pop);
     /* works up to here...*/
     ADD_PATTERN(simplify_iload_aload);
-    /*ADD_PATTERN(remove_iload_istore);*/
     ADD_PATTERN(remove_load_store);
-    /* SOMETHING WITH REMOVE LOAD STORE FUCKING BLOWS */
-    /* DOESN'T COMPILE BENCHMARK 4 */
 
     ADD_PATTERN(simplify_gt);
     ADD_PATTERN(simplify_lt);
+
+    ADD_PATTERN(remove_after_return);
+    /* works up to here... */
+    ADD_PATTERN(simplify_string_addition);
+    /* works up to here... */
+    ADD_PATTERN(simplify_increment);
+    ADD_PATTERN(simplify_decrement);
+    ADD_PATTERN(simplify_aload_swap);
+    ADD_PATTERN(simplify_iconst_swap);
+    ADD_PATTERN(simplify_aconst_swap);
+    ADD_PATTERN(self_subtraction);
+
     return 1;
   }

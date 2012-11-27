@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-cat in1 | jus Beep.java Tools.java BeepIO.java Dictionary.java Lexicon.java
