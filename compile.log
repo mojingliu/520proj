@@ -1,0 +1,98 @@
+BENCHMARK group-1 ./group-1 Main
+  compiling with javac -O                  (.java --> .class)
+  disassembling with D-Java                (.class --> .j)
+  disassembling with D-Java                (.class --> .sj)
+  compiling with a-joos -O                 (.java --> .j)
+  assembling with jasmin                   (.j --> .class)
+  disassembling with D-Java                (.class --> .sj)
+  compiling with a+joos -O                 (.java --> .j)
+  assembling with jasmin                   (.j --> .class)
+  disassembling with D-Java                (.class --> .sj)
+  running javac-opt benchmark
+  running a-joos-opt benchmark
+  running a+joos-opt benchmark
+
+BENCHMARK group-2 ./group-2/transform AsciiFunArt
+  compiling with javac -O                  (.java --> .class)
+  disassembling with D-Java                (.class --> .j)
+  disassembling with D-Java                (.class --> .sj)
+  compiling with a-joos -O                 (.java --> .j)
+  assembling with jasmin                   (.j --> .class)
+  disassembling with D-Java                (.class --> .sj)
+  compiling with a+joos -O                 (.java --> .j)
+  assembling with jasmin                   (.j --> .class)
+  disassembling with D-Java                (.class --> .sj)
+  running javac-opt benchmark
+  running a-joos-opt benchmark
+  running a+joos-opt benchmark
+
+BENCHMARK group-3 ./group-3 Main
+  compiling with javac -O                  (.java --> .class)
+  disassembling with D-Java                (.class --> .j)
+  disassembling with D-Java                (.class --> .sj)
+  compiling with a-joos -O                 (.java --> .j)
+  assembling with jasmin                   (.j --> .class)
+  disassembling with D-Java                (.class --> .sj)
+  compiling with a+joos -O                 (.java --> .j)
+  assembling with jasmin                   (.j --> .class)
+  disassembling with D-Java                (.class --> .sj)
+  running javac-opt benchmark
+  running a-joos-opt benchmark
+  running a+joos-opt benchmark
+
+BENCHMARK group-4 ./group-4 Maze
+  compiling with javac -O                  (.java --> .class)
+  disassembling with D-Java                (.class --> .j)
+  disassembling with D-Java                (.class --> .sj)
+  compiling with a-joos -O                 (.java --> .j)
+  assembling with jasmin                   (.j --> .class)
+  disassembling with D-Java                (.class --> .sj)
+  compiling with a+joos -O                 (.java --> .j)
+  assembling with jasmin                   (.j --> .class)
+  disassembling with D-Java                (.class --> .sj)
+  running javac-opt benchmark
+  running a-joos-opt benchmark
+  running a+joos-opt benchmark
+
+BENCHMARK group-5 ./group-5 Beep
+  compiling with javac -O                  (.java --> .class)
+  disassembling with D-Java                (.class --> .j)
+  disassembling with D-Java                (.class --> .sj)
+  compiling with a-joos -O                 (.java --> .j)
+  assembling with jasmin                   (.j --> .class)
+  disassembling with D-Java                (.class --> .sj)
+  compiling with a+joos -O                 (.java --> .j)
+  assembling with jasmin                   (.j --> .class)
+  disassembling with D-Java                (.class --> .sj)
+  running javac-opt benchmark
+  running a-joos-opt benchmark
+  running a+joos-opt benchmark
+
+BENCHMARK group-6 ./group-6 Main
+  compiling with javac -O                  (.java --> .class)
+  disassembling with D-Java                (.class --> .j)
+  disassembling with D-Java                (.class --> .sj)
+  compiling with a-joos -O                 (.java --> .j)
+  assembling with jasmin                   (.j --> .class)
+  disassembling with D-Java                (.class --> .sj)
+  compiling with a+joos -O                 (.java --> .j)
+  assembling with jasmin                   (.j --> .class)
+  disassembling with D-Java                (.class --> .sj)
+  running javac-opt benchmark
+  running a-joos-opt benchmark
+  running a+joos-opt benchmark
+
+BENCHMARK group-7 ./group-7 GameCenter
+  compiling with javac -O                  (.java --> .class)
+  disassembling with D-Java                (.class --> .j)
+  disassembling with D-Java                (.class --> .sj)
+  compiling with a-joos -O                 (.java --> .j)
+  assembling with jasmin                   (.j --> .class)
+  disassembling with D-Java                (.class --> .sj)
+  compiling with a+joos -O                 (.java --> .j)
+  assembling with jasmin                   (.j --> .class)
+  disassembling with D-Java                (.class --> .sj)
+  running javac-opt benchmark
+  running a-joos-opt benchmark
+  running a+joos-opt benchmark
+

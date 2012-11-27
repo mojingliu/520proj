@@ -990,6 +990,117 @@ int simplify_dup_swap_put(CODE **c)
   return 0;
 }
 
+int remove_redundant_labels(CODE **c)
+{/*
+  int l1, l2;
+  if(is_goto(*c, &l1))
+  {
+    if(is_label(next(destination(l1)), &l2))
+    {
+      copylabel(l2);
+      return replace_modified(c, 1, makeCODEgoto(l2, NULL));
+    }
+  }
+  else if(is_ifeq(*c, &l1))
+  {
+    if(is_label(next(destination(l1)), &l2))
+    {
+      copylabel(l2);
+      return replace_modified(c, 1, makeCODEifeq(l2, NULL));
+    }
+  }
+  else if(is_ifne(*c, &l1))
+  {
+    if(is_label(next(destination(l1)), &l2))
+    {
+      copylabel(l2);
+      return replace_modified(c, 1, makeCODEifne(l2, NULL));
+    }
+  }
+  else if(is_if_acmpeq(*c, &l1))
+  {
+    if(is_label(next(destination(l1)), &l2))
+    {
+      copylabel(l2);
+      return replace_modified(c, 1, makeCODEif_acmpeq(l2, NULL));
+    }
+  }
+  else if(is_if_acmpne(*c, &l1))
+  {
+    if(is_label(next(destination(l1)), &l2))
+    {
+      copylabel(l2);
+      return replace_modified(c, 1, makeCODEif_acmpne(l2, NULL));
+    }
+  }
+  else if(is_ifnull(*c, &l1))
+  {
+    if(is_label(next(destination(l1)), &l2))
+    {
+      copylabel(l2);
+      return replace_modified(c, 1, makeCODEifnull(l2, NULL));
+    }
+  }
+  else if(is_ifnonnull(*c, &l1))
+  {
+    if(is_label(next(destination(l1)), &l2))
+    {
+      copylabel(l2);
+      return replace_modified(c, 1, makeCODEifnonnull(l2, NULL));
+    }
+  }
+  else if(is_if_icmpeq(*c, &l1))
+  {
+    if(is_label(next(destination(l1)), &l2))
+    {
+      copylabel(l2);
+      return replace_modified(c, 1, makeCODEif_icmpeq(l2, NULL));
+    }
+  }
+  else if(is_if_icmpgt(*c, &l1))
+  {
+    if(is_label(next(destination(l1)), &l2))
+    {
+      copylabel(l2);
+      return replace_modified(c, 1, makeCODEif_icmpgt(l2, NULL));
+    }
+  }
+  else if(is_if_icmplt(*c, &l1))
+  {
+    if(is_label(next(destination(l1)), &l2))
+    {
+      copylabel(l2);
+      return replace_modified(c, 1, makeCODEif_icmplt(l2, NULL));
+    }
+  }
+  else if(is_if_icmple(*c, &l1))
+  {
+    if(is_label(next(destination(l1)), &l2))
+    {
+      copylabel(l2);
+      return replace_modified(c, 1, makeCODEif_icmple(l2, NULL));
+    }
+  }
+  else if(is_if_icmpge(*c, &l1))
+  {
+    if(is_label(next(destination(l1)), &l2))
+    {
+      copylabel(l2);
+      return replace_modified(c, 1, makeCODEif_icmpge(l2, NULL));
+    }
+  }
+  else if(is_if_icmpne(*c, &l1))
+  {
+    if(is_label(next(destination(l1)), &l2))
+    {
+      copylabel(l2);
+      return replace_modified(c, 1, makeCODEif_icmpne(l2, NULL));
+    }
+  }*/
+  return 0;
+}
+
+
 
 
 
@@ -1050,6 +1161,8 @@ int init_patterns()
     ADD_PATTERN(self_subtraction);
 
     ADD_PATTERN(simplify_dup_swap_put);
+
+    ADD_PATTERN(remove_redundant_labels);
 
 
     return 1;
