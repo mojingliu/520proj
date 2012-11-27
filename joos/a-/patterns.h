@@ -262,9 +262,7 @@ int addition_by_zero(CODE **c)
 int simplify_goto_goto(CODE **c)
 { int l1,l2;
   if (is_goto(*c,&l1) && is_goto(next(destination(l1)),&l2) && l1>l2) {
-     droplabel(l1);
-     copylabel(l2);
-     return replace(c,1,makeCODEgoto(l2,NULL));
+     return replace_modified(c,1,makeCODEgoto(l2,NULL));
   }
   return 0;
 }
@@ -400,7 +398,7 @@ int simplify_iload_aload(CODE **c)
  * ------>
  * if_cmpge l3
  */
-int simplify_lt(CODE **c)
+int simplify_icmplt(CODE **c)
 { 
   int l1, l2, l3;
   CODE *nexter = next(*c);
@@ -409,11 +407,32 @@ int simplify_lt(CODE **c)
     if(is_goto(next(nexter), &l2))
     {
       if(is_ifeq(next(destination(l2)), &l3))
-      {
-        droplabel(l1);
-        copylabel(l2);
-        return replace(c, 7, makeCODEif_icmpge(l3, NULL));
-      }
+        return replace_modified(c, 7, makeCODEif_icmpge(l3, NULL));
+    }
+  }
+  return 0;
+}
+
+/* if_icmple l1
+ * iconst_0
+ * goto l2
+ * l1 :
+ * iconst_1
+ * l2 :
+ * ifeq l3
+ * ------>
+ * if_icmpgt l3
+ */
+int simplify_icmple(CODE **c)
+{ 
+  int l1, l2, l3;
+  CODE *nexter = next(*c);
+  if(is_if_icmple(*c, &l1))
+  {
+    if(is_goto(next(nexter), &l2))
+    {
+      if(is_ifeq(next(destination(l2)), &l3))
+        return replace_modified(c, 7, makeCODEif_icmpgt(l3, NULL));
     }
   }
   return 0;
@@ -427,9 +446,9 @@ int simplify_lt(CODE **c)
  * l2 :
  * ifeq l3
  * ------>
- * if_cmple l3
+ * if_icmple l3
  */
-int simplify_gt(CODE **c)
+int simplify_icmpgt(CODE **c)
 { 
   int l1, l2, l3;
   CODE *nexter = next(*c);
@@ -438,15 +457,191 @@ int simplify_gt(CODE **c)
     if(is_goto(next(nexter), &l2))
     {
       if(is_ifeq(next(destination(l2)), &l3))
-      {
-        droplabel(l1);
-        copylabel(l2);
-        return replace(c, 7, makeCODEif_icmple(l3, NULL));
-      }
+        return replace_modified(c, 7, makeCODEif_icmple(l3, NULL));
     }
   }
   return 0;
 }
+
+/* if_icmpge l1
+ * iconst_0
+ * goto l2
+ * l1 :
+ * iconst_1
+ * l2 :
+ * ifeq l3
+ * ------>
+ * if_icmplt l3
+ */
+int simplify_icmpge(CODE **c)
+{ 
+  int l1, l2, l3;
+  CODE *nexter = next(*c);
+  if(is_if_icmpge(*c, &l1))
+  {
+    if(is_goto(next(nexter), &l2))
+    {
+      if(is_ifeq(next(destination(l2)), &l3))
+        return replace_modified(c, 7, makeCODEif_icmplt(l3, NULL));
+    }
+  }
+  return 0;
+}
+
+/* if_icmpne true_2
+ * iconst_0
+ * goto stop_3
+ * true_2:
+ * iconst_1
+ * stop_3:
+ * ifeq stop_1
+ * ...
+ * ------------>
+ * if_acmpeq stop_1
+ * ....
+ */
+int simplify_icmpne(CODE **c)
+{ 
+  int l1, l2, l3;
+  if(is_if_icmpne(*c, &l1))
+  {
+    if(is_goto(nextby(*c, 2), &l2))
+    {
+      if(is_ifeq(next(destination(l2)), &l3))
+        return replace_modified(c, 7, makeCODEif_icmpeq(l3, NULL));
+    }
+  }
+  return 0;
+}
+
+/* if_icmpeq true_2
+ * iconst_0
+ * goto stop_3
+ * true_2:
+ * iconst_1
+ * stop_3:
+ * ifeq stop_1
+ * ...
+ * ------------>
+ * if_acmpeq stop_1
+ * ....
+ */
+int simplify_icmpeq(CODE **c)
+{ 
+  int l1, l2, l3;
+  if(is_if_icmpeq(*c, &l1))
+  {
+    if(is_goto(nextby(*c, 2), &l2))
+    {
+      if(is_ifeq(next(destination(l2)), &l3))
+        return replace_modified(c, 7, makeCODEif_icmpne(l3, NULL));
+    }
+  }
+  return 0;
+}
+
+
+
+/* if_acmpne true_2
+ * iconst_0
+ * goto stop_3
+ * true_2:
+ * iconst_1
+ * stop_3:
+ * ifeq stop_1
+ * ...
+ * ------------>
+ * if_acmpeq stop_1
+ * ....
+ */
+int simplify_acmpne(CODE **c)
+{ 
+  int l1, l2, l3;
+  if(is_if_acmpne(*c, &l1))
+  {
+    if(is_goto(nextby(*c, 2), &l2))
+    {
+      if(is_ifeq(next(destination(l2)), &l3))
+        return replace_modified(c, 7, makeCODEif_acmpeq(l3, NULL));
+    }
+  }
+  return 0;
+}
+
+/* if_acmpeq true_2
+ * iconst_0
+ * goto stop_3
+ * true_2:
+ * iconst_1
+ * stop_3:
+ * ifeq stop_1
+ * ...
+ * ------------>
+ * if_acmpne stop_1
+ * ....
+ */
+int simplify_acmpeq(CODE **c)
+{ 
+  int l1, l2, l3;
+  if(is_if_acmpeq(*c, &l1))
+  {
+    if(is_goto(nextby(*c, 2), &l2))
+    {
+      if(is_ifeq(next(destination(l2)), &l3))
+        return replace_modified(c, 7, makeCODEif_acmpne(l3, NULL));
+    }
+  }
+  return 0;
+}
+
+/* ifnull l1
+ * goto l2
+ * l1:
+ * ...
+ * ------------>
+ * ifnonnull l2
+ * ....
+ */
+int simplify_ifnull(CODE **c)
+{ 
+  int l1, l2, l3;
+  if(is_ifnull(*c, &l1))
+  {
+    if(is_goto(next(*c), &l2))
+    {
+      if(is_label(nextby(*c, 2), &l3) && (l1 == l3))
+        return replace_modified(c, 3, makeCODEifnonnull(l2, NULL));
+    }
+  }
+  return 0;
+}
+
+/* ifnonnull true_2
+ * iconst_0
+ * goto stop_3
+ * true_2:
+ * iconst_1
+ * stop_3:
+ * ifeq stop_1
+ * ...
+ * ------------>
+ * ifnull stop_1
+ * ....
+ */
+int simplify_ifnonnull(CODE **c)
+{ 
+  int l1, l2, l3;
+  if(is_ifnonnull(*c, &l1))
+  {
+    if(is_goto(next(*c), &l2))
+    {
+      if(is_label(nextby(*c, 2), &l3) && (l1 == l3))
+        return replace_modified(c, 3, makeCODEifnull(l2, NULL));
+    }
+  }
+  return 0;
+}
+
 
 /*
  * areturn
@@ -724,6 +919,77 @@ int simplify_aconst_swap(CODE **c)
   return 0;
 }
 
+/*
+*  aconst_null
+*  dup
+*  aload_y
+*  swap
+*  putfield stuff
+*  pop
+*  ....
+*  -------->
+*  aload_y
+*  iconst_x
+*  putfield stuff
+*/
+int simplify_aconst_null_swap(CODE **c)
+{
+  int y;
+  char *z;
+  if(is_aconst_null(*c))
+  {
+    if(is_dup(next(*c)))
+    {
+      if(is_aload(nextby(*c, 2), &y))
+      {
+        if(is_swap(nextby(*c, 3)))
+        {
+          if(is_putfield(nextby(*c, 4), &z))
+          {
+            if(is_pop(nextby(*c, 5)))
+              return replace(c, 6, makeCODEaload(y, makeCODEaconst_null(makeCODEputfield(z, NULL))));
+          }
+        }
+      }
+    }
+  } 
+  return 0;
+}
+
+/*
+* dup
+* aload_x
+* swap
+* putfield
+* pop
+* ...
+* ------->
+* aload_x
+* swap
+* putfield 
+* ....
+*/
+int simplify_dup_swap_put(CODE **c)
+{
+  int x;
+  char *y;
+  if(is_dup(*c))
+  {
+    if(is_aload(next(*c), &x))
+    {
+      if(is_swap(nextby(*c, 2)))
+      {
+        if(is_putfield(nextby(*c, 3), &y))
+        {
+          if(is_pop(nextby(*c, 4)))
+            return replace(c, 5, makeCODEaload(x, makeCODEswap(makeCODEputfield(y, NULL))));
+        }
+      }
+    }
+  }
+  return 0;
+}
+
 
 
 
@@ -760,8 +1026,16 @@ int init_patterns()
     ADD_PATTERN(simplify_iload_aload);
     ADD_PATTERN(remove_load_store);
 
-    ADD_PATTERN(simplify_gt);
-    ADD_PATTERN(simplify_lt);
+    ADD_PATTERN(simplify_icmpne);
+    ADD_PATTERN(simplify_icmpgt);
+    ADD_PATTERN(simplify_icmpge);
+    ADD_PATTERN(simplify_icmplt);    
+    ADD_PATTERN(simplify_acmpeq);
+    ADD_PATTERN(simplify_acmpne);
+    ADD_PATTERN(simplify_icmple);
+    ADD_PATTERN(simplify_icmpeq);
+    ADD_PATTERN(simplify_ifnonnull);
+    ADD_PATTERN(simplify_ifnull);
 
     ADD_PATTERN(remove_after_return);
     /* works up to here... */
@@ -772,7 +1046,11 @@ int init_patterns()
     ADD_PATTERN(simplify_aload_swap);
     ADD_PATTERN(simplify_iconst_swap);
     ADD_PATTERN(simplify_aconst_swap);
+    ADD_PATTERN(simplify_aconst_null_swap);
     ADD_PATTERN(self_subtraction);
+
+    ADD_PATTERN(simplify_dup_swap_put);
+
 
     return 1;
   }
