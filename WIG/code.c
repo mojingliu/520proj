@@ -671,15 +671,15 @@ void codeSTM(STM* s, int session, int safe_if)
                             cIndent++;
                             cNewline();
                         }
-                        fprintf(cOfile, "if (%d <= counter <= %d) or ", small_show, big_show);
+                        fprintf(cOfile, "if counter <= %d and ((%d <= counter) or ", big_show, small_show);
                     }
                     else
                     {   /* there were no shows, can skip the crazy logic */
-                        fprintf(cOfile, "if ");
+                        fprintf(cOfile, "if (");
                     }
 
                     codeEXP(s->val.ifelseE.expr);
-                    fprintf(cOfile, ": #colon 1");
+                    fprintf(cOfile, "): #colon 1");
                     cIndent++;
                     cNewline();
                     if (s->val.ifelseE.stm1->kind == showK)
