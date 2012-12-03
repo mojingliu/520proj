@@ -6,74 +6,74 @@ all:
 	make code --no-print-directory
 
 code: y.tab.o lex.yy.o main.o tree.h tree.o pretty.h pretty.o memory.h memory.o weeder.h weeder.o symbol.h symbol.o prettysymbol.h prettysymbol.o type.h type.o prettytype.h prettytype.o code.h code.o
-	$(CC) lex.yy.o y.tab.o tree.o pretty.o memory.o main.o weeder.o symbol.o prettysymbol.o type.o prettytype.o code.o -o wig -lfl -lm
+	$(CC) lex.yy.o y.tab.o tree.o pretty.o memory.o main.o weeder.o symbol.o prettysymbol.o type.o prettytype.o code.o -o douglas -lfl -lm
 
 check:
 	make weed --no-print-directory
 	make pretty --no-print-directory
 
 weed:
-	./wig failExit.wig --notypcheck --nopretty --nosymbol
-	./wig failShow.wig --notypcheck --nopretty --nosymbol
-	./wig failDivideByZero.wig --notypcheck --nopretty --nosymbol
-	./wig chess.wig --notypcheck --nopretty --nosymbol
+	./douglas failExit.wig --notypcheck --nopretty --nosymbol
+	./douglas failShow.wig --notypcheck --nopretty --nosymbol
+	./douglas failDivideByZero.wig --notypcheck --nopretty --nosymbol
+	./douglas chess.wig --notypcheck --nopretty --nosymbol
 
 pretty:
-	./wig chat.wig prettysmalltest.wig --noweeder --notypecheck --nosymbol
+	./douglas chat.wig prettysmalltest.wig --noweeder --notypecheck --nosymbol
 
 symbol:
-	./wig chat.wig --noweeder --nopretty --notypecheck --printsymbol
+	./douglas chat.wig --noweeder --nopretty --notypecheck --printsymbol
 
 type:
-	./wig chat.wig --noweeder --nopretty --prettytype
-	./wig emailer.wig --noweeder --nopretty 
-	./wig fatchecker.wig --noweeder --nopretty
+	./douglas chat.wig --noweeder --nopretty --prettytype
+	./douglas emailer.wig --noweeder --nopretty 
+	./douglas fatchecker.wig --noweeder --nopretty
 
 testtype:
-	./wig typefailtests/fail1.wig --nopretty 
-	./wig typefailtests/fail2.wig --nopretty
-	./wig typefailtests/fail3.wig --nopretty
-	./wig typefailtests/fail4.wig --nopretty
-	./wig typefailtests/fail5.wig --nopretty
-	./wig typefailtests/fail6.wig --nopretty
-	./wig typefailtests/fail7.wig --nopretty
-	./wig typefailtests/fail8.wig --nopretty
-	./wig typefailtests/fail9.wig --nopretty
-	./wig typefailtests/fail10.wig --nopretty
-	./wig typefailtests/fail11.wig --nopretty
-	./wig typefailtests/fail12.wig --nopretty
-	./wig typefailtests/fail13.wig --nopretty
-	./wig typefailtests/fail14.wig --nopretty
-	./wig typefailtests/fail15.wig --nopretty
-	./wig typefailtests/fail16.wig --nopretty
-	./wig typefailtests/fail17.wig --nopretty
-	./wig typefailtests/fail18.wig --nopretty
-	./wig typefailtests/fail19.wig --nopretty
-	./wig typefailtests/fail20.wig --nopretty
-	./wig typefailtests/fail21.wig --nopretty
-	./wig typefailtests/fail22.wig --nopretty
-	./wig typefailtests/fail23.wig --nopretty
-	./wig typefailtests/fail24.wig --nopretty
-	./wig typefailtests/fail25.wig --nopretty
+	./douglas typefailtests/fail1.wig --nopretty 
+	./douglas typefailtests/fail2.wig --nopretty
+	./douglas typefailtests/fail3.wig --nopretty
+	./douglas typefailtests/fail4.wig --nopretty
+	./douglas typefailtests/fail5.wig --nopretty
+	./douglas typefailtests/fail6.wig --nopretty
+	./douglas typefailtests/fail7.wig --nopretty
+	./douglas typefailtests/fail8.wig --nopretty
+	./douglas typefailtests/fail9.wig --nopretty
+	./douglas typefailtests/fail10.wig --nopretty
+	./douglas typefailtests/fail11.wig --nopretty
+	./douglas typefailtests/fail12.wig --nopretty
+	./douglas typefailtests/fail13.wig --nopretty
+	./douglas typefailtests/fail14.wig --nopretty
+	./douglas typefailtests/fail15.wig --nopretty
+	./douglas typefailtests/fail16.wig --nopretty
+	./douglas typefailtests/fail17.wig --nopretty
+	./douglas typefailtests/fail18.wig --nopretty
+	./douglas typefailtests/fail19.wig --nopretty
+	./douglas typefailtests/fail20.wig --nopretty
+	./douglas typefailtests/fail21.wig --nopretty
+	./douglas typefailtests/fail22.wig --nopretty
+	./douglas typefailtests/fail23.wig --nopretty
+	./douglas typefailtests/fail24.wig --nopretty
+	./douglas typefailtests/fail25.wig --nopretty
 
 testsymbol:
-	./wig failtests/fail1.wig --nopretty --notypecheck
-	./wig failtests/fail2.wig --nopretty --notypecheck
-	./wig failtests/fail3.wig --nopretty --notypecheck
-	./wig failtests/fail4.wig --nopretty --notypecheck
-	./wig failtests/fail5.wig --nopretty --notypecheck
-	./wig failtests/fail6.wig --nopretty --notypecheck
-	./wig failtests/fail7.wig --nopretty --notypecheck
-	./wig failtests/fail8.wig --nopretty --notypecheck
-	./wig failtests/fail9.wig --nopretty --notypecheck
-	./wig failtests/fail10.wig --nopretty --notypecheck
-	./wig failtests/fail11.wig --nopretty --notypecheck
-	./wig failtests/fail12.wig --nopretty --notypecheck
-	./wig failtests/fail13.wig --nopretty --notypecheck
-	./wig failtests/fail14.wig --nopretty --notypecheck
-	./wig failtests/fail15.wig --nopretty --notypecheck
-	./wig failtests/fail16.wig --nopretty --notypecheck
-	./wig failtests/fail17.wig --nopretty --notypecheck
+	./douglas failtests/fail1.wig --nopretty --notypecheck
+	./douglas failtests/fail2.wig --nopretty --notypecheck
+	./douglas failtests/fail3.wig --nopretty --notypecheck
+	./douglas failtests/fail4.wig --nopretty --notypecheck
+	./douglas failtests/fail5.wig --nopretty --notypecheck
+	./douglas failtests/fail6.wig --nopretty --notypecheck
+	./douglas failtests/fail7.wig --nopretty --notypecheck
+	./douglas failtests/fail8.wig --nopretty --notypecheck
+	./douglas failtests/fail9.wig --nopretty --notypecheck
+	./douglas failtests/fail10.wig --nopretty --notypecheck
+	./douglas failtests/fail11.wig --nopretty --notypecheck
+	./douglas failtests/fail12.wig --nopretty --notypecheck
+	./douglas failtests/fail13.wig --nopretty --notypecheck
+	./douglas failtests/fail14.wig --nopretty --notypecheck
+	./douglas failtests/fail15.wig --nopretty --notypecheck
+	./douglas failtests/fail16.wig --nopretty --notypecheck
+	./douglas failtests/fail17.wig --nopretty --notypecheck
 
 y.tab.c y.tab.h: wig.y
 	bison --yacc --defines wig.y
@@ -83,4 +83,4 @@ lex.yy.c: wig.l y.tab.h
 
 clean:
 	rm y.tab.* lex.yy.*; rm *.o
-	rm wig
+	rm douglas

@@ -30,7 +30,7 @@ void help()
 	printf("--noweeder: turns off the weeder\n");
 	printf("--nosymbol: turns off the symbol table\n");
 	printf("--printsymbol: prints the symbol table\n");
-	printf("--nopretty: turns off pretty printer\n");
+	printf("--pretty: turns on pretty printer\n");
 	printf("--notypecheck: turns off the typechecker\n");
 	printf("--nocode: turns off the final code generation\n");
 	printf("--prettytype: prints the file with expression types\n");
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 	int i;
 	int weeder = 1;
 	int symbol = 1;
-	int pretty = 1;
+	int pretty = 0;
 	int typecheck = 1;
 	int codegen = 1;
 	int printsymbol = 0;
@@ -68,8 +68,8 @@ int main(int argc, char *argv[])
 			weeder = 0;
 		else if(!strcmp(argv[i], "--nosymbol"))
 			symbol = 0;
-		else if(!strcmp(argv[i], "--nopretty"))
-			pretty = 0;
+		else if(!strcmp(argv[i], "--pretty"))
+			pretty = 1;
 		else if(!strcmp(argv[i], "--notypecheck"))
 			typecheck = 0;
 		else if(!strcmp(argv[i], "--printsymbol"))
@@ -149,7 +149,22 @@ int main(int argc, char *argv[])
 	}
 	if(codegen)
 	{
-		ofile = fopen("chess.py", "w");
+		if(argv[2] != NULL)
+		{
+			ofile = fopen(argv[2], "w");
+			if(ofile == NULL)
+			{
+				printf("Error opening output file.");
+				fclose(yyin);
+				printf("\n\n");
+				return(0);
+			}
+		}
+		else
+		{
+			printf("Please provide an output file.");
+			printf(" ./douglas inputFile outputFile [--noweeder] [--nocode] [--nosymbol] [--printsymbol] [--prettytype] [--pretty] [--notypecheck]\n");
+		}
 		cSetofile(ofile);
 		codeSERVICE(theservice);
 	}

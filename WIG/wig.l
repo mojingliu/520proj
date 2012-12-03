@@ -135,7 +135,7 @@ extern int lineno;
                             return tINTCONST;
                           }
 
-<HTMLTAG>\/?[a-zA-Z_][a-zA-Z0-9_]*  { 
+<HTMLTAG>\/?[a-zA-Z_][a-zA-Z0-9_]*\/?  { 
                                     yylval.stringconst = (char *)malloc(strlen(yytext)+1);
                                     sprintf(yylval.stringconst,"%s",yytext); 
                                     return tIDENTIFIER; 
