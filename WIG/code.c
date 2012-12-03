@@ -4,10 +4,12 @@
 FILE* cOfile;
 int cIndent = 0;
 int show_num = 0;
+char* filename;
 const int cTAB_WIDTH = 4;
 
-void cSetofile(FILE *f){
+void cSetofile(FILE *f, char* fn){
     cOfile = f;
+    filename = fn;
 }
 
 void cNewline()
@@ -50,13 +52,18 @@ void codeSERVICE(SERVICE* s)
             fprintf(cOfile, "self.parent = parent"); cNewline();
             fprintf(cOfile, "self.variables = variables"); cNewline();
         cIndent--; cNewline();
+        fprintf(cOfile, "def globals(self):"); cIndent++; cNewline();
+            fprintf(cOfile, "while self.parent is not None:"); cIndent++; cNewline();
+                fprintf(cOfile, "self = self.parent"); cIndent--; cNewline();
+            fprintf(cOfile, "return self");  cIndent--; cNewline();
+        cNewline();
         fprintf(cOfile, "def __getitem__(self, index):"); cIndent++; cNewline();
             fprintf(cOfile, "if index not in self.variables:"); cIndent++; cNewline();
                 fprintf(cOfile, "if self.parent is None:"); cIndent++; cNewline();
                     fprintf(cOfile, "raise AttributeError"); cIndent--; cNewline();
                 fprintf(cOfile, "return self.parent[index]"); cIndent--; cNewline();
-            fprintf(cOfile, "return self.variables[index]"); cNewline();
-        cIndent--; cNewline();
+            fprintf(cOfile, "return self.variables[index]"); cIndent--; cNewline();
+        cNewline();
         fprintf(cOfile, "def __setitem__(self, index, val):"); cIndent++; cNewline();
             fprintf(cOfile, "if index not in self.variables:"); cIndent++; cNewline();
                 fprintf(cOfile, "if self.parent is None:"); cIndent++; cNewline();
@@ -65,26 +72,20 @@ void codeSERVICE(SERVICE* s)
                 fprintf(cOfile, "return"); cIndent--; cNewline();
             fprintf(cOfile, "self.variables[index] = val"); cIndent -= 2; cNewline();
     cNewline();
-    fprintf(cOfile, "class FnStack(object):"); cIndent++; cNewline();
-        fprintf(cOfile, "def __init__(self, parent, variables):"); cIndent++; cNewline();
-    fprintf(cOfile, "self.parent = parent"); cNewline();
-    fprintf(cOfile, "self.variables = variables"); cNewline();
-    cIndent--; cNewline();
-    fprintf(cOfile, "def __getitem__(self, index):"); cIndent++; cNewline();
-    fprintf(cOfile, "if index not in self.variables:"); cIndent++; cNewline();
-    fprintf(cOfile, "while self.parent is not None:"); cIndent++; cNewline();
-    fprintf(cOfile, "self = self.parent"); cIndent -= 2; cNewline();
-    fprintf(cOfile, "if index not in self.variables:"); cIndent++; cNewline();
-    fprintf(cOfile, "raise AttributeError"); cIndent--; cNewline();
-    fprintf(cOfile, "return self.variables[index]"); cIndent--; cNewline();
-    cNewline();
-    fprintf(cOfile, "def __setitem__(self, index, val):"); cIndent++; cNewline();
-    fprintf(cOfile, "if index not in self.variables:"); cIndent++; cNewline();
-    fprintf(cOfile, "while self.parent is not None:"); cIndent++; cNewline();
-    fprintf(cOfile, "self = self.parent"); cIndent -= 2; cNewline();
-    fprintf(cOfile, "if index not in self.variables:"); cIndent++; cNewline();
-    fprintf(cOfile, "raise AttributeError"); cIndent--; cNewline();
-    fprintf(cOfile, "self.variables[index] = val"); cIndent -= 2; cNewline();
+    fprintf(cOfile, "class FnStack(VarStack):"); cIndent++; cNewline();
+        fprintf(cOfile, "def __getitem__(self, index):"); cIndent++; cNewline();
+            fprintf(cOfile, "if index not in self.variables:"); cIndent++; cNewline();
+                fprintf(cOfile, "self = self.globals()"); cIndent--; cNewline();
+            fprintf(cOfile, "if index not in self.variables:"); cIndent++; cNewline();
+                fprintf(cOfile, "raise AttributeError"); cIndent--; cNewline();
+            fprintf(cOfile, "return self.variables[index]"); cIndent--; cNewline();
+        cNewline();
+        fprintf(cOfile, "def __setitem__(self, index, val):"); cIndent++; cNewline();
+            fprintf(cOfile, "if index not in self.variables:"); cIndent++; cNewline();
+                fprintf(cOfile, "self = self.globals()"); cIndent--; cNewline();
+            fprintf(cOfile, "if index not in self.variables:"); cIndent++; cNewline();
+                fprintf(cOfile, "raise AttributeError"); cIndent--; cNewline();
+            fprintf(cOfile, "self.variables[index] = val"); cIndent -= 2; cNewline();
     cNewline();
     if(s->schema != NULL)
     {
@@ -127,6 +128,9 @@ void codeSERVICE(SERVICE* s)
         fprintf(cOfile, "global v"); cNewline();
         fprintf(cOfile, "f = open(sid + \".ws\", \"w\")"); cNewline();
         fprintf(cOfile, "pickle.dump((counter, v), f)"); cNewline();
+        fprintf(cOfile, "f.close()"); cNewline();
+        fprintf(cOfile, "f = open(\"%s.ws\", \"w\")", filename); cNewline();
+        fprintf(cOfile, "pickle.dump(v.globals(), f)"); cNewline();
         fprintf(cOfile, "f.close()"); cIndent--; cNewline();
     cNewline();
     fprintf(cOfile, "def push_context(new_context):"); cIndent++; cNewline();
@@ -165,6 +169,21 @@ void codeSERVICE(SERVICE* s)
             fprintf(cOfile, "if k in keys:"); cIndent++; cNewline();
                 fprintf(cOfile, "del a[k]"); cIndent -= 2; cNewline();
         fprintf(cOfile, "return a"); cIndent--; cNewline();
+    cNewline();
+    fprintf(cOfile, "def load_globals():"); cIndent++; cNewline();
+        fprintf(cOfile, "try:"); cIndent++; cNewline();
+            fprintf(cOfile, "f = open(\"%s.ws\", \"r\")", filename); cNewline();
+            fprintf(cOfile, "globs = pickle.load(f)"); cNewline();
+            fprintf(cOfile, "f.close()"); cIndent--; cNewline();
+        fprintf(cOfile, "except IOError:  # didn't find a globals file"); cIndent++; cNewline();
+            fprintf(cOfile, "pass"); cIndent--; cNewline();
+        fprintf(cOfile, "else:"); cIndent++; cNewline();
+            fprintf(cOfile, "if temp.parent is not None:"); cIndent++; cNewline();
+                fprintf(cOfile, "while temp.parent.parent is not None:  # sew the globals onto the rest"); cIndent++; cNewline();
+                    fprintf(cOfile, "temp = temp.parent"); cIndent--; cNewline();
+                fprintf(cOfile, "temp.parent = globs"); cIndent--; cNewline();
+            fprintf(cOfile, "else:  # you are everything"); cIndent++; cNewline();
+                fprintf(cOfile, "v = globs"); cIndent -= 3; cNewline();
     cNewline();
     fprintf(cOfile, "###############################################################################"); cNewline();
     if(s->html != NULL)
@@ -213,10 +232,12 @@ void codeSERVICE(SERVICE* s)
                     fprintf(cOfile, "print \" -<a href='?\" + s + \"'>\", s, \"</a><br>\""); cIndent--; cNewline();
                 fprintf(cOfile, "print \"</html>\""); cIndent--; cNewline();
             fprintf(cOfile, "else:"); cIndent++; cNewline();
+                fprintf(cOfile, "load_globals()"); cNewline();
                 fprintf(cOfile, "for i in storage:"); cIndent++; cNewline();
                     fprintf(cOfile, "receives[i] = str(storage[i].value)"); cIndent--; cNewline();
                 fprintf(cOfile, "sessions[session]()"); cIndent -= 2; cNewline();
         fprintf(cOfile, "else:"); cIndent++; cNewline();
+            fprintf(cOfile, "load_globals()"); cNewline();
             fprintf(cOfile, "sessions[session]()"); cIndent -= 2; cNewline();
 }
 

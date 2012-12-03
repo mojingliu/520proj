@@ -4,7 +4,7 @@
 #include "tree.h"
 #include <stdio.h>
 
-void cSetofile(FILE *f);
+void cSetofile(FILE *f, char* fn);
 void codeSERVICE(SERVICE *s);
 void codeHTML(HTML* h);
 void codeHTMLBODY(HTMLBODY* h);

@@ -165,7 +165,7 @@ int main(int argc, char *argv[])
 			printf("Please provide an output file.");
 			printf(" ./douglas inputFile outputFile [--noweeder] [--nocode] [--nosymbol] [--printsymbol] [--prettytype] [--pretty] [--notypecheck]\n");
 		}
-		cSetofile(ofile);
+		cSetofile(ofile, argv[2]);
 		codeSERVICE(theservice);
 	}
 	fclose(yyin);
