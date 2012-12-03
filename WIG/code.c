@@ -555,7 +555,7 @@ void codeSTM(STM* s, int session)
             fprintf(cOfile, ")");
             cIndent--;
             cNewline();
-            fprintf(cOfile, "if counter == %d:", show_num);
+            fprintf(cOfile, "if counter == %d: #showk 1", show_num);
             cIndent++;
             cNewline();
             fprintf(cOfile, "counter = 0");
@@ -566,7 +566,7 @@ void codeSTM(STM* s, int session)
             }
             cIndent--;
             cNewline();
-            fprintf(cOfile, "if counter <= %d:", show_num);
+            fprintf(cOfile, "if counter <= %d: #showk 2", show_num);
             cIndent++;
             cNewline();
             fprintf(cOfile, "pass");
@@ -602,7 +602,7 @@ void codeSTM(STM* s, int session)
                     {
                         cIndent--;
                         cNewline();
-                        fprintf(cOfile, "if counter <= %d:", big_show);
+                        fprintf(cOfile, "if counter <= %d: #if big_show 1", big_show);
                         cIndent++;
                         cNewline();
                         fprintf(cOfile, "if (%d <= counter <= %d) or ", small_show, big_show);
@@ -615,7 +615,7 @@ void codeSTM(STM* s, int session)
                     fprintf(cOfile, "if ");
                 }
                 codeEXP(s->val.ifE.expr);
-                fprintf(cOfile, ":");
+                fprintf(cOfile, ": #ifk colon 1");
                 cIndent++;
                 cNewline();
                 codeSTM(s->val.ifE.stm, session);
@@ -637,7 +637,7 @@ void codeSTM(STM* s, int session)
                     {
                         cIndent--;
                         cNewline();
-                        fprintf(cOfile, "if counter <= %d:", biggest_show);
+                        fprintf(cOfile, "if counter <= %d: #biggest show", biggest_show);
                         cIndent++;
                         cNewline();
                         fprintf(cOfile, "if (%d <= counter <= %d) or ", small_show, big_show);
@@ -648,12 +648,12 @@ void codeSTM(STM* s, int session)
                     }
 
                     codeEXP(s->val.ifelseE.expr);
-                    fprintf(cOfile, ":");
+                    fprintf(cOfile, ": #colon 1");
                     cIndent++;
                     cNewline();
                     if (s->val.ifelseE.stm1->kind == showK)
                     {
-                        fprintf(cOfile, "if counter <= %d:", show_num);
+                        fprintf(cOfile, "if counter <= %d: #show_num 1", show_num);
                         cIndent++;
                         cNewline();
                     }
@@ -672,12 +672,12 @@ void codeSTM(STM* s, int session)
                         /*if (small_show)
                             fprintf(cOfile, "if %d <= counter <= %d:", small_show, big_show);
                         else*/
-                        fprintf(cOfile, "se:");
+                        fprintf(cOfile, "se: #se 1");
                         cIndent++;
                         cNewline();
                         if (s->val.ifelseE.stm2->kind == showK)
                         {
-                            fprintf(cOfile, "if counter <= %d:", show_num);
+                            fprintf(cOfile, "if counter <= %d: #show_num 2", show_num);
                             cIndent++;
                             cNewline();
                         }
@@ -695,7 +695,7 @@ void codeSTM(STM* s, int session)
             }
             fprintf(cOfile, "if ");
             codeEXP(s->val.ifelseE.expr);
-            fprintf(cOfile, ":");
+            fprintf(cOfile, ": #colon 2");
             cIndent++;
             cNewline();
             codeSTM(s->val.ifelseE.stm1, session);
@@ -704,7 +704,7 @@ void codeSTM(STM* s, int session)
             fprintf(cOfile, "el");
             if(!(s->val.ifelseE.stm2->kind == ifK || s->val.ifelseE.stm2->kind == ifelseK))
             {   /* else */
-                fprintf(cOfile, "se:");
+                fprintf(cOfile, "se: #se 2");
                 cIndent++;
                 cNewline();
                 codeSTM(s->val.ifelseE.stm2, session);
@@ -725,7 +725,7 @@ void codeSTM(STM* s, int session)
                     {
                         cIndent--;
                         cNewline();
-                        fprintf(cOfile, "if counter <= %d:", big_show);
+                        fprintf(cOfile, "if counter <= %d: #big_show 1", big_show);
                         cIndent++;
                         cNewline();
                         fprintf(cOfile, "while (%d <= counter <= %d) or ", small_show, big_show);
@@ -745,7 +745,7 @@ void codeSTM(STM* s, int session)
                 cNewline();
                 if (s->val.whileE.stm->kind == showK)
                 {
-                    fprintf(cOfile, "if counter <= %d:", show_num);
+                    fprintf(cOfile, "if counter <= %d: #show_num 3", show_num);
                     cIndent++;
                     cNewline();
                 }
@@ -809,8 +809,10 @@ void codeCOMPOUNDSTM(COMPOUNDSTM* c, int session)
     declares_vars = (c->variable != NULL);
     if (session)
     {
-        fprintf(cOfile, "if counter <= %d:", show_num);
+        fprintf(cOfile, "if counter <= %d: #compoundstm 1", show_num);
         cIndent++;
+        cNewline();
+        fprintf(cOfile, "pass");
         cNewline();
     }
     if(declares_vars)
