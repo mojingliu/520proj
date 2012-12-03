@@ -22,7 +22,7 @@ void codeFUNCTION(FUNCTION* f);
 void codeARGUMENT(ARGUMENT* a);
 void codeARGUMENTpush(ARGUMENT* a);
 void codeSESSION(SESSION* s);
-void codeSTM(STM* s, int session);
+void codeSTM(STM* s, int session, int safe_if);
 void codeCOMPOUNDSTM(COMPOUNDSTM* c, int session);
 void codeDOCUMENT(DOCUMENT* d);
 void codeRECEIVE(RECEIVE* r);

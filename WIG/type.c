@@ -591,6 +591,7 @@ SCHEMA* keepIDs(SCHEMA* schema, ID* id)
 	SCHEMA* toR;
 	FIELD* temp;
 	FIELD* toAdd;
+	toAdd = NULL;
 	toR = NEW(SCHEMA);
 	while(id != NULL)
 	{	/* iterate over each id in the right side list */
@@ -633,7 +634,8 @@ SCHEMA* removeIDs(SCHEMA* schema, ID* id)
 	ID* tempID;
 	toR = NEW(SCHEMA);
 	tempID = id;
-	
+	tempField = NULL;
+	toAdd = NULL;
 	/* Make sure all ids are in the tuple */
 	while(tempID != NULL)
 	{
@@ -655,11 +657,11 @@ SCHEMA* removeIDs(SCHEMA* schema, ID* id)
 		tempID = tempID->next;
 	}
 	/* all ids in the tuple, now do removes */
-	tempID = id;
+	tempField = schema->field;
 	while(tempField != NULL)
 	{
 		matched = 0;
-		tempField = schema->field;
+		tempID = id;
 		while(tempID != NULL)
 		{	
 			if(!strcmp(id->identifier, tempField->id->identifier))
